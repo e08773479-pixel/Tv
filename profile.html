@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>JOKER GAMES - الملف الشخصي</title>
+    <title>JOKER GAMES - المجتمع والملف الشخصي</title>
     <style>
         :root {
             --bg-main: #dfceb7;
@@ -51,7 +51,7 @@
             flex-direction: column;
             align-items: center;
             justify-content: space-between;
-            padding: 15px;
+            padding: 10px 12px;
             position: relative;
             overflow: hidden !important;
         }
@@ -70,21 +70,21 @@
         /* زر العودة */
         .back-btn {
             position: absolute;
-            top: 12px;
-            right: 12px;
-            width: 40px;
-            height: 40px;
+            top: 10px;
+            right: 10px;
+            width: 36px;
+            height: 36px;
             background: #ffffff;
             border-radius: 50%;
             display: flex;
             justify-content: center;
             align-items: center;
-            font-size: 18px;
+            font-size: 16px;
             font-weight: bold;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            box-shadow: 0 3px 8px rgba(0,0,0,0.2);
             cursor: pointer;
             z-index: 20;
-            border: 3.5px solid var(--border-color);
+            border: 3px solid var(--border-color);
         }
 
         .back-btn:active { transform: scale(0.9); }
@@ -93,19 +93,18 @@
         .page-header {
             text-align: center;
             z-index: 10;
-            margin-top: 5px;
         }
 
         .page-title {
-            font-size: 32px;
+            font-size: 24px;
             font-weight: 900;
             color: #ffffff;
             text-shadow: 
-                3px 3px 0 #000,
-                -3px -3px 0 #000,
-                3px -3px 0 #000,
-                -3px 3px 0 #000,
-                0 5px 0 #000;
+                2px 2px 0 #000,
+                -2px -2px 0 #000,
+                2px -2px 0 #000,
+                -2px 2px 0 #000,
+                0 4px 0 #000;
             line-height: 1;
         }
 
@@ -113,32 +112,39 @@
         .profile-card {
             width: 100%;
             background: #ffffff;
-            border: 4px solid var(--border-color);
-            border-radius: 20px;
-            padding: 12px;
+            border: 3px solid var(--border-color);
+            border-radius: 16px;
+            padding: 8px 10px;
             display: flex;
             flex-direction: column;
             align-items: center;
-            box-shadow: 0 6px 0 var(--border-color);
+            box-shadow: 0 4px 0 var(--border-color);
             z-index: 10;
             position: relative;
-            margin-top: 30px;
+            margin-top: 20px;
         }
 
         .avatar-container {
-            width: 85px;
-            height: 85px;
+            width: 65px;
+            height: 65px;
             border-radius: 50%;
-            border: 4px solid var(--border-color);
+            border: 3px solid var(--border-color);
             background: linear-gradient(135deg, #a855f7, #6b21a8);
             display: flex;
             justify-content: center;
             align-items: center;
-            font-size: 42px;
-            margin-top: -50px;
-            box-shadow: 0 5px 0 var(--border-color);
+            font-size: 34px;
+            margin-top: -38px;
+            box-shadow: 0 3px 0 var(--border-color);
             position: relative;
             cursor: pointer;
+            overflow: hidden;
+        }
+
+        .avatar-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
         }
 
         .edit-badge {
@@ -148,58 +154,72 @@
             background: var(--accent-yellow);
             border: 2px solid var(--border-color);
             border-radius: 50%;
-            width: 26px;
-            height: 26px;
+            width: 22px;
+            height: 22px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 12px;
+            font-size: 10px;
         }
 
         .player-name {
-            font-size: 20px;
+            font-size: 16px;
             font-weight: 900;
             color: #000000;
-            margin-top: 4px;
+            margin-top: 2px;
         }
 
         .rank-badge {
-            margin-top: 4px;
+            margin-top: 2px;
             background: var(--accent-yellow);
             color: #000;
             font-weight: 900;
-            font-size: 11px;
-            padding: 3px 12px;
+            font-size: 10px;
+            padding: 2px 10px;
             border-radius: 20px;
             border: 2px solid var(--border-color);
             box-shadow: 0 2px 0 var(--border-color);
+        }
+
+        /* عدادات الأصدقاء والمتابعين */
+        .social-stats-row {
+            display: flex;
+            gap: 15px;
+            margin-top: 6px;
+            font-size: 11px;
+            font-weight: 900;
+            color: #334155;
+        }
+
+        .social-stat-item span {
+            color: var(--primary);
         }
 
         /* شريط المستوى */
         .level-container {
             width: 100%;
             background: #f8fafc;
-            border: 2.5px solid var(--border-color);
-            border-radius: 12px;
-            padding: 8px 10px;
-            margin-top: 8px;
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            padding: 4px 8px;
+            margin-top: 5px;
         }
 
         .level-header {
             display: flex;
             justify-content: space-between;
-            font-size: 11px;
+            font-size: 9px;
             font-weight: 900;
             color: #000;
-            margin-bottom: 4px;
+            margin-bottom: 2px;
         }
 
         .progress-bar-outer {
             width: 100%;
-            height: 10px;
+            height: 6px;
             background: #e2e8f0;
-            border-radius: 8px;
-            border: 2px solid var(--border-color);
+            border-radius: 5px;
+            border: 1.5px solid var(--border-color);
             overflow: hidden;
         }
 
@@ -210,32 +230,63 @@
             transition: width 0.4s ease;
         }
 
+        /* كارت التصنيف العالمي 🌍 */
+        .global-rank-card {
+            width: 100%;
+            background: linear-gradient(135deg, #1e293b, #0f172a);
+            border: 2.5px solid var(--border-color);
+            border-radius: 12px;
+            padding: 6px 10px;
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 3px 0 var(--border-color);
+            z-index: 10;
+        }
+
+        .global-rank-item {
+            text-align: center;
+        }
+
+        .global-rank-val {
+            font-size: 14px;
+            font-weight: 900;
+            color: var(--accent-yellow);
+        }
+
+        .global-rank-lbl {
+            font-size: 8px;
+            color: #94a3b8;
+            font-weight: 800;
+        }
+
         /* شبكة الإحصائيات */
         .stats-grid {
             width: 100%;
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 8px;
+            gap: 5px;
             z-index: 10;
         }
 
         .stat-box {
             background: #ffffff;
-            border: 3px solid var(--border-color);
-            border-radius: 14px;
-            padding: 8px;
+            border: 2px solid var(--border-color);
+            border-radius: 10px;
+            padding: 5px;
             text-align: center;
-            box-shadow: 0 3px 0 var(--border-color);
+            box-shadow: 0 2px 0 var(--border-color);
         }
 
         .stat-value {
-            font-size: 18px;
+            font-size: 14px;
             font-weight: 900;
             color: #000000;
         }
 
         .stat-label {
-            font-size: 10px;
+            font-size: 8px;
             font-weight: 800;
             color: #475569;
         }
@@ -245,19 +296,19 @@
             width: 100%;
             display: flex;
             flex-direction: column;
-            gap: 8px;
+            gap: 5px;
             z-index: 10;
         }
 
         .btn-main {
             width: 100%;
-            padding: 10px;
-            border-radius: 14px;
-            border: 3px solid var(--border-color);
-            font-size: 14px;
+            padding: 7px;
+            border-radius: 10px;
+            border: 2.5px solid var(--border-color);
+            font-size: 12px;
             font-weight: 900;
             cursor: pointer;
-            box-shadow: 0 4px 0 var(--border-color);
+            box-shadow: 0 3px 0 var(--border-color);
             transition: transform 0.1s;
             display: flex;
             justify-content: center;
@@ -267,90 +318,138 @@
 
         .btn-main:active {
             transform: translateY(2px);
-            box-shadow: 0 2px 0 var(--border-color);
+            box-shadow: 0 1px 0 var(--border-color);
         }
 
         .btn-yellow { background: var(--accent-yellow); color: #000; }
+        .btn-green { background: var(--accent-green); color: #000; }
         .btn-purple { background: var(--primary); color: #fff; }
         .btn-blue { background: #3b82f6; color: #fff; }
         .btn-red { background: var(--accent-red); color: #fff; }
 
-        /* نافذة التعديل الترحيبية الاحترافية (Modal) */
+        /* نافذة الـ Modal */
         .modal-overlay {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.7);
+            background: rgba(0, 0, 0, 0.75);
             z-index: 100;
             display: none;
             justify-content: center;
             align-items: center;
-            padding: 20px;
+            padding: 12px;
             backdrop-filter: blur(3px);
         }
 
         .modal-card {
             width: 100%;
+            max-height: 82vh;
             background: #ffffff;
-            border: 4px solid var(--border-color);
-            border-radius: 20px;
-            padding: 20px;
-            box-shadow: 0 8px 0 var(--border-color);
+            border: 3.5px solid var(--border-color);
+            border-radius: 16px;
+            padding: 12px;
+            box-shadow: 0 6px 0 var(--border-color);
             display: flex;
             flex-direction: column;
-            gap: 12px;
+            gap: 8px;
             text-align: center;
-            animation: popIn 0.2s ease-out;
+            animation: popIn 0.15s ease-out;
         }
 
         @keyframes popIn {
-            0% { transform: scale(0.8); opacity: 0; }
+            0% { transform: scale(0.85); opacity: 0; }
             100% { transform: scale(1); opacity: 1; }
         }
 
         .modal-title {
-            font-size: 18px;
+            font-size: 15px;
             font-weight: 900;
             color: #000;
         }
 
         .modal-input {
             width: 100%;
-            padding: 10px;
-            border: 2.5px solid var(--border-color);
-            border-radius: 12px;
-            font-size: 14px;
+            padding: 7px;
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 12px;
             font-weight: 800;
             text-align: center;
             outline: none;
         }
 
-        .avatar-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 10px;
+        /* جدول أعلى 100 متصدر والتحدي */
+        .leaderboard-list {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
             margin: 5px 0;
+            overflow-y: auto;
+            max-height: 48vh;
+            padding-left: 4px;
         }
 
-        .avatar-option {
-            font-size: 30px;
-            background: #f1f5f9;
+        .leader-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 6px 8px;
             border: 2px solid var(--border-color);
-            border-radius: 12px;
-            padding: 6px;
+            border-radius: 8px;
+            background: #f8fafc;
+            font-weight: 900;
+            font-size: 11px;
             cursor: pointer;
         }
 
-        .avatar-option:active {
-            transform: scale(0.9);
-            background: var(--accent-yellow);
+        .leader-item:active {
+            background: #e2e8f0;
+        }
+
+        .leader-item.my-rank {
+            background: #fef08a;
+            border-color: var(--primary);
+        }
+
+        .leader-rank {
+            width: 22px;
+            height: 22px;
+            background: #000;
+            color: #fff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 9px;
+        }
+
+        /* خيارات تغيير الصورة (معرض أو إيموجي) */
+        .avatar-options-box {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .avatar-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 6px;
+        }
+
+        .avatar-option {
+            font-size: 24px;
+            background: #f1f5f9;
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            padding: 4px;
+            cursor: pointer;
         }
 
         .modal-btns {
             display: flex;
-            gap: 8px;
+            gap: 5px;
         }
     </style>
 </head>
@@ -374,12 +473,17 @@
 
         <div class="profile-card">
             <div class="avatar-container" onclick="openAvatarModal()">
-                <span id="playerAvatar">🃏</span>
+                <span id="playerAvatarDisplay">🃏</span>
                 <div class="edit-badge">✏️</div>
             </div>
             
             <div class="player-name" id="userName">اللاعب الجوكر</div>
             <div class="rank-badge" id="rankBadge">🏆 التصنيف: برونزي</div>
+
+            <div class="social-stats-row">
+                <div class="social-stat-item">👥 الأصدقاء: <span id="friendsCount">24</span></div>
+                <div class="social-stat-item">⭐ المتابعين: <span id="followersCount">142</span></div>
+            </div>
 
             <div class="level-container">
                 <div class="level-header">
@@ -389,6 +493,23 @@
                 <div class="progress-bar-outer">
                     <div class="progress-bar-inner" id="xpBar"></div>
                 </div>
+            </div>
+        </div>
+
+        <div class="global-rank-card">
+            <div class="global-rank-item">
+                <div class="global-rank-val" id="myGlobalRank">#--</div>
+                <div class="global-rank-lbl">مركزي العالمي 🏅</div>
+            </div>
+            <div style="width:1px; height:22px; background:#334155;"></div>
+            <div class="global-rank-item">
+                <div class="global-rank-val" id="topGameScore">150,000</div>
+                <div class="global-rank-lbl">أعلى سكور باللعبة 🔥</div>
+            </div>
+            <div style="width:1px; height:22px; background:#334155;"></div>
+            <div class="global-rank-item">
+                <div class="global-rank-val">18,420</div>
+                <div class="global-rank-lbl">اللاعبين النشطين 👥</div>
             </div>
         </div>
 
@@ -412,12 +533,32 @@
         </div>
 
         <div class="action-buttons">
+            <button class="btn-main btn-green" onclick="openLeaderboardModal()">🏆 المتصدرين وتحدي اللاعبين</button>
             <button class="btn-main btn-yellow" onclick="openNameModal()">✏️ تغيير اسم اللاعب</button>
-            <button class="btn-main btn-blue" onclick="openPassModal()">🔑 تغيير كلمة السر</button>
-            <button class="btn-main btn-purple" onclick="openAvatarModal()">🎭 تغيير الشخصية</button>
+            <button class="btn-main btn-blue" onclick="openAvatarModal()">🖼️ تغيير صورة البروفايل</button>
             <button class="btn-main btn-red" onclick="openLogoutModal()">🚪 تسجيل الخروج</button>
         </div>
 
+    </div>
+
+    <div class="modal-overlay" id="leaderboardModal">
+        <div class="modal-card">
+            <div class="modal-title">🏆 المتصدرون (اضغط على أي لاعب لتحديه)</div>
+            <div class="leaderboard-list" id="leaderboardList"></div>
+            <button class="btn-main btn-red" onclick="closeModal('leaderboardModal')">إغلاق</button>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="playerActionModal">
+        <div class="modal-card">
+            <div class="modal-title" id="actionPlayerTitle">تحدي اللاعب</div>
+            <p style="font-size: 11px; font-weight: 800; color: #475569;" id="actionPlayerDesc">ماذا تريد أن تفعل مع هذا اللاعب؟</p>
+            <div style="display:flex; flex-direction:column; gap:6px; margin-top:8px;">
+                <button class="btn-main btn-green" onclick="sendMatchInvite()">⚔️ إرسال دعوة لعب ماتش</button>
+                <button class="btn-main btn-yellow" onclick="sendFriendRequest()">➕ إضافة كصديق</button>
+                <button class="btn-main btn-red" onclick="closeModal('playerActionModal')">إلغاء</button>
+            </div>
+        </div>
     </div>
 
     <div class="modal-overlay" id="nameModal">
@@ -431,67 +572,78 @@
         </div>
     </div>
 
-    <div class="modal-overlay" id="passModal">
-        <div class="modal-card">
-            <div class="modal-title">🔑 تغيير كلمة السر</div>
-            <input type="password" id="oldPassInput" class="modal-input" placeholder="كلمة السر الحالية">
-            <input type="password" id="newPassInput" class="modal-input" placeholder="كلمة السر الجديدة">
-            <div class="modal-btns">
-                <button class="btn-main btn-blue" onclick="savePass()">تغيير</button>
-                <button class="btn-main btn-red" onclick="closeModal('passModal')">إلغاء</button>
-            </div>
-        </div>
-    </div>
-
     <div class="modal-overlay" id="avatarModal">
         <div class="modal-card">
-            <div class="modal-title">🎭 اختر شخصيتك المفضل</div>
-            <div class="avatar-grid">
-                <div class="avatar-option" onclick="selectAvatar('🃏')">🃏</div>
-                <div class="avatar-option" onclick="selectAvatar('🥷')">🥷</div>
-                <div class="avatar-option" onclick="selectAvatar('🦁')">🦁</div>
-                <div class="avatar-option" onclick="selectAvatar('👑')">👑</div>
-                <div class="avatar-option" onclick="selectAvatar('🔥')">🔥</div>
-                <div class="avatar-option" onclick="selectAvatar('🤖')">🤖</div>
-                <div class="avatar-option" onclick="selectAvatar('💀')">💀</div>
-                <div class="avatar-option" onclick="selectAvatar('🎯')">🎯</div>
+            <div class="modal-title">🖼️ اختر صورتك الشخصية</div>
+            <div class="avatar-options-box">
+                <input type="file" id="galleryInput" accept="image/*" style="display:none;" onchange="handleImageUpload(event)">
+                <button class="btn-main btn-blue" onclick="document.getElementById('galleryInput').click()">📁 ارفع صورة من معرض الصور</button>
+                <div style="font-size:10px; font-weight:800; color:#64748b; margin:2px 0;">أو اختر شخصية جاهزة:</div>
+                <div class="avatar-grid">
+                    <div class="avatar-option" onclick="selectAvatarEmoji('🃏')">🃏</div>
+                    <div class="avatar-option" onclick="selectAvatarEmoji('🥷')">🥷</div>
+                    <div class="avatar-option" onclick="selectAvatarEmoji('🦁')">🦁</div>
+                    <div class="avatar-option" onclick="selectAvatarEmoji('👑')">👑</div>
+                    <div class="avatar-option" onclick="selectAvatarEmoji('🔥')">🔥</div>
+                    <div class="avatar-option" onclick="selectAvatarEmoji('🤖')">🤖</div>
+                    <div class="avatar-option" onclick="selectAvatarEmoji('💀')">💀</div>
+                    <div class="avatar-option" onclick="selectAvatarEmoji('🎯')">🎯</div>
+                </div>
             </div>
-            <button class="btn-main btn-red" onclick="closeModal('avatarModal')">إلغاء</button>
+            <button class="btn-main btn-red" onclick="closeModal('avatarModal')" style="margin-top:5px;">إلغاء</button>
         </div>
     </div>
 
     <div class="modal-overlay" id="logoutModal">
         <div class="modal-card">
             <div class="modal-title">🚪 هل تريد تسجيل الخروج؟</div>
-            <p style="font-size: 12px; font-weight: 800; color: #64748b;">سيتم إعادتك إلى القائمة الرئيسية للتطبيق.</p>
+            <p style="font-size: 10px; font-weight: 800; color: #64748b;">سيتم إعادتك لشاشة تسجيل الدخول من جديد.</p>
             <div class="modal-btns">
-                <button class="btn-main btn-red" onclick="confirmLogout()">تأكيد الخروج</button>
+                <button class="btn-main btn-red" onclick="confirmLogout()">تسجيل الخروج</button>
                 <button class="btn-main btn-yellow" onclick="closeModal('logoutModal')">إلغاء</button>
             </div>
         </div>
     </div>
 
     <script>
-        // قراءة البيانات وتحديث الشاشة فوراً عند الفتح
+        // توليد 100 متصدر افتراضي
+        function generateTop100Players() {
+            let list = [];
+            let avatars = ['👑', '🥷', '🦁', '🔥', '🤖', '🎯', '💀', '⚡'];
+            let prefixes = ["أسطورة", "شبح", "قناص", "بطل", "ملك", "محترف", "فنان", "دبابة", "صاعقة", "حوت"];
+            let currentScore = 120000;
+            for (let i = 1; i <= 100; i++) {
+                currentScore -= Math.floor(Math.random() * 900) + 100;
+                if (currentScore < 500) currentScore = 500;
+                list.push({ name: prefixes[i % prefixes.length] + " " + (1000 + i), score: currentScore, avatar: avatars[i % avatars.length] });
+            }
+            return list;
+        }
+
+        let globalTop100 = generateTop100Players();
+        let selectedTargetPlayer = "";
+
         window.onload = function() {
             updateUI();
         };
 
         function updateUI() {
             let name = localStorage.getItem('joker_user_name') || 'اللاعب الجوكر';
-            let avatar = localStorage.getItem('joker_user_avatar') || '🃏';
+            let avatarType = localStorage.getItem('joker_user_avatar_type') || 'emoji';
+            let avatarValue = localStorage.getItem('joker_user_avatar') || '🃏';
+            
             let score = parseInt(localStorage.getItem('joker_total_score')) || 0;
             let wins = parseInt(localStorage.getItem('joker_wins')) || 0;
             let losses = parseInt(localStorage.getItem('joker_losses')) || 0;
+            let friends = parseInt(localStorage.getItem('joker_friends')) || 24;
+            let followers = parseInt(localStorage.getItem('joker_followers')) || 142;
 
-            // حساب المستويات (1000 نقطة لكل مستوى)
             let level = Math.floor(score / 1000) + 1;
             if (level > 100) level = 100;
 
             let currentLevelXP = score % 1000;
             let xpPercent = (currentLevelXP / 1000) * 100;
 
-            // حساب التصنيف
             let rank = "برونزي 🐣";
             if (score >= 3000) rank = "فضي ⚔️";
             if (score >= 8000) rank = "ذهبي 🥇";
@@ -501,8 +653,17 @@
             let totalGames = wins + losses;
             let winRate = totalGames > 0 ? Math.round((wins / totalGames) * 100) : 0;
 
+            // عرض الصورة الشخصية سواء إيموجي أو صورة مرفوعة من المعرض
+            let avatarContainer = document.getElementById('playerAvatarDisplay');
+            if (avatarType === 'image') {
+                avatarContainer.innerHTML = `<img src="${avatarValue}" alt="Avatar">`;
+            } else {
+                avatarContainer.innerText = avatarValue;
+            }
+
             document.getElementById('userName').innerText = name;
-            document.getElementById('playerAvatar').innerText = avatar;
+            document.getElementById('friendsCount').innerText = friends;
+            document.getElementById('followersCount').innerText = followers;
             document.getElementById('statScore').innerText = score.toLocaleString();
             document.getElementById('statWins').innerText = wins;
             document.getElementById('statLosses').innerText = losses;
@@ -512,33 +673,102 @@
             document.getElementById('xpLabel').innerText = currentLevelXP + " / 1000 XP";
             document.getElementById('xpBar').style.width = xpPercent + "%";
             document.getElementById('rankBadge').innerText = "🏆 التصنيف: " + rank;
+
+            processGlobalRanking(name, score, avatarValue, avatarType);
         }
 
-        // فتح وإغلاق النوافذ الترحيبية
+        function processGlobalRanking(myName, myScore, myAvatar, avatarType) {
+            let allList = [...globalTop100, { name: myName + " (أنت)", score: myScore, avatar: myAvatar, isMe: true }];
+            allList.sort((a, b) => b.score - a.score);
+
+            let myRealIndex = allList.findIndex(p => p.isMe);
+            let myRankNumber = myRealIndex + 1;
+            let topScore = allList[0].score;
+
+            document.getElementById('myGlobalRank').innerText = "#" + myRankNumber;
+            document.getElementById('topGameScore').innerText = topScore.toLocaleString();
+
+            let listHTML = "";
+            globalTop100.forEach((player, index) => {
+                let rankNum = index + 1;
+                let medal = rankNum === 1 ? "🥇" : rankNum === 2 ? "🥈" : rankNum === 3 ? "🥉" : "#" + rankNum;
+                listHTML += `
+                    <div class="leader-item" onclick="openPlayerAction('${player.name}', ${player.score})">
+                        <div style="display:flex; align-items:center; gap:6px;">
+                            <span class="leader-rank">${medal}</span>
+                            <span>${player.avatar} ${player.name}</span>
+                        </div>
+                        <span style="color:var(--primary);">${player.score.toLocaleString()} نقطة ⚔️</span>
+                    </div>
+                `;
+            });
+
+            if (myRankNumber > 100) {
+                listHTML += `
+                    <div style="text-align:center; font-size:9px; color:#64748b; font-weight:800; margin:4px 0;">... ترتيبك خارج الـ 100 الأوائل ...</div>
+                    <div class="leader-item my-rank">
+                        <div style="display:flex; align-items:center; gap:6px;">
+                            <span class="leader-rank">#${myRankNumber}</span>
+                            <span>${avatarType === 'image' ? '👤' : myAvatar} ${myName} (أنت)</span>
+                        </div>
+                        <span style="color:var(--primary);">${myScore.toLocaleString()} نقطة</span>
+                    </div>
+                `;
+            }
+
+            document.getElementById('leaderboardList').innerHTML = listHTML;
+        }
+
+        // تفاعل عند الضغط على أي لاعب في القائمة لتحديه
+        function openPlayerAction(playerName, playerScore) {
+            selectedTargetPlayer = playerName;
+            document.getElementById('actionPlayerTitle').innerText = "تحدي اللاعب: " + playerName;
+            document.getElementById('actionPlayerDesc').innerText = "النقاط: " + playerScore.toLocaleString() + " نقطة. اختر الإجراء المناسب:";
+            document.getElementById('playerActionModal').style.display = 'flex';
+        }
+
+        function sendMatchInvite() {
+            alert("تم إرسال دعوة تحدي ماتش بنجاح إلى اللاعب (" + selectedTargetPlayer + ")! في انتظار الرد...");
+            closeModal('playerActionModal');
+            closeModal('leaderboardModal');
+        }
+
+        function sendFriendRequest() {
+            alert("تم إرسال طلب صداقة إلى (" + selectedTargetPlayer + ") بنجاح!");
+            closeModal('playerActionModal');
+        }
+
+        // رفع صورة من المعرض
+        function handleImageUpload(event) {
+            let file = event.target.files[0];
+            if (file) {
+                let reader = new FileReader();
+                reader.onload = function(e) {
+                    localStorage.setItem('joker_user_avatar', e.target.result);
+                    localStorage.setItem('joker_user_avatar_type', 'image');
+                    updateUI();
+                    closeModal('avatarModal');
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function selectAvatarEmoji(emoji) {
+            localStorage.setItem('joker_user_avatar', emoji);
+            localStorage.setItem('joker_user_avatar_type', 'emoji');
+            updateUI();
+            closeModal('avatarModal');
+        }
+
+        function openLeaderboardModal() { document.getElementById('leaderboardModal').style.display = 'flex'; }
         function openNameModal() {
             document.getElementById('nameInput').value = localStorage.getItem('joker_user_name') || '';
             document.getElementById('nameModal').style.display = 'flex';
         }
+        function openAvatarModal() { document.getElementById('avatarModal').style.display = 'flex'; }
+        function openLogoutModal() { document.getElementById('logoutModal').style.display = 'flex'; }
+        function closeModal(id) { document.getElementById(id).style.display = 'none'; }
 
-        function openPassModal() {
-            document.getElementById('oldPassInput').value = '';
-            document.getElementById('newPassInput').value = '';
-            document.getElementById('passModal').style.display = 'flex';
-        }
-
-        function openAvatarModal() {
-            document.getElementById('avatarModal').style.display = 'flex';
-        }
-
-        function openLogoutModal() {
-            document.getElementById('logoutModal').style.display = 'flex';
-        }
-
-        function closeModal(id) {
-            document.getElementById(id).style.display = 'none';
-        }
-
-        // حفظ الاسم
         function saveName() {
             let val = document.getElementById('nameInput').value.trim();
             if (val) {
@@ -548,35 +778,8 @@
             }
         }
 
-        // تغيير كلمة السر
-        function savePass() {
-            let oldP = document.getElementById('oldPassInput').value;
-            let newP = document.getElementById('newPassInput').value;
-            let savedP = localStorage.getItem('joker_user_pass') || '123456';
-
-            if (oldP === savedP) {
-                if (newP.length >= 4) {
-                    localStorage.setItem('joker_user_pass', newP);
-                    closeModal('passModal');
-                }
-            }
-        }
-
-        // اختيار الشخصية
-        function selectAvatar(emoji) {
-            localStorage.setItem('joker_user_avatar', emoji);
-            updateUI();
-            closeModal('avatarModal');
-        }
-
-        // التوجيه للواجهة الأولى
-        function goToHome() {
-            window.location.href = 'index.html';
-        }
-
-        function confirmLogout() {
-            window.location.href = 'index.html';
-        }
+        function goToHome() { window.location.href = 'main.html'; }
+        function confirmLogout() { window.location.href = 'login.html'; }
     </script>
 </body>
 </html>
