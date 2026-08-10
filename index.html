@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لعبة التفادي الممتعة</title>
+    <style>
+        body {
+            margin: 0;
+            background: #1a1a2e;
+            color: white;
+            font-family: sans-serif;
+            text-align: center;
+            touch-action: manipulation;
+        }
+        h1 { margin: 10px 0 5px; font-size: 20px; }
+        #score { font-size: 18px; color: #4ecca3; margin-bottom: 10px; }
+        canvas {
+            background: #16213e;
+            border: 2px solid #4ecca3;
+            border-radius: 8px;
+            display: block;
+            margin: 0 auto;
+            max-width: 90vw;
+        }
+        .controls {
+            margin-top: 15px;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+        button {
+            background: #4ecca3;
+            border: none;
+            color: #1a1a2e;
+            padding: 15px 30px;
+            font-size: 18px;
+            font-weight: bold;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>لعبة تفادي العقبات 🚀</h1>
+    <div id="score">النقاط: 0</div>
+    <canvas id="gameCanvas" width="300" height="400"></canvas>
+
+    <div class="controls">
+        <button onclick="moveLeft()">◀ شمال</button>
+        <button onclick="moveRight()">يمين ▶</button>
+    </div>
+
+    <script>
+        const canvas = document.getElementById("gameCanvas");
+        const ctx = canvas.getContext("2d");
+        const scoreElement = document.getElementById("score");
+
+        let score = 0;
+        let gameOver = false;
+
+        // اللاعب
+        const player = {
+            x: 130,
+            y: 350,
+            width: 40,
+            height: 40,
+            speed: 25,
+            color: "#4ecca3"
+        };
+
+        // العقبة
+        const enemy = {
+            x: Math.random() * 260,
+            y: 0,
+            width: 40,
+            height: 40,
+            speed: 4,
+            color: "#e94560"
+        };
+
+        function drawPlayer() {
+            ctx.fillStyle = player.color;
+            ctx.fillRect(player.x, player.y, player.width, player.height);
+        }
+
+        function drawEnemy() {
+            ctx.fillStyle = enemy.color;
+            ctx.fillRect(enemy.x, enemy.y, enemy.width, enemy.height);
+        }
+
+        function moveLeft() {
+            if (player.x > 0 && !gameOver) player.x -= player.speed;
+        }
+
+        function moveRight() {
+            if (player.x < canvas.width - player.width && !gameOver) player.x += player.speed;
+        }
+
+        function update() {
+            if (gameOver) return;
+
+            // تحريك العقبة
+            enemy.y += enemy.speed;
+
+            // إذا وصلت العقبة للأسفل
+            if (enemy.y > canvas.height) {
+                enemy.y = -40;
+                enemy.x = Math.random() * (canvas.width - enemy.width);
+                score += 10;
+                scoreElement.innerText = "النقاط: " + score;
+                if (score % 50 === 0) enemy.speed += 1; // زيادة الصعوبة
+            }
+
+            // فحص التصادم
+            if (
+                player.x < enemy.x + enemy.width &&
+                player.x + player.width > enemy.x &&
+                player.y < enemy.y + enemy.height &&
+                player.y + player.height > enemy.y
+            ) {
+                gameOver = true;
+                alert("انتهت اللعبة! مجموع نقاطك: " + score);
+                location.reload();
+            }
+        }
+
+        function loop() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            drawPlayer();
+            drawEnemy();
+            update();
+            if (!gameOver) requestAnimationFrame(loop);
+        }
+
+        loop();
+    </script>
+</body>
+</html>
