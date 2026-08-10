@@ -1,253 +1,318 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>لعبة كرة القدم - التحدي الكروي</title>
+    <title>eFootball Pro - PES Clone</title>
     <style>
-        body {
+        * {
+            box-sizing: border-box;
             margin: 0;
-            background: #1e272e;
-            color: white;
+            padding: 0;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            text-align: center;
-            touch-action: manipulation;
+            user-select: none;
         }
-        h1 { margin: 10px 0 5px; font-size: 22px; color: #fbc531; }
-        .scoreboard {
+
+        body {
+            background: #070a10;
+            color: white;
+            height: 100vh;
+            overflow: hidden;
             display: flex;
             justify-content: center;
-            gap: 20px;
-            font-size: 18px;
-            margin-bottom: 10px;
-            font-weight: bold;
+            align-items: center;
         }
-        canvas {
-            background: #2ed573;
-            border: 4px solid #ffffff;
-            border-radius: 6px;
-            display: block;
-            margin: 0 auto;
-            max-width: 95vw;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+
+        .game-container {
+            width: 100%;
+            max-width: 450px;
+            height: 100vh;
+            max-height: 900px;
+            background: linear-gradient(180deg, #0f172a 0%, #020617 100%);
+            position: relative;
+            box-shadow: 0 0 30px rgba(56, 189, 248, 0.2);
+            overflow: hidden;
         }
-        .controls {
-            margin-top: 15px;
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 8px;
-            max-width: 300px;
-            margin-left: auto;
-            margin-right: auto;
+
+        .screen {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            transition: all 0.4s ease-in-out;
+            opacity: 0;
+            pointer-events: none;
+            transform: scale(0.95);
         }
-        button {
-            background: #00a8ff;
-            border: none;
+
+        .screen.active {
+            opacity: 1;
+            pointer-events: all;
+            transform: scale(1);
+        }
+
+        /* 1. الشاشة الترحيبية */
+        #splash-screen {
+            background: radial-gradient(circle, #1e293b 0%, #070a10 100%);
+            text-align: center;
+        }
+
+        .logo-title {
+            font-size: 36px;
+            font-weight: 900;
+            background: linear-gradient(45deg, #00d2ff, #3a7bd5);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 20px rgba(0, 210, 255, 0.4);
+            margin-bottom: 5px;
+        }
+
+        .logo-sub { font-size: 13px; color: #94a3b8; margin-bottom: 30px; }
+
+        .btn-main {
+            background: linear-gradient(90deg, #00d2ff, #3a7bd5);
             color: white;
-            padding: 12px;
-            font-size: 16px;
+            border: none;
+            padding: 15px 35px;
+            font-size: 17px;
             font-weight: bold;
-            border-radius: 8px;
+            border-radius: 50px;
             cursor: pointer;
+            width: 80%;
+            box-shadow: 0 4px 15px rgba(0, 210, 255, 0.3);
         }
-        button:active { background: #0097e6; }
-        .kick-btn {
-            grid-column: span 3;
-            background: #e1b12c;
-            color: #2f3640;
-            font-size: 18px;
+
+        /* 2. تسجيل الدخول */
+        .form-group { width: 100%; margin-bottom: 15px; text-align: right; }
+        .form-group label { display: block; font-size: 13px; color: #38bdf8; margin-bottom: 5px; }
+        .form-group input {
+            width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #334155;
+            background: #1e293b; color: white; font-size: 15px; outline: none;
         }
+
+        /* 3. اللوبي */
+        .user-header {
+            width: 100%; background: #1e293b; padding: 12px; border-radius: 10px;
+            display: flex; justify-content: space-between; position: absolute; top: 15px;
+            width: calc(100% - 40px); font-size: 14px; border: 1px solid #38bdf8;
+        }
+
+        .menu-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; width: 100%; margin-top: 50px; }
+        .menu-card {
+            background: #1e293b; border: 1px solid #38bdf8; border-radius: 12px;
+            padding: 18px; text-align: center; font-weight: bold; cursor: pointer;
+        }
+        .menu-card.play { grid-column: span 2; background: linear-gradient(135deg, #10b981, #059669); border: none; font-size: 18px; }
+
+        /* 4. شاشة التشكيلة (Squad) */
+        .pitch-preview {
+            width: 100%; height: 350px; background: #15803d; border: 2px solid white;
+            border-radius: 10px; position: relative; margin: 15px 0; overflow: hidden;
+        }
+        .pitch-line { position: absolute; top: 50%; width: 100%; height: 2px; background: rgba(255,255,255,0.5); }
+        .pitch-circle {
+            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            width: 70px; height: 70px; border: 2px solid rgba(255,255,255,0.5); border-radius: 50%;
+        }
+        .player-dot {
+            position: absolute; width: 28px; height: 28px; background: #00d2ff;
+            color: #000; border-radius: 50%; font-weight: bold; font-size: 10px;
+            display: flex; justify-content: center; align-items: center; border: 2px solid #fff;
+            transform: translate(-50%, -50%);
+        }
+
+        /* 5. شاشة الملعب والمباراة */
+        canvas { background: #16a34a; border-radius: 8px; display: block; margin: 0 auto; max-width: 100%; }
+        .controls { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; margin-top: 10px; width: 100%; }
+        .controls button { background: #38bdf8; border: none; color: #000; padding: 10px; font-weight: bold; border-radius: 6px; }
+        .kick-btn { grid-column: span 3; background: #facc15 !important; }
     </style>
 </head>
 <body>
 
-    <h1>⚽ لعبة كرة القدم ⚽</h1>
-    
-    <div class="scoreboard">
-        <div>أنت: <span id="playerScore" style="color: #00a8ff;">0</span></div>
-        <div>الحارس: <span id="keeperScore" style="color: #e84118;">0</span></div>
-    </div>
+    <div class="game-container">
 
-    <canvas id="field" width="360" height="500"></canvas>
+        <div id="splash-screen" class="screen active">
+            <div class="logo-title">eFOOTBALL 26</div>
+            <div class="logo-sub">محاكاة كرة القدم الاحترافية</div>
+            <button class="btn-main" onclick="goToScreen('login-screen')">اضغط للبدء ⚽</button>
+        </div>
 
-    <div class="controls">
-        <div></div>
-        <button onclick="movePlayer(0, -15)">⬆ فوق</button>
-        <div></div>
-        <button onclick="movePlayer(-15, 0)">◀ شمال</button>
-        <button onclick="movePlayer(0, 15)">⬇ تحت</button>
-        <button onclick="movePlayer(15, 0)">يمين ▶</button>
-        <button class="kick-btn" onclick="kickBall()">شوط الكورة 🚀</button>
+        <div id="login-screen" class="screen">
+            <h2 style="margin-bottom: 20px; color: #38bdf8;">بيانات الكابتن</h2>
+            <div class="form-group">
+                <label>اسم المدرب:</label>
+                <input type="text" id="pName" placeholder="مثال: أحمد">
+            </div>
+            <div class="form-group">
+                <label>اسم الفريق:</label>
+                <input type="text" id="tName" placeholder="مثال: الأهلي">
+            </div>
+            <button class="btn-main" onclick="saveData()">دخول اللوبي 🚀</button>
+        </div>
+
+        <div id="lobby-screen" class="screen">
+            <div class="user-header">
+                <div>المدرب: <span id="dispP" style="color:#38bdf8;">--</span></div>
+                <div>الفريق: <span id="dispT" style="color:#facc15;">--</span></div>
+            </div>
+
+            <div class="menu-grid">
+                <div class="menu-card play" onclick="startMatchScreen()">⚽ بدء المباراة</div>
+                <div class="menu-card" onclick="goToScreen('squad-screen')">👕 التشكيلة (4-3-3)</div>
+                <div class="menu-card" onclick="alert('المتجر يفتح قريباً!')">🛒 الانتقالات</div>
+                <div class="menu-card" onclick="alert('سلسلة البطولات قادمة!')">🏆 الدوري</div>
+            </div>
+        </div>
+
+        <div id="squad-screen" class="screen">
+            <h3 style="color:#facc15;">خطة الفريق (4-3-3)</h3>
+            <div class="pitch-preview" id="pitch">
+                <div class="pitch-line"></div>
+                <div class="pitch-circle"></div>
+            </div>
+            <button class="btn-main" onclick="goToScreen('lobby-screen')">عودة للوبي ↩</button>
+        </div>
+
+        <div id="match-screen" class="screen">
+            <div style="margin-bottom: 5px; font-weight: bold; color: #facc15;">
+                <span id="matchTeam">فريقك</span> <span id="score">0 - 0</span> الخصم
+            </div>
+            <canvas id="field" width="320" height="400"></canvas>
+            
+            <div class="controls">
+                <div></div>
+                <button onclick="movePlayer(0, -12)">⬆</button>
+                <div></div>
+                <button onclick="movePlayer(-12, 0)">◀</button>
+                <button onclick="movePlayer(0, 12)">⬇</button>
+                <button onclick="movePlayer(12, 0)">▶</button>
+                <button class="kick-btn" onclick="kickBall()">شوط الكورة 🚀</button>
+            </div>
+        </div>
+
     </div>
 
     <script>
+        // نظام الشاشات
+        function goToScreen(id) {
+            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+            document.getElementById(id).classList.add('active');
+        }
+
+        function saveData() {
+            const p = document.getElementById('pName').value || "المدرب";
+            const t = document.getElementById('tName').value || "فريقي";
+            document.getElementById('dispP').innerText = p;
+            document.getElementById('dispT').innerText = t;
+            document.getElementById('matchTeam').innerText = t;
+            renderSquad();
+            goToScreen('lobby-screen');
+        }
+
+        // رسم توزيع اللعيبة في التشكيلة 4-3-3
+        function renderSquad() {
+            const pitch = document.getElementById('pitch');
+            pitch.querySelectorAll('.player-dot').forEach(el => el.remove());
+
+            const positions = [
+                {x: 50, y: 90}, // GK
+                {x: 20, y: 75}, {x: 40, y: 80}, {x: 60, y: 80}, {x: 80, y: 75}, // DEF
+                {x: 30, y: 50}, {x: 50, y: 55}, {x: 70, y: 50}, // MID
+                {x: 20, y: 25}, {x: 50, y: 20}, {x: 80, y: 25}  // FWD
+            ];
+
+            positions.forEach((pos, idx) => {
+                const dot = document.createElement('div');
+                dot.className = 'player-dot';
+                dot.style.left = pos.x + '%';
+                dot.style.top = pos.y + '%';
+                dot.innerText = idx === 0 ? 'GK' : 'P' + idx;
+                pitch.appendChild(dot);
+            });
+        }
+
+        // محرك المباراة Canvas
         const canvas = document.getElementById("field");
         const ctx = canvas.getContext("2d");
 
-        let pScore = 0;
-        let kScore = 0;
+        let player = { x: 160, y: 320, r: 10 };
+        let keeper = { x: 130, y: 20, w: 60, h: 10, dir: 2 };
+        let ball = { x: 160, y: 300, r: 6, vx: 0, vy: 0 };
+        let scoreP = 0, scoreK = 0;
 
-        // المرمى
-        const goal = { x: 100, y: 0, width: 160, height: 15 };
-
-        // اللاعب
-        const player = { x: 165, y: 400, radius: 15, color: "#00a8ff" };
-
-        // الحارس (ذكاء اصطناعي)
-        const keeper = { x: 150, y: 30, width: 60, height: 12, speed: 2.5, color: "#e84118" };
-
-        // الكرة
-        const ball = {
-            x: 180,
-            y: 350,
-            radius: 8,
-            vx: 0,
-            vy: 0,
-            friction: 0.96, // احتكاك الأرضية بيبطأ الكورة تدريجياً
-            color: "#ffffff"
-        };
-
-        // رسم خطوط الملعب
-        function drawField() {
-            ctx.fillStyle = "#2ed573";
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-            // خط منتصف الملعب
-            ctx.strokeStyle = "rgba(255, 255, 255, 0.7)";
-            ctx.lineWidth = 3;
-            ctx.beginPath();
-            ctx.moveTo(0, canvas.height / 2);
-            ctx.lineTo(canvas.width, canvas.height / 2);
-            ctx.stroke();
-
-            // دائرة المنتصف
-            ctx.beginPath();
-            ctx.arc(canvas.width / 2, canvas.height / 2, 40, 0, Math.PI * 2);
-            ctx.stroke();
-
-            // المرمى (الشباك)
-            ctx.fillStyle = "rgba(255, 255, 255, 0.3)";
-            ctx.fillRect(goal.x, goal.y, goal.width, goal.height);
-            ctx.strokeRect(goal.x, goal.y, goal.width, goal.height);
+        function startMatchScreen() {
+            goToScreen('match-screen');
+            gameLoop();
         }
 
-        // رسم الأشخاص والكرة
-        function drawEntities() {
-            // رسم الحارس
-            ctx.fillStyle = keeper.color;
-            ctx.fillRect(keeper.x, keeper.y, keeper.width, keeper.height);
-
-            // رسم اللاعب
-            ctx.beginPath();
-            ctx.arc(player.x, player.y, player.radius, 0, Math.PI * 2);
-            ctx.fillStyle = player.color;
-            ctx.fill();
-            ctx.strokeStyle = "#fff";
-            ctx.stroke();
-
-            // رسم الكرة
-            ctx.beginPath();
-            ctx.arc(ball.x, ball.y, ball.radius, 0, Math.PI * 2);
-            ctx.fillStyle = ball.color;
-            ctx.fill();
-            ctx.strokeStyle = "#000";
-            ctx.stroke();
-        }
-
-        // تحريك اللاعب
         function movePlayer(dx, dy) {
-            player.x = Math.max(player.radius, Math.min(canvas.width - player.radius, player.x + dx));
-            player.y = Math.max(canvas.height / 2, Math.min(canvas.height - player.radius, player.y + dy));
+            player.x += dx;
+            player.y += dy;
         }
 
-        // شوط الكورة
         function kickBall() {
-            // حساب المسافة بين اللاعب والكرة
             let dist = Math.hypot(player.x - ball.x, player.y - ball.y);
-            
-            // تسديد الكورة فقط لو كانت قريبة من اللاعب
-            if (dist < player.radius + ball.radius + 15) {
-                let angle = Math.atan2(keeper.y - ball.y, (keeper.x + keeper.width/2) - ball.x);
-                // شوط الكورة في اتجاه المرمى بفرصة تحريف بسيطة
-                ball.vy = -12;
-                ball.vx = (Math.random() - 0.5) * 6;
+            if(dist < 25) {
+                ball.vy = -10;
+                ball.vx = (Math.random() - 0.5) * 4;
             }
         }
 
-        // إعطاء الكورة دفعة لو اللاعب زقها برجليه
-        function checkPlayerBallCollision() {
-            let dist = Math.hypot(player.x - ball.x, player.y - ball.y);
-            if (dist < player.radius + ball.radius) {
-                ball.vx = (ball.x - player.x) * 0.3;
-                ball.vy = (ball.y - player.y) * 0.3;
-            }
-        }
-
-        // إعادة تشغيل الهجمة عند التسجيل أو الصد
-        function resetPositions() {
-            ball.x = 180;
-            ball.y = 350;
-            ball.vx = 0;
-            ball.vy = 0;
-            player.x = 165;
-            player.y = 400;
-        }
-
-        // تحديث حالة اللعبة
-        function update() {
-            // حركة الكورة واحتكاكها بالملعب
+        function updateMatch() {
             ball.x += ball.vx;
             ball.y += ball.vy;
-            ball.vx *= ball.friction;
-            ball.vy *= ball.friction;
+            ball.vx *= 0.95;
+            ball.vy *= 0.95;
 
-            // اصطدام الكورة بالجدران الجانبية
-            if (ball.x - ball.radius < 0 || ball.x + ball.radius > canvas.width) {
-                ball.vx *= -1;
-            }
+            // حارس الخصم
+            keeper.x += keeper.dir;
+            if(keeper.x <= 20 || keeper.x >= 240) keeper.dir *= -1;
 
-            // حركة الحارس الذكي (بيلحق مكان الكورة)
-            let keeperCenter = keeper.x + keeper.width / 2;
-            if (keeperCenter < ball.x) keeper.x += keeper.speed;
-            if (keeperCenter > ball.x) keeper.x -= keeper.speed;
-
-            checkPlayerBallCollision();
-
-            // 1. فحص الهدف (جووول!)
-            if (ball.y - ball.radius <= goal.height && ball.x > goal.x && ball.x < goal.x + goal.width) {
-                pScore++;
-                document.getElementById("playerScore").innerText = pScore;
-                alert("جــــــوووووووول! 🎉⚽");
-                resetPositions();
-            } 
-            // 2. تصدي الحارس للكورة
-            else if (
-                ball.x > keeper.x && 
-                ball.x < keeper.x + keeper.width && 
-                ball.y - ball.radius <= keeper.y + keeper.height &&
-                ball.y + ball.radius >= keeper.y
-            ) {
-                kScore++;
-                document.getElementById("keeperScore").innerText = kScore;
-                alert("الحارس تصدى لها! 🛑");
-                resetPositions();
-            }
-            // 3. الكورة طلعت بره خط المرمى
-            else if (ball.y < 0) {
-                alert("ضربة مرمى / بره! ❌");
-                resetPositions();
+            // تسجيل هدف
+            if(ball.y <= 15 && ball.x > 100 && ball.x < 220) {
+                scoreP++;
+                document.getElementById('score').innerText = `${scoreP} - ${scoreK}`;
+                alert('جـــوووول! ⚽');
+                resetMatch();
             }
         }
 
-        // المحرك الأساسي للعبة (Game Loop)
+        function resetMatch() {
+            ball = { x: 160, y: 300, r: 6, vx: 0, vy: 0 };
+            player = { x: 160, y: 320, r: 10 };
+        }
+
+        function drawMatch() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            // رسم المرمى
+            ctx.strokeStyle = '#fff';
+            ctx.strokeRect(100, 0, 120, 15);
+
+            // الحارس
+            ctx.fillStyle = '#ef4444';
+            ctx.fillRect(keeper.x, keeper.y, keeper.w, keeper.h);
+
+            // اللاعب
+            ctx.fillStyle = '#38bdf8';
+            ctx.beginPath(); ctx.arc(player.x, player.y, player.r, 0, Math.PI*2); ctx.fill();
+
+            // الكرة
+            ctx.fillStyle = '#fff';
+            ctx.beginPath(); ctx.arc(ball.x, ball.y, ball.r, 0, Math.PI*2); ctx.fill();
+        }
+
         function gameLoop() {
-            drawField();
-            drawEntities();
-            update();
+            updateMatch();
+            drawMatch();
             requestAnimationFrame(gameLoop);
         }
-
-        gameLoop();
     </script>
 </body>
 </html>
