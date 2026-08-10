@@ -23,25 +23,25 @@
             align-items: center;
         }
 
-        /* حاوية الشاشة بحجم الموبايل وتنسيق الصورة بالضبط */
+        /* حاوية الشاشة بحجم الموبايل وتملأ المساحة بالكامل */
         .app-viewport {
             width: 100vw;
             height: 100vh;
             max-width: 430px;
-            /* خلفية النقاط الكرتونية مثل الصورة */
+            /* خلفية النقاط الكرتونية مثل الصورة بالظبط */
             background-color: #dfceb7;
             background-image: radial-gradient(#c2aa8e 24%, transparent 24%);
             background-size: 15px 15px;
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: flex-start;
-            padding: 50px 18px 20px 18px;
+            justify-content: space-between;
+            padding: 35px 16px 20px 16px;
             position: relative;
             overflow: hidden;
         }
 
-        /* --- البرق الخلفي المطابق للصورة بالمسطرة --- */
+        /* البرق الخلفي المطابق للصورة */
         .svg-lightning-bg {
             position: absolute;
             top: -2%;
@@ -52,18 +52,17 @@
             pointer-events: none;
         }
 
-        /* --- العنوان الرئيسي --- */
+        /* --- 1. العنوان الرئيسي --- */
         .page-header {
             text-align: center;
             z-index: 10;
-            margin-bottom: 28px;
+            margin-top: 5px;
         }
 
         .page-title {
             font-size: 46px;
             font-weight: 900;
             color: #ffffff;
-            /* حد أسود كرتوني بارز 3D */
             text-shadow: 
                 3px 3px 0 #000,
                 -3px -3px 0 #000,
@@ -73,58 +72,93 @@
                 0 8px 12px rgba(0,0,0,0.3);
             letter-spacing: 1px;
             line-height: 1;
-            margin-bottom: 6px;
+            margin-bottom: 4px;
         }
 
         .page-subtitle {
-            font-size: 14.5px;
+            font-size: 14px;
             font-weight: 800;
             color: #0f172a;
         }
 
-        /* --- شبكة المربعات 2x2 --- */
+        /* --- 2. شبكة المربعات 2x2 لتملأ الشاشة --- */
         .games-grid {
             width: 100%;
+            flex: 1;
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 15px;
+            grid-template-rows: 1fr 1fr;
+            gap: 14px;
             z-index: 10;
+            margin: 15px 0;
         }
 
-        /* تصميم الكارت الأسود وحجمه المضبوط */
+        /* المربع الكرتوني العريض بحواف دائرية وشريط أسود */
         .game-card {
             width: 100%;
-            aspect-ratio: 1 / 1.08; /* أبعاد المربع من الصورة */
+            height: 100%;
             background: #000000;
-            border-radius: 24px;
-            padding: 3px;
-            box-shadow: 0 10px 22px rgba(0, 0, 0, 0.4);
+            border-radius: 22px;
+            box-shadow: 0 8px 18px rgba(0, 0, 0, 0.4);
             cursor: pointer;
             transition: transform 0.12s ease;
             border: 3.5px solid #000000;
             overflow: hidden;
             display: flex;
-            justify-content: center;
-            align-items: center;
+            flex-direction: column;
         }
 
         .game-card:active {
             transform: scale(0.95);
         }
 
-        .game-card img {
+        /* صندوق الصورة الكبير */
+        .card-image-box {
+            flex: 1;
             width: 100%;
-            height: 100%;
-            object-fit: cover;
-            border-radius: 19px;
-            display: block;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card-icon-big {
+            font-size: 58px;
+            filter: drop-shadow(0 6px 10px rgba(0,0,0,0.4));
+            animation: pulse 2.5s infinite ease-in-out;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.08); }
+        }
+
+        /* خلفيات ملونة جذابة لصور الألعاب */
+        .bg-1 { background: linear-gradient(180deg, #34d399 0%, #059669 100%); }
+        .bg-2 { background: linear-gradient(180deg, #fbbf24 0%, #d97706 100%); }
+        .bg-3 { background: linear-gradient(180deg, #f87171 0%, #dc2626 100%); }
+        .bg-4 { background: linear-gradient(180deg, #818cf8 0%, #4f46e5 100%); }
+
+        /* الشريط الأبيض السفلي فيه اسم اللعبة تحتيها */
+        .card-title-bar {
+            background: #ffffff;
+            color: #0f172a;
+            text-align: center;
+            padding: 8px 4px;
+            font-size: 13px;
+            font-weight: 900;
+            border-top: 3px solid #000000;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
         /* زر الرجوع للرئيسية */
         .back-btn {
             position: absolute;
-            top: 18px;
-            right: 18px;
+            top: 15px;
+            right: 15px;
             width: 40px;
             height: 40px;
             background: #ffffff;
@@ -163,19 +197,31 @@
         <div class="games-grid">
 
             <div class="game-card" onclick="openGamePage('game1.html')">
-                <img src="1.png" alt="" onerror="this.src='1.jpg';">
+                <div class="card-image-box bg-1">
+                    <div class="card-icon-big">🌊🕵️‍♂️</div>
+                </div>
+                <div class="card-title-bar">بحور ولا مبحورش</div>
             </div>
 
             <div class="game-card" onclick="openGamePage('game2.html')">
-                <img src="2.png" alt="" onerror="this.src='2.jpg';">
+                <div class="card-image-box bg-2">
+                    <div class="card-icon-big">⚖️💰</div>
+                </div>
+                <div class="card-title-bar">المزاد</div>
             </div>
 
             <div class="game-card" onclick="openGamePage('game3.html')">
-                <img src="3.png" alt="" onerror="this.src='3.jpg';">
+                <div class="card-image-box bg-3">
+                    <div class="card-icon-big">🛡️⚔️</div>
+                </div>
+                <div class="card-title-bar">اقف ف صفى عشان بصفى</div>
             </div>
 
             <div class="game-card" onclick="openGamePage('game4.html')">
-                <img src="4.png" alt="" onerror="this.src='4.jpg';">
+                <div class="card-image-box bg-4">
+                    <div class="card-icon-big">🎭❓</div>
+                </div>
+                <div class="card-title-bar">اللاعب الخفى</div>
             </div>
 
         </div>
