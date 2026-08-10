@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>JOKER - Pro Login</title>
+    <title>JOKER - العرش</title>
     <style>
         * {
             box-sizing: border-box;
@@ -24,54 +24,53 @@
             align-items: center;
         }
 
-        /* الحاوية الكبرى - Fullscreen */
         .joker-viewport {
             width: 100vw;
             height: 100vh;
-            background: radial-gradient(circle at 50% 30%, #2e0854 0%, #110326 50%, #030008 100%);
+            background: radial-gradient(circle at 50% 25%, #4c1d95 0%, #1e0938 50%, #030008 100%);
             display: flex;
             flex-direction: column;
             justify-content: space-between;
             align-items: center;
-            padding: 20px;
+            padding: 25px 20px;
             position: relative;
-            overflow: hidden;
+            overflow-y: auto;
         }
 
-        /* خلفية الإضاءة المتحركة والتأثيرات */
+        /* توهج الخلفية */
         .ambient-glow {
             position: absolute;
-            width: 350px;
-            height: 350px;
-            background: radial-gradient(circle, rgba(168, 85, 247, 0.4) 0%, rgba(217, 70, 239, 0.1) 50%, transparent 70%);
-            top: 10%;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(168, 85, 247, 0.45) 0%, rgba(217, 70, 239, 0.15) 60%, transparent 80%);
+            top: 5%;
             border-radius: 50%;
-            filter: blur(60px);
-            animation: pulseGlow 4s infinite alternate;
+            filter: blur(70px);
+            animation: pulseGlow 3.5s infinite alternate;
             pointer-events: none;
         }
 
         @keyframes pulseGlow {
-            0% { transform: scale(1); opacity: 0.7; }
-            100% { transform: scale(1.2); opacity: 1; }
+            0% { transform: scale(0.95); opacity: 0.8; }
+            100% { transform: scale(1.15); opacity: 1; }
         }
 
-        /* 1. شعار اللعبة الفخم */
+        /* 1. شعار الجوكر والجمل المعبرة */
         .brand-header {
             text-align: center;
-            margin-top: 15px;
+            margin-top: 10px;
             z-index: 5;
         }
 
         .joker-avatar-frame {
-            width: 75px;
-            height: 75px;
-            margin: 0 auto 10px;
-            background: linear-gradient(135deg, #a855f7, #facc15);
+            width: 110px;
+            height: 110px;
+            margin: 0 auto 12px;
+            background: linear-gradient(135deg, #facc15, #a855f7, #ec4899);
             border-radius: 50%;
-            padding: 3px;
-            box-shadow: 0 0 25px rgba(168, 85, 247, 0.6);
-            animation: float 3.5s ease-in-out infinite;
+            padding: 4px;
+            box-shadow: 0 0 35px rgba(168, 85, 247, 0.8), 0 0 15px rgba(250, 204, 21, 0.5);
+            animation: float 3s ease-in-out infinite;
         }
 
         .joker-avatar-inner {
@@ -82,61 +81,65 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            font-size: 38px;
+            font-size: 60px;
         }
 
         .brand-title {
-            font-size: 40px;
+            font-size: 46px;
             font-weight: 900;
-            letter-spacing: 4px;
-            background: linear-gradient(180deg, #ffffff 0%, #d8b4fe 40%, #a855f7 70%, #581c87 100%);
+            letter-spacing: 5px;
+            background: linear-gradient(180deg, #ffffff 0%, #facc15 30%, #a855f7 70%, #581c87 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            text-shadow: 0 0 20px rgba(168, 85, 247, 0.5);
+            text-shadow: 0 0 25px rgba(168, 85, 247, 0.6);
+            margin-bottom: 4px;
         }
 
-        .brand-subtitle {
-            font-size: 11px;
-            color: #facc15;
-            letter-spacing: 3px;
-            font-weight: 800;
-            text-transform: uppercase;
+        .joker-quote {
+            font-size: 13px;
+            color: #e9d5ff;
+            font-weight: 700;
+            font-style: italic;
+            text-shadow: 0 2px 8px rgba(0,0,0,0.8);
+            max-width: 320px;
+            margin: 0 auto;
+            line-height: 1.4;
         }
 
         @keyframes float {
             0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-8px); }
+            50% { transform: translateY(-10px); }
         }
 
-        /* 2. صندوق الدخول الاحترافي (Glassmorphism) */
+        /* 2. صندوق الدخول الزجاجي */
         .auth-card {
             width: 100%;
             max-width: 400px;
-            background: rgba(19, 7, 36, 0.75);
-            border: 1px solid rgba(168, 85, 247, 0.35);
+            background: rgba(19, 7, 36, 0.8);
+            border: 1px solid rgba(168, 85, 247, 0.4);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
             border-radius: 24px;
             padding: 22px;
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8), inset 0 0 15px rgba(168, 85, 247, 0.15);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.85);
             z-index: 5;
+            margin: 15px 0;
         }
 
-        /* أزرار التبديل الدخول / الحساب الجديد */
         .auth-tabs {
             display: flex;
             background: #0a0314;
-            border: 1px solid rgba(168, 85, 247, 0.2);
+            border: 1px solid rgba(168, 85, 247, 0.25);
             border-radius: 14px;
             padding: 4px;
-            margin-bottom: 20px;
+            margin-bottom: 18px;
         }
 
         .tab-button {
             flex: 1;
             background: transparent;
             border: none;
-            color: #a855f7;
+            color: #c084fc;
             padding: 10px;
             font-size: 14px;
             font-weight: 800;
@@ -151,9 +154,8 @@
             box-shadow: 0 4px 15px rgba(168, 85, 247, 0.4);
         }
 
-        /* حقول الإدخال */
         .field-group {
-            margin-bottom: 14px;
+            margin-bottom: 12px;
             text-align: right;
         }
 
@@ -161,21 +163,15 @@
             display: block;
             font-size: 12px;
             color: #d8b4fe;
-            margin-bottom: 6px;
+            margin-bottom: 5px;
             font-weight: 700;
-        }
-
-        .input-wrapper {
-            position: relative;
-            display: flex;
-            align-items: center;
         }
 
         .field-group input, .field-group select {
             width: 100%;
-            padding: 13px 15px;
+            padding: 12px 14px;
             border-radius: 12px;
-            border: 1px solid #3b0764;
+            border: 1px solid #4c1d95;
             background: rgba(10, 3, 20, 0.9);
             color: white;
             font-size: 14px;
@@ -184,12 +180,10 @@
         }
 
         .field-group input:focus, .field-group select:focus {
-            border-color: #a855f7;
-            box-shadow: 0 0 12px rgba(168, 85, 247, 0.5);
-            background: #120524;
+            border-color: #facc15;
+            box-shadow: 0 0 12px rgba(250, 204, 21, 0.4);
         }
 
-        /* زر الدخول الرئيسي */
         .submit-action-btn {
             width: 100%;
             background: linear-gradient(90deg, #a855f7, #d946ef);
@@ -209,12 +203,8 @@
             gap: 8px;
         }
 
-        .submit-action-btn:active {
-            transform: scale(0.97);
-            box-shadow: 0 2px 10px rgba(168, 85, 247, 0.3);
-        }
+        .submit-action-btn:active { transform: scale(0.97); }
 
-        /* حالة السيرفر بالأسفل */
         .server-indicator {
             display: flex;
             align-items: center;
@@ -222,7 +212,7 @@
             gap: 6px;
             font-size: 11px;
             color: #4ade80;
-            margin-top: 14px;
+            margin-top: 12px;
             font-weight: 600;
         }
 
@@ -234,12 +224,82 @@
             box-shadow: 0 0 8px #4ade80;
         }
 
-        /* الحقوق */
         .footer-credits {
             font-size: 11px;
-            color: #6b21a8;
+            color: #7e22ce;
             font-weight: 700;
             z-index: 5;
+        }
+
+        /* 3. نافذة التنبيه الفخمة المخصصة (Custom Modal) */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(10px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 100;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .modal-card {
+            width: 85%;
+            max-width: 350px;
+            background: radial-gradient(circle at center, #2e0854 0%, #0d021a 100%);
+            border: 2px solid #facc15;
+            border-radius: 20px;
+            padding: 25px 20px;
+            text-align: center;
+            box-shadow: 0 0 40px rgba(250, 204, 21, 0.4);
+            transform: scale(0.8);
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .modal-overlay.active .modal-card {
+            transform: scale(1);
+        }
+
+        .modal-icon {
+            font-size: 45px;
+            margin-bottom: 10px;
+        }
+
+        .modal-title {
+            font-size: 20px;
+            font-weight: 900;
+            color: #facc15;
+            margin-bottom: 8px;
+        }
+
+        .modal-text {
+            font-size: 13px;
+            color: #d8b4fe;
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+
+        .modal-btn {
+            background: linear-gradient(90deg, #facc15, #eab308);
+            color: #000;
+            border: none;
+            padding: 12px 30px;
+            font-size: 15px;
+            font-weight: 900;
+            border-radius: 10px;
+            cursor: pointer;
+            box-shadow: 0 0 15px rgba(250, 204, 21, 0.5);
         }
     </style>
 </head>
@@ -253,7 +313,7 @@
                 <div class="joker-avatar-inner">🃏</div>
             </div>
             <div class="brand-title">JOKER</div>
-            <div class="brand-subtitle">ULTIMATE ONLINE ARENA</div>
+            <div class="joker-quote">"من يضحك أخيراً.. يضحك كثيراً! مرحباً بك في ساحة التحدي"</div>
         </div>
 
         <div class="auth-card">
@@ -294,10 +354,44 @@
 
         </div>
 
-        <div class="footer-credits">JOKER ENGINE v2.0 • 2026</div>
+        <div class="footer-credits">JOKER ENGINE v2.5 • 2026</div>
+    </div>
+
+    <div class="modal-overlay" id="customModal">
+        <div class="modal-card">
+            <div class="modal-icon" id="modalIcon">👑</div>
+            <div class="modal-title" id="modalTitle">عنوان الرسالة</div>
+            <div class="modal-text" id="modalText">نص الرسالة الفخم يظهر هنا...</div>
+            <button class="modal-btn" onclick="closeModal()">موافق 🃏</button>
+        </div>
     </div>
 
     <script>
+        let pendingRedirect = false;
+
+        // دالة لإظهار الرسائل الفخمة المخصصة بدلاً من رسائل المتصفح
+        function showJokerPopup(title, text, icon = "🃏", isSuccess = false) {
+            document.getElementById('modalTitle').innerText = title;
+            document.getElementById('modalText').innerText = text;
+            document.getElementById('modalIcon').innerText = icon;
+            document.getElementById('customModal').classList.add('active');
+            pendingRedirect = isSuccess;
+        }
+
+        function closeModal() {
+            document.getElementById('customModal').classList.remove('active');
+            if (pendingRedirect) {
+                window.location.href = "main.html";
+            }
+        }
+
+        window.onload = function() {
+            const savedUser = localStorage.getItem('joker_current_user');
+            if (savedUser) {
+                window.location.href = "main.html";
+            }
+        };
+
         let mode = 'login';
 
         function switchAuthMode(selectedMode) {
@@ -323,7 +417,7 @@
             const server = document.getElementById('serverSelect').value;
 
             if (!user || !pass) {
-                alert("⚠️ يرجى إدخال اسم المستخدم وكلمة السر لاستكمال الدخول!");
+                showJokerPopup("تنبيه الجوكر", "يرجى إدخال اسم المستخدم وكلمة السر لاستكمال الدخول!", "⚠️");
                 return;
             }
 
@@ -331,24 +425,27 @@
 
             if (mode === 'register') {
                 if (usersDB[user]) {
-                    alert("❌ اسم المستخدم هذا موجود بالفعل! اختر اسماً آخر.");
+                    showJokerPopup("اسم مستخدم مكرر", "اسم المستخدم هذا مسجل بالفعل! اختر اسماً أسطورياً آخر.", "❌");
                     return;
                 }
                 usersDB[user] = { password: pass, coins: 5000, gems: 100 };
                 localStorage.setItem('joker_users_db', JSON.stringify(usersDB));
-                alert("🎉 تم إنشاء حسابك بنجاح! جاري تحويلك للعبة...");
+                
+                localStorage.setItem('joker_current_user', user);
+                localStorage.setItem('joker_server', server);
+
+                showJokerPopup("أهلاً بك في العرش!", `تم إنشاء حسابك بنجاح يا ${user}! مرحباً بك في عالم الجوكر.`, "👑", true);
             } else {
                 if (!usersDB[user] || usersDB[user].password !== pass) {
-                    alert("❌ اسم المستخدم أو كلمة السر غير صحيحة!");
+                    showJokerPopup("خطأ في البيانات", "اسم المستخدم أو كلمة السر غير صحيحة! تأكد من بياناتك.", "🔑");
                     return;
                 }
+
+                localStorage.setItem('joker_current_user', user);
+                localStorage.setItem('joker_server', server);
+
+                showJokerPopup("تم تسجيل الدخول", `مرحباً بعودتك يا ${user}! جاري تحويلك للعرش الرئيسي...`, "🚀", true);
             }
-
-            localStorage.setItem('joker_current_user', user);
-            localStorage.setItem('joker_server', server);
-
-            // الانتقال للواجهة الرئيسية (main.html)
-            window.location.href = "main.html";
         }
     </script>
 </body>
