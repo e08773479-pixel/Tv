@@ -17,31 +17,31 @@
             width: 100vw;
             height: 100vh;
             overflow: hidden;
-            background: #d8c2a3;
+            background: #dfceb7;
             display: flex;
             justify-content: center;
             align-items: center;
         }
 
-        /* حاوية الشاشة بحجم الموبايل وتملأ المساحة بالكامل */
+        /* حاوية الشاشة المطابقة لأبعاد الموبايل والصورة */
         .app-viewport {
             width: 100vw;
             height: 100vh;
             max-width: 430px;
-            /* خلفية النقاط الكرتونية مثل الصورة بالظبط */
+            /* خلفية النقاط الكرتونية (Halftone) من الصورة بالظبط */
             background-color: #dfceb7;
             background-image: radial-gradient(#c2aa8e 24%, transparent 24%);
             background-size: 15px 15px;
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: space-between;
-            padding: 35px 16px 20px 16px;
+            justify-content: flex-start;
+            padding: 40px 18px 20px 18px;
             position: relative;
             overflow: hidden;
         }
 
-        /* البرق الخلفي المطابق للصورة */
+        /* البرق الأصفر العريض المائل في منتصف الخلفية */
         .svg-lightning-bg {
             position: absolute;
             top: -2%;
@@ -52,57 +52,56 @@
             pointer-events: none;
         }
 
-        /* --- 1. العنوان الرئيسي --- */
+        /* --- العنوان الرئيسي --- */
         .page-header {
             text-align: center;
             z-index: 10;
-            margin-top: 5px;
+            margin-bottom: 20px;
+            margin-top: 10px;
         }
 
         .page-title {
-            font-size: 46px;
+            font-size: 48px;
             font-weight: 900;
             color: #ffffff;
+            /* حد أسود بارز 3D طابق الأصل */
             text-shadow: 
                 3px 3px 0 #000,
                 -3px -3px 0 #000,
                 3px -3px 0 #000,
                 -3px 3px 0 #000,
                 0 6px 0 #000,
-                0 8px 12px rgba(0,0,0,0.3);
+                0 10px 15px rgba(0,0,0,0.3);
             letter-spacing: 1px;
             line-height: 1;
-            margin-bottom: 4px;
+            margin-bottom: 6px;
         }
 
         .page-subtitle {
-            font-size: 14px;
+            font-size: 15px;
             font-weight: 800;
-            color: #0f172a;
+            color: #000000;
         }
 
-        /* --- 2. شبكة المربعات 2x2 لتملأ الشاشة --- */
+        /* --- شبكة المربعات 2x2 --- */
         .games-grid {
             width: 100%;
-            flex: 1;
             display: grid;
             grid-template-columns: 1fr 1fr;
-            grid-template-rows: 1fr 1fr;
             gap: 14px;
             z-index: 10;
-            margin: 15px 0;
         }
 
-        /* المربع الكرتوني العريض بحواف دائرية وشريط أسود */
+        /* إطار الكارت الأسود العريض */
         .game-card {
             width: 100%;
-            height: 100%;
+            aspect-ratio: 1 / 1.15;
             background: #000000;
-            border-radius: 22px;
-            box-shadow: 0 8px 18px rgba(0, 0, 0, 0.4);
+            border-radius: 24px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
             cursor: pointer;
             transition: transform 0.12s ease;
-            border: 3.5px solid #000000;
+            border: 4px solid #000000;
             overflow: hidden;
             display: flex;
             flex-direction: column;
@@ -112,7 +111,7 @@
             transform: scale(0.95);
         }
 
-        /* صندوق الصورة الكبير */
+        /* صندوق الصورة/الجرافيك الداخلي */
         .card-image-box {
             flex: 1;
             width: 100%;
@@ -123,52 +122,46 @@
             overflow: hidden;
         }
 
-        .card-icon-big {
-            font-size: 58px;
-            filter: drop-shadow(0 6px 10px rgba(0,0,0,0.4));
-            animation: pulse 2.5s infinite ease-in-out;
+        .card-icon {
+            font-size: 52px;
+            filter: drop-shadow(0 4px 8px rgba(0,0,0,0.4));
         }
 
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.08); }
-        }
+        /* ألوان الجرافيك الداخلي للكروت */
+        .bg-sea { background: linear-gradient(180deg, #10b981 0%, #047857 100%); }
+        .bg-auction { background: linear-gradient(180deg, #f59e0b 0%, #b45309 100%); }
+        .bg-fight { background: linear-gradient(180deg, #ef4444 0%, #b91c1c 100%); }
+        .bg-ghost { background: linear-gradient(180deg, #6366f1 0%, #4338ca 100%); }
 
-        /* خلفيات ملونة جذابة لصور الألعاب */
-        .bg-1 { background: linear-gradient(180deg, #34d399 0%, #059669 100%); }
-        .bg-2 { background: linear-gradient(180deg, #fbbf24 0%, #d97706 100%); }
-        .bg-3 { background: linear-gradient(180deg, #f87171 0%, #dc2626 100%); }
-        .bg-4 { background: linear-gradient(180deg, #818cf8 0%, #4f46e5 100%); }
-
-        /* الشريط الأبيض السفلي فيه اسم اللعبة تحتيها */
+        /* الشريط الأبيض السفلي لعنوان اللعبة */
         .card-title-bar {
             background: #ffffff;
-            color: #0f172a;
+            color: #000000;
             text-align: center;
-            padding: 8px 4px;
-            font-size: 13px;
+            padding: 8px 2px;
+            font-size: 12.5px;
             font-weight: 900;
-            border-top: 3px solid #000000;
+            border-top: 3.5px solid #000000;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
         }
 
-        /* زر الرجوع للرئيسية */
+        /* زر العودة */
         .back-btn {
             position: absolute;
-            top: 15px;
-            right: 15px;
-            width: 40px;
-            height: 40px;
+            top: 20px;
+            right: 20px;
+            width: 42px;
+            height: 42px;
             background: #ffffff;
             border-radius: 50%;
             display: flex;
             justify-content: center;
             align-items: center;
-            font-size: 18px;
+            font-size: 20px;
             font-weight: bold;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.18);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
             cursor: pointer;
             z-index: 20;
             border: 2px solid #000000;
@@ -197,29 +190,29 @@
         <div class="games-grid">
 
             <div class="game-card" onclick="openGamePage('game1.html')">
-                <div class="card-image-box bg-1">
-                    <div class="card-icon-big">🌊🕵️‍♂️</div>
+                <div class="card-image-box bg-sea">
+                    <div class="card-icon">🌊🕵️‍♂️</div>
                 </div>
                 <div class="card-title-bar">بحور ولا مبحورش</div>
             </div>
 
             <div class="game-card" onclick="openGamePage('game2.html')">
-                <div class="card-image-box bg-2">
-                    <div class="card-icon-big">⚖️💰</div>
+                <div class="card-image-box bg-auction">
+                    <div class="card-icon">⚖️🍔</div>
                 </div>
                 <div class="card-title-bar">المزاد</div>
             </div>
 
             <div class="game-card" onclick="openGamePage('game3.html')">
-                <div class="card-image-box bg-3">
-                    <div class="card-icon-big">🛡️⚔️</div>
+                <div class="card-image-box bg-fight">
+                    <div class="card-icon">🥊🛡️</div>
                 </div>
                 <div class="card-title-bar">اقف ف صفى عشان بصفى</div>
             </div>
 
             <div class="game-card" onclick="openGamePage('game4.html')">
-                <div class="card-image-box bg-4">
-                    <div class="card-icon-big">🎭❓</div>
+                <div class="card-image-box bg-ghost">
+                    <div class="card-icon">🥷❓</div>
                 </div>
                 <div class="card-title-bar">اللاعب الخفى</div>
             </div>
