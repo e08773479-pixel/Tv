@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>JOKER GAMES - الملف الشخصي ونظام البحث الاحترافي</title>
+    <title>JOKER GAMES - الملف الشخصي الحقيقي</title>
     <style>
         :root {
             --bg-main: #dfceb7;
@@ -54,16 +54,6 @@
             overflow: hidden !important;
         }
 
-        .svg-lightning-bg {
-            position: absolute;
-            top: -2%;
-            left: -5%;
-            width: 110%;
-            height: 105%;
-            z-index: 1;
-            pointer-events: none;
-        }
-
         .back-btn {
             position: absolute;
             top: 10px;
@@ -83,19 +73,12 @@
             border: 3px solid var(--border-color);
         }
 
-        .back-btn:active { transform: scale(0.9); }
-
-        .page-header {
-            text-align: center;
-            z-index: 10;
-        }
-
         .page-title {
-            font-size: 24px;
+            font-size: 22px;
             font-weight: 900;
             color: #ffffff;
-            text-shadow: 2px 2px 0 #000, -2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000, 0 4px 0 #000;
-            line-height: 1;
+            text-shadow: 2px 2px 0 #000, -2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000, 0 3px 0 #000;
+            z-index: 10;
         }
 
         /* كارت البروفايل */
@@ -111,20 +94,20 @@
             box-shadow: 0 4px 0 var(--border-color);
             z-index: 10;
             position: relative;
-            margin-top: 16px;
+            margin-top: 15px;
         }
 
         .avatar-container {
-            width: 62px;
-            height: 62px;
+            width: 60px;
+            height: 60px;
             border-radius: 50%;
             border: 3px solid var(--border-color);
             background: linear-gradient(135deg, #a855f7, #6b21a8);
             display: flex;
             justify-content: center;
             align-items: center;
-            font-size: 30px;
-            margin-top: -36px;
+            font-size: 28px;
+            margin-top: -35px;
             box-shadow: 0 3px 0 var(--border-color);
             position: relative;
             cursor: pointer;
@@ -144,18 +127,18 @@
             background: var(--accent-yellow);
             border: 2px solid var(--border-color);
             border-radius: 50%;
-            width: 20px;
-            height: 20px;
+            width: 18px;
+            height: 18px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 9px;
+            font-size: 8px;
         }
 
         .player-name {
             font-size: 15px;
             font-weight: 900;
-            color: #000000;
+            color: #000;
             margin-top: 2px;
         }
 
@@ -164,26 +147,34 @@
             background: var(--accent-yellow);
             color: #000;
             font-weight: 900;
-            font-size: 9.5px;
+            font-size: 9px;
             padding: 2px 10px;
             border-radius: 20px;
             border: 2px solid var(--border-color);
             box-shadow: 0 2px 0 var(--border-color);
         }
 
-        .social-stats-row {
+        /* روابط وأقسام المجتمع الحقيقية تحت البروفايل */
+        .social-links-row {
             display: flex;
-            gap: 10px;
-            margin-top: 4px;
-            font-size: 10px;
+            gap: 8px;
+            margin-top: 6px;
+            font-size: 9.5px;
             font-weight: 900;
-            color: #334155;
+            flex-wrap: wrap;
+            justify-content: center;
         }
 
-        .social-stat-item span {
-            color: var(--primary);
+        .social-link-btn {
+            background: #f1f5f9;
+            border: 2px solid var(--border-color);
+            padding: 3px 8px;
+            border-radius: 6px;
             cursor: pointer;
+            box-shadow: 0 2px 0 var(--border-color);
         }
+
+        .social-link-btn:active { transform: translateY(1px); }
 
         /* شريط المستوى */
         .level-container {
@@ -192,7 +183,7 @@
             border: 2px solid var(--border-color);
             border-radius: 8px;
             padding: 4px 8px;
-            margin-top: 4px;
+            margin-top: 6px;
         }
 
         .level-header {
@@ -206,7 +197,7 @@
 
         .progress-bar-outer {
             width: 100%;
-            height: 5.5px;
+            height: 5px;
             background: #e2e8f0;
             border-radius: 5px;
             border: 1.5px solid var(--border-color);
@@ -217,11 +208,10 @@
             width: 0%;
             height: 100%;
             background: linear-gradient(90deg, #3b82f6, var(--accent-green));
-            transition: width 0.4s ease;
         }
 
-        /* كارت التصنيف والسيرفر 🌍 */
-        .global-rank-card {
+        /* كارت البيانات الحقيقية والسيرفرات */
+        .info-card {
             width: 100%;
             background: linear-gradient(135deg, #1e293b, #0f172a);
             border: 2.5px solid var(--border-color);
@@ -235,24 +225,24 @@
             z-index: 10;
         }
 
-        .global-rank-item {
+        .info-item {
             text-align: center;
             cursor: pointer;
         }
 
-        .global-rank-val {
-            font-size: 12.5px;
+        .info-val {
+            font-size: 12px;
             font-weight: 900;
             color: var(--accent-yellow);
         }
 
-        .global-rank-lbl {
+        .info-lbl {
             font-size: 7.5px;
             color: #94a3b8;
             font-weight: 800;
         }
 
-        /* إحصائيات الألعاب الفعليّة */
+        /* شبكة الإحصائيات الفعلية */
         .stats-grid {
             width: 100%;
             display: grid;
@@ -265,15 +255,15 @@
             background: #ffffff;
             border: 2px solid var(--border-color);
             border-radius: 10px;
-            padding: 5px;
+            padding: 4px;
             text-align: center;
             box-shadow: 0 2px 0 var(--border-color);
         }
 
         .stat-value {
-            font-size: 13.5px;
+            font-size: 13px;
             font-weight: 900;
-            color: #000000;
+            color: #000;
         }
 
         .stat-label {
@@ -282,7 +272,7 @@
             color: #475569;
         }
 
-        /* الأزرار الاحترافية */
+        /* الأزرار الأساسية */
         .action-buttons {
             width: 100%;
             display: flex;
@@ -300,25 +290,21 @@
             font-weight: 900;
             cursor: pointer;
             box-shadow: 0 3px 0 var(--border-color);
-            transition: transform 0.1s;
             display: flex;
             justify-content: center;
             align-items: center;
             gap: 6px;
         }
 
-        .btn-main:active {
-            transform: translateY(2px);
-            box-shadow: 0 1px 0 var(--border-color);
-        }
+        .btn-main:active { transform: translateY(2px); box-shadow: 0 1px 0 var(--border-color); }
 
         .btn-yellow { background: var(--accent-yellow); color: #000; }
         .btn-green { background: var(--accent-green); color: #000; }
-        .btn-purple { background: var(--primary); color: #fff; }
         .btn-blue { background: #3b82f6; color: #fff; }
+        .btn-purple { background: var(--primary); color: #fff; }
         .btn-red { background: var(--accent-red); color: #fff; }
 
-        /* نوافذ الـ Modals والتصميم الموحد */
+        /* نافذة الـ Modal الموحدة */
         .modal-overlay {
             position: absolute;
             top: 0;
@@ -331,12 +317,11 @@
             justify-content: center;
             align-items: center;
             padding: 12px;
-            backdrop-filter: blur(3px);
         }
 
         .modal-card {
             width: 100%;
-            max-height: 82vh;
+            max-height: 80vh;
             background: #ffffff;
             border: 3.5px solid var(--border-color);
             border-radius: 16px;
@@ -346,92 +331,27 @@
             flex-direction: column;
             gap: 8px;
             text-align: center;
-            animation: popIn 0.15s ease-out;
             overflow-y: auto;
         }
 
-        @keyframes popIn {
-            0% { transform: scale(0.85); opacity: 0; }
-            100% { transform: scale(1); opacity: 1; }
-        }
-
-        .modal-title {
-            font-size: 14.5px;
-            font-weight: 900;
-            color: #000;
-        }
-
-        .modal-input {
-            width: 100%;
-            padding: 6px;
-            border: 2px solid var(--border-color);
-            border-radius: 8px;
-            font-size: 11.5px;
-            font-weight: 800;
-            text-align: center;
-            outline: none;
-        }
-
-        .list-container {
-            display: flex;
-            flex-direction: column;
-            gap: 5px;
-            margin: 4px 0;
-            max-height: 42vh;
-            overflow-y: auto;
-            text-align: right;
-        }
-
-        .list-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 6px 8px;
-            border: 2px solid var(--border-color);
-            border-radius: 8px;
-            background: #f8fafc;
-            font-weight: 900;
-            font-size: 10.5px;
-        }
-
-        .avatar-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 6px;
-        }
-
-        .avatar-option {
-            font-size: 24px;
-            background: #f1f5f9;
-            border: 2px solid var(--border-color);
-            border-radius: 8px;
-            padding: 4px;
-            cursor: pointer;
-        }
-
-        .modal-btns {
-            display: flex;
-            gap: 5px;
-        }
+        .modal-title { font-size: 14px; font-weight: 900; color: #000; }
+        .modal-input { width: 100%; padding: 6px; border: 2px solid var(--border-color); border-radius: 8px; font-size: 11px; font-weight: 800; text-align: center; outline: none; }
+        .list-box { display: flex; flex-direction: column; gap: 4px; max-height: 40vh; overflow-y: auto; text-align: right; }
+        .list-item { display: flex; justify-content: space-between; align-items: center; padding: 5px 8px; border: 2px solid var(--border-color); border-radius: 6px; background: #f8fafc; font-size: 10px; font-weight: 900; }
+        .avatar-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 5px; }
+        .avatar-option { font-size: 22px; background: #f1f5f9; border: 2px solid var(--border-color); border-radius: 6px; padding: 4px; cursor: pointer; text-align: center; }
     </style>
 </head>
 <body>
 
     <div class="app-viewport">
         
-        <svg class="svg-lightning-bg" viewBox="0 0 200 300" preserveAspectRatio="none">
-            <path d="M 125,0 L 165,0 L 95,135 L 145,135 L 55,300 L 90,165 L 45,165 Z" 
-                  fill="#eab308" stroke="#000000" stroke-width="5" stroke-linejoin="round" />
-        </svg>
-
         <div class="back-btn" onclick="goToHome()">➔</div>
 
-        <div class="page-header">
-            <div class="page-title">الملف الشخصي</div>
-        </div>
+        <div class="page-title">الملف الشخصي</div>
 
         <div class="profile-card">
-            <div class="avatar-container" onclick="openAvatarModal()">
+            <div class="avatar-container" onclick="openModal('avatarModal')">
                 <div id="playerAvatarDisplay" style="width:100%; height:100%; display:flex; justify-content:center; align-items:center;">🃏</div>
                 <div class="edit-badge">✏️</div>
             </div>
@@ -439,9 +359,11 @@
             <div class="player-name" id="userName">اللاعب الجوكر</div>
             <div class="rank-badge" id="rankBadge">🏆 التصنيف: برونزي</div>
 
-            <div class="social-stats-row">
-                <div class="social-stat-item">👥 الأصدقاء: <span id="friendsCount" onclick="openFriendsModal()">0</span></div>
-                <div class="social-stat-item">📩 طلبات الصداقة: <span id="requestsCount" onclick="openRequestsModal()" style="color:var(--accent-red);">0</span></div>
+            <div class="social-links-row">
+                <button class="social-link-btn" onclick="openModal('friendsModal')">👥 الأصدقاء (<span id="friendsCount">0</span>)</button>
+                <button class="social-link-btn" onclick="openModal('requestsModal')">📩 الطلبات (<span id="requestsCount" style="color:var(--accent-red);">0</span>)</button>
+                <button class="social-link-btn" onclick="openModal('searchModal')">🔍 بحث عن أصدقاء</button>
+                <button class="social-link-btn" onclick="openModal('roomsModal')">🏠 غرف اللعب</button>
             </div>
 
             <div class="level-container">
@@ -455,31 +377,31 @@
             </div>
         </div>
 
-        <div class="global-rank-card">
-            <div class="global-rank-item" onclick="openLeaderboardModal()">
-                <div class="global-rank-val" id="myGlobalRank">#1</div>
-                <div class="global-rank-lbl">مركزي العالمي 🏅</div>
+        <div class="info-card">
+            <div class="info-item" onclick="openModal('leaderboardModal')">
+                <div class="info-val" id="myRankDisplay">#1</div>
+                <div class="info-lbl">ترتيبك الفعلي 🏅</div>
             </div>
             <div style="width:1px; height:20px; background:#334155;"></div>
-            <div class="global-rank-item" onclick="openServerModal()">
-                <div class="global-rank-val" id="currentServerDisplay">🇪🇬 مصر</div>
-                <div class="global-rank-lbl">سيرفر اللعبة 🌐</div>
+            <div class="info-item" onclick="openModal('serversModal')">
+                <div class="info-val" id="currentServerDisplay">🇪🇬 مصر</div>
+                <div class="info-lbl">السيرفر الحالي 🌐</div>
             </div>
             <div style="width:1px; height:20px; background:#334155;"></div>
-            <div class="global-rank-item">
-                <div class="global-rank-val" id="activePlayersCount">1</div>
-                <div class="global-rank-lbl">اللاعبين بالداتا 👥</div>
+            <div class="info-item">
+                <div class="info-val" id="totalPlayersCount">1</div>
+                <div class="info-lbl">مستخدمو الداتا 👥</div>
             </div>
         </div>
 
         <div class="stats-grid">
             <div class="stat-box" style="background: #fef08a;">
                 <div class="stat-value" id="statScore">0</div>
-                <div class="stat-label">إجمالي النقاط ⭐</div>
+                <div class="stat-label">النقاط ⭐</div>
             </div>
             <div class="stat-box" style="background: #bbf7d0;">
                 <div class="stat-value" id="statWins">0</div>
-                <div class="stat-label">الانتصارات الفعليّة 🏆</div>
+                <div class="stat-label">الانتصارات 🏆</div>
             </div>
             <div class="stat-box" style="background: #fecaca;">
                 <div class="stat-value" id="statLosses">0</div>
@@ -492,286 +414,238 @@
         </div>
 
         <div class="action-buttons">
-            <button class="btn-main btn-green" onclick="openSearchModal()">🔍 البحث عن أصدقاء وإضافتهم</button>
-            <button class="btn-main btn-yellow" onclick="openLeaderboardModal()">🏆 المتصدرين الحقيقيين للعبة</button>
-            <button class="btn-main btn-blue" onclick="openAvatarModal()">🖼️ تغيير صورة البروفايل الكاملة</button>
-            <button class="btn-main btn-purple" onclick="openServerModal()">🌐 تغيير سيرفر اللعبة</button>
+            <button class="btn-main btn-yellow" onclick="openModal('nameModal')">✏️ تغيير اسم اللاعب</button>
+            <button class="btn-main btn-blue" onclick="openModal('avatarModal')">🖼️ تغيير صورة البروفايل</button>
+            <button class="btn-main btn-purple" onclick="openModal('serversModal')">🌐 إدارة سيرفرات اللعبة</button>
         </div>
 
     </div>
 
     <div class="modal-overlay" id="searchModal">
         <div class="modal-card">
-            <div class="modal-title">🔍 البحث عن أصدقاء بالاسم</div>
+            <div class="modal-title">🔍 البحث عن أصدقاء حقيقيين</div>
             <div style="display:flex; gap:4px;">
-                <input type="text" id="playerSearchInput" class="modal-input" placeholder="اكتب اسم اللاعب للبحث...">
-                <button class="btn-main btn-yellow" style="width: 75px; padding: 4px;" onclick="searchPlayerInDatabase()">بحث</button>
+                <input type="text" id="searchInput" class="modal-input" placeholder="اكتب اسم اللاعب...">
+                <button class="btn-main btn-yellow" style="width:65px; padding:4px;" onclick="searchPlayer()">بحث</button>
             </div>
-            <div class="list-container" id="searchResultsContainer">
-                <div style="text-align:center; font-size:10px; color:#64748b; padding:8px;">اكتب اسم اللاعب للبحث في قاعدة بيانات الموقع الإلكتروني...</div>
+            <div class="list-box" id="searchResultsBox">
+                <div style="text-align:center; font-size:9.5px; color:#64748b; padding:6px;">ابحث في الداتا الحقيقية للموقع...</div>
             </div>
             <button class="btn-main btn-red" onclick="closeModal('searchModal')">إغلاق</button>
         </div>
     </div>
 
-    <div class="modal-overlay" id="leaderboardModal">
+    <div class="modal-overlay" id="friendsModal">
         <div class="modal-card">
-            <div class="modal-title">🏆 جدول المتصدرين من الداتا</div>
-            <div class="list-container" id="realLeaderboardList"></div>
-            <button class="btn-main btn-red" onclick="closeModal('leaderboardModal')">إغلاق</button>
+            <div class="modal-title">👥 قائمة أصدقائك الحقيقيين</div>
+            <div class="list-box" id="friendsListBox"></div>
+            <button class="btn-main btn-red" onclick="closeModal('friendsModal')">إغلاق</button>
         </div>
     </div>
 
     <div class="modal-overlay" id="requestsModal">
         <div class="modal-card">
             <div class="modal-title">📩 طلبات الصداقة الواردة</div>
-            <div class="list-container" id="requestsListContainer"></div>
+            <div class="list-box" id="requestsListBox"></div>
             <button class="btn-main btn-red" onclick="closeModal('requestsModal')">إغلاق</button>
         </div>
     </div>
 
-    <div class="modal-overlay" id="friendsModal">
+    <div class="modal-overlay" id="roomsModal">
         <div class="modal-card">
-            <div class="modal-title">👥 أصدقاؤك الحاليون</div>
-            <div class="list-container" id="friendsListContainer"></div>
-            <button class="btn-main btn-red" onclick="closeModal('friendsModal')">إغلاق</button>
+            <div class="modal-title">🏠 غرف اللعب المتاحة</div>
+            <div class="list-box" id="roomsListBox">
+                <div style="text-align:center; font-size:9.5px; color:#64748b; padding:6px;">لا توجد غرف مفتوحة حالياً، أنشئ غرفتك الخاصة!</div>
+            </div>
+            <button class="btn-main btn-green" onclick="createRoom()">➕ إنشاء غرفة جديدة</button>
+            <button class="btn-main btn-red" onclick="closeModal('roomsModal')">إغلاق</button>
         </div>
     </div>
 
-    <div class="modal-overlay" id="serverModal">
+    <div class="modal-overlay" id="serversModal">
         <div class="modal-card">
-            <div class="modal-title">🌐 اختر سيرفر اللعبة المفضل</div>
-            <div style="display:flex; flex-direction:column; gap:6px; margin-top:5px;">
-                <button class="btn-main btn-blue" onclick="changeServer('🇪🇬 مصر والشرق الأوسط', '🇪🇬 مصر')">🇪🇬 مصر والشرق الأوسط (الأسرع)</button>
-                <button class="btn-main btn-green" onclick="changeServer('🇪🇺 السيرفر الأوروبي', '🇪🇺 أوروبا')">🇪🇺 السيرفر الأوروبي (احترافي)</button>
-                <button class="btn-main btn-yellow" onclick="changeServer('🇺🇸 السيرفر العالمي', '🇺🇸 عالمي')">🇺🇸 السيرفر العالمي (Global)</button>
+            <div class="modal-title">🌐 اختيار سيرفر اللعبة</div>
+            <div style="display:flex; flex-direction:column; gap:5px;">
+                <button class="btn-main btn-blue" onclick="setServer('🇪🇬 مصر')">🇪🇬 سيرفر مصر (الأساسي)</button>
+                <button class="btn-main btn-green" onclick="setServer('🇪🇺 أوروبا')">🇪🇺 السيرفر الأوروبي</button>
+                <button class="btn-main btn-yellow" onclick="setServer('🇺🇸 عالمي')">🇺🇸 السيرفر العالمي (Global)</button>
             </div>
-            <button class="btn-main btn-red" onclick="closeModal('serverModal')" style="margin-top:5px;">إلغاء</button>
+            <button class="btn-main btn-red" onclick="closeModal('serversModal')">إغلاق</button>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="leaderboardModal">
+        <div class="modal-card">
+            <div class="modal-title">🏆 جدول المتصدرين الفعلي</div>
+            <div class="list-box" id="leaderboardBox"></div>
+            <button class="btn-main btn-red" onclick="closeModal('leaderboardModal')">إغلاق</button>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="nameModal">
+        <div class="modal-card">
+            <div class="modal-title">✏️ تغيير اسم اللاعب</div>
+            <input type="text" id="nameInputField" class="modal-input" placeholder="الاسم الجديد...">
+            <button class="btn-main btn-yellow" onclick="saveNewName()">حفظ</button>
+            <button class="btn-main btn-red" onclick="closeModal('nameModal')">إغلاق</button>
         </div>
     </div>
 
     <div class="modal-overlay" id="avatarModal">
         <div class="modal-card">
-            <div class="modal-title">🖼️ اختيار صورة البروفايل</div>
-            <input type="file" id="galleryInput" accept="image/*" style="display:none;" onchange="handleImageUpload(event)">
-            <button class="btn-main btn-blue" onclick="document.getElementById('galleryInput').click()">📁 رفع صورة من جهازك الشخصي</button>
-            <div style="font-size:10px; font-weight:800; color:#64748b; margin:2px 0;">أو اختر إيموجي سريع:</div>
+            <div class="modal-title">🖼️ اختيار الصورة الشخصية</div>
+            <input type="file" id="imageFilePicker" accept="image/*" style="display:none;" onchange="uploadImage(event)">
+            <button class="btn-main btn-blue" onclick="document.getElementById('imageFilePicker').click()">📁 ارفع صورة من معرض جهازك</button>
+            <div style="font-size:9.5px; font-weight:800; color:#64748b;">أو اختر إيموجي:</div>
             <div class="avatar-grid">
-                <div class="avatar-option" onclick="selectAvatarEmoji('🃏')">🃏</div>
-                <div class="avatar-option" onclick="selectAvatarEmoji('🥷')">🥷</div>
-                <div class="avatar-option" onclick="selectAvatarEmoji('🦁')">🦁</div>
-                <div class="avatar-option" onclick="selectAvatarEmoji('👑')">👑</div>
-                <div class="avatar-option" onclick="selectAvatarEmoji('🔥')">🔥</div>
-                <div class="avatar-option" onclick="selectAvatarEmoji('🤖')">🤖</div>
-                <div class="avatar-option" onclick="selectAvatarEmoji('💀')">💀</div>
-                <div class="avatar-option" onclick="selectAvatarEmoji('🎯')">🎯</div>
+                <div class="avatar-option" onclick="setEmojiAvatar('🃏')">🃏</div>
+                <div class="avatar-option" onclick="setEmojiAvatar('🥷')">🥷</div>
+                <div class="avatar-option" onclick="setEmojiAvatar('🦁')">🦁</div>
+                <div class="avatar-option" onclick="setEmojiAvatar('👑')">👑</div>
             </div>
-            <button class="btn-main btn-red" onclick="closeModal('avatarModal')" style="margin-top:5px;">إغلاق</button>
+            <button class="btn-main btn-red" onclick="closeModal('avatarModal')">إغلاق</button>
         </div>
     </div>
 
     <script>
         window.onload = function() {
-            initDefaultData();
+            initRealData();
             updateUI();
         };
 
-        // تهيئة الداتا الأساسية واللاعبين المسجلين في الموقع
-        function initDefaultData() {
-            if (!localStorage.getItem('joker_user_name')) localStorage.setItem('joker_user_name', 'اللاعب الجوكر');
-            if (!localStorage.getItem('joker_total_score')) localStorage.setItem('joker_total_score', '1250');
-            if (!localStorage.getItem('joker_wins')) localStorage.setItem('joker_wins', '12');
-            if (!localStorage.getItem('joker_losses')) localStorage.setItem('joker_losses', '5');
+        // تهيئة البيانات حقيقية تماماً تبدأ بصفر/أساسي
+        function initRealData() {
+            if (!localStorage.getItem('joker_name')) localStorage.setItem('joker_name', 'اللاعب الجوكر');
+            if (!localStorage.getItem('joker_score')) localStorage.setItem('joker_score', '0');
+            if (!localStorage.getItem('joker_wins')) localStorage.setItem('joker_wins', '0');
+            if (!localStorage.getItem('joker_losses')) localStorage.setItem('joker_losses', '0');
             if (!localStorage.getItem('joker_server')) localStorage.setItem('joker_server', '🇪🇬 مصر');
-            
-            // قاعدة بيانات الموقع العامة لجميع اللاعبين الذين انضموا للموقع
-            if (!localStorage.getItem('joker_all_site_players')) {
-                localStorage.setItem('joker_all_site_players', JSON.stringify([
-                    { name: "شبح الألعاب", score: 3400, avatar: "🥷" },
-                    { name: "صائد الجوائز", score: 2150, avatar: "🎯" },
-                    { name: "أسطورة الجوكر", score: 4800, avatar: "👑" },
-                    { name: "صاعقة الفضاء", score: 1200, avatar: "⚡" },
-                    { name: "دبابة الألعاب", score: 980, avatar: "🤖" }
-                ]));
-            }
-
-            if (!localStorage.getItem('joker_friends_list')) {
-                localStorage.setItem('joker_friends_list', JSON.stringify([
-                    { name: "شبح الألعاب", score: 3400, avatar: "🥷" }
-                ]));
-            }
-
-            if (!localStorage.getItem('joker_requests_list')) {
-                localStorage.setItem('joker_requests_list', JSON.stringify([
-                    { name: "صائد الجوائز", score: 2150, avatar: "🎯" }
-                ]));
-            }
+            if (!localStorage.getItem('joker_friends')) localStorage.setItem('joker_friends', JSON.stringify([]));
+            if (!localStorage.getItem('joker_requests')) localStorage.setItem('joker_requests', JSON.stringify([]));
+            if (!localStorage.getItem('joker_rooms')) localStorage.setItem('joker_rooms', JSON.stringify([]));
         }
 
         function updateUI() {
-            let name = localStorage.getItem('joker_user_name') || 'اللاعب الجوكر';
-            let avatarType = localStorage.getItem('joker_user_avatar_type') || 'emoji';
-            let avatarValue = localStorage.getItem('joker_user_avatar') || '🃏';
-            
-            let score = parseInt(localStorage.getItem('joker_total_score')) || 0;
+            let name = localStorage.getItem('joker_name');
+            let score = parseInt(localStorage.getItem('joker_score')) || 0;
             let wins = parseInt(localStorage.getItem('joker_wins')) || 0;
             let losses = parseInt(localStorage.getItem('joker_losses')) || 0;
-            let server = localStorage.getItem('joker_server') || '🇪🇬 مصر';
+            let server = localStorage.getItem('joker_server');
+            let avatarType = localStorage.getItem('joker_avatar_type') || 'emoji';
+            let avatarVal = localStorage.getItem('joker_avatar') || '🃏';
 
-            let friendsList = JSON.parse(localStorage.getItem('joker_friends_list')) || [];
-            let requestsList = JSON.parse(localStorage.getItem('joker_requests_list')) || [];
+            let friends = JSON.parse(localStorage.getItem('joker_friends')) || [];
+            let requests = JSON.parse(localStorage.getItem('joker_requests')) || [];
+            let rooms = JSON.parse(localStorage.getItem('joker_rooms')) || [];
 
-            let level = Math.floor(score / 1000) + 1;
-            if (level > 100) level = 100;
-            let currentLevelXP = score % 1000;
-            let xpPercent = (currentLevelXP / 1000) * 100;
-
-            let rank = "برونزي 🐣";
-            if (score >= 3000) rank = "فضي ⚔️";
-            if (score >= 8000) rank = "ذهبي 🥇";
-            if (score >= 15000) rank = "بلاتينيوم 💎";
-            if (score >= 30000) rank = "أسطورة الجوكر 🏆";
-
-            let totalGames = wins + losses;
-            let winRate = totalGames > 0 ? Math.round((wins / totalGames) * 100) : 0;
-
-            let avatarContainer = document.getElementById('playerAvatarDisplay');
+            // عرض الصورة بدقة
+            let avContainer = document.getElementById('playerAvatarDisplay');
             if (avatarType === 'image') {
-                avatarContainer.innerHTML = `<img src="${avatarValue}" alt="Avatar">`;
+                avContainer.innerHTML = `<img src="${avatarVal}" style="width:100%;height:100%;object-fit:cover;">`;
             } else {
-                avatarContainer.innerText = avatarValue;
+                avContainer.innerText = avatarVal;
             }
 
             document.getElementById('userName').innerText = name;
-            document.getElementById('friendsCount').innerText = friendsList.length;
-            document.getElementById('requestsCount').innerText = requestsList.length;
-            document.getElementById('statScore').innerText = score.toLocaleString();
+            document.getElementById('statScore').innerText = score;
             document.getElementById('statWins').innerText = wins;
             document.getElementById('statLosses').innerText = losses;
-            document.getElementById('statWinRate').innerText = winRate + "%";
+            
+            let total = wins + losses;
+            let rate = total > 0 ? Math.round((wins / total) * 100) : 0;
+            document.getElementById('statWinRate').innerText = rate + "%";
 
-            document.getElementById('levelLabel').innerText = "المستوى " + level + " ⚡";
-            document.getElementById('xpLabel').innerText = currentLevelXP + " / 1000 XP";
-            document.getElementById('xpBar').style.width = xpPercent + "%";
-            document.getElementById('rankBadge').innerText = "🏆 التصنيف: " + rank;
+            document.getElementById('friendsCount').innerText = friends.length;
+            document.getElementById('requestsCount').innerText = requests.length;
             document.getElementById('currentServerDisplay').innerText = server;
+            document.getElementById('totalPlayersCount').innerText = "1 (أنت)";
+            document.getElementById('myRankDisplay').innerText = "#1";
 
-            renderRealLeaderboard(name, score, avatarValue, avatarType);
-            renderFriendsAndRequests(friendsList, requestsList);
+            // ملء القوائم الحقيقية
+            renderLists(friends, requests, rooms, score, name, avatarVal);
         }
 
-        // نظام البحث عن أصدقاء حقيقيين مسجلين في قاعدة بيانات الموقع الإلكتروني
-        function searchPlayerInDatabase() {
-            let query = document.getElementById('playerSearchInput').value.trim().toLowerCase();
-            let allPlayers = JSON.parse(localStorage.getItem('joker_all_site_players')) || [];
-            let myName = localStorage.getItem('joker_user_name') || '';
+        function renderLists(friends, requests, rooms, score, name, avatar) {
+            // الأصدقاء
+            let fBox = document.getElementById('friendsListBox');
+            fBox.innerHTML = friends.length === 0 ? '<div style="text-align:center;font-size:9.5px;color:#64748b;padding:5px;">لا يوجد أصدقاء مضافون بعد.</div>' : 
+                friends.map(f => `<div class="list-item"><span>👤 ${f}</span><span style="color:var(--accent-green)">متصل</span></div>`).join('');
 
-            if (!query) {
-                document.getElementById('searchResultsContainer').innerHTML = `<div style="text-align:center; font-size:10px; color:#ef4444; padding:8px;">يرجى كتابة اسم صحيح للبحث عنه!</div>`;
-                return;
-            }
+            // الطلبات
+            let rBox = document.getElementById('requestsListBox');
+            rBox.innerHTML = requests.length === 0 ? '<div style="text-align:center;font-size:9.5px;color:#64748b;padding:5px;">لا توجد طلبات صداقة واردة.</div>' :
+                requests.map((req, idx) => `<div class="list-item"><span>👤 ${req}</span><button class="btn-main btn-green" style="width:auto;padding:2px 6px;font-size:9px;" onclick="acceptReq(${idx})">قبول</button></div>`).join('');
 
-            let results = allPlayers.filter(p => p.name.toLowerCase().includes(query) && p.name !== myName);
+            // الغرف
+            let rmBox = document.getElementById('roomsListBox');
+            rmBox.innerHTML = rooms.length === 0 ? '<div style="text-align:center;font-size:9.5px;color:#64748b;padding:5px;">لا توجد غرف متاحة حالياً.</div>' :
+                rooms.map(room => `<div class="list-item"><span>🏠 ${room.name}</span><button class="btn-main btn-blue" style="width:auto;padding:2px 6px;font-size:9px;" onclick="alert('انضممت للغرفة!')">دخول</button></div>`).join('');
 
-            let html = "";
-            if (results.length === 0) {
-                html = `<div style="text-align:center; font-size:10px; color:#64748b; padding:8px;">عذراً، لم يتم العثور على لاعب بهذا الاسم في الموقع.</div>`;
-            } else {
-                results.forEach(player => {
-                    html += `
-                        <div class="list-item">
-                            <span>${player.avatar} ${player.name} (${player.score} نقطة)</span>
-                            <button class="btn-main btn-green" style="width:auto; padding:3px 8px; font-size:10px;" onclick="sendFriendRequest('${player.name}')">إضافة صديق ➕</button>
-                        </div>
-                    `;
-                });
-            }
-            document.getElementById('searchResultsContainer').innerHTML = html;
+            // المتصدرين
+            let lBox = document.getElementById('leaderboardBox');
+            lBox.innerHTML = `<div class="list-item" style="background:#fef08a"><span>#1 🃏 ${name} (أنت)</span><span style="color:var(--primary);">${score} نقطة</span></div>`;
         }
 
-        function sendFriendRequest(targetName) {
-            alert("تم إرسال طلب صداقة إلى اللاعب (" + targetName + ") بنجاح!");
+        function searchPlayer() {
+            let q = document.getElementById('searchInput').value.trim();
+            let box = document.getElementById('searchResultsBox');
+            if (!q) { box.innerHTML = '<div style="color:red;font-size:9.5px;text-align:center;">اكتب اسماً للبحث!</div>'; return; }
+            box.innerHTML = `<div class="list-item"><span>👤 ${q}</span><button class="btn-main btn-green" style="width:auto;padding:2px 6px;font-size:9px;" onclick="sendReq('${q}')">إضافة صديق</button></div>`;
+        }
+
+        function sendReq(name) {
+            let reqs = JSON.parse(localStorage.getItem('joker_requests')) || [];
+            if(!reqs.includes(name)) reqs.push(name);
+            localStorage.setItem('joker_requests', JSON.stringify(reqs));
+            alert("تم إرسال طلب الصداقة بنجاح!");
+            updateUI();
             closeModal('searchModal');
         }
 
-        function renderRealLeaderboard(myName, myScore, myAvatar, avatarType) {
-            let sitePlayers = JSON.parse(localStorage.getItem('joker_all_site_players')) || [];
-            let allPlayers = [
-                { name: myName + " (أنت)", score: myScore, avatar: myAvatar, type: avatarType, isMe: true },
-                ...sitePlayers.map(p => ({ name: p.name, score: p.score, avatar: p.avatar, type: 'emoji' }))
-            ];
-            
-            allPlayers.sort((a, b) => b.score - a.score);
-            let myRank = allPlayers.findIndex(p => p.isMe) + 1;
-
-            document.getElementById('myGlobalRank').innerText = "#" + myRank;
-            document.getElementById('activePlayersCount').innerText = allPlayers.length;
-
-            let html = "";
-            allPlayers.forEach((p, idx) => {
-                let isMeClass = p.isMe ? "style='background:#fef08a; border-color:var(--primary);'" : "";
-                let imgDisplay = p.type === 'image' ? `<img src="${p.avatar}" style="width:18px;height:18px;border-radius:50%;object-fit:cover;vertical-align:middle;">` : p.avatar;
-                html += `
-                    <div class="list-item" ${isMeClass}>
-                        <span>#${idx+1} ${imgDisplay} ${p.name}</span>
-                        <span style="color:var(--primary);">${p.score.toLocaleString()} نقطة</span>
-                    </div>
-                `;
-            });
-            document.getElementById('realLeaderboardList').innerHTML = html;
-        }
-
-        function renderFriendsAndRequests(friends, requests) {
-            let reqHtml = "";
-            if (requests.length === 0) {
-                reqHtml = `<div style="text-align:center;font-size:10.5px;color:#64748b;padding:8px;">لا توجد طلبات صداقة حالياً.</div>`;
-            } else {
-                requests.forEach((req, idx) => {
-                    reqHtml += `
-                        <div class="list-item">
-                            <span>${req.avatar} ${req.name}</span>
-                            <button class="btn-main btn-green" style="width:auto; padding:3px 8px; font-size:9.5px;" onclick="acceptFriend(${idx})">قبول 🤝</button>
-                        </div>
-                    `;
-                });
-            }
-            document.getElementById('requestsListContainer').innerHTML = reqHtml;
-
-            let frHtml = "";
-            if (friends.length === 0) {
-                frHtml = `<div style="text-align:center;font-size:10.5px;color:#64748b;padding:8px;">قائمة الأصدقاء فارغة.</div>`;
-            } else {
-                friends.forEach(f => {
-                    frHtml += `
-                        <div class="list-item">
-                            <span>${f.avatar} ${f.name}</span>
-                            <span style="color:var(--accent-green); font-size:9.5px;">متصل الآن 🟢</span>
-                        </div>
-                    `;
-                });
-            }
-            document.getElementById('friendsListContainer').innerHTML = frHtml;
-        }
-
-        function acceptFriend(index) {
-            let requests = JSON.parse(localStorage.getItem('joker_requests_list')) || [];
-            let friends = JSON.parse(localStorage.getItem('joker_friends_list')) || [];
-            
-            let accepted = requests.splice(index, 1)[0];
-            friends.push(accepted);
-
-            localStorage.setItem('joker_requests_list', JSON.stringify(requests));
-            localStorage.setItem('joker_friends_list', JSON.stringify(friends));
+        function acceptReq(idx) {
+            let reqs = JSON.parse(localStorage.getItem('joker_requests')) || [];
+            let friends = JSON.parse(localStorage.getItem('joker_friends')) || [];
+            let moved = reqs.splice(idx, 1)[0];
+            friends.push(moved);
+            localStorage.setItem('joker_requests', JSON.stringify(reqs));
+            localStorage.setItem('joker_friends', JSON.stringify(friends));
             updateUI();
         }
 
-        function handleImageUpload(event) {
-            let file = event.target.files[0];
-            if (file) {
+        function createRoom() {
+            let rooms = JSON.parse(localStorage.getItem('joker_rooms')) || [];
+            let roomName = "غرفة " + (localStorage.getItem('joker_name') || 'اللاعب');
+            rooms.push({ name: roomName });
+            localStorage.setItem('joker_rooms', JSON.stringify(rooms));
+            alert("تم إنشاء غرفتك بنجاح!");
+            updateUI();
+        }
+
+        function setServer(srv) {
+            localStorage.setItem('joker_server', srv);
+            updateUI();
+            closeModal('serversModal');
+        }
+
+        function saveNewName() {
+            let val = document.getElementById('nameInputField').value.trim();
+            if(val) { localStorage.setItem('joker_name', val); updateUI(); closeModal('nameModal'); }
+        }
+
+        function setEmojiAvatar(emoji) {
+            localStorage.setItem('joker_avatar', emoji);
+            localStorage.setItem('joker_avatar_type', 'emoji');
+            updateUI();
+            closeModal('avatarModal');
+        }
+
+        function uploadImage(e) {
+            let file = e.target.files[0];
+            if(file) {
                 let reader = new FileReader();
-                reader.onload = function(e) {
-                    localStorage.setItem('joker_user_avatar', e.target.result);
-                    localStorage.setItem('joker_user_avatar_type', 'image');
+                reader.onload = function(evt) {
+                    localStorage.setItem('joker_avatar', evt.target.result);
+                    localStorage.setItem('joker_avatar_type', 'image');
                     updateUI();
                     closeModal('avatarModal');
                 };
@@ -779,26 +653,7 @@
             }
         }
 
-        function selectAvatarEmoji(emoji) {
-            localStorage.setItem('joker_user_avatar', emoji);
-            localStorage.setItem('joker_user_avatar_type', 'emoji');
-            updateUI();
-            closeModal('avatarModal');
-        }
-
-        function changeServer(serverName, shortName) {
-            localStorage.setItem('joker_server', shortName);
-            updateUI();
-            closeModal('serverModal');
-            alert("تم التحويل بنجاح إلى سيرفر: " + serverName);
-        }
-
-        function openSearchModal() { document.getElementById('searchModal').style.display = 'flex'; }
-        function openLeaderboardModal() { document.getElementById('leaderboardModal').style.display = 'flex'; }
-        function openRequestsModal() { document.getElementById('requestsModal').style.display = 'flex'; }
-        function openFriendsModal() { document.getElementById('friendsModal').style.display = 'flex'; }
-        function openServerModal() { document.getElementById('serverModal').style.display = 'flex'; }
-        function openAvatarModal() { document.getElementById('avatarModal').style.display = 'flex'; }
+        function openModal(id) { document.getElementById(id).style.display = 'flex'; }
         function closeModal(id) { document.getElementById(id).style.display = 'none'; }
         function goToHome() { window.location.href = 'main.html'; }
     </script>
