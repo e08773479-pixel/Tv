@@ -17,134 +17,127 @@
             width: 100vw;
             height: 100vh;
             overflow: hidden;
-            background: #dfd2be;
+            background: #d8c2a3;
             display: flex;
             justify-content: center;
             align-items: center;
         }
 
+        /* حاوية الشاشة بحجم الموبايل وتنسيق الصورة بالضبط */
         .app-viewport {
             width: 100vw;
             height: 100vh;
-            /* الخلفية النقطية بنفس ألوان الصورة بالظبط */
-            background-color: #dfd2be;
-            background-image: radial-gradient(#c8b9a1 22%, transparent 22%);
-            background-size: 16px 16px;
+            max-width: 430px;
+            /* خلفية النقاط الكرتونية مثل الصورة */
+            background-color: #dfceb7;
+            background-image: radial-gradient(#c2aa8e 24%, transparent 24%);
+            background-size: 15px 15px;
             display: flex;
             flex-direction: column;
             align-items: center;
-            padding: 18px 14px 10px 14px;
+            justify-content: flex-start;
+            padding: 50px 18px 20px 18px;
             position: relative;
-            overflow-y: auto;
+            overflow: hidden;
         }
 
-        /* رسمة البرق الكبيرة باللون الأصفر والحدود الداكنة بالمنتصف */
-        .big-lightning-bg {
+        /* --- البرق الخلفي المطابق للصورة بالمسطرة --- */
+        .svg-lightning-bg {
             position: absolute;
-            top: 2%;
-            left: 50%;
-            transform: translateX(-50%) rotate(12deg);
-            font-size: 380px;
-            color: #facc15;
-            text-shadow: 
-                -4px -4px 0 #000, 
-                 4px -4px 0 #000, 
-                -4px  4px 0 #000, 
-                 4px  4px 0 #000,
-                 0px 10px 20px rgba(0,0,0,0.3);
+            top: -2%;
+            left: -5%;
+            width: 110%;
+            height: 105%;
             z-index: 1;
             pointer-events: none;
-            opacity: 0.95;
-            line-height: 1;
         }
 
-        /* --- 1. رأس الصفحة --- */
+        /* --- العنوان الرئيسي --- */
         .page-header {
             text-align: center;
-            z-index: 5;
-            margin-top: 10px;
-            margin-bottom: 22px;
+            z-index: 10;
+            margin-bottom: 28px;
         }
 
         .page-title {
-            font-size: 44px;
+            font-size: 46px;
             font-weight: 900;
             color: #ffffff;
+            /* حد أسود كرتوني بارز 3D */
             text-shadow: 
                 3px 3px 0 #000,
                 -3px -3px 0 #000,
                 3px -3px 0 #000,
                 -3px 3px 0 #000,
-                0 5px 0 #000;
+                0 6px 0 #000,
+                0 8px 12px rgba(0,0,0,0.3);
             letter-spacing: 1px;
             line-height: 1;
-            margin-bottom: 4px;
+            margin-bottom: 6px;
         }
 
         .page-subtitle {
-            font-size: 14px;
+            font-size: 14.5px;
             font-weight: 800;
-            color: #1e293b;
-            text-shadow: 0 1px 2px rgba(255,255,255,0.8);
+            color: #0f172a;
         }
 
-        /* --- 2. شبكة المربعات (2x2) --- */
+        /* --- شبكة المربعات 2x2 --- */
         .games-grid {
             width: 100%;
-            max-width: 390px;
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 14px;
-            z-index: 5;
-            padding-bottom: 15px;
+            gap: 15px;
+            z-index: 10;
         }
 
-        /* المربع/الكارت الخالي من أي كتابة */
+        /* تصميم الكارت الأسود وحجمه المضبوط */
         .game-card {
             width: 100%;
-            aspect-ratio: 1 / 1.15;
+            aspect-ratio: 1 / 1.08; /* أبعاد المربع من الصورة */
             background: #000000;
-            border-radius: 22px;
-            overflow: hidden;
-            box-shadow: 0 8px 18px rgba(0, 0, 0, 0.45);
+            border-radius: 24px;
+            padding: 3px;
+            box-shadow: 0 10px 22px rgba(0, 0, 0, 0.4);
             cursor: pointer;
-            transition: transform 0.15s ease;
-            border: 3px solid #000000;
+            transition: transform 0.12s ease;
+            border: 3.5px solid #000000;
+            overflow: hidden;
             display: flex;
             justify-content: center;
             align-items: center;
-            position: relative;
         }
 
         .game-card:active {
-            transform: scale(0.96);
+            transform: scale(0.95);
         }
 
         .game-card img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            border-radius: 18px;
+            border-radius: 19px;
+            display: block;
         }
 
-        /* زر العودة للرئيسية */
+        /* زر الرجوع للرئيسية */
         .back-btn {
             position: absolute;
-            top: 15px;
-            right: 15px;
-            width: 38px;
-            height: 38px;
+            top: 18px;
+            right: 18px;
+            width: 40px;
+            height: 40px;
             background: #ffffff;
             border-radius: 50%;
             display: flex;
             justify-content: center;
             align-items: center;
-            font-size: 16px;
+            font-size: 18px;
             font-weight: bold;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.18);
             cursor: pointer;
-            z-index: 10;
-            border: 1px solid #d1d5db;
+            z-index: 20;
+            border: 2px solid #000000;
         }
     </style>
 </head>
@@ -152,7 +145,13 @@
 
     <div class="app-viewport">
         
-        <div class="big-lightning-bg">⚡</div>
+        <svg class="svg-lightning-bg" viewBox="0 0 200 300" preserveAspectRatio="none">
+            <path d="M 125,0 L 165,0 L 95,135 L 145,135 L 55,300 L 90,165 L 45,165 Z" 
+                  fill="#eab308" 
+                  stroke="#000000" 
+                  stroke-width="5" 
+                  stroke-linejoin="round" />
+        </svg>
 
         <div class="back-btn" onclick="window.location.href='main.html'">➔</div>
 
