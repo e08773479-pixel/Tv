@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>JOKER GAMES - الملف الشخصي الاحترافي</title>
+    <title>JOKER GAMES - الملف الشخصي</title>
     <style>
         :root {
             --bg-main: #dfceb7;
@@ -21,19 +21,25 @@
             padding: 0;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             user-select: none;
+            -webkit-user-select: none;
+            touch-action: manipulation;
         }
 
+        /* تثبيت الشاشة بالكامل ومنع السحب */
         html, body {
             width: 100vw;
             height: 100vh;
-            overflow: hidden;
+            overflow: hidden !important;
+            position: fixed;
+            top: 0;
+            left: 0;
             background: var(--bg-main);
             display: flex;
             justify-content: center;
             align-items: center;
         }
 
-        /* حاوية الموبايل */
+        /* حاوية الموبايل الثابتة */
         .app-viewport {
             width: 100vw;
             height: 100vh;
@@ -44,10 +50,10 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: flex-start;
-            padding: 20px 16px;
+            justify-content: space-between;
+            padding: 15px;
             position: relative;
-            overflow-y: auto;
+            overflow: hidden !important;
         }
 
         /* البرق الخلفي */
@@ -61,19 +67,19 @@
             pointer-events: none;
         }
 
-        /* زر العودة للرئيسية */
+        /* زر العودة */
         .back-btn {
             position: absolute;
-            top: 15px;
-            right: 15px;
-            width: 42px;
-            height: 42px;
+            top: 12px;
+            right: 12px;
+            width: 40px;
+            height: 40px;
             background: #ffffff;
             border-radius: 50%;
             display: flex;
             justify-content: center;
             align-items: center;
-            font-size: 20px;
+            font-size: 18px;
             font-weight: bold;
             box-shadow: 0 4px 10px rgba(0,0,0,0.2);
             cursor: pointer;
@@ -81,16 +87,17 @@
             border: 3.5px solid var(--border-color);
         }
 
-        /* العنوان العلوي */
+        .back-btn:active { transform: scale(0.9); }
+
+        /* العنوان */
         .page-header {
             text-align: center;
             z-index: 10;
             margin-top: 5px;
-            margin-bottom: 15px;
         }
 
         .page-title {
-            font-size: 36px;
+            font-size: 32px;
             font-weight: 900;
             color: #ffffff;
             text-shadow: 
@@ -98,7 +105,7 @@
                 -3px -3px 0 #000,
                 3px -3px 0 #000,
                 -3px 3px 0 #000,
-                0 6px 0 #000;
+                0 5px 0 #000;
             line-height: 1;
         }
 
@@ -107,29 +114,28 @@
             width: 100%;
             background: #ffffff;
             border: 4px solid var(--border-color);
-            border-radius: 22px;
-            padding: 15px;
+            border-radius: 20px;
+            padding: 12px;
             display: flex;
             flex-direction: column;
             align-items: center;
             box-shadow: 0 6px 0 var(--border-color);
             z-index: 10;
             position: relative;
-            margin-top: 35px;
-            margin-bottom: 15px;
+            margin-top: 30px;
         }
 
         .avatar-container {
-            width: 95px;
-            height: 95px;
+            width: 85px;
+            height: 85px;
             border-radius: 50%;
             border: 4px solid var(--border-color);
             background: linear-gradient(135deg, #a855f7, #6b21a8);
             display: flex;
             justify-content: center;
             align-items: center;
-            font-size: 48px;
-            margin-top: -60px;
+            font-size: 42px;
+            margin-top: -50px;
             box-shadow: 0 5px 0 var(--border-color);
             position: relative;
             cursor: pointer;
@@ -142,55 +148,55 @@
             background: var(--accent-yellow);
             border: 2px solid var(--border-color);
             border-radius: 50%;
-            width: 28px;
-            height: 28px;
+            width: 26px;
+            height: 26px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 13px;
+            font-size: 12px;
         }
 
         .player-name {
-            font-size: 22px;
+            font-size: 20px;
             font-weight: 900;
             color: #000000;
-            margin-top: 6px;
+            margin-top: 4px;
         }
 
         .rank-badge {
-            margin-top: 5px;
+            margin-top: 4px;
             background: var(--accent-yellow);
             color: #000;
             font-weight: 900;
-            font-size: 12px;
-            padding: 4px 14px;
+            font-size: 11px;
+            padding: 3px 12px;
             border-radius: 20px;
             border: 2px solid var(--border-color);
             box-shadow: 0 2px 0 var(--border-color);
         }
 
-        /* قسم نظام المستويات الـ XP */
+        /* شريط المستوى */
         .level-container {
             width: 100%;
             background: #f8fafc;
             border: 2.5px solid var(--border-color);
-            border-radius: 14px;
-            padding: 10px 12px;
-            margin-top: 12px;
+            border-radius: 12px;
+            padding: 8px 10px;
+            margin-top: 8px;
         }
 
         .level-header {
             display: flex;
             justify-content: space-between;
-            font-size: 12px;
+            font-size: 11px;
             font-weight: 900;
             color: #000;
-            margin-bottom: 5px;
+            margin-bottom: 4px;
         }
 
         .progress-bar-outer {
             width: 100%;
-            height: 12px;
+            height: 10px;
             background: #e2e8f0;
             border-radius: 8px;
             border: 2px solid var(--border-color);
@@ -209,31 +215,29 @@
             width: 100%;
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 10px;
+            gap: 8px;
             z-index: 10;
-            margin-bottom: 15px;
         }
 
         .stat-box {
             background: #ffffff;
-            border: 3.5px solid var(--border-color);
-            border-radius: 16px;
-            padding: 10px;
+            border: 3px solid var(--border-color);
+            border-radius: 14px;
+            padding: 8px;
             text-align: center;
-            box-shadow: 0 4px 0 var(--border-color);
+            box-shadow: 0 3px 0 var(--border-color);
         }
 
         .stat-value {
-            font-size: 20px;
+            font-size: 18px;
             font-weight: 900;
             color: #000000;
         }
 
         .stat-label {
-            font-size: 11px;
+            font-size: 10px;
             font-weight: 800;
             color: #475569;
-            margin-top: 2px;
         }
 
         /* الأزرار */
@@ -241,29 +245,28 @@
             width: 100%;
             display: flex;
             flex-direction: column;
-            gap: 10px;
+            gap: 8px;
             z-index: 10;
-            margin-bottom: 15px;
         }
 
         .btn-main {
             width: 100%;
-            padding: 12px;
-            border-radius: 16px;
-            border: 3.5px solid var(--border-color);
-            font-size: 15px;
+            padding: 10px;
+            border-radius: 14px;
+            border: 3px solid var(--border-color);
+            font-size: 14px;
             font-weight: 900;
             cursor: pointer;
-            box-shadow: 0 5px 0 var(--border-color);
+            box-shadow: 0 4px 0 var(--border-color);
             transition: transform 0.1s;
             display: flex;
             justify-content: center;
             align-items: center;
-            gap: 8px;
+            gap: 6px;
         }
 
         .btn-main:active {
-            transform: translateY(3px);
+            transform: translateY(2px);
             box-shadow: 0 2px 0 var(--border-color);
         }
 
@@ -272,6 +275,83 @@
         .btn-blue { background: #3b82f6; color: #fff; }
         .btn-red { background: var(--accent-red); color: #fff; }
 
+        /* نافذة التعديل الترحيبية الاحترافية (Modal) */
+        .modal-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 100;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            backdrop-filter: blur(3px);
+        }
+
+        .modal-card {
+            width: 100%;
+            background: #ffffff;
+            border: 4px solid var(--border-color);
+            border-radius: 20px;
+            padding: 20px;
+            box-shadow: 0 8px 0 var(--border-color);
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            text-align: center;
+            animation: popIn 0.2s ease-out;
+        }
+
+        @keyframes popIn {
+            0% { transform: scale(0.8); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        .modal-title {
+            font-size: 18px;
+            font-weight: 900;
+            color: #000;
+        }
+
+        .modal-input {
+            width: 100%;
+            padding: 10px;
+            border: 2.5px solid var(--border-color);
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: 800;
+            text-align: center;
+            outline: none;
+        }
+
+        .avatar-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            margin: 5px 0;
+        }
+
+        .avatar-option {
+            font-size: 30px;
+            background: #f1f5f9;
+            border: 2px solid var(--border-color);
+            border-radius: 12px;
+            padding: 6px;
+            cursor: pointer;
+        }
+
+        .avatar-option:active {
+            transform: scale(0.9);
+            background: var(--accent-yellow);
+        }
+
+        .modal-btns {
+            display: flex;
+            gap: 8px;
+        }
     </style>
 </head>
 <body>
@@ -293,13 +373,12 @@
         </div>
 
         <div class="profile-card">
-            <div class="avatar-container" onclick="changeAvatar()">
+            <div class="avatar-container" onclick="openAvatarModal()">
                 <span id="playerAvatar">🃏</span>
                 <div class="edit-badge">✏️</div>
             </div>
             
             <div class="player-name" id="userName">اللاعب الجوكر</div>
-            
             <div class="rank-badge" id="rankBadge">🏆 التصنيف: برونزي</div>
 
             <div class="level-container">
@@ -333,47 +412,95 @@
         </div>
 
         <div class="action-buttons">
-            <button class="btn-main btn-yellow" onclick="changeName()">✏️ تغيير اسم اللاعب</button>
-            <button class="btn-main btn-blue" onclick="changePassword()">🔑 تغيير كلمة السر</button>
-            <button class="btn-main btn-purple" onclick="changeAvatar()">🎭 تغيير الأفاتار / الشخصية</button>
-            <button class="btn-main btn-red" onclick="logout()">🚪 تسجيل الخروج</button>
+            <button class="btn-main btn-yellow" onclick="openNameModal()">✏️ تغيير اسم اللاعب</button>
+            <button class="btn-main btn-blue" onclick="openPassModal()">🔑 تغيير كلمة السر</button>
+            <button class="btn-main btn-purple" onclick="openAvatarModal()">🎭 تغيير الشخصية</button>
+            <button class="btn-main btn-red" onclick="openLogoutModal()">🚪 تسجيل الخروج</button>
         </div>
 
     </div>
 
+    <div class="modal-overlay" id="nameModal">
+        <div class="modal-card">
+            <div class="modal-title">✏️ اكتب اسمك الجديد</div>
+            <input type="text" id="nameInput" class="modal-input" placeholder="اسم اللاعب...">
+            <div class="modal-btns">
+                <button class="btn-main btn-yellow" onclick="saveName()">حفظ</button>
+                <button class="btn-main btn-red" onclick="closeModal('nameModal')">إلغاء</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="passModal">
+        <div class="modal-card">
+            <div class="modal-title">🔑 تغيير كلمة السر</div>
+            <input type="password" id="oldPassInput" class="modal-input" placeholder="كلمة السر الحالية">
+            <input type="password" id="newPassInput" class="modal-input" placeholder="كلمة السر الجديدة">
+            <div class="modal-btns">
+                <button class="btn-main btn-blue" onclick="savePass()">تغيير</button>
+                <button class="btn-main btn-red" onclick="closeModal('passModal')">إلغاء</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="avatarModal">
+        <div class="modal-card">
+            <div class="modal-title">🎭 اختر شخصيتك المفضل</div>
+            <div class="avatar-grid">
+                <div class="avatar-option" onclick="selectAvatar('🃏')">🃏</div>
+                <div class="avatar-option" onclick="selectAvatar('🥷')">🥷</div>
+                <div class="avatar-option" onclick="selectAvatar('🦁')">🦁</div>
+                <div class="avatar-option" onclick="selectAvatar('👑')">👑</div>
+                <div class="avatar-option" onclick="selectAvatar('🔥')">🔥</div>
+                <div class="avatar-option" onclick="selectAvatar('🤖')">🤖</div>
+                <div class="avatar-option" onclick="selectAvatar('💀')">💀</div>
+                <div class="avatar-option" onclick="selectAvatar('🎯')">🎯</div>
+            </div>
+            <button class="btn-main btn-red" onclick="closeModal('avatarModal')">إلغاء</button>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="logoutModal">
+        <div class="modal-card">
+            <div class="modal-title">🚪 هل تريد تسجيل الخروج؟</div>
+            <p style="font-size: 12px; font-weight: 800; color: #64748b;">سيتم إعادتك إلى القائمة الرئيسية للتطبيق.</p>
+            <div class="modal-btns">
+                <button class="btn-main btn-red" onclick="confirmLogout()">تأكيد الخروج</button>
+                <button class="btn-main btn-yellow" onclick="closeModal('logoutModal')">إلغاء</button>
+            </div>
+        </div>
+    </div>
+
     <script>
-        // تحميل وقراءة البيانات عند فتح الصفحة
+        // قراءة البيانات وتحديث الشاشة فوراً عند الفتح
         window.onload = function() {
             updateUI();
         };
 
         function updateUI() {
-            // جلب البيانات المخزنة محلياً
             let name = localStorage.getItem('joker_user_name') || 'اللاعب الجوكر';
             let avatar = localStorage.getItem('joker_user_avatar') || '🃏';
             let score = parseInt(localStorage.getItem('joker_total_score')) || 0;
             let wins = parseInt(localStorage.getItem('joker_wins')) || 0;
             let losses = parseInt(localStorage.getItem('joker_losses')) || 0;
 
-            // 1. حساب نظام المستويات (كل 1000 نقطة بـ ليفل حتى ليفل 100)
+            // حساب المستويات (1000 نقطة لكل مستوى)
             let level = Math.floor(score / 1000) + 1;
-            if (level > 100) level = 100; // أقصى حد 100
+            if (level > 100) level = 100;
 
             let currentLevelXP = score % 1000;
             let xpPercent = (currentLevelXP / 1000) * 100;
 
-            // 2. حساب التصنيف (Rank) بناءً على السكور والمستوى
+            // حساب التصنيف
             let rank = "برونزي 🐣";
             if (score >= 3000) rank = "فضي ⚔️";
             if (score >= 8000) rank = "ذهبي 🥇";
             if (score >= 15000) rank = "بلاتينيوم 💎";
             if (score >= 30000) rank = "أسطورة الجوكر 🏆";
 
-            // 3. حساب نسبة الفوز
             let totalGames = wins + losses;
             let winRate = totalGames > 0 ? Math.round((wins / totalGames) * 100) : 0;
 
-            // تحديث شاشة البروفايل
             document.getElementById('userName').innerText = name;
             document.getElementById('playerAvatar').innerText = avatar;
             document.getElementById('statScore').innerText = score.toLocaleString();
@@ -387,56 +514,68 @@
             document.getElementById('rankBadge').innerText = "🏆 التصنيف: " + rank;
         }
 
-        // تغيير اسم اللاعب
-        function changeName() {
-            let currentName = localStorage.getItem('joker_user_name') || 'اللاعب الجوكر';
-            let newName = prompt("أدخل اسم اللاعب الجديد:", currentName);
-            if (newName && newName.trim() !== "") {
-                localStorage.setItem('joker_user_name', newName.trim());
+        // فتح وإغلاق النوافذ الترحيبية
+        function openNameModal() {
+            document.getElementById('nameInput').value = localStorage.getItem('joker_user_name') || '';
+            document.getElementById('nameModal').style.display = 'flex';
+        }
+
+        function openPassModal() {
+            document.getElementById('oldPassInput').value = '';
+            document.getElementById('newPassInput').value = '';
+            document.getElementById('passModal').style.display = 'flex';
+        }
+
+        function openAvatarModal() {
+            document.getElementById('avatarModal').style.display = 'flex';
+        }
+
+        function openLogoutModal() {
+            document.getElementById('logoutModal').style.display = 'flex';
+        }
+
+        function closeModal(id) {
+            document.getElementById(id).style.display = 'none';
+        }
+
+        // حفظ الاسم
+        function saveName() {
+            let val = document.getElementById('nameInput').value.trim();
+            if (val) {
+                localStorage.setItem('joker_user_name', val);
                 updateUI();
-                alert("تم تغيير الاسم بنجاح! ✅");
+                closeModal('nameModal');
             }
         }
 
         // تغيير كلمة السر
-        function changePassword() {
-            let oldPass = prompt("أدخل كلمة السر الحالية:");
-            let savedPass = localStorage.getItem('joker_user_pass') || '123456';
+        function savePass() {
+            let oldP = document.getElementById('oldPassInput').value;
+            let newP = document.getElementById('newPassInput').value;
+            let savedP = localStorage.getItem('joker_user_pass') || '123456';
 
-            if (oldPass === savedPass) {
-                let newPass = prompt("أدخل كلمة السر الجديدة:");
-                if (newPass && newPass.trim().length >= 4) {
-                    localStorage.setItem('joker_user_pass', newPass.trim());
-                    alert("تم تغيير كلمة السر بنجاح! 🔒");
-                } else {
-                    alert("كلمة السر يجب أن تكون 4 أرقام/حروف على الأقل!");
+            if (oldP === savedP) {
+                if (newP.length >= 4) {
+                    localStorage.setItem('joker_user_pass', newP);
+                    closeModal('passModal');
                 }
-            } else if (oldPass !== null) {
-                alert("كلمة السر الحالية غير صحيحة! ❌");
             }
         }
 
-        // تغيير الأفاتار
-        function changeAvatar() {
-            const avatars = ['🃏', '🥷', '🦁', '👑', '🔥', '🤖', '💀', '🎯'];
-            let choice = prompt("اختر رقم الشخصية:\n1- 🃏\n2- 🥷\n3- 🦁\n4- 👑\n5- 🔥\n6- 🤖\n7- 💀\n8- 🎯");
-            let index = parseInt(choice) - 1;
-            if (index >= 0 && index < avatars.length) {
-                localStorage.setItem('joker_user_avatar', avatars[index]);
-                updateUI();
-            }
+        // اختيار الشخصية
+        function selectAvatar(emoji) {
+            localStorage.setItem('joker_user_avatar', emoji);
+            updateUI();
+            closeModal('avatarModal');
         }
 
-        // العودة للقائمة الرئيسية
+        // التوجيه للواجهة الأولى
         function goToHome() {
             window.location.href = 'index.html';
         }
 
-        // تسجيل الخروج
-        function logout() {
-            if (confirm("هل تريد تسجيل الخروج والعودة للواجهة الرئيسية؟")) {
-                window.location.href = 'index.html'; // بيوديه لأول قائمة في التطبيق
-            }
+        function confirmLogout() {
+            window.location.href = 'index.html';
         }
     </script>
 </body>
