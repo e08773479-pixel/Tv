@@ -3,264 +3,441 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>JOKER GAMES - نظام التصنيف العالمي</title>
+    <title>JOKER GAMES - الملف الشخصي الاحترافي</title>
     <style>
         :root {
-            --joker-purple: #7c3aed;
-            --joker-green: #22c55e;
-            --joker-gold: #facc15;
-            --joker-dark: #0f172a;
-            --joker-card: #1e293b;
+            --bg-main: #dfceb7;
+            --bg-dots: #c2aa8e;
+            --primary: #7c3aed;
+            --accent-yellow: #facc15;
+            --accent-green: #22c55e;
+            --accent-red: #ef4444;
+            --border-color: #000000;
         }
 
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, sans-serif; }
-        
-        body {
-            background: var(--joker-dark);
-            color: white;
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            user-select: none;
+        }
+
+        html, body {
+            width: 100vw;
+            height: 100vh;
+            overflow: hidden;
+            background: var(--bg-main);
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
-            overflow: hidden;
         }
 
         /* حاوية الموبايل */
-        .app-container {
-            width: 100%;
-            height: 100%;
-            max-width: 450px;
-            background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%);
-            position: relative;
+        .app-viewport {
+            width: 100vw;
+            height: 100vh;
+            max-width: 430px;
+            background-color: var(--bg-main);
+            background-image: radial-gradient(var(--bg-dots) 24%, transparent 24%);
+            background-size: 15px 15px;
             display: flex;
             flex-direction: column;
-            padding: 20px;
-            border: 2px solid #334155;
-        }
-
-        /* رأس الصفحة - المعلومات الأساسية */
-        .header {
-            text-align: center;
-            margin-top: 20px;
+            align-items: center;
+            justify-content: flex-start;
+            padding: 20px 16px;
             position: relative;
+            overflow-y: auto;
         }
 
-        .avatar-wrapper {
-            width: 120px;
-            height: 120px;
-            margin: 0 auto;
+        /* البرق الخلفي */
+        .svg-lightning-bg {
+            position: absolute;
+            top: -2%;
+            left: -5%;
+            width: 110%;
+            height: 105%;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        /* زر العودة للرئيسية */
+        .back-btn {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            width: 42px;
+            height: 42px;
+            background: #ffffff;
             border-radius: 50%;
-            border: 4px solid var(--joker-purple);
-            position: relative;
-            background: #334155;
             display: flex;
             justify-content: center;
             align-items: center;
-            font-size: 60px;
-            box-shadow: 0 0 20px rgba(124, 58, 237, 0.5);
+            font-size: 20px;
+            font-weight: bold;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            cursor: pointer;
+            z-index: 20;
+            border: 3.5px solid var(--border-color);
         }
 
-        .level-badge {
-            position: absolute;
-            bottom: -5px;
-            right: -5px;
-            background: var(--joker-gold);
-            color: black;
+        /* العنوان العلوي */
+        .page-header {
+            text-align: center;
+            z-index: 10;
+            margin-top: 5px;
+            margin-bottom: 15px;
+        }
+
+        .page-title {
+            font-size: 36px;
             font-weight: 900;
-            padding: 5px 12px;
-            border-radius: 15px;
-            border: 2px solid black;
-            font-size: 14px;
+            color: #ffffff;
+            text-shadow: 
+                3px 3px 0 #000,
+                -3px -3px 0 #000,
+                3px -3px 0 #000,
+                -3px 3px 0 #000,
+                0 6px 0 #000;
+            line-height: 1;
         }
 
-        .user-name { font-size: 26px; font-weight: 900; margin-top: 15px; letter-spacing: 1px; }
-        .rank-name { color: var(--joker-green); font-weight: 800; font-size: 16px; margin-top: 5px; text-transform: uppercase; }
-
-        /* نظام الليفل والـ XP */
-        .xp-section {
-            background: var(--joker-card);
-            border-radius: 20px;
-            padding: 20px;
-            margin: 25px 0;
-            border: 1px solid #334155;
-        }
-
-        .xp-header { display: flex; justify-content: space-between; margin-bottom: 10px; font-weight: bold; font-size: 14px; }
-        
-        .progress-container {
+        /* كارت البروفايل */
+        .profile-card {
             width: 100%;
-            height: 15px;
-            background: #0f172a;
-            border-radius: 10px;
-            border: 1px solid #475569;
+            background: #ffffff;
+            border: 4px solid var(--border-color);
+            border-radius: 22px;
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            box-shadow: 0 6px 0 var(--border-color);
+            z-index: 10;
+            position: relative;
+            margin-top: 35px;
+            margin-bottom: 15px;
+        }
+
+        .avatar-container {
+            width: 95px;
+            height: 95px;
+            border-radius: 50%;
+            border: 4px solid var(--border-color);
+            background: linear-gradient(135deg, #a855f7, #6b21a8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 48px;
+            margin-top: -60px;
+            box-shadow: 0 5px 0 var(--border-color);
+            position: relative;
+            cursor: pointer;
+        }
+
+        .edit-badge {
+            position: absolute;
+            bottom: -2px;
+            left: -2px;
+            background: var(--accent-yellow);
+            border: 2px solid var(--border-color);
+            border-radius: 50%;
+            width: 28px;
+            height: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 13px;
+        }
+
+        .player-name {
+            font-size: 22px;
+            font-weight: 900;
+            color: #000000;
+            margin-top: 6px;
+        }
+
+        .rank-badge {
+            margin-top: 5px;
+            background: var(--accent-yellow);
+            color: #000;
+            font-weight: 900;
+            font-size: 12px;
+            padding: 4px 14px;
+            border-radius: 20px;
+            border: 2px solid var(--border-color);
+            box-shadow: 0 2px 0 var(--border-color);
+        }
+
+        /* قسم نظام المستويات الـ XP */
+        .level-container {
+            width: 100%;
+            background: #f8fafc;
+            border: 2.5px solid var(--border-color);
+            border-radius: 14px;
+            padding: 10px 12px;
+            margin-top: 12px;
+        }
+
+        .level-header {
+            display: flex;
+            justify-content: space-between;
+            font-size: 12px;
+            font-weight: 900;
+            color: #000;
+            margin-bottom: 5px;
+        }
+
+        .progress-bar-outer {
+            width: 100%;
+            height: 12px;
+            background: #e2e8f0;
+            border-radius: 8px;
+            border: 2px solid var(--border-color);
             overflow: hidden;
         }
 
-        .progress-bar {
-            height: 100%;
+        .progress-bar-inner {
             width: 0%;
-            background: linear-gradient(90deg, var(--joker-purple), var(--joker-green));
-            transition: width 0.5s ease-in-out;
-            box-shadow: 0 0 10px var(--joker-purple);
+            height: 100%;
+            background: linear-gradient(90deg, #3b82f6, var(--accent-green));
+            transition: width 0.4s ease;
         }
 
         /* شبكة الإحصائيات */
         .stats-grid {
+            width: 100%;
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 15px;
-            margin-bottom: 25px;
+            gap: 10px;
+            z-index: 10;
+            margin-bottom: 15px;
         }
 
-        .stat-card {
-            background: rgba(255,255,255,0.05);
-            padding: 15px;
-            border-radius: 15px;
+        .stat-box {
+            background: #ffffff;
+            border: 3.5px solid var(--border-color);
+            border-radius: 16px;
+            padding: 10px;
             text-align: center;
-            border: 1px solid #334155;
+            box-shadow: 0 4px 0 var(--border-color);
         }
 
-        .stat-value { font-size: 22px; font-weight: 900; display: block; }
-        .stat-label { font-size: 12px; color: #94a3b8; font-weight: bold; }
+        .stat-value {
+            font-size: 20px;
+            font-weight: 900;
+            color: #000000;
+        }
+
+        .stat-label {
+            font-size: 11px;
+            font-weight: 800;
+            color: #475569;
+            margin-top: 2px;
+        }
 
         /* الأزرار */
-        .btn {
+        .action-buttons {
             width: 100%;
-            padding: 15px;
-            border-radius: 15px;
-            border: none;
-            font-size: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            z-index: 10;
+            margin-bottom: 15px;
+        }
+
+        .btn-main {
+            width: 100%;
+            padding: 12px;
+            border-radius: 16px;
+            border: 3.5px solid var(--border-color);
+            font-size: 15px;
             font-weight: 900;
             cursor: pointer;
-            margin-bottom: 10px;
-            transition: transform 0.2s;
+            box-shadow: 0 5px 0 var(--border-color);
+            transition: transform 0.1s;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
         }
 
-        .btn:active { transform: scale(0.95); }
-        .btn-edit { background: var(--joker-purple); color: white; }
-        .btn-reset { background: #ef4444; color: white; margin-top: auto; }
-
-        .back-btn {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            font-size: 24px;
-            cursor: pointer;
-            z-index: 10;
+        .btn-main:active {
+            transform: translateY(3px);
+            box-shadow: 0 2px 0 var(--border-color);
         }
+
+        .btn-yellow { background: var(--accent-yellow); color: #000; }
+        .btn-purple { background: var(--primary); color: #fff; }
+        .btn-blue { background: #3b82f6; color: #fff; }
+        .btn-red { background: var(--accent-red); color: #fff; }
 
     </style>
 </head>
 <body>
 
-    <div class="app-container">
-        <div class="back-btn" onclick="history.back()">✖</div>
+    <div class="app-viewport">
+        
+        <svg class="svg-lightning-bg" viewBox="0 0 200 300" preserveAspectRatio="none">
+            <path d="M 125,0 L 165,0 L 95,135 L 145,135 L 55,300 L 90,165 L 45,165 Z" 
+                  fill="#eab308" 
+                  stroke="#000000" 
+                  stroke-width="5" 
+                  stroke-linejoin="round" />
+        </svg>
 
-        <div class="header">
-            <div class="avatar-wrapper">
-                <span id="displayAvatar">🃏</span>
-                <div class="level-badge">LVL <span id="displayLevel">1</span></div>
-            </div>
-            <h1 class="user-name" id="displayName">اللاعب الجوكر</h1>
-            <p class="rank-name" id="displayRank">برونزي III</p>
+        <div class="back-btn" onclick="goToHome()">➔</div>
+
+        <div class="page-header">
+            <div class="page-title">الملف الشخصي</div>
         </div>
 
-        <div class="xp-section">
-            <div class="xp-header">
-                <span>التقدم للمستوى التالي</span>
-                <span id="xpText">0 / 1000 XP</span>
+        <div class="profile-card">
+            <div class="avatar-container" onclick="changeAvatar()">
+                <span id="playerAvatar">🃏</span>
+                <div class="edit-badge">✏️</div>
             </div>
-            <div class="progress-container">
-                <div class="progress-bar" id="xpBar"></div>
+            
+            <div class="player-name" id="userName">اللاعب الجوكر</div>
+            
+            <div class="rank-badge" id="rankBadge">🏆 التصنيف: برونزي</div>
+
+            <div class="level-container">
+                <div class="level-header">
+                    <span id="levelLabel">المستوى 1 ⚡</span>
+                    <span id="xpLabel">0 / 1000 XP</span>
+                </div>
+                <div class="progress-bar-outer">
+                    <div class="progress-bar-inner" id="xpBar"></div>
+                </div>
             </div>
         </div>
 
         <div class="stats-grid">
-            <div class="stat-card">
-                <span class="stat-value" id="statTotalScore">0</span>
-                <span class="stat-label">إجمالي النقاط ⭐</span>
+            <div class="stat-box" style="background: #fef08a;">
+                <div class="stat-value" id="statScore">0</div>
+                <div class="stat-label">إجمالي النقاط ⭐</div>
             </div>
-            <div class="stat-card">
-                <span class="stat-value" id="statWinRate">0%</span>
-                <span class="stat-label">نسبة الفوز 🏆</span>
+            <div class="stat-box" style="background: #bbf7d0;">
+                <div class="stat-value" id="statWins">0</div>
+                <div class="stat-label">الانتصارات 🏆</div>
             </div>
-            <div class="stat-card">
-                <span class="stat-value" id="statWins">0</span>
-                <span class="stat-label">انتصارات</span>
+            <div class="stat-box" style="background: #fecaca;">
+                <div class="stat-value" id="statLosses">0</div>
+                <div class="stat-label">الهزائم ❌</div>
             </div>
-            <div class="stat-card">
-                <span class="stat-value" id="statLosses">0</span>
-                <span class="stat-label">هزائم</span>
+            <div class="stat-box" style="background: #e9d5ff;">
+                <div class="stat-value" id="statWinRate">0%</div>
+                <div class="stat-label">نسبة الفوز 📊</div>
             </div>
         </div>
 
-        <button class="btn btn-edit" onclick="editProfile()">✏️ تعديل الملف الشخصي</button>
-        <button class="btn btn-reset" onclick="resetSystem()">🔄 تصفير كافة البيانات</button>
+        <div class="action-buttons">
+            <button class="btn-main btn-yellow" onclick="changeName()">✏️ تغيير اسم اللاعب</button>
+            <button class="btn-main btn-blue" onclick="changePassword()">🔑 تغيير كلمة السر</button>
+            <button class="btn-main btn-purple" onclick="changeAvatar()">🎭 تغيير الأفاتار / الشخصية</button>
+            <button class="btn-main btn-red" onclick="logout()">🚪 تسجيل الخروج</button>
+        </div>
+
     </div>
 
     <script>
-        // دالة تحديث وعرض البيانات
-        function updateProfileUI() {
-            // سحب البيانات من الملفات الأخرى (LocalStorage)
+        // تحميل وقراءة البيانات عند فتح الصفحة
+        window.onload = function() {
+            updateUI();
+        };
+
+        function updateUI() {
+            // جلب البيانات المخزنة محلياً
+            let name = localStorage.getItem('joker_user_name') || 'اللاعب الجوكر';
+            let avatar = localStorage.getItem('joker_user_avatar') || '🃏';
             let score = parseInt(localStorage.getItem('joker_total_score')) || 0;
             let wins = parseInt(localStorage.getItem('joker_wins')) || 0;
             let losses = parseInt(localStorage.getItem('joker_losses')) || 0;
-            let name = localStorage.getItem('joker_name') || 'اللاعب الجوكر';
-            let avatar = localStorage.getItem('joker_avatar') || '🃏';
 
-            // 1. حساب الليفل (كل 1000 نقطة ليفل)
+            // 1. حساب نظام المستويات (كل 1000 نقطة بـ ليفل حتى ليفل 100)
             let level = Math.floor(score / 1000) + 1;
-            if (level > 100) level = 100; // أقصى ليفل 100
+            if (level > 100) level = 100; // أقصى حد 100
 
-            // 2. حساب الـ XP داخل الليفل الحالي
             let currentLevelXP = score % 1000;
             let xpPercent = (currentLevelXP / 1000) * 100;
 
-            // 3. حساب التصنيف (Rank)
-            let rank = "";
-            if (score < 3000) rank = "برونزي III";
-            else if (score < 10000) rank = "فضي II";
-            else if (score < 30000) rank = "ذهبي I";
-            else if (score < 60000) rank = "بلاتينيوم 💎";
-            else if (score < 100000) rank = "ماستر ⚔️";
-            else rank = "أسطورة الجوكر 🏆";
+            // 2. حساب التصنيف (Rank) بناءً على السكور والمستوى
+            let rank = "برونزي 🐣";
+            if (score >= 3000) rank = "فضي ⚔️";
+            if (score >= 8000) rank = "ذهبي 🥇";
+            if (score >= 15000) rank = "بلاتينيوم 💎";
+            if (score >= 30000) rank = "أسطورة الجوكر 🏆";
 
-            // 4. حساب نسبة الفوز
+            // 3. حساب نسبة الفوز
             let totalGames = wins + losses;
             let winRate = totalGames > 0 ? Math.round((wins / totalGames) * 100) : 0;
 
-            // تحديث العناصر في الصفحة
-            document.getElementById('displayName').innerText = name;
-            document.getElementById('displayAvatar').innerText = avatar;
-            document.getElementById('displayLevel').innerText = level;
-            document.getElementById('displayRank').innerText = rank;
-            document.getElementById('statTotalScore').innerText = score.toLocaleString();
+            // تحديث شاشة البروفايل
+            document.getElementById('userName').innerText = name;
+            document.getElementById('playerAvatar').innerText = avatar;
+            document.getElementById('statScore').innerText = score.toLocaleString();
             document.getElementById('statWins').innerText = wins;
             document.getElementById('statLosses').innerText = losses;
             document.getElementById('statWinRate').innerText = winRate + "%";
-            document.getElementById('xpText').innerText = currentLevelXP + " / 1000 XP";
+
+            document.getElementById('levelLabel').innerText = "المستوى " + level + " ⚡";
+            document.getElementById('xpLabel').innerText = currentLevelXP + " / 1000 XP";
             document.getElementById('xpBar').style.width = xpPercent + "%";
+            document.getElementById('rankBadge').innerText = "🏆 التصنيف: " + rank;
         }
 
-        // دالة التعديل
-        function editProfile() {
-            let newName = prompt("أدخل اسمك الجديد:", localStorage.getItem('joker_name') || "");
-            if(newName) localStorage.setItem('joker_name', newName);
-            updateProfileUI();
-        }
-
-        // دالة التصفير
-        function resetSystem() {
-            if(confirm("هل أنت متأكد من تصفير كل نقاطك وتصنيفك؟")) {
-                localStorage.setItem('joker_total_score', 0);
-                localStorage.setItem('joker_wins', 0);
-                localStorage.setItem('joker_losses', 0);
-                updateProfileUI();
+        // تغيير اسم اللاعب
+        function changeName() {
+            let currentName = localStorage.getItem('joker_user_name') || 'اللاعب الجوكر';
+            let newName = prompt("أدخل اسم اللاعب الجديد:", currentName);
+            if (newName && newName.trim() !== "") {
+                localStorage.setItem('joker_user_name', newName.trim());
+                updateUI();
+                alert("تم تغيير الاسم بنجاح! ✅");
             }
         }
 
-        // التحديث عند الفتح
-        window.onload = updateProfileUI;
+        // تغيير كلمة السر
+        function changePassword() {
+            let oldPass = prompt("أدخل كلمة السر الحالية:");
+            let savedPass = localStorage.getItem('joker_user_pass') || '123456';
+
+            if (oldPass === savedPass) {
+                let newPass = prompt("أدخل كلمة السر الجديدة:");
+                if (newPass && newPass.trim().length >= 4) {
+                    localStorage.setItem('joker_user_pass', newPass.trim());
+                    alert("تم تغيير كلمة السر بنجاح! 🔒");
+                } else {
+                    alert("كلمة السر يجب أن تكون 4 أرقام/حروف على الأقل!");
+                }
+            } else if (oldPass !== null) {
+                alert("كلمة السر الحالية غير صحيحة! ❌");
+            }
+        }
+
+        // تغيير الأفاتار
+        function changeAvatar() {
+            const avatars = ['🃏', '🥷', '🦁', '👑', '🔥', '🤖', '💀', '🎯'];
+            let choice = prompt("اختر رقم الشخصية:\n1- 🃏\n2- 🥷\n3- 🦁\n4- 👑\n5- 🔥\n6- 🤖\n7- 💀\n8- 🎯");
+            let index = parseInt(choice) - 1;
+            if (index >= 0 && index < avatars.length) {
+                localStorage.setItem('joker_user_avatar', avatars[index]);
+                updateUI();
+            }
+        }
+
+        // العودة للقائمة الرئيسية
+        function goToHome() {
+            window.location.href = 'index.html';
+        }
+
+        // تسجيل الخروج
+        function logout() {
+            if (confirm("هل تريد تسجيل الخروج والعودة للواجهة الرئيسية؟")) {
+                window.location.href = 'index.html'; // بيوديه لأول قائمة في التطبيق
+            }
+        }
     </script>
 </body>
 </html>
