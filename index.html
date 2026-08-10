@@ -3,137 +3,251 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>لعبة التفادي الممتعة</title>
+    <title>لعبة كرة القدم - التحدي الكروي</title>
     <style>
         body {
             margin: 0;
-            background: #1a1a2e;
+            background: #1e272e;
             color: white;
-            font-family: sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             text-align: center;
             touch-action: manipulation;
         }
-        h1 { margin: 10px 0 5px; font-size: 20px; }
-        #score { font-size: 18px; color: #4ecca3; margin-bottom: 10px; }
-        canvas {
-            background: #16213e;
-            border: 2px solid #4ecca3;
-            border-radius: 8px;
-            display: block;
-            margin: 0 auto;
-            max-width: 90vw;
-        }
-        .controls {
-            margin-top: 15px;
+        h1 { margin: 10px 0 5px; font-size: 22px; color: #fbc531; }
+        .scoreboard {
             display: flex;
             justify-content: center;
             gap: 20px;
+            font-size: 18px;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+        canvas {
+            background: #2ed573;
+            border: 4px solid #ffffff;
+            border-radius: 6px;
+            display: block;
+            margin: 0 auto;
+            max-width: 95vw;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+        }
+        .controls {
+            margin-top: 15px;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+            max-width: 300px;
+            margin-left: auto;
+            margin-right: auto;
         }
         button {
-            background: #4ecca3;
+            background: #00a8ff;
             border: none;
-            color: #1a1a2e;
-            padding: 15px 30px;
-            font-size: 18px;
+            color: white;
+            padding: 12px;
+            font-size: 16px;
             font-weight: bold;
             border-radius: 8px;
+            cursor: pointer;
+        }
+        button:active { background: #0097e6; }
+        .kick-btn {
+            grid-column: span 3;
+            background: #e1b12c;
+            color: #2f3640;
+            font-size: 18px;
         }
     </style>
 </head>
 <body>
 
-    <h1>لعبة تفادي العقبات 🚀</h1>
-    <div id="score">النقاط: 0</div>
-    <canvas id="gameCanvas" width="300" height="400"></canvas>
+    <h1>⚽ لعبة كرة القدم ⚽</h1>
+    
+    <div class="scoreboard">
+        <div>أنت: <span id="playerScore" style="color: #00a8ff;">0</span></div>
+        <div>الحارس: <span id="keeperScore" style="color: #e84118;">0</span></div>
+    </div>
+
+    <canvas id="field" width="360" height="500"></canvas>
 
     <div class="controls">
-        <button onclick="moveLeft()">◀ شمال</button>
-        <button onclick="moveRight()">يمين ▶</button>
+        <div></div>
+        <button onclick="movePlayer(0, -15)">⬆ فوق</button>
+        <div></div>
+        <button onclick="movePlayer(-15, 0)">◀ شمال</button>
+        <button onclick="movePlayer(0, 15)">⬇ تحت</button>
+        <button onclick="movePlayer(15, 0)">يمين ▶</button>
+        <button class="kick-btn" onclick="kickBall()">شوط الكورة 🚀</button>
     </div>
 
     <script>
-        const canvas = document.getElementById("gameCanvas");
+        const canvas = document.getElementById("field");
         const ctx = canvas.getContext("2d");
-        const scoreElement = document.getElementById("score");
 
-        let score = 0;
-        let gameOver = false;
+        let pScore = 0;
+        let kScore = 0;
+
+        // المرمى
+        const goal = { x: 100, y: 0, width: 160, height: 15 };
 
         // اللاعب
-        const player = {
-            x: 130,
+        const player = { x: 165, y: 400, radius: 15, color: "#00a8ff" };
+
+        // الحارس (ذكاء اصطناعي)
+        const keeper = { x: 150, y: 30, width: 60, height: 12, speed: 2.5, color: "#e84118" };
+
+        // الكرة
+        const ball = {
+            x: 180,
             y: 350,
-            width: 40,
-            height: 40,
-            speed: 25,
-            color: "#4ecca3"
+            radius: 8,
+            vx: 0,
+            vy: 0,
+            friction: 0.96, // احتكاك الأرضية بيبطأ الكورة تدريجياً
+            color: "#ffffff"
         };
 
-        // العقبة
-        const enemy = {
-            x: Math.random() * 260,
-            y: 0,
-            width: 40,
-            height: 40,
-            speed: 4,
-            color: "#e94560"
-        };
+        // رسم خطوط الملعب
+        function drawField() {
+            ctx.fillStyle = "#2ed573";
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-        function drawPlayer() {
+            // خط منتصف الملعب
+            ctx.strokeStyle = "rgba(255, 255, 255, 0.7)";
+            ctx.lineWidth = 3;
+            ctx.beginPath();
+            ctx.moveTo(0, canvas.height / 2);
+            ctx.lineTo(canvas.width, canvas.height / 2);
+            ctx.stroke();
+
+            // دائرة المنتصف
+            ctx.beginPath();
+            ctx.arc(canvas.width / 2, canvas.height / 2, 40, 0, Math.PI * 2);
+            ctx.stroke();
+
+            // المرمى (الشباك)
+            ctx.fillStyle = "rgba(255, 255, 255, 0.3)";
+            ctx.fillRect(goal.x, goal.y, goal.width, goal.height);
+            ctx.strokeRect(goal.x, goal.y, goal.width, goal.height);
+        }
+
+        // رسم الأشخاص والكرة
+        function drawEntities() {
+            // رسم الحارس
+            ctx.fillStyle = keeper.color;
+            ctx.fillRect(keeper.x, keeper.y, keeper.width, keeper.height);
+
+            // رسم اللاعب
+            ctx.beginPath();
+            ctx.arc(player.x, player.y, player.radius, 0, Math.PI * 2);
             ctx.fillStyle = player.color;
-            ctx.fillRect(player.x, player.y, player.width, player.height);
+            ctx.fill();
+            ctx.strokeStyle = "#fff";
+            ctx.stroke();
+
+            // رسم الكرة
+            ctx.beginPath();
+            ctx.arc(ball.x, ball.y, ball.radius, 0, Math.PI * 2);
+            ctx.fillStyle = ball.color;
+            ctx.fill();
+            ctx.strokeStyle = "#000";
+            ctx.stroke();
         }
 
-        function drawEnemy() {
-            ctx.fillStyle = enemy.color;
-            ctx.fillRect(enemy.x, enemy.y, enemy.width, enemy.height);
+        // تحريك اللاعب
+        function movePlayer(dx, dy) {
+            player.x = Math.max(player.radius, Math.min(canvas.width - player.radius, player.x + dx));
+            player.y = Math.max(canvas.height / 2, Math.min(canvas.height - player.radius, player.y + dy));
         }
 
-        function moveLeft() {
-            if (player.x > 0 && !gameOver) player.x -= player.speed;
+        // شوط الكورة
+        function kickBall() {
+            // حساب المسافة بين اللاعب والكرة
+            let dist = Math.hypot(player.x - ball.x, player.y - ball.y);
+            
+            // تسديد الكورة فقط لو كانت قريبة من اللاعب
+            if (dist < player.radius + ball.radius + 15) {
+                let angle = Math.atan2(keeper.y - ball.y, (keeper.x + keeper.width/2) - ball.x);
+                // شوط الكورة في اتجاه المرمى بفرصة تحريف بسيطة
+                ball.vy = -12;
+                ball.vx = (Math.random() - 0.5) * 6;
+            }
         }
 
-        function moveRight() {
-            if (player.x < canvas.width - player.width && !gameOver) player.x += player.speed;
+        // إعطاء الكورة دفعة لو اللاعب زقها برجليه
+        function checkPlayerBallCollision() {
+            let dist = Math.hypot(player.x - ball.x, player.y - ball.y);
+            if (dist < player.radius + ball.radius) {
+                ball.vx = (ball.x - player.x) * 0.3;
+                ball.vy = (ball.y - player.y) * 0.3;
+            }
         }
 
+        // إعادة تشغيل الهجمة عند التسجيل أو الصد
+        function resetPositions() {
+            ball.x = 180;
+            ball.y = 350;
+            ball.vx = 0;
+            ball.vy = 0;
+            player.x = 165;
+            player.y = 400;
+        }
+
+        // تحديث حالة اللعبة
         function update() {
-            if (gameOver) return;
+            // حركة الكورة واحتكاكها بالملعب
+            ball.x += ball.vx;
+            ball.y += ball.vy;
+            ball.vx *= ball.friction;
+            ball.vy *= ball.friction;
 
-            // تحريك العقبة
-            enemy.y += enemy.speed;
-
-            // إذا وصلت العقبة للأسفل
-            if (enemy.y > canvas.height) {
-                enemy.y = -40;
-                enemy.x = Math.random() * (canvas.width - enemy.width);
-                score += 10;
-                scoreElement.innerText = "النقاط: " + score;
-                if (score % 50 === 0) enemy.speed += 1; // زيادة الصعوبة
+            // اصطدام الكورة بالجدران الجانبية
+            if (ball.x - ball.radius < 0 || ball.x + ball.radius > canvas.width) {
+                ball.vx *= -1;
             }
 
-            // فحص التصادم
-            if (
-                player.x < enemy.x + enemy.width &&
-                player.x + player.width > enemy.x &&
-                player.y < enemy.y + enemy.height &&
-                player.y + player.height > enemy.y
+            // حركة الحارس الذكي (بيلحق مكان الكورة)
+            let keeperCenter = keeper.x + keeper.width / 2;
+            if (keeperCenter < ball.x) keeper.x += keeper.speed;
+            if (keeperCenter > ball.x) keeper.x -= keeper.speed;
+
+            checkPlayerBallCollision();
+
+            // 1. فحص الهدف (جووول!)
+            if (ball.y - ball.radius <= goal.height && ball.x > goal.x && ball.x < goal.x + goal.width) {
+                pScore++;
+                document.getElementById("playerScore").innerText = pScore;
+                alert("جــــــوووووووول! 🎉⚽");
+                resetPositions();
+            } 
+            // 2. تصدي الحارس للكورة
+            else if (
+                ball.x > keeper.x && 
+                ball.x < keeper.x + keeper.width && 
+                ball.y - ball.radius <= keeper.y + keeper.height &&
+                ball.y + ball.radius >= keeper.y
             ) {
-                gameOver = true;
-                alert("انتهت اللعبة! مجموع نقاطك: " + score);
-                location.reload();
+                kScore++;
+                document.getElementById("keeperScore").innerText = kScore;
+                alert("الحارس تصدى لها! 🛑");
+                resetPositions();
+            }
+            // 3. الكورة طلعت بره خط المرمى
+            else if (ball.y < 0) {
+                alert("ضربة مرمى / بره! ❌");
+                resetPositions();
             }
         }
 
-        function loop() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            drawPlayer();
-            drawEnemy();
+        // المحرك الأساسي للعبة (Game Loop)
+        function gameLoop() {
+            drawField();
+            drawEntities();
             update();
-            if (!gameOver) requestAnimationFrame(loop);
+            requestAnimationFrame(gameLoop);
         }
 
-        loop();
+        gameLoop();
     </script>
 </body>
 </html>
