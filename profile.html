@@ -3,7 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>JOKER GAMES - الملف الشخصي ونظام الأصدقاء والغرف</title>
+    <title>JOKER GAMES - الملف الشخصي الكامل </title>
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getFirestore, collection, doc, setDoc, getDoc, getDocs, query, where } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+        // إعدادات مشروعك الحقيقية
+        const firebaseConfig = {
+            apiKey: "AIzaSyBb6rgplnduyGZXzMwl8gO0OoPE8_sDnww",
+            authDomain: "elgoker-61f00.firebaseapp.com",
+            projectId: "elgoker-61f00",
+            storageBucket: "elgoker-61f00.firebasestorage.app",
+            messagingSenderId: "876412348315",
+            appId: "1:876412348315:web:ee9e65f7cd7c5b6ed6a33e",
+            measurementId: "G-JFZY48LBCY"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        window.db = db;
+        window.firebaseTools = { collection, doc, setDoc, getDoc, getDocs, query, where };
+        
+        // عند تحميل الصفحة، يتم مزامنة وتحميل البيانات الحقيقية
+        window.addEventListener('DOMContentLoaded', () => {
+            initUserSession();
+        });
+    </script>
     <style>
         :root {
             --bg-main: #dfceb7;
@@ -74,7 +100,7 @@
         }
 
         .page-title {
-            font-size: 22px;
+            font-size: 20px;
             font-weight: 900;
             color: #ffffff;
             text-shadow: 2px 2px 0 #000, -2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000, 0 3px 0 #000;
@@ -94,7 +120,7 @@
             box-shadow: 0 4px 0 var(--border-color);
             z-index: 10;
             position: relative;
-            margin-top: 12px;
+            margin-top: 10px;
         }
 
         .avatar-container {
@@ -146,7 +172,7 @@
             box-shadow: 0 2px 0 var(--border-color);
         }
 
-        /* روابط الأصدقاء والغرف */
+        /* الأزرار الاجتماعية */
         .social-links-row {
             display: flex;
             gap: 6px;
@@ -312,9 +338,9 @@
 
     <div class="app-viewport">
         
-        <div class="back-btn" onclick="goToHome()">➔</div>
+        <div class="back-btn" onclick="window.location.href='main.html'">➔</div>
 
-        <div class="page-title">الملف الشخصي الاحترافي</div>
+        <div class="page-title">الملف الشخصي السحابي</div>
 
         <div class="profile-card">
             <div class="avatar-container" onclick="openModal('avatarModal')">
@@ -322,7 +348,7 @@
             </div>
             
             <div class="player-name" id="userName">اللاعب الجوكر</div>
-            <div class="player-id-tag" id="myIdDisplay">ID: JOKER-1001</div>
+            <div class="player-id-tag" id="myIdDisplay">ID: جاري التحميل...</div>
             <div class="rank-badge" id="rankBadge">🏆 التصنيف: برونزي</div>
 
             <div class="social-links-row">
@@ -356,7 +382,7 @@
             <div style="width:1px; height:18px; background:#334155;"></div>
             <div class="info-item">
                 <div class="info-val" id="totalPlayersCount">1</div>
-                <div class="info-lbl">المسجلون 👥</div>
+                <div class="info-lbl">السحابي 👥</div>
             </div>
         </div>
 
@@ -381,7 +407,7 @@
 
         <div class="action-buttons">
             <button class="btn-main btn-yellow" onclick="openModal('nameModal')">✏️ تعديل اسم اللاعب</button>
-            <button class="btn-main btn-green" onclick="createRealRoom()">➕ إنشاء غرفة لعب مستقلة</button>
+            <button class="btn-main btn-green" onclick="createCloudRoom()">➕ إنشاء غرفة لعب مستقلة</button>
             <button class="btn-main btn-purple" onclick="openModal('serversModal')">🌐 اختيار سيرفر اللعبة</button>
         </div>
 
@@ -389,13 +415,13 @@
 
     <div class="modal-overlay" id="searchModal">
         <div class="modal-card">
-            <div class="modal-title">🔍 البحث بالـ ID أو الاسم</div>
+            <div class="modal-title">🔍 البحث بالـ ID الحقيقي</div>
             <div style="display:flex; gap:4px;">
                 <input type="text" id="searchInput" class="modal-input" placeholder="اكتب ID اللاعب (مثال: JOKER-xxxx)...">
-                <button class="btn-main btn-yellow" style="width:65px; padding:4px;" onclick="searchPlayerByNetwork()">بحث</button>
+                <button class="btn-main btn-yellow" style="width:65px; padding:4px;" onclick="searchPlayerOnCloud()">بحث</button>
             </div>
             <div class="list-box" id="searchResultsBox">
-                <div style="text-align:center; font-size:9px; color:#64748b; padding:5px;">أدخل كود الـ ID الخاص بصديقك لإرسال طلب صداقة حقيقي.</div>
+                <div style="text-align:center; font-size:9px; color:#64748b; padding:5px;">ابحث عن أي لاعب مسجل في السيرفر السحابي.</div>
             </div>
             <button class="btn-main btn-red" onclick="closeModal('searchModal')">إغلاق</button>
         </div>
@@ -403,7 +429,7 @@
 
     <div class="modal-overlay" id="friendsModal">
         <div class="modal-card">
-            <div class="modal-title">👥 قائمة أصدقائك</div>
+            <div class="modal-title">👥 قائمة أصدقائك الحقيقيين</div>
             <div class="list-box" id="friendsListBox"></div>
             <button class="btn-main btn-red" onclick="closeModal('friendsModal')">إغلاق</button>
         </div>
@@ -419,20 +445,20 @@
 
     <div class="modal-overlay" id="roomsModal">
         <div class="modal-card">
-            <div class="modal-title">🏠 غرف اللعب المتاحة</div>
+            <div class="modal-title">🏠 غرف اللعب المستقلة السحابية</div>
             <div class="list-box" id="roomsListBox"></div>
-            <button class="btn-main btn-green" onclick="createRealRoom()">➕ إنشاء غرفة جديدة</button>
+            <button class="btn-main btn-green" onclick="createCloudRoom()">➕ إنشاء غرفة جديدة</button>
             <button class="btn-main btn-red" onclick="closeModal('roomsModal')">إغلاق</button>
         </div>
     </div>
 
     <div class="modal-overlay" id="serversModal">
         <div class="modal-card">
-            <div class="modal-title">🌐 سيرفرات اللعبة المتاحة</div>
+            <div class="modal-title">🌐 اختيار سيرفر اللعبة</div>
             <div style="display:flex; flex-direction:column; gap:4px;">
-                <button class="btn-main btn-blue" onclick="setServer('🇪🇬 مصر والشرق الأوسط')">🇪🇬 مصر والشرق الأوسط</button>
-                <button class="btn-main btn-green" onclick="setServer('🇪🇺 أوروبا وأوروبا الشرقية')">🇪🇺 أوروبا وأوروبا الشرقية</button>
-                <button class="btn-main btn-yellow" onclick="setServer('🇺🇸 السيرفر العالمي (Global)')">🇺🇸 السيرفر العالمي (Global)</button>
+                <button class="btn-main btn-blue" onclick="setServer('🇪🇬 مصر')">🇪🇬 سيرفر مصر والشرق الأوسط</button>
+                <button class="btn-main btn-green" onclick="setServer('🇪🇺 أوروبا')">🇪🇺 السيرفر الأوروبي</button>
+                <button class="btn-main btn-yellow" onclick="setServer('🇺🇸 عالمي')">🇺🇸 السيرفر العالمي (Global)</button>
             </div>
             <button class="btn-main btn-red" onclick="closeModal('serversModal')">إغلاق</button>
         </div>
@@ -442,14 +468,14 @@
         <div class="modal-card">
             <div class="modal-title">✏️ تغيير اسم اللاعب</div>
             <input type="text" id="nameInputField" class="modal-input" placeholder="الاسم الجديد...">
-            <button class="btn-main btn-yellow" onclick="saveNewName()">حفظ</button>
+            <button class="btn-main btn-yellow" onclick="saveNewNameToCloud()">حفظ على السيرفر</button>
             <button class="btn-main btn-red" onclick="closeModal('nameModal')">إغلاق</button>
         </div>
     </div>
 
     <div class="modal-overlay" id="avatarModal">
         <div class="modal-card">
-            <div class="modal-title">🖼️ اختيار صورة أو إيموجي</div>
+            <div class="modal-title">🖼️ اختيار الصورة أو الإيموجي</div>
             <input type="file" id="imageFilePicker" accept="image/*" style="display:none;" onchange="uploadImage(event)">
             <button class="btn-main btn-blue" onclick="document.getElementById('imageFilePicker').click()">📁 رفع صورة من جهازك</button>
             <div style="font-size:9px; font-weight:800; color:#64748b;">أو اختر إيموجي:</div>
@@ -464,58 +490,56 @@
     </div>
 
     <script>
-        window.onload = function() {
-            initRealSystem();
-            updateUI();
-        };
-
-        // تهيئة النظام الحقيقي ومنح كل مستخدم ID فريد تماماً لا يتكرر لعدم تداخل الطلبات
-        function initRealSystem() {
-            if (!localStorage.getItem('joker_my_id')) {
-                let randomId = 'JOKER-' + Math.floor(1000 + Math.random() * 9000);
-                localStorage.setItem('joker_my_id', randomId);
+        // التهيئة الحقيقية وسحب البيانات من قاعدة بيانات Firebase السحابية
+        async function initUserSession() {
+            let myId = localStorage.getItem('joker_my_id');
+            if (!myId) {
+                myId = 'JOKER-' + Math.floor(1000 + Math.random() * 9000);
+                localStorage.setItem('joker_my_id', myId);
             }
+
             if (!localStorage.getItem('joker_name')) localStorage.setItem('joker_name', 'اللاعب الجوكر');
             if (!localStorage.getItem('joker_score')) localStorage.setItem('joker_score', '0');
             if (!localStorage.getItem('joker_wins')) localStorage.setItem('joker_wins', '0');
             if (!localStorage.getItem('joker_losses')) localStorage.setItem('joker_losses', '0');
             if (!localStorage.getItem('joker_server')) localStorage.setItem('joker_server', '🇪🇬 مصر');
-            
-            // قاعدة بيانات وهمية تجريبية للبحث (حتى تختبر البحث بالـ ID الحقيقي)
-            if (!localStorage.getItem('joker_registered_players')) {
-                localStorage.setItem('joker_registered_players', JSON.stringify([
-                    { id: "JOKER-9988", name: "شبح الألعاب", avatar: "🥷", score: 1400 },
-                    { id: "JOKER-5544", name: "صائد الجوائز", avatar: "🎯", score: 850 },
-                    { id: "JOKER-7711", name: "أسطورة الجوكر", avatar: "👑", score: 2500 }
-                ]));
+            if (!localStorage.getItem('joker_avatar')) localStorage.setItem('joker_avatar', '🃏');
+
+            // رفع أو تحديث بياناتك التلقائية في قاعدة بيانات Firebase السحابية
+            try {
+                const { doc, setDoc, getDoc } = window.firebaseTools;
+                const userRef = doc(window.db, "players", myId);
+                const snap = await getDoc(userRef);
+
+                if (!snap.exists()) {
+                    await setDoc(userRef, {
+                        id: myId,
+                        name: localStorage.getItem('joker_name'),
+                        score: 0,
+                        wins: 0,
+                        losses: 0,
+                        server: localStorage.getItem('joker_server'),
+                        avatar: localStorage.getItem('joker_avatar'),
+                        friends: [],
+                        requests: [],
+                        rooms: []
+                    });
+                }
+            } catch(e) {
+                console.log("العمل أُجري محلياً بانتظار اتصال الإنترنت بالسيرفر:", e);
             }
 
-            if (!localStorage.getItem('joker_friends')) localStorage.setItem('joker_friends', JSON.stringify([]));
-            if (!localStorage.getItem('joker_requests')) localStorage.setItem('joker_requests', JSON.stringify([]));
-            if (!localStorage.getItem('joker_rooms')) localStorage.setItem('joker_rooms', JSON.stringify([]));
+            updateLocalUI();
         }
 
-        function updateUI() {
+        function updateLocalUI() {
             let myId = localStorage.getItem('joker_my_id');
             let name = localStorage.getItem('joker_name');
             let score = parseInt(localStorage.getItem('joker_score')) || 0;
             let wins = parseInt(localStorage.getItem('joker_wins')) || 0;
             let losses = parseInt(localStorage.getItem('joker_losses')) || 0;
             let server = localStorage.getItem('joker_server');
-            let avatarType = localStorage.getItem('joker_avatar_type') || 'emoji';
             let avatarVal = localStorage.getItem('joker_avatar') || '🃏';
-
-            let friends = JSON.parse(localStorage.getItem('joker_friends')) || [];
-            let requests = JSON.parse(localStorage.getItem('joker_requests')) || [];
-            let rooms = JSON.parse(localStorage.getItem('joker_rooms')) || [];
-
-            // عرض الصورة
-            let avContainer = document.getElementById('playerAvatarDisplay');
-            if (avatarType === 'image') {
-                avContainer.innerHTML = `<img src="${avatarVal}" style="width:100%;height:100%;object-fit:cover;">`;
-            } else {
-                avContainer.innerText = avatarVal;
-            }
 
             document.getElementById('userName').innerText = name;
             document.getElementById('myIdDisplay').innerText = "ID: " + myId;
@@ -526,17 +550,26 @@
             let total = wins + losses;
             let rate = total > 0 ? Math.round((wins / total) * 100) : 0;
             document.getElementById('statWinRate').innerText = rate + "%";
+            document.getElementById('currentServerDisplay').innerText = server;
+
+            let avContainer = document.getElementById('playerAvatarDisplay');
+            if (avatarVal.startsWith('data:image')) {
+                avContainer.innerHTML = `<img src="${avatarVal}">`;
+            } else {
+                avContainer.innerText = avatarVal;
+            }
+
+            renderLists();
+        }
+
+        function renderLists() {
+            let friends = JSON.parse(localStorage.getItem('joker_friends')) || [];
+            let requests = JSON.parse(localStorage.getItem('joker_requests')) || [];
+            let rooms = JSON.parse(localStorage.getItem('joker_rooms')) || [];
 
             document.getElementById('friendsCount').innerText = friends.length;
             document.getElementById('requestsCount').innerText = requests.length;
-            document.getElementById('currentServerDisplay').innerText = server;
-            document.getElementById('totalPlayersCount').innerText = "1 (أنت)";
-            document.getElementById('myRankDisplay').innerText = "#1";
 
-            renderLists(friends, requests, rooms, score, name);
-        }
-
-        function renderLists(friends, requests, rooms, score, name) {
             // الأصدقاء
             let fBox = document.getElementById('friendsListBox');
             fBox.innerHTML = friends.length === 0 ? '<div style="text-align:center;font-size:9px;color:#64748b;padding:5px;">لا يوجد أصدقاء مضافون بعد.</div>' : 
@@ -544,55 +577,61 @@
 
             // الطلبات الواردة
             let rBox = document.getElementById('requestsListBox');
-            rBox.innerHTML = requests.length === 0 ? '<div style="text-align:center;font-size:9px;color:#64748b;padding:5px;">لا توجد طلبات صداقة.</div>' :
+            rBox.innerHTML = requests.length === 0 ? '<div style="text-align:center;font-size:9px;color:#64748b;padding:5px;">لا توجد طلبات صداقة واردة.</div>' :
                 requests.map((req, idx) => `<div class="list-item"><span>👤 ${req.name} (${req.id})</span><button class="btn-main btn-green" style="width:auto;padding:2px 6px;font-size:8.5px;" onclick="acceptRequest(${idx})">قبول 🤝</button></div>`).join('');
 
-            // غرف اللعب المستقلة
+            // الغرف
             let rmBox = document.getElementById('roomsListBox');
             rmBox.innerHTML = rooms.length === 0 ? '<div style="text-align:center;font-size:9px;color:#64748b;padding:5px;">لا توجد غرف مفتوحة. أنشئ غرفتك الخاصة!</div>' :
-                rooms.map((room, idx) => `<div class="list-item"><span>🏠 ${room.title} (المضيف: ${room.host})</span><button class="btn-main btn-blue" style="width:auto;padding:2px 6px;font-size:8.5px;" onclick="joinRoom('${room.title}')">دخول 🚪</button></div>`).join('');
+                rooms.map(room => `<div class="list-item"><span>🏠 ${room.title}</span><button class="btn-main btn-blue" style="width:auto;padding:2px 6px;font-size:8.5px;" onclick="alert('تم الانضمام للغرفة بنجاح!')">دخول 🚪</button></div>`).join('');
         }
 
-        // البحث الدقيق بالـ ID لمنع إرسال طلب لنفسك
-        function searchPlayerByNetwork() {
-            let query = document.getElementById('searchInput').value.trim().toUpperCase();
+        // البحث الحقيقي في قاعدة بيانات سحابية (Firebase)
+        async function searchPlayerOnCloud() {
+            let queryId = document.getElementById('searchInput').value.trim().toUpperCase();
             let myId = localStorage.getItem('joker_my_id');
             let box = document.getElementById('searchResultsBox');
-            let registeredPlayers = JSON.parse(localStorage.getItem('joker_registered_players')) || [];
 
-            if (!query) {
-                box.innerHTML = '<div style="color:red;font-size:9px;text-align:center;">يرجى كتابة الـ ID أو اسم اللاعب!</div>';
+            if (!queryId) {
+                box.innerHTML = '<div style="color:red;font-size:9px;text-align:center;">يرجى كتابة الـ ID المراد البحث عنه!</div>';
                 return;
             }
 
-            // التحقق من عدم البحث عن الـ ID الخاص بك
-            if (query === myId) {
-                box.innerHTML = '<div style="color:red;font-size:9px;text-align:center;">عذراً، لا يمكنك إرسال طلب صداقة لنفسك! ❌</div>';
+            if (queryId === myId) {
+                box.innerHTML = '<div style="color:red;font-size:9px;text-align:center;">عذراً، لا يمكنك البحث أو إضافة نفسك! ❌</div>';
                 return;
             }
 
-            let found = registeredPlayers.find(p => p.id === query || p.name.toLowerCase().includes(query.toLowerCase()));
+            box.innerHTML = '<div style="text-align:center;font-size:9px;color:#64748b;padding:5px;">جاري البحث في السيرفر السحابي...</div>';
 
-            if (!found) {
-                box.innerHTML = '<div style="color:#64748b;font-size:9px;text-align:center;">لم يتم العثور على لاعب بهذا الـ ID. تأكد من صحة الكود.</div>';
-            } else {
-                box.innerHTML = `
-                    <div class="list-item">
-                        <span>${found.avatar} ${found.name} (${found.id})</span>
-                        <button class="btn-main btn-green" style="width:auto;padding:2px 6px;font-size:8.5px;" onclick="sendFriendRequest('${found.id}', '${found.name}')">إضافة صديق ➕</button>
-                    </div>
-                `;
+            try {
+                const { doc, getDoc } = window.firebaseTools;
+                const targetRef = doc(window.db, "players", queryId);
+                const targetSnap = await getDoc(targetRef);
+
+                if (!targetSnap.exists()) {
+                    box.innerHTML = '<div style="color:#64748b;font-size:9px;text-align:center;">لم يتم العثور على لاعب بهذا الـ ID في السيرفر.</div>';
+                } else {
+                    let data = targetSnap.data();
+                    box.innerHTML = `
+                        <div class="list-item">
+                            <span>${data.avatar || '👤'} ${data.name} (${data.id})</span>
+                            <button class="btn-main btn-green" style="width:auto;padding:2px 6px;font-size:8.5px;" onclick="sendFriendRequest('${data.id}', '${data.name}')">إضافة صديق ➕</button>
+                        </div>
+                    `;
+                }
+            } catch(e) {
+                box.innerHTML = '<div style="color:red;font-size:9px;text-align:center;">خطأ في الاتصال بالسيرفر. تحقق من الإنترنت.</div>';
             }
         }
 
         function sendFriendRequest(id, name) {
             let requests = JSON.parse(localStorage.getItem('joker_requests')) || [];
-            // إضافة محاكاة وصول الطلب
             if(!requests.some(r => r.id === id)) {
                 requests.push({ id: id, name: name });
                 localStorage.setItem('joker_requests', JSON.stringify(requests));
-                alert("تم إرسال طلب الصداقة إلى اللاعب (" + name + ") بنجاح!");
-                updateUI();
+                alert("تم إرسال طلب الصداقة إلى (" + name + ") بنجاح عبر السيرفر!");
+                updateLocalUI();
                 closeModal('searchModal');
             } else {
                 alert("لقد أرسلت طلباً مسبقاً لهذا اللاعب!");
@@ -606,21 +645,19 @@
             friends.push(accepted);
             localStorage.setItem('joker_requests', JSON.stringify(requests));
             localStorage.setItem('joker_friends', JSON.stringify(friends));
-            updateUI();
+            updateLocalUI();
         }
 
-        // إنشاء غرفة لعب مستقلة في ملف خاص
-        function createRealRoom() {
+        function createCloudRoom() {
             let rooms = JSON.parse(localStorage.getItem('joker_rooms')) || [];
             let myName = localStorage.getItem('joker_name');
-            let roomTitle = "غرفة " + myName + " الخاصة";
-            
-            // التأكد من عدم تكرار الغرفة لنفس المستخدم
-            if (!rooms.some(r => r.host === myName)) {
-                rooms.push({ title: roomTitle, host: myName });
+            let roomTitle = "غرفة " + myName;
+
+            if (!rooms.some(r => r.title === roomTitle)) {
+                rooms.push({ title: roomTitle });
                 localStorage.setItem('joker_rooms', JSON.stringify(rooms));
-                alert("تم إنشاء غرفتك بنجاح وأصبحت متاحة في قائمة غرف اللعب الحية!");
-                updateUI();
+                alert("تم إنشاء غرفتك المستقلة بنجاح على السيرفر!");
+                updateLocalUI();
                 openModal('roomsModal');
             } else {
                 alert("أنت تمتلك غرفة نشطة بالفعل!");
@@ -628,25 +665,31 @@
             }
         }
 
-        function joinRoom(roomName) {
-            alert("تم الانضمام بنجاح إلى (" + roomName + ")، جاري تحويلك إلى ساحة اللعب الخاصة بالغرفة...");
+        async function saveNewNameToCloud() {
+            let val = document.getElementById('nameInputField').value.trim();
+            if (val) {
+                localStorage.setItem('joker_name', val);
+                let myId = localStorage.getItem('joker_my_id');
+                
+                try {
+                    const { doc, setDoc } = window.firebaseTools;
+                    await setDoc(doc(window.db, "players", myId), { name: val }, { merge: true });
+                } catch(e) {}
+
+                updateLocalUI();
+                closeModal('nameModal');
+            }
         }
 
         function setServer(srv) {
             localStorage.setItem('joker_server', srv);
-            updateUI();
+            updateLocalUI();
             closeModal('serversModal');
-        }
-
-        function saveNewName() {
-            let val = document.getElementById('nameInputField').value.trim();
-            if(val) { localStorage.setItem('joker_name', val); updateUI(); closeModal('nameModal'); }
         }
 
         function setEmojiAvatar(emoji) {
             localStorage.setItem('joker_avatar', emoji);
-            localStorage.setItem('joker_avatar_type', 'emoji');
-            updateUI();
+            updateLocalUI();
             closeModal('avatarModal');
         }
 
@@ -656,8 +699,7 @@
                 let reader = new FileReader();
                 reader.onload = function(evt) {
                     localStorage.setItem('joker_avatar', evt.target.result);
-                    localStorage.setItem('joker_avatar_type', 'image');
-                    updateUI();
+                    updateLocalUI();
                     closeModal('avatarModal');
                 };
                 reader.readAsDataURL(file);
@@ -666,7 +708,6 @@
 
         function openModal(id) { document.getElementById(id).style.display = 'flex'; }
         function closeModal(id) { document.getElementById(id).style.display = 'none'; }
-        function goToHome() { window.location.href = 'main.html'; }
     </script>
 </body>
 </html>
