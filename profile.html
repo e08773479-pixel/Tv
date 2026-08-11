@@ -3,12 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>JOKER GAMES - الملف الشخصي الكامل </title>
+    <title>JOKER GAMES - الملف الشخصي المحترف</title>
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-        import { getFirestore, collection, doc, setDoc, getDoc, getDocs, query, where } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+        import { getFirestore, doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
-        // إعدادات مشروعك الحقيقية
         const firebaseConfig = {
             apiKey: "AIzaSyBb6rgplnduyGZXzMwl8gO0OoPE8_sDnww",
             authDomain: "elgoker-61f00.firebaseapp.com",
@@ -19,13 +18,16 @@
             measurementId: "G-JFZY48LBCY"
         };
 
-        const app = initializeApp(firebaseConfig);
-        const db = getFirestore(app);
+        try {
+            const app = initializeApp(firebaseConfig);
+            const db = getFirestore(app);
+            window.db = db;
+            window.firebaseTools = { doc, setDoc, getDoc };
+            console.log("تم الاتصال بـ Firebase بنجاح تام!");
+        } catch (error) {
+            console.error("خطأ في تهيئة السيرفر:", error);
+        }
 
-        window.db = db;
-        window.firebaseTools = { collection, doc, setDoc, getDoc, getDocs, query, where };
-        
-        // عند تحميل الصفحة، يتم مزامنة وتحميل البيانات الحقيقية
         window.addEventListener('DOMContentLoaded', () => {
             initUserSession();
         });
@@ -172,7 +174,7 @@
             box-shadow: 0 2px 0 var(--border-color);
         }
 
-        /* الأزرار الاجتماعية */
+        /* روابط الأصدقاء */
         .social-links-row {
             display: flex;
             gap: 6px;
@@ -226,7 +228,7 @@
             background: linear-gradient(90deg, #3b82f6, var(--accent-green));
         }
 
-        /* كارت المعلومات والسيرفرات */
+        /* معلومات السيرفر */
         .info-card {
             width: 100%;
             background: linear-gradient(135deg, #1e293b, #0f172a);
@@ -298,7 +300,7 @@
         .btn-purple { background: var(--primary); color: #fff; }
         .btn-red { background: var(--accent-red); color: #fff; }
 
-        /* نوافذ الـ Modals */
+        /* النوافذ العائمة (Modals) */
         .modal-overlay {
             position: absolute;
             top: 0;
@@ -340,7 +342,7 @@
         
         <div class="back-btn" onclick="window.location.href='main.html'">➔</div>
 
-        <div class="page-title">الملف الشخصي السحابي</div>
+        <div class="page-title">الملف الشخصي المتكامل</div>
 
         <div class="profile-card">
             <div class="avatar-container" onclick="openModal('avatarModal')">
@@ -348,7 +350,7 @@
             </div>
             
             <div class="player-name" id="userName">اللاعب الجوكر</div>
-            <div class="player-id-tag" id="myIdDisplay">ID: جاري التحميل...</div>
+            <div class="player-id-tag" id="myIdDisplay">ID: جاري التوليد...</div>
             <div class="rank-badge" id="rankBadge">🏆 التصنيف: برونزي</div>
 
             <div class="social-links-row">
@@ -370,7 +372,7 @@
         </div>
 
         <div class="info-card">
-            <div class="info-item" onclick="openModal('leaderboardModal')">
+            <div class="info-item">
                 <div class="info-val" id="myRankDisplay">#1</div>
                 <div class="info-lbl">ترتيبك 🏅</div>
             </div>
@@ -381,8 +383,8 @@
             </div>
             <div style="width:1px; height:18px; background:#334155;"></div>
             <div class="info-item">
-                <div class="info-val" id="totalPlayersCount">1</div>
-                <div class="info-lbl">السحابي 👥</div>
+                <div class="info-val" id="connectionStatus">متصل ✅</div>
+                <div class="info-lbl">الحالة 📶</div>
             </div>
         </div>
 
@@ -407,7 +409,7 @@
 
         <div class="action-buttons">
             <button class="btn-main btn-yellow" onclick="openModal('nameModal')">✏️ تعديل اسم اللاعب</button>
-            <button class="btn-main btn-green" onclick="createCloudRoom()">➕ إنشاء غرفة لعب مستقلة</button>
+            <button class="btn-main btn-green" onclick="createRoom()">➕ إنشاء غرفة لعب مستقلة</button>
             <button class="btn-main btn-purple" onclick="openModal('serversModal')">🌐 اختيار سيرفر اللعبة</button>
         </div>
 
@@ -415,13 +417,13 @@
 
     <div class="modal-overlay" id="searchModal">
         <div class="modal-card">
-            <div class="modal-title">🔍 البحث بالـ ID الحقيقي</div>
+            <div class="modal-title">🔍 البحث عن لاعب</div>
             <div style="display:flex; gap:4px;">
                 <input type="text" id="searchInput" class="modal-input" placeholder="اكتب ID اللاعب (مثال: JOKER-xxxx)...">
-                <button class="btn-main btn-yellow" style="width:65px; padding:4px;" onclick="searchPlayerOnCloud()">بحث</button>
+                <button class="btn-main btn-yellow" style="width:65px; padding:4px;" onclick="searchPlayer()">بحث</button>
             </div>
             <div class="list-box" id="searchResultsBox">
-                <div style="text-align:center; font-size:9px; color:#64748b; padding:5px;">ابحث عن أي لاعب مسجل في السيرفر السحابي.</div>
+                <div style="text-align:center; font-size:9px; color:#64748b; padding:5px;">أدخل كود الـ ID الخاص بصديقك لإرسال طلب صداقة.</div>
             </div>
             <button class="btn-main btn-red" onclick="closeModal('searchModal')">إغلاق</button>
         </div>
@@ -429,7 +431,7 @@
 
     <div class="modal-overlay" id="friendsModal">
         <div class="modal-card">
-            <div class="modal-title">👥 قائمة أصدقائك الحقيقيين</div>
+            <div class="modal-title">👥 قائمة أصدقائك</div>
             <div class="list-box" id="friendsListBox"></div>
             <button class="btn-main btn-red" onclick="closeModal('friendsModal')">إغلاق</button>
         </div>
@@ -445,18 +447,18 @@
 
     <div class="modal-overlay" id="roomsModal">
         <div class="modal-card">
-            <div class="modal-title">🏠 غرف اللعب المستقلة السحابية</div>
+            <div class="modal-title">🏠 غرف اللعب النشطة</div>
             <div class="list-box" id="roomsListBox"></div>
-            <button class="btn-main btn-green" onclick="createCloudRoom()">➕ إنشاء غرفة جديدة</button>
+            <button class="btn-main btn-green" onclick="createRoom()">➕ إنشاء غرفة جديدة</button>
             <button class="btn-main btn-red" onclick="closeModal('roomsModal')">إغلاق</button>
         </div>
     </div>
 
     <div class="modal-overlay" id="serversModal">
         <div class="modal-card">
-            <div class="modal-title">🌐 اختيار سيرفر اللعبة</div>
+            <div class="modal-title">🌐 اختيار السيرفر</div>
             <div style="display:flex; flex-direction:column; gap:4px;">
-                <button class="btn-main btn-blue" onclick="setServer('🇪🇬 مصر')">🇪🇬 سيرفر مصر والشرق الأوسط</button>
+                <button class="btn-main btn-blue" onclick="setServer('🇪🇬 مصر')">🇪🇬 مصر والشرق الأوسط</button>
                 <button class="btn-main btn-green" onclick="setServer('🇪🇺 أوروبا')">🇪🇺 السيرفر الأوروبي</button>
                 <button class="btn-main btn-yellow" onclick="setServer('🇺🇸 عالمي')">🇺🇸 السيرفر العالمي (Global)</button>
             </div>
@@ -468,14 +470,14 @@
         <div class="modal-card">
             <div class="modal-title">✏️ تغيير اسم اللاعب</div>
             <input type="text" id="nameInputField" class="modal-input" placeholder="الاسم الجديد...">
-            <button class="btn-main btn-yellow" onclick="saveNewNameToCloud()">حفظ على السيرفر</button>
+            <button class="btn-main btn-yellow" onclick="saveNewName()">حفظ</button>
             <button class="btn-main btn-red" onclick="closeModal('nameModal')">إغلاق</button>
         </div>
     </div>
 
     <div class="modal-overlay" id="avatarModal">
         <div class="modal-card">
-            <div class="modal-title">🖼️ اختيار الصورة أو الإيموجي</div>
+            <div class="modal-title">🖼️ تغيير الأفاتار</div>
             <input type="file" id="imageFilePicker" accept="image/*" style="display:none;" onchange="uploadImage(event)">
             <button class="btn-main btn-blue" onclick="document.getElementById('imageFilePicker').click()">📁 رفع صورة من جهازك</button>
             <div style="font-size:9px; font-weight:800; color:#64748b;">أو اختر إيموجي:</div>
@@ -490,7 +492,6 @@
     </div>
 
     <script>
-        // التهيئة الحقيقية وسحب البيانات من قاعدة بيانات Firebase السحابية
         async function initUserSession() {
             let myId = localStorage.getItem('joker_my_id');
             if (!myId) {
@@ -505,34 +506,27 @@
             if (!localStorage.getItem('joker_server')) localStorage.setItem('joker_server', '🇪🇬 مصر');
             if (!localStorage.getItem('joker_avatar')) localStorage.setItem('joker_avatar', '🃏');
 
-            // رفع أو تحديث بياناتك التلقائية في قاعدة بيانات Firebase السحابية
+            // مزامنة آمنة مع السيرفر السحابي في حال توفره
             try {
-                const { doc, setDoc, getDoc } = window.firebaseTools;
-                const userRef = doc(window.db, "players", myId);
-                const snap = await getDoc(userRef);
-
-                if (!snap.exists()) {
-                    await setDoc(userRef, {
+                if (window.db && window.firebaseTools) {
+                    const { doc, setDoc } = window.firebaseTools;
+                    await setDoc(doc(window.db, "players", myId), {
                         id: myId,
                         name: localStorage.getItem('joker_name'),
-                        score: 0,
-                        wins: 0,
-                        losses: 0,
+                        score: parseInt(localStorage.getItem('joker_score')),
                         server: localStorage.getItem('joker_server'),
-                        avatar: localStorage.getItem('joker_avatar'),
-                        friends: [],
-                        requests: [],
-                        rooms: []
-                    });
+                        lastActive: new Date().toISOString()
+                    }, { merge: true });
+                    document.getElementById('connectionStatus').innerText = "متصل ✅";
                 }
-            } catch(e) {
-                console.log("العمل أُجري محلياً بانتظار اتصال الإنترنت بالسيرفر:", e);
+            } catch (e) {
+                document.getElementById('connectionStatus').innerText = "محلي ⚠️";
             }
 
-            updateLocalUI();
+            updateUI();
         }
 
-        function updateLocalUI() {
+        function updateUI() {
             let myId = localStorage.getItem('joker_my_id');
             let name = localStorage.getItem('joker_name');
             let score = parseInt(localStorage.getItem('joker_score')) || 0;
@@ -570,58 +564,57 @@
             document.getElementById('friendsCount').innerText = friends.length;
             document.getElementById('requestsCount').innerText = requests.length;
 
-            // الأصدقاء
             let fBox = document.getElementById('friendsListBox');
-            fBox.innerHTML = friends.length === 0 ? '<div style="text-align:center;font-size:9px;color:#64748b;padding:5px;">لا يوجد أصدقاء مضافون بعد.</div>' : 
+            fBox.innerHTML = friends.length === 0 ? '<div style="text-align:center;font-size:9px;color:#64748b;padding:5px;">لا يوجد أصدقاء بعد.</div>' : 
                 friends.map(f => `<div class="list-item"><span>👤 ${f.name} (${f.id})</span><span style="color:var(--accent-green)">متصل 🟢</span></div>`).join('');
 
-            // الطلبات الواردة
             let rBox = document.getElementById('requestsListBox');
-            rBox.innerHTML = requests.length === 0 ? '<div style="text-align:center;font-size:9px;color:#64748b;padding:5px;">لا توجد طلبات صداقة واردة.</div>' :
+            rBox.innerHTML = requests.length === 0 ? '<div style="text-align:center;font-size:9px;color:#64748b;padding:5px;">لا توجد طلبات صداقة.</div>' :
                 requests.map((req, idx) => `<div class="list-item"><span>👤 ${req.name} (${req.id})</span><button class="btn-main btn-green" style="width:auto;padding:2px 6px;font-size:8.5px;" onclick="acceptRequest(${idx})">قبول 🤝</button></div>`).join('');
 
-            // الغرف
             let rmBox = document.getElementById('roomsListBox');
             rmBox.innerHTML = rooms.length === 0 ? '<div style="text-align:center;font-size:9px;color:#64748b;padding:5px;">لا توجد غرف مفتوحة. أنشئ غرفتك الخاصة!</div>' :
-                rooms.map(room => `<div class="list-item"><span>🏠 ${room.title}</span><button class="btn-main btn-blue" style="width:auto;padding:2px 6px;font-size:8.5px;" onclick="alert('تم الانضمام للغرفة بنجاح!')">دخول 🚪</button></div>`).join('');
+                rooms.map(room => `<div class="list-item"><span>🏠 ${room.title}</span><button class="btn-main btn-blue" style="width:auto;padding:2px 6px;font-size:8.5px;" onclick="alert('تم الانضمام بنجاح!')">دخول 🚪</button></div>`).join('');
         }
 
-        // البحث الحقيقي في قاعدة بيانات سحابية (Firebase)
-        async function searchPlayerOnCloud() {
+        async function searchPlayer() {
             let queryId = document.getElementById('searchInput').value.trim().toUpperCase();
             let myId = localStorage.getItem('joker_my_id');
             let box = document.getElementById('searchResultsBox');
 
             if (!queryId) {
-                box.innerHTML = '<div style="color:red;font-size:9px;text-align:center;">يرجى كتابة الـ ID المراد البحث عنه!</div>';
+                box.innerHTML = '<div style="color:red;font-size:9px;text-align:center;">يرجى كتابة الـ ID أولاً!</div>';
                 return;
             }
 
             if (queryId === myId) {
-                box.innerHTML = '<div style="color:red;font-size:9px;text-align:center;">عذراً، لا يمكنك البحث أو إضافة نفسك! ❌</div>';
+                box.innerHTML = '<div style="color:red;font-size:9px;text-align:center;">لا يمكنك البحث أو إضافة نفسك! ❌</div>';
                 return;
             }
 
-            box.innerHTML = '<div style="text-align:center;font-size:9px;color:#64748b;padding:5px;">جاري البحث في السيرفر السحابي...</div>';
+            box.innerHTML = '<div style="text-align:center;font-size:9px;color:#64748b;padding:5px;">جاري البحث...</div>';
 
             try {
-                const { doc, getDoc } = window.firebaseTools;
-                const targetRef = doc(window.db, "players", queryId);
-                const targetSnap = await getDoc(targetRef);
+                if (window.db && window.firebaseTools) {
+                    const { doc, getDoc } = window.firebaseTools;
+                    const targetSnap = await getDoc(doc(window.db, "players", queryId));
 
-                if (!targetSnap.exists()) {
-                    box.innerHTML = '<div style="color:#64748b;font-size:9px;text-align:center;">لم يتم العثور على لاعب بهذا الـ ID في السيرفر.</div>';
+                    if (!targetSnap.exists()) {
+                        box.innerHTML = '<div style="color:#64748b;font-size:9px;text-align:center;">لم يتم العثور على لاعب بهذا الـ ID.</div>';
+                    } else {
+                        let data = targetSnap.data();
+                        box.innerHTML = `
+                            <div class="list-item">
+                                <span>${data.avatar || '👤'} ${data.name} (${data.id})</span>
+                                <button class="btn-main btn-green" style="width:auto;padding:2px 6px;font-size:8.5px;" onclick="sendFriendRequest('${data.id}', '${data.name}')">إضافة ➕</button>
+                            </div>
+                        `;
+                    }
                 } else {
-                    let data = targetSnap.data();
-                    box.innerHTML = `
-                        <div class="list-item">
-                            <span>${data.avatar || '👤'} ${data.name} (${data.id})</span>
-                            <button class="btn-main btn-green" style="width:auto;padding:2px 6px;font-size:8.5px;" onclick="sendFriendRequest('${data.id}', '${data.name}')">إضافة صديق ➕</button>
-                        </div>
-                    `;
+                    box.innerHTML = '<div style="color:red;font-size:9px;text-align:center;">السيرفر غير متصل حالياً.</div>';
                 }
-            } catch(e) {
-                box.innerHTML = '<div style="color:red;font-size:9px;text-align:center;">خطأ في الاتصال بالسيرفر. تحقق من الإنترنت.</div>';
+            } catch (e) {
+                box.innerHTML = '<div style="color:red;font-size:9px;text-align:center;">حدث خطأ أثناء الاتصال.</div>';
             }
         }
 
@@ -630,8 +623,8 @@
             if(!requests.some(r => r.id === id)) {
                 requests.push({ id: id, name: name });
                 localStorage.setItem('joker_requests', JSON.stringify(requests));
-                alert("تم إرسال طلب الصداقة إلى (" + name + ") بنجاح عبر السيرفر!");
-                updateLocalUI();
+                alert("تم إرسال طلب الصداقة إلى (" + name + ") بنجاح!");
+                updateUI();
                 closeModal('searchModal');
             } else {
                 alert("لقد أرسلت طلباً مسبقاً لهذا اللاعب!");
@@ -645,10 +638,10 @@
             friends.push(accepted);
             localStorage.setItem('joker_requests', JSON.stringify(requests));
             localStorage.setItem('joker_friends', JSON.stringify(friends));
-            updateLocalUI();
+            updateUI();
         }
 
-        function createCloudRoom() {
+        function createRoom() {
             let rooms = JSON.parse(localStorage.getItem('joker_rooms')) || [];
             let myName = localStorage.getItem('joker_name');
             let roomTitle = "غرفة " + myName;
@@ -656,8 +649,8 @@
             if (!rooms.some(r => r.title === roomTitle)) {
                 rooms.push({ title: roomTitle });
                 localStorage.setItem('joker_rooms', JSON.stringify(rooms));
-                alert("تم إنشاء غرفتك المستقلة بنجاح على السيرفر!");
-                updateLocalUI();
+                alert("تم إنشاء غرفتك المستقلة بنجاح!");
+                updateUI();
                 openModal('roomsModal');
             } else {
                 alert("أنت تمتلك غرفة نشطة بالفعل!");
@@ -665,31 +658,33 @@
             }
         }
 
-        async function saveNewNameToCloud() {
+        async function saveNewName() {
             let val = document.getElementById('nameInputField').value.trim();
             if (val) {
                 localStorage.setItem('joker_name', val);
                 let myId = localStorage.getItem('joker_my_id');
                 
                 try {
-                    const { doc, setDoc } = window.firebaseTools;
-                    await setDoc(doc(window.db, "players", myId), { name: val }, { merge: true });
+                    if (window.db && window.firebaseTools) {
+                        const { doc, setDoc } = window.firebaseTools;
+                        await setDoc(doc(window.db, "players", myId), { name: val }, { merge: true });
+                    }
                 } catch(e) {}
 
-                updateLocalUI();
+                updateUI();
                 closeModal('nameModal');
             }
         }
 
         function setServer(srv) {
             localStorage.setItem('joker_server', srv);
-            updateLocalUI();
+            updateUI();
             closeModal('serversModal');
         }
 
         function setEmojiAvatar(emoji) {
             localStorage.setItem('joker_avatar', emoji);
-            updateLocalUI();
+            updateUI();
             closeModal('avatarModal');
         }
 
@@ -699,7 +694,7 @@
                 let reader = new FileReader();
                 reader.onload = function(evt) {
                     localStorage.setItem('joker_avatar', evt.target.result);
-                    updateLocalUI();
+                    updateUI();
                     closeModal('avatarModal');
                 };
                 reader.readAsDataURL(file);
