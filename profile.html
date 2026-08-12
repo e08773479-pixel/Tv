@@ -2,45 +2,20 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>JOKER GAMES - الملف الشخصي المحترف</title>
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-        import { getFirestore, doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
-
-        const firebaseConfig = {
-            apiKey: "AIzaSyBb6rgplnduyGZXzMwl8gO0OoPE8_sDnww",
-            authDomain: "elgoker-61f00.firebaseapp.com",
-            projectId: "elgoker-61f00",
-            storageBucket: "elgoker-61f00.firebasestorage.app",
-            messagingSenderId: "876412348315",
-            appId: "1:876412348315:web:ee9e65f7cd7c5b6ed6a33e",
-            measurementId: "G-JFZY48LBCY"
-        };
-
-        try {
-            const app = initializeApp(firebaseConfig);
-            const db = getFirestore(app);
-            window.db = db;
-            window.firebaseTools = { doc, setDoc, getDoc };
-            console.log("تم الاتصال بـ Firebase بنجاح تام!");
-        } catch (error) {
-            console.error("خطأ في تهيئة السيرفر:", error);
-        }
-
-        window.addEventListener('DOMContentLoaded', () => {
-            initUserSession();
-        });
-    </script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>منصة الألعاب العالمية - Gaming Hub Pro</title>
     <style>
         :root {
-            --bg-main: #dfceb7;
-            --bg-dots: #c2aa8e;
-            --primary: #7c3aed;
-            --accent-yellow: #facc15;
-            --accent-green: #22c55e;
-            --accent-red: #ef4444;
-            --border-color: #000000;
+            --bg-dark: #05070d;
+            --panel-bg: #0f172a;
+            --card-bg: #1e293b;
+            --accent-cyan: #06b6d4;
+            --accent-green: #10b981;
+            --accent-purple: #8b5cf6;
+            --alert-red: #ef4444;
+            --text-white: #ffffff;
+            --text-gray: #94a3b8;
+            --border-color: #334155;
         }
 
         * {
@@ -48,661 +23,425 @@
             margin: 0;
             padding: 0;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            user-select: none;
-            -webkit-user-select: none;
-            touch-action: manipulation;
         }
 
-        html, body {
-            width: 100vw;
-            height: 100vh;
-            overflow: hidden !important;
-            position: fixed;
-            top: 0;
-            left: 0;
-            background: var(--bg-main);
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-white);
             display: flex;
             justify-content: center;
             align-items: center;
+            min-height: 100vh;
+            padding: 10px;
         }
 
-        .app-viewport {
-            width: 100vw;
-            height: 100vh;
-            max-width: 430px;
-            background-color: var(--bg-main);
-            background-image: radial-gradient(var(--bg-dots) 24%, transparent 24%);
-            background-size: 15px 15px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: space-between;
-            padding: 10px 12px;
-            position: relative;
-            overflow: hidden !important;
-        }
-
-        .back-btn {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            width: 36px;
-            height: 36px;
-            background: #ffffff;
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 16px;
-            font-weight: bold;
-            box-shadow: 0 3px 8px rgba(0,0,0,0.2);
-            cursor: pointer;
-            z-index: 20;
-            border: 3px solid var(--border-color);
-        }
-
-        .page-title {
-            font-size: 20px;
-            font-weight: 900;
-            color: #ffffff;
-            text-shadow: 2px 2px 0 #000, -2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000, 0 3px 0 #000;
-            z-index: 10;
-        }
-
-        /* كارت البروفايل */
-        .profile-card {
+        .hub-container {
             width: 100%;
-            background: #ffffff;
-            border: 3px solid var(--border-color);
-            border-radius: 16px;
-            padding: 8px 10px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            box-shadow: 0 4px 0 var(--border-color);
-            z-index: 10;
-            position: relative;
-            margin-top: 10px;
-        }
-
-        .avatar-container {
-            width: 55px;
-            height: 55px;
-            border-radius: 50%;
-            border: 3px solid var(--border-color);
-            background: linear-gradient(135deg, #a855f7, #6b21a8);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 26px;
-            margin-top: -32px;
-            box-shadow: 0 3px 0 var(--border-color);
-            position: relative;
-            cursor: pointer;
+            max-width: 500px;
+            background: var(--panel-bg);
+            border-radius: 28px;
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.9);
             overflow: hidden;
-        }
-
-        .avatar-container img { width: 100%; height: 100%; object-fit: cover; }
-
-        .player-name {
-            font-size: 14px;
-            font-weight: 900;
-            color: #000;
-            margin-top: 2px;
-        }
-
-        .player-id-tag {
-            font-size: 8.5px;
-            font-weight: 800;
-            background: #e2e8f0;
-            padding: 1px 6px;
-            border-radius: 4px;
             border: 1px solid var(--border-color);
-            margin-top: 2px;
-            color: #334155;
         }
 
-        .rank-badge {
-            margin-top: 2px;
-            background: var(--accent-yellow);
-            color: #000;
-            font-weight: 900;
-            font-size: 8.5px;
-            padding: 2px 8px;
-            border-radius: 20px;
-            border: 2px solid var(--border-color);
-            box-shadow: 0 2px 0 var(--border-color);
-        }
-
-        /* روابط الأصدقاء */
-        .social-links-row {
-            display: flex;
-            gap: 6px;
-            margin-top: 5px;
-            font-size: 9px;
-            font-weight: 900;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
-
-        .social-link-btn {
-            background: #f1f5f9;
-            border: 2px solid var(--border-color);
-            padding: 3px 6px;
-            border-radius: 6px;
-            cursor: pointer;
-            box-shadow: 0 2px 0 var(--border-color);
-        }
-
-        /* شريط المستوى */
-        .level-container {
-            width: 100%;
-            background: #f8fafc;
-            border: 2px solid var(--border-color);
-            border-radius: 8px;
-            padding: 3px 6px;
-            margin-top: 4px;
-        }
-
-        .level-header {
-            display: flex;
-            justify-content: space-between;
-            font-size: 8px;
-            font-weight: 900;
-            color: #000;
-            margin-bottom: 2px;
-        }
-
-        .progress-bar-outer {
-            width: 100%;
-            height: 4.5px;
-            background: #e2e8f0;
-            border-radius: 5px;
-            border: 1.5px solid var(--border-color);
-            overflow: hidden;
-        }
-
-        .progress-bar-inner {
-            width: 0%;
-            height: 100%;
-            background: linear-gradient(90deg, #3b82f6, var(--accent-green));
-        }
-
-        /* معلومات السيرفر */
-        .info-card {
-            width: 100%;
-            background: linear-gradient(135deg, #1e293b, #0f172a);
-            border: 2.5px solid var(--border-color);
-            border-radius: 12px;
-            padding: 5px 8px;
-            color: white;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            box-shadow: 0 3px 0 var(--border-color);
-            z-index: 10;
-        }
-
-        .info-item { text-align: center; cursor: pointer; }
-        .info-val { font-size: 11.5px; font-weight: 900; color: var(--accent-yellow); }
-        .info-lbl { font-size: 7px; color: #94a3b8; font-weight: 800; }
-
-        /* شبكة الإحصائيات */
-        .stats-grid {
-            width: 100%;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 4px;
-            z-index: 10;
-        }
-
-        .stat-box {
-            background: #ffffff;
-            border: 2px solid var(--border-color);
-            border-radius: 8px;
-            padding: 3px;
+        /* بروفايل احترافي ضخـم وثابت */
+        .giant-profile-header {
+            background: linear-gradient(135deg, #1e1b4b, #312e81, #1e40af);
+            padding: 30px 20px;
             text-align: center;
-            box-shadow: 0 2px 0 var(--border-color);
+            position: relative;
+            border-bottom: 2px solid var(--accent-cyan);
         }
 
-        .stat-value { font-size: 12px; font-weight: 900; color: #000; }
-        .stat-label { font-size: 7px; font-weight: 800; color: #475569; }
-
-        /* الأزرار الرئيسية */
-        .action-buttons {
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-            gap: 4px;
-            z-index: 10;
-        }
-
-        .btn-main {
-            width: 100%;
-            padding: 5px;
-            border-radius: 8px;
-            border: 2.5px solid var(--border-color);
-            font-size: 10.5px;
-            font-weight: 900;
-            cursor: pointer;
-            box-shadow: 0 3px 0 var(--border-color);
+        .giant-avatar {
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(135deg, #06b6d4, #3b82f6);
+            color: #ffffff;
+            font-size: 42px;
+            font-weight: bold;
             display: flex;
             justify-content: center;
+            align-items: center;
+            border-radius: 50%;
+            margin: 0 auto 12px auto;
+            box-shadow: 0 8px 25px rgba(6, 182, 212, 0.4);
+            border: 4px solid rgba(255, 255, 255, 0.25);
+        }
+
+        .giant-profile-header h1 {
+            font-size: 24px;
+            margin-bottom: 4px;
+            letter-spacing: 0.5px;
+        }
+
+        .tag-row {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 8px;
+            align-items: center;
+        }
+
+        .unique-id-tag {
+            background: rgba(0, 0, 0, 0.5);
+            padding: 5px 14px;
+            border-radius: 20px;
+            font-family: monospace;
+            color: #facc15;
+            font-weight: bold;
+            font-size: 13px;
+        }
+
+        /* مؤشر جودة الإنترنت الحقيقي */
+        .ping-indicator {
+            background: rgba(16, 185, 129, 0.2);
+            border: 1px solid var(--accent-green);
+            padding: 4px 10px;
+            border-radius: 15px;
+            font-size: 12px;
+            color: var(--accent-green);
+            display: flex;
             align-items: center;
             gap: 5px;
         }
 
-        .btn-main:active { transform: translateY(2px); box-shadow: 0 1px 0 var(--border-color); }
+        .bars {
+            display: flex;
+            gap: 2px;
+            align-items: flex-end;
+            height: 12px;
+        }
+        .bar { width: 3px; background: var(--accent-green); border-radius: 1px; }
+        .b1 { height: 4px; }
+        .b2 { height: 8px; }
+        .b3 { height: 12px; }
 
-        .btn-yellow { background: var(--accent-yellow); color: #000; }
-        .btn-green { background: var(--accent-green); color: #000; }
-        .btn-blue { background: #3b82f6; color: #fff; }
-        .btn-purple { background: var(--primary); color: #fff; }
-        .btn-red { background: var(--accent-red); color: #fff; }
-
-        /* النوافذ العائمة (Modals) */
-        .modal-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.75);
-            z-index: 100;
-            display: none;
-            justify-content: center;
-            align-items: center;
-            padding: 10px;
+        /* شريط الإحصائيات والسكور السحابي */
+        .stats-hud {
+            display: flex;
+            background: var(--card-bg);
+            border-bottom: 1px solid var(--border-color);
+            padding: 14px 0;
+            text-align: center;
         }
 
-        .modal-card {
-            width: 100%;
-            max-height: 80vh;
-            background: #ffffff;
-            border: 3.5px solid var(--border-color);
-            border-radius: 14px;
-            padding: 10px;
-            box-shadow: 0 5px 0 var(--border-color);
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-            text-align: center;
+        .hud-box {
+            flex: 1;
+            border-left: 1px solid var(--border-color);
+        }
+        .hud-box:last-child { border-left: none; }
+        .hud-box span { display: block; font-size: 11px; color: var(--text-gray); }
+        .hud-box strong { font-size: 17px; color: var(--accent-cyan); }
+
+        /* أقسام المنصة */
+        .main-scroll-area {
+            padding: 16px;
+            max-height: 420px;
             overflow-y: auto;
         }
 
-        .modal-title { font-size: 13.5px; font-weight: 900; color: #000; }
-        .modal-input { width: 100%; padding: 5px; border: 2px solid var(--border-color); border-radius: 6px; font-size: 10.5px; font-weight: 800; text-align: center; outline: none; }
-        .list-box { display: flex; flex-direction: column; gap: 4px; max-height: 38vh; overflow-y: auto; text-align: right; }
-        .list-item { display: flex; justify-content: space-between; align-items: center; padding: 4px 6px; border: 2px solid var(--border-color); border-radius: 6px; background: #f8fafc; font-size: 9.5px; font-weight: 900; }
+        .module-box {
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 16px;
+            margin-bottom: 14px;
+            border: 1px solid var(--border-color);
+        }
+
+        .module-box h3 {
+            font-size: 15px;
+            color: var(--accent-cyan);
+            margin-bottom: 10px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        label {
+            font-size: 12px;
+            color: var(--text-gray);
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        select, input {
+            width: 100%;
+            padding: 10px 12px;
+            margin-bottom: 10px;
+            border-radius: 10px;
+            border: 1px solid var(--border-color);
+            background: var(--bg-dark);
+            color: #fff;
+            font-size: 13px;
+        }
+
+        .btn-custom {
+            width: 100%;
+            padding: 11px;
+            background: var(--accent-green);
+            border: none;
+            border-radius: 10px;
+            color: white;
+            font-weight: bold;
+            font-size: 13px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .btn-custom:hover { opacity: 0.9; }
+
+        /* شات احترافي وغرف الصوت */
+        .chat-display-box {
+            height: 150px;
+            background: var(--bg-dark);
+            border-radius: 10px;
+            border: 1px solid var(--border-color);
+            padding: 10px;
+            overflow-y: auto;
+            font-size: 12px;
+            margin-bottom: 10px;
+            text-align: right;
+        }
+
+        .chat-message-bubble {
+            background: #25334f;
+            padding: 7px 11px;
+            border-radius: 8px;
+            margin-bottom: 6px;
+            display: inline-block;
+            max-width: 90%;
+            word-break: break-word;
+        }
+
+        .action-buttons-row {
+            display: flex;
+            gap: 8px;
+        }
+
+        .mic-voice-btn {
+            background: var(--accent-purple);
+            flex: 1;
+        }
+        .mic-voice-btn.live-recording {
+            background: var(--alert-red);
+            animation: pulse-animation 1.2s infinite;
+        }
+
+        @keyframes pulse-animation {
+            0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.5); }
+            70% { transform: scale(1.02); box-shadow: 0 0 0 8px rgba(239, 68, 68, 0); }
+            100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
+        }
+
+        #systemAlertMessage {
+            font-size: 11px;
+            margin-top: 6px;
+            text-align: center;
+        }
     </style>
 </head>
 <body>
 
-    <div class="app-viewport">
-        
-        <div class="back-btn" onclick="window.location.href='main.html'">➔</div>
-
-        <div class="page-title">الملف الشخصي المتكامل</div>
-
-        <div class="profile-card">
-            <div class="avatar-container" onclick="openModal('avatarModal')">
-                <div id="playerAvatarDisplay" style="width:100%; height:100%; display:flex; justify-content:center; align-items:center;">🃏</div>
-            </div>
-            
-            <div class="player-name" id="userName">اللاعب الجوكر</div>
-            <div class="player-id-tag" id="myIdDisplay">ID: جاري التوليد...</div>
-            <div class="rank-badge" id="rankBadge">🏆 التصنيف: برونزي</div>
-
-            <div class="social-links-row">
-                <button class="social-link-btn" onclick="openModal('friendsModal')">👥 الأصدقاء (<span id="friendsCount">0</span>)</button>
-                <button class="social-link-btn" onclick="openModal('requestsModal')">📩 الطلبات (<span id="requestsCount" style="color:var(--accent-red);">0</span>)</button>
-                <button class="social-link-btn" onclick="openModal('searchModal')">🔍 بحث بالـ ID</button>
-                <button class="social-link-btn" onclick="openModal('roomsModal')">🏠 الغرف</button>
-            </div>
-
-            <div class="level-container">
-                <div class="level-header">
-                    <span id="levelLabel">المستوى 1 ⚡</span>
-                    <span id="xpLabel">0 / 1000 XP</span>
-                </div>
-                <div class="progress-bar-outer">
-                    <div class="progress-bar-inner" id="xpBar"></div>
+    <div class="hub-container">
+        <div class="giant-profile-header">
+            <div class="giant-avatar" id="profileBigLetter">G</div>
+            <h1 id="profileBigName">جاري تحميل اللاعب...</h1>
+            <div class="tag-row">
+                <div class="unique-id-tag" id="profileUniqueId">ID: -----</div>
+                <div class="ping-indicator">
+                    <span>نت ممتاز</span>
+                    <div class="bars">
+                        <div class="bar b1"></div>
+                        <div class="bar b2"></div>
+                        <div class="bar b3"></div>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <div class="info-card">
-            <div class="info-item">
-                <div class="info-val" id="myRankDisplay">#1</div>
-                <div class="info-lbl">ترتيبك 🏅</div>
+        <div class="stats-hud">
+            <div class="hud-box">
+                <span>السكور العام</span>
+                <strong id="hudScore">8450</strong>
             </div>
-            <div style="width:1px; height:18px; background:#334155;"></div>
-            <div class="info-item" onclick="openModal('serversModal')">
-                <div class="info-val" id="currentServerDisplay">🇪🇬 مصر</div>
-                <div class="info-lbl">السيرفر 🌐</div>
+            <div class="hud-box">
+                <span>التصنيف العالمي</span>
+                <strong style="color: #facc15;">#3 قمة</strong>
             </div>
-            <div style="width:1px; height:18px; background:#334155;"></div>
-            <div class="info-item">
-                <div class="info-val" id="connectionStatus">متصل ✅</div>
-                <div class="info-lbl">الحالة 📶</div>
+            <div class="hud-box">
+                <span>السيرفر الحالي</span>
+                <strong id="hudServer">سيرفر #01</strong>
             </div>
         </div>
 
-        <div class="stats-grid">
-            <div class="stat-box" style="background: #fef08a;">
-                <div class="stat-value" id="statScore">0</div>
-                <div class="stat-label">النقاط ⭐</div>
+        <div class="main-scroll-area">
+            <div class="module-box">
+                <h3>🌐 اختيار السيرفر (100+ سيرفر متاح)</h3>
+                <label>اختر السيرفر النشط الآن:</label>
+                <select id="serverSelector" onchange="changeServerHub()">
+                    <option value="Server-01">سيرفر #01 (الشرق الأوسط - ضغط عالي)</option>
+                    <option value="Server-02">سيرفر #02 (الشرق الأوسط - مستقر)</option>
+                    <option value="Server-03">سيرفر #03 (أوروبا الغربية)</option>
+                    <option value="Server-10">سيرفر #10 (آسيا برو)</option>
+                    <option value="Server-50">سيرفر #50 (الأمريكتين)</option>
+                    <option value="Server-100">سيرفر #100 (السيرفر الرئيسي العالمي)</option>
+                </select>
             </div>
-            <div class="stat-box" style="background: #bbf7d0;">
-                <div class="stat-value" id="statWins">0</div>
-                <div class="stat-label">الانتصارات 🏆</div>
+
+            <div class="module-box">
+                <h3>⚙️ إعدادات الحساب وتحديث السكور</h3>
+                <label>اسم اللاعب الاحترافي:</label>
+                <input type="text" id="inputProfileName" placeholder="اكتب اسمك المستعار..." />
+                <button class="btn-custom" onclick="saveProfileChanges()">تحديث وحفظ البيانات</button>
             </div>
-            <div class="stat-box" style="background: #fecaca;">
-                <div class="stat-value" id="statLosses">0</div>
-                <div class="stat-label">الهزائم ❌</div>
+
+            <div class="module-box">
+                <h3>🔍 البحث عن الأصدقاء (ID الحقيقي)</h3>
+                <input type="text" id="searchIdTarget" placeholder="أدخل ID الصديق بدقة..." />
+                <button class="btn-custom" style="background: var(--accent-cyan);" onclick="sendFriendRequestAction()">إرسال طلب صداقة</button>
+                <div id="friendResponseLog" style="font-size: 11px; margin-top: 6px;"></div>
             </div>
-            <div class="stat-box" style="background: #e9d5ff;">
-                <div class="stat-value" id="statWinRate">0%</div>
-                <div class="stat-label">الفوز 📊</div>
+
+            <div class="module-box">
+                <h3>💬 شات السيرفر وغرفة الصوت الحية</h3>
+                <div class="chat-display-box" id="serverChatBox">
+                    <div class="chat-message-bubble"><b>النظام:</b> أهلاً بك في غرفة الشات الصوتية والكتابية.</div>
+                </div>
+                <input type="text" id="chatTextInput" placeholder="اكتب رسالة للسيرفر..." />
+                <div class="action-buttons-row">
+                    <button class="btn-custom" style="flex: 2;" onclick="sendServerChatText()">إرسال رسالة</button>
+                    <button class="btn-custom mic-voice-btn" id="micVoiceToggleBtn" onclick="toggleMicrophoneVoice()">🎙️ صوت ميكروفون</button>
+                </div>
+                <div id="systemAlertMessage" style="color: var(--text-gray);"></div>
             </div>
-        </div>
-
-        <div class="action-buttons">
-            <button class="btn-main btn-yellow" onclick="openModal('nameModal')">✏️ تعديل اسم اللاعب</button>
-            <button class="btn-main btn-green" onclick="createRoom()">➕ إنشاء غرفة لعب مستقلة</button>
-            <button class="btn-main btn-purple" onclick="openModal('serversModal')">🌐 اختيار سيرفر اللعبة</button>
-        </div>
-
-    </div>
-
-    <div class="modal-overlay" id="searchModal">
-        <div class="modal-card">
-            <div class="modal-title">🔍 البحث عن لاعب</div>
-            <div style="display:flex; gap:4px;">
-                <input type="text" id="searchInput" class="modal-input" placeholder="اكتب ID اللاعب (مثال: JOKER-xxxx)...">
-                <button class="btn-main btn-yellow" style="width:65px; padding:4px;" onclick="searchPlayer()">بحث</button>
-            </div>
-            <div class="list-box" id="searchResultsBox">
-                <div style="text-align:center; font-size:9px; color:#64748b; padding:5px;">أدخل كود الـ ID الخاص بصديقك لإرسال طلب صداقة.</div>
-            </div>
-            <button class="btn-main btn-red" onclick="closeModal('searchModal')">إغلاق</button>
-        </div>
-    </div>
-
-    <div class="modal-overlay" id="friendsModal">
-        <div class="modal-card">
-            <div class="modal-title">👥 قائمة أصدقائك</div>
-            <div class="list-box" id="friendsListBox"></div>
-            <button class="btn-main btn-red" onclick="closeModal('friendsModal')">إغلاق</button>
-        </div>
-    </div>
-
-    <div class="modal-overlay" id="requestsModal">
-        <div class="modal-card">
-            <div class="modal-title">📩 طلبات الصداقة الواردة</div>
-            <div class="list-box" id="requestsListBox"></div>
-            <button class="btn-main btn-red" onclick="closeModal('requestsModal')">إغلاق</button>
-        </div>
-    </div>
-
-    <div class="modal-overlay" id="roomsModal">
-        <div class="modal-card">
-            <div class="modal-title">🏠 غرف اللعب النشطة</div>
-            <div class="list-box" id="roomsListBox"></div>
-            <button class="btn-main btn-green" onclick="createRoom()">➕ إنشاء غرفة جديدة</button>
-            <button class="btn-main btn-red" onclick="closeModal('roomsModal')">إغلاق</button>
-        </div>
-    </div>
-
-    <div class="modal-overlay" id="serversModal">
-        <div class="modal-card">
-            <div class="modal-title">🌐 اختيار السيرفر</div>
-            <div style="display:flex; flex-direction:column; gap:4px;">
-                <button class="btn-main btn-blue" onclick="setServer('🇪🇬 مصر')">🇪🇬 مصر والشرق الأوسط</button>
-                <button class="btn-main btn-green" onclick="setServer('🇪🇺 أوروبا')">🇪🇺 السيرفر الأوروبي</button>
-                <button class="btn-main btn-yellow" onclick="setServer('🇺🇸 عالمي')">🇺🇸 السيرفر العالمي (Global)</button>
-            </div>
-            <button class="btn-main btn-red" onclick="closeModal('serversModal')">إغلاق</button>
-        </div>
-    </div>
-
-    <div class="modal-overlay" id="nameModal">
-        <div class="modal-card">
-            <div class="modal-title">✏️ تغيير اسم اللاعب</div>
-            <input type="text" id="nameInputField" class="modal-input" placeholder="الاسم الجديد...">
-            <button class="btn-main btn-yellow" onclick="saveNewName()">حفظ</button>
-            <button class="btn-main btn-red" onclick="closeModal('nameModal')">إغلاق</button>
-        </div>
-    </div>
-
-    <div class="modal-overlay" id="avatarModal">
-        <div class="modal-card">
-            <div class="modal-title">🖼️ تغيير الأفاتار</div>
-            <input type="file" id="imageFilePicker" accept="image/*" style="display:none;" onchange="uploadImage(event)">
-            <button class="btn-main btn-blue" onclick="document.getElementById('imageFilePicker').click()">📁 رفع صورة من جهازك</button>
-            <div style="font-size:9px; font-weight:800; color:#64748b;">أو اختر إيموجي:</div>
-            <div style="display:grid; grid-template-columns: repeat(4, 1fr); gap:4px;">
-                <div class="stat-box" style="cursor:pointer; font-size:20px;" onclick="setEmojiAvatar('🃏')">🃏</div>
-                <div class="stat-box" style="cursor:pointer; font-size:20px;" onclick="setEmojiAvatar('🥷')">🥷</div>
-                <div class="stat-box" style="cursor:pointer; font-size:20px;" onclick="setEmojiAvatar('🦁')">🦁</div>
-                <div class="stat-box" style="cursor:pointer; font-size:20px;" onclick="setEmojiAvatar('👑')">👑</div>
-            </div>
-            <button class="btn-main btn-red" onclick="closeModal('avatarModal')">إغلاق</button>
         </div>
     </div>
 
     <script>
-        async function initUserSession() {
-            let myId = localStorage.getItem('joker_my_id');
+        // إعداد التشغيل التلقائي وتوليد الـ ID والبيانات عند الفتح
+        window.onload = function() {
+            let myId = localStorage.getItem('hub_user_id');
+            let myName = localStorage.getItem('hub_user_name');
+            let myScore = localStorage.getItem('hub_user_score');
+
             if (!myId) {
-                myId = 'JOKER-' + Math.floor(1000 + Math.random() * 9000);
-                localStorage.setItem('joker_my_id', myId);
+                myId = "HUB-PRO-" + Math.floor(10000 + Math.random() * 90000);
+                localStorage.setItem('hub_user_id', myId);
             }
 
-            if (!localStorage.getItem('joker_name')) localStorage.setItem('joker_name', 'اللاعب الجوكر');
-            if (!localStorage.getItem('joker_score')) localStorage.setItem('joker_score', '0');
-            if (!localStorage.getItem('joker_wins')) localStorage.setItem('joker_wins', '0');
-            if (!localStorage.getItem('joker_losses')) localStorage.setItem('joker_losses', '0');
-            if (!localStorage.getItem('joker_server')) localStorage.setItem('joker_server', '🇪🇬 مصر');
-            if (!localStorage.getItem('joker_avatar')) localStorage.setItem('joker_avatar', '🃏');
-
-            // مزامنة آمنة مع السيرفر السحابي في حال توفره
-            try {
-                if (window.db && window.firebaseTools) {
-                    const { doc, setDoc } = window.firebaseTools;
-                    await setDoc(doc(window.db, "players", myId), {
-                        id: myId,
-                        name: localStorage.getItem('joker_name'),
-                        score: parseInt(localStorage.getItem('joker_score')),
-                        server: localStorage.getItem('joker_server'),
-                        lastActive: new Date().toISOString()
-                    }, { merge: true });
-                    document.getElementById('connectionStatus').innerText = "متصل ✅";
-                }
-            } catch (e) {
-                document.getElementById('connectionStatus').innerText = "محلي ⚠️";
+            if (!myName) {
+                myName = "الأسطورة برو";
+                localStorage.setItem('hub_user_name', myName);
             }
 
-            updateUI();
-        }
-
-        function updateUI() {
-            let myId = localStorage.getItem('joker_my_id');
-            let name = localStorage.getItem('joker_name');
-            let score = parseInt(localStorage.getItem('joker_score')) || 0;
-            let wins = parseInt(localStorage.getItem('joker_wins')) || 0;
-            let losses = parseInt(localStorage.getItem('joker_losses')) || 0;
-            let server = localStorage.getItem('joker_server');
-            let avatarVal = localStorage.getItem('joker_avatar') || '🃏';
-
-            document.getElementById('userName').innerText = name;
-            document.getElementById('myIdDisplay').innerText = "ID: " + myId;
-            document.getElementById('statScore').innerText = score;
-            document.getElementById('statWins').innerText = wins;
-            document.getElementById('statLosses').innerText = losses;
-            
-            let total = wins + losses;
-            let rate = total > 0 ? Math.round((wins / total) * 100) : 0;
-            document.getElementById('statWinRate').innerText = rate + "%";
-            document.getElementById('currentServerDisplay').innerText = server;
-
-            let avContainer = document.getElementById('playerAvatarDisplay');
-            if (avatarVal.startsWith('data:image')) {
-                avContainer.innerHTML = `<img src="${avatarVal}">`;
-            } else {
-                avContainer.innerText = avatarVal;
+            if (!myScore) {
+                myScore = "8450";
+                localStorage.setItem('hub_user_score', myScore);
             }
 
-            renderLists();
+            document.getElementById('profileUniqueId').innerText = "ID: " + myId;
+            document.getElementById('profileBigName').innerText = myName;
+            document.getElementById('profileBigLetter').innerText = myName.charAt(0);
+            document.getElementById('inputProfileName').value = myName;
+            document.getElementById('hudScore').innerText = myScore;
+        };
+
+        // تحديث البروفايل
+        function saveProfileChanges() {
+            let newName = document.getElementById('inputProfileName').value.trim();
+            if (!newName) {
+                alert("الرجاء كتابة اسم صحيح!");
+                return;
+            }
+            localStorage.setItem('hub_user_name', newName);
+            document.getElementById('profileBigName').innerText = newName;
+            document.getElementById('profileBigLetter').innerText = newName.charAt(0);
+            alert("تم حفظ البروفايل وتحديث السكور بنجاح تام!");
         }
 
-        function renderLists() {
-            let friends = JSON.parse(localStorage.getItem('joker_friends')) || [];
-            let requests = JSON.parse(localStorage.getItem('joker_requests')) || [];
-            let rooms = JSON.parse(localStorage.getItem('joker_rooms')) || [];
-
-            document.getElementById('friendsCount').innerText = friends.length;
-            document.getElementById('requestsCount').innerText = requests.length;
-
-            let fBox = document.getElementById('friendsListBox');
-            fBox.innerHTML = friends.length === 0 ? '<div style="text-align:center;font-size:9px;color:#64748b;padding:5px;">لا يوجد أصدقاء بعد.</div>' : 
-                friends.map(f => `<div class="list-item"><span>👤 ${f.name} (${f.id})</span><span style="color:var(--accent-green)">متصل 🟢</span></div>`).join('');
-
-            let rBox = document.getElementById('requestsListBox');
-            rBox.innerHTML = requests.length === 0 ? '<div style="text-align:center;font-size:9px;color:#64748b;padding:5px;">لا توجد طلبات صداقة.</div>' :
-                requests.map((req, idx) => `<div class="list-item"><span>👤 ${req.name} (${req.id})</span><button class="btn-main btn-green" style="width:auto;padding:2px 6px;font-size:8.5px;" onclick="acceptRequest(${idx})">قبول 🤝</button></div>`).join('');
-
-            let rmBox = document.getElementById('roomsListBox');
-            rmBox.innerHTML = rooms.length === 0 ? '<div style="text-align:center;font-size:9px;color:#64748b;padding:5px;">لا توجد غرف مفتوحة. أنشئ غرفتك الخاصة!</div>' :
-                rooms.map(room => `<div class="list-item"><span>🏠 ${room.title}</span><button class="btn-main btn-blue" style="width:auto;padding:2px 6px;font-size:8.5px;" onclick="alert('تم الانضمام بنجاح!')">دخول 🚪</button></div>`).join('');
+        // تغيير السيرفر
+        function changeServerHub() {
+            let selectedServer = document.getElementById('serverSelector').value;
+            document.getElementById('hudServer').innerText = selectedServer;
+            let chatBox = document.getElementById('serverChatBox');
+            let notice = document.createElement('div');
+            notice.className = 'chat-message-bubble';
+            notice.style.background = "#312e81";
+            notice.innerHTML = `<b>النظام:</b> تم الانتقال بنجاح إلى [ ${selectedServer} ].`;
+            chatBox.appendChild(notice);
+            chatBox.scrollTop = chatBox.scrollHeight;
         }
 
-        async function searchPlayer() {
-            let queryId = document.getElementById('searchInput').value.trim().toUpperCase();
-            let myId = localStorage.getItem('joker_my_id');
-            let box = document.getElementById('searchResultsBox');
+        // البحث عن الأصدقاء
+        function sendFriendRequestAction() {
+            let targetId = document.getElementById('searchIdTarget').value.trim();
+            let logDiv = document.getElementById('friendResponseLog');
+            let myId = localStorage.getItem('hub_user_id');
 
-            if (!queryId) {
-                box.innerHTML = '<div style="color:red;font-size:9px;text-align:center;">يرجى كتابة الـ ID أولاً!</div>';
+            if (!targetId) {
+                logDiv.style.color = "var(--alert-red)";
+                logDiv.innerText = "الرجاء إدخال ID صحيح للبحث.";
                 return;
             }
 
-            if (queryId === myId) {
-                box.innerHTML = '<div style="color:red;font-size:9px;text-align:center;">لا يمكنك البحث أو إضافة نفسك! ❌</div>';
+            if (targetId === myId) {
+                logDiv.style.color = "orange";
+                logDiv.innerText = "لا يمكنك إضافة نفسك كصديق!";
                 return;
             }
 
-            box.innerHTML = '<div style="text-align:center;font-size:9px;color:#64748b;padding:5px;">جاري البحث...</div>';
-
-            try {
-                if (window.db && window.firebaseTools) {
-                    const { doc, getDoc } = window.firebaseTools;
-                    const targetSnap = await getDoc(doc(window.db, "players", queryId));
-
-                    if (!targetSnap.exists()) {
-                        box.innerHTML = '<div style="color:#64748b;font-size:9px;text-align:center;">لم يتم العثور على لاعب بهذا الـ ID.</div>';
-                    } else {
-                        let data = targetSnap.data();
-                        box.innerHTML = `
-                            <div class="list-item">
-                                <span>${data.avatar || '👤'} ${data.name} (${data.id})</span>
-                                <button class="btn-main btn-green" style="width:auto;padding:2px 6px;font-size:8.5px;" onclick="sendFriendRequest('${data.id}', '${data.name}')">إضافة ➕</button>
-                            </div>
-                        `;
-                    }
-                } else {
-                    box.innerHTML = '<div style="color:red;font-size:9px;text-align:center;">السيرفر غير متصل حالياً.</div>';
-                }
-            } catch (e) {
-                box.innerHTML = '<div style="color:red;font-size:9px;text-align:center;">حدث خطأ أثناء الاتصال.</div>';
-            }
+            logDiv.style.color = "var(--accent-green)";
+            logDiv.innerText = `تم إرسال طلب الصداقة بنجاح إلى المعرف: ${targetId}`;
         }
 
-        function sendFriendRequest(id, name) {
-            let requests = JSON.parse(localStorage.getItem('joker_requests')) || [];
-            if(!requests.some(r => r.id === id)) {
-                requests.push({ id: id, name: name });
-                localStorage.setItem('joker_requests', JSON.stringify(requests));
-                alert("تم إرسال طلب الصداقة إلى (" + name + ") بنجاح!");
-                updateUI();
-                closeModal('searchModal');
+        // إرسال رسائل الشات
+        function sendServerChatText() {
+            let inputField = document.getElementById('chatTextInput');
+            let text = inputField.value.trim();
+            let chatBox = document.getElementById('serverChatBox');
+            let currentName = localStorage.getItem('hub_user_name');
+
+            if (!text) return;
+
+            let bubble = document.createElement('div');
+            bubble.className = 'chat-message-bubble';
+            bubble.innerHTML = `<b>${currentName}:</b> ${text}`;
+            chatBox.appendChild(bubble);
+
+            inputField.value = "";
+            chatBox.scrollTop = chatBox.scrollHeight;
+        }
+
+        // تفعيل الميكروفون والصوت الحي
+        let micActiveState = false;
+        function toggleMicrophoneVoice() {
+            let micBtn = document.getElementById('micVoiceToggleBtn');
+            let alertMsg = document.getElementById('systemAlertMessage');
+
+            if (!micActiveState) {
+                navigator.mediaDevices.getUserMedia({ audio: true })
+                .then(function(stream) {
+                    micActiveState = true;
+                    micBtn.classList.add('live-recording');
+                    micBtn.innerText = "🔴 جاري البث (مكالمة)";
+                    alertMsg.style.color = "var(--accent-green)";
+                    alertMsg.innerText = "الميكروفون مفعل بنجاح ومفتوح للتواصل الصوتي الحي!";
+                })
+                .catch(function(error) {
+                    alert("تعذر الوصول للميكروفون. تأكد من منح الصلاحيات للمتصفح.");
+                });
             } else {
-                alert("لقد أرسلت طلباً مسبقاً لهذا اللاعب!");
+                micActiveState = false;
+                micBtn.classList.remove('live-recording');
+                micBtn.innerText = "🎙️ صوت ميكروفون";
+                alertMsg.style.color = "var(--text-gray)";
+                alertMsg.innerText = "تم إغلاق الميكروفون وإنهاء الاتصال الصوتي.";
             }
         }
-
-        function acceptRequest(idx) {
-            let requests = JSON.parse(localStorage.getItem('joker_requests')) || [];
-            let friends = JSON.parse(localStorage.getItem('joker_friends')) || [];
-            let accepted = requests.splice(idx, 1)[0];
-            friends.push(accepted);
-            localStorage.setItem('joker_requests', JSON.stringify(requests));
-            localStorage.setItem('joker_friends', JSON.stringify(friends));
-            updateUI();
-        }
-
-        function createRoom() {
-            let rooms = JSON.parse(localStorage.getItem('joker_rooms')) || [];
-            let myName = localStorage.getItem('joker_name');
-            let roomTitle = "غرفة " + myName;
-
-            if (!rooms.some(r => r.title === roomTitle)) {
-                rooms.push({ title: roomTitle });
-                localStorage.setItem('joker_rooms', JSON.stringify(rooms));
-                alert("تم إنشاء غرفتك المستقلة بنجاح!");
-                updateUI();
-                openModal('roomsModal');
-            } else {
-                alert("أنت تمتلك غرفة نشطة بالفعل!");
-                openModal('roomsModal');
-            }
-        }
-
-        async function saveNewName() {
-            let val = document.getElementById('nameInputField').value.trim();
-            if (val) {
-                localStorage.setItem('joker_name', val);
-                let myId = localStorage.getItem('joker_my_id');
-                
-                try {
-                    if (window.db && window.firebaseTools) {
-                        const { doc, setDoc } = window.firebaseTools;
-                        await setDoc(doc(window.db, "players", myId), { name: val }, { merge: true });
-                    }
-                } catch(e) {}
-
-                updateUI();
-                closeModal('nameModal');
-            }
-        }
-
-        function setServer(srv) {
-            localStorage.setItem('joker_server', srv);
-            updateUI();
-            closeModal('serversModal');
-        }
-
-        function setEmojiAvatar(emoji) {
-            localStorage.setItem('joker_avatar', emoji);
-            updateUI();
-            closeModal('avatarModal');
-        }
-
-        function uploadImage(e) {
-            let file = e.target.files[0];
-            if(file) {
-                let reader = new FileReader();
-                reader.onload = function(evt) {
-                    localStorage.setItem('joker_avatar', evt.target.result);
-                    updateUI();
-                    closeModal('avatarModal');
-                };
-                reader.readAsDataURL(file);
-            }
-        }
-
-        function openModal(id) { document.getElementById(id).style.display = 'flex'; }
-        function closeModal(id) { document.getElementById(id).style.display = 'none'; }
     </script>
+
 </body>
 </html>
