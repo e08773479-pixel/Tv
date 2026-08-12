@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Joker Game - Pro Active League & UCL Tables</title>
+    <title>Joker Game - Pro Career & UCL Knockouts</title>
     <style>
         :root {
             --bg-dark: #020408;
@@ -71,7 +71,7 @@
         .match-center-box { display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; gap: 10px; }
 
         .vs-display {
-            font-size: 15px; font-weight: bold; color: var(--text-main);
+            font-size: 14px; font-weight: bold; color: var(--text-main);
             background: rgba(0,0,0,0.5); border: 2px solid var(--pink);
             padding: 10px; border-radius: 15px; width: 100%;
         }
@@ -99,7 +99,7 @@
 
     <div class="game-viewport">
         <div class="top-bar">
-            <div id="tournamentTitle" class="match-title">🏆 دوري الـ 20 نادياً ودوري أبطال أوروبا (32 فريقاً)</div>
+            <div id="tournamentTitle" class="match-title">🏆 نظام البطولات الاحترافي</div>
             <div class="coins-container">
                 <span>🪙</span>
                 <span id="playerCoins">1000</span>
@@ -108,7 +108,7 @@
 
         <div class="league-container">
             <div class="card-box">
-                <div id="tableHeading" class="section-heading">📊 جدول الترتيب والنقاط</div>
+                <div id="tableHeading" class="section-heading">📊 جدول الترتيب والمجموعات</div>
                 <div class="table-wrapper">
                     <table>
                         <thead>
@@ -124,7 +124,7 @@
             </div>
 
             <div class="card-box match-center-box">
-                <div id="roundIndicator" class="section-heading">الجولة: 1 / 38</div>
+                <div id="roundIndicator" class="section-heading">الجولة: 1 / 8</div>
                 
                 <div class="vs-display">
                     <div id="teamHome">ناديك</div>
@@ -132,9 +132,9 @@
                     <div id="teamAway" style="color: var(--pink);">جاري تحديد الخصم...</div>
                 </div>
 
-                <div id="matchOutcome" class="match-result-text">الفوز في الماتش الحي يضيف نقاطك للجدول فوراً! ⚡</div>
+                <div id="matchOutcome" class="match-result-text">الفوز في الماتش الحي يُسجل في الجدول وتتأهل لأدوار الإقصاء! ⚡</div>
 
-                <button class="play-btn" onclick="startLiveMatch()">دخول الماتش الحي وتحديث الجدول 🏟️</button>
+                <button class="play-btn" onclick="startLiveMatch()">دخول الماتش الحي وتحديث الترتيب 🏟️</button>
             </div>
         </div>
 
@@ -155,8 +155,9 @@
         let currentMode = localStorage.getItem('careerMode') || 'league';
         let leagueRound = parseInt(localStorage.getItem('leagueRound')) || 1;
         let uclRound = parseInt(localStorage.getItem('uclRound')) || 1;
+        let uclPhase = localStorage.getItem('uclPhase') || 'league'; // 'league', 'r16_first', 'r16_second', 'qf_first', 'qf_second', 'sf_first', 'sf_second', 'final'
 
-        // تهيئة الجداول ببيانات 20 فريق و 32 فريق
+        // قوائم الفرق
         let premier20 = JSON.parse(localStorage.getItem('premierLeague20')) || [
             { name: userTeam, played: 0, pts: 0 }, { name: "أرسنال", played: 0, pts: 0 },
             { name: "مانشستر سيتي", played: 0, pts: 0 }, { name: "ليفربول", played: 0, pts: 0 },
@@ -189,8 +190,6 @@
             { name: "غلطة سراي", played: 0, pts: 0 }, { name: "ريد بول سالزبورغ", played: 0, pts: 0 }
         ];
 
-        // تحديث النقاط تلقائياً إذا كانت مسجلة من ماتش سابقة
-        checkPendingMatchResults();
         renderUI();
 
         function switchMode(mode) {
@@ -206,31 +205,60 @@
             let activeList, title;
             if (currentMode === 'league') {
                 activeList = premier20;
-                title = `📊 جدول الدوري الإنجليزي (20 فريقاً) - جولة ${leagueRound}/38`;
-                document.getElementById('tournamentTitle').innerText = "🏆 البريميرليج (20 فريق حقيقي)";
+                title = `📊 جدول الدوري الإنجليزي - جولة ${leagueRound}/38`;
+                document.getElementById('tournamentTitle').innerText = "🏆 البريميرليج (20 فريق)";
                 document.getElementById('roundIndicator').innerText = `الجولة: ${leagueRound} / 38`;
             } else {
-                activeList = ucl32;
-                title = `⭐ دوري أبطال أوروبا (32 فريقاً) - جولة ${uclRound}/8`;
-                document.getElementById('tournamentTitle').innerText = "⭐ دوري أبطال أوروبا (تأهل أول 8 للإقصائيات)";
-                document.getElementById('roundIndicator').innerText = `الجولة الأوروبية: ${uclRound} / 8`;
+                if (uclPhase === 'league') {
+                    activeList = ucl32;
+                    title = `⭐ دوري الأبطال (مرحلة الدوري) - جولة ${uclRound}/8`;
+                    document.getElementById('tournamentTitle').innerText = "⭐ دوري أبطال أوروبا (تأهل أول 8 للإقصاء)";
+                    document.getElementById('roundIndicator').innerText = `الجولة الأوروبية: ${uclRound} / 8`;
+                } else {
+                    // أدوار الإقصاء (ذهاب وعودة)
+                    let phaseNames = {
+                        'r16_first': 'دور الـ 16 (مباراة الذهاب 🔄)',
+                        'r16_second': 'دور الـ 16 (مباراة العودة 🔄)',
+                        'qf_first': 'ربع النهائي (مباراة الذهاب 🔄)',
+                        'qf_second': 'ربع النهائي (مباراة العودة 🔄)',
+                        'sf_first': 'نصف النهائي (مباراة الذهاب 🔄)',
+                        'sf_second': 'نصف النهائي (مباراة العودة 🔄)',
+                        'final': 'المباراة النهائية الكبرى 🏆'
+                    };
+                    document.getElementById('tournamentTitle').innerText = `⭐ دوري أبطال أوروبا - ${phaseNames[uclPhase]}`;
+                    document.getElementById('roundIndicator').innerText = `مرحلة خروج المغلوب (ذهاب/عودة)`;
+                    document.getElementById('tableHeading').innerText = `🔥 الأندية المتأهلة للإقصائيات`;
+                    
+                    // عرض أول 8 فرق المتأهلة
+                    ucl32.sort((a, b) => b.pts - a.pts);
+                    let top8 = ucl32.slice(0, 8);
+                    top8.forEach((t, i) => {
+                        let isUser = t.name === userTeam ? "color: var(--accent); font-weight:900;" : "";
+                        tbody.innerHTML += `<tr style="${isUser}"><td>${i + 1}. ${t.name} ⭐ [متأهل]</td><td>${t.played}</td><td>${t.pts}</td></tr>`;
+                    });
+
+                    document.getElementById('teamHome').innerText = userTeam;
+                    document.getElementById('teamAway').innerText = uclPhase === 'final' ? "عملاق نهائي أوروبا" : "منافس الإقصائيات";
+                    localStorage.setItem('currentOpponent', document.getElementById('teamAway').innerText);
+                    return;
+                }
             }
 
-            document.getElementById('tableHeading').innerText = title;
+            if (currentMode === 'league' || uclPhase === 'league') {
+                document.getElementById('tableHeading').innerText = title;
+                activeList.sort((a, b) => b.pts - a.pts);
+                activeList.forEach((t, i) => {
+                    let isUser = t.name === userTeam ? "color: var(--accent); font-weight:900;" : "";
+                    let highlightTag = (currentMode === 'ucl' && i < 8) ? " ⭐ [تأهل مباشر]" : "";
+                    tbody.innerHTML += `<tr style="${isUser}"><td>${i + 1}. ${t.name}${highlightTag}</td><td>${t.played}</td><td>${t.pts}</td></tr>`;
+                });
 
-            activeList.sort((a, b) => b.pts - a.pts);
-            activeList.forEach((t, i) => {
-                let isUser = t.name === userTeam ? "color: var(--accent); font-weight:900;" : "";
-                let topTag = (currentMode === 'ucl' && i < 8) ? " ⭐ [تأهل]" : "";
-                tbody.innerHTML += `<tr style="${isUser}"><td>${i + 1}. ${t.name}${topTag}</td><td>${t.played}</td><td>${t.pts}</td></tr>`;
-            });
-
-            let opponents = activeList.filter(t => t.name !== userTeam);
-            let chosenOpp = opponents[Math.floor(Math.random() * opponents.length)] || { name: "الخصم القادم" };
-            
-            document.getElementById('teamHome').innerText = userTeam;
-            document.getElementById('teamAway').innerText = chosenOpp.name;
-            localStorage.setItem('currentOpponent', chosenOpp.name);
+                let opponents = activeList.filter(t => t.name !== userTeam);
+                let chosenOpp = opponents[Math.floor(Math.random() * opponents.length)] || { name: "الخصم القادم" };
+                document.getElementById('teamHome').innerText = userTeam;
+                document.getElementById('teamAway').innerText = chosenOpp.name;
+                localStorage.setItem('currentOpponent', chosenOpp.name);
+            }
         }
 
         function startLiveMatch() {
@@ -243,47 +271,6 @@
 
             localStorage.setItem('userSquadPower', squadRating);
             window.location.href = 'live_match.html';
-        }
-
-        // فحص وتسجيل نتيجة الماتش الحي فوراً في الجدول
-        function checkPendingMatchResults() {
-            let lastResult = localStorage.getItem('lastMatchResult'); // يفترض أن يكتبه الماتش الحي (win, draw, loss)
-            let matchProcessed = localStorage.getItem('matchProcessed');
-
-            if (lastResult && matchProcessed !== 'true') {
-                let activeList = currentMode === 'league' ? premier20 : ucl32;
-                let userObj = activeList.find(t => t.name === userTeam);
-
-                if (userObj) {
-                    userObj.played += 1;
-                    if (lastResult === 'win') userObj.pts += 3;
-                    else if (lastResult === 'draw') userObj.pts += 1;
-
-                    // محاكاة سريعة لباقي الفرق في الجولة لكي يتحرك الجدول واقعياً
-                    activeList.forEach(t => {
-                        if (t.name !== userTeam) {
-                            t.played += 1;
-                            let r = Math.random();
-                            if (r > 0.6) t.pts += 3;
-                            else if (r > 0.3) t.pts += 1;
-                        }
-                    });
-
-                    if (currentMode === 'league') {
-                        leagueRound++;
-                        if (leagueRound > 38) leagueRound = 38;
-                        localStorage.setItem('leagueRound', leagueRound);
-                        localStorage.setItem('premierLeague20', JSON.stringify(activeList));
-                    } else {
-                        uclRound++;
-                        if (uclRound > 8) uclRound = 8;
-                        localStorage.setItem('uclRound', uclRound);
-                        localStorage.setItem('uclLeague32', JSON.stringify(activeList));
-                    }
-                }
-                localStorage.setItem('matchProcessed', 'true');
-                localStorage.removeItem('lastMatchResult');
-            }
         }
     </script>
 
