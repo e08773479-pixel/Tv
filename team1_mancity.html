@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Joker Game - Manchester City</title>
+    <style>
+        :root {
+            --bg-dark: #020408;
+            --accent: #00ff88;
+            --accent-glow: rgba(0, 255, 136, 0.9);
+            --gold: #ffd700;
+            --gold-glow: rgba(255, 215, 0, 0.9);
+            --cyan: #00f0ff;
+            --pink: #ff007f;
+            --text-main: #ffffff;
+        }
+        
+        * {
+            box-sizing: border-box;
+            user-select: none;
+        }
+
+        html, body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100vh;
+            overflow: hidden;
+            background: radial-gradient(circle at center, #0a192f 0%, #020408 100%);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .game-viewport {
+            width: 900px;
+            height: 600px;
+            background: linear-gradient(135deg, rgba(13, 27, 42, 0.98) 0%, rgba(5, 11, 20, 0.99) 100%);
+            border-radius: 28px;
+            box-shadow: 0 0 80px rgba(0, 255, 136, 0.4), inset 0 0 35px rgba(0, 240, 255, 0.2);
+            border: 3px solid rgba(0, 255, 136, 0.6);
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 40px;
+            gap: 20px;
+        }
+
+        .welcome-icon {
+            font-size: 85px;
+            filter: drop-shadow(0 0 25px var(--pink));
+            animation: bounce 1.5s infinite ease-in-out;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+
+        .welcome-title {
+            font-size: 38px;
+            font-weight: 900;
+            background: linear-gradient(45deg, var(--gold), var(--accent), var(--cyan));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 30px var(--gold-glow);
+            letter-spacing: 2px;
+        }
+
+        .club-name-display {
+            font-size: 30px;
+            font-weight: bold;
+            color: var(--cyan);
+            text-shadow: 0 0 15px rgba(0, 240, 255, 0.7);
+        }
+
+        .timer-text {
+            font-size: 16px;
+            color: rgba(255, 255, 255, 0.7);
+            margin-top: 10px;
+            letter-spacing: 1px;
+        }
+
+        .back-btn {
+            background: transparent;
+            border: 2px solid var(--cyan);
+            color: var(--cyan);
+            padding: 8px 25px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: bold;
+            transition: 0.2s;
+            text-decoration: none;
+            box-shadow: 0 0 10px rgba(0, 240, 255, 0.2);
+            margin-top: 10px;
+        }
+
+        .back-btn:hover {
+            background: var(--cyan);
+            color: #020408;
+            box-shadow: 0 0 20px var(--cyan);
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="game-viewport">
+        <div class="welcome-icon">🏆</div>
+        <div class="welcome-title">أهلاً بك في النادي الخاص بك</div>
+        <div class="club-name-display">⚽ مانشستر سيتي ⚽</div>
+        <div id="timerDisplay" class="timer-text">سيتم الانتقال خلال 5 ثوانٍ...</div>
+        
+        <div>
+            <a href="game6.html" class="back-btn">← رجوع لقائمة الفرق</a>
+        </div>
+    </div>
+
+    <script>
+        // عداد تنازلي لمدة 5 ثوانٍ
+        let timeLeft = 5;
+        const timerElement = document.getElementById('timerDisplay');
+
+        const countdown = setInterval(() => {
+            timeLeft--;
+            if (timeLeft > 0) {
+                timerElement.innerText = "سيتم الانتقال خلال " + timeLeft + " ثوانٍ...";
+            } else {
+                clearInterval(countdown);
+            }
+        }, 1000);
+
+        // التحويل التلقائي بعد 5 ثوانٍ تماماً إلى صفحة welcome.html
+        setTimeout(() => {
+            window.location.href = 'welcome.html';
+        }, 5000);
+    </script>
+
+</body>
+</html>
