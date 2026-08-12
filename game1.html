@@ -3,18 +3,37 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>JOKER AI - Big 5 Leagues & Egyptian Draft</title>
+    <title>JOKER FC - Ultimate Empire 2026</title>
     <style>
+        /* ==========================================================================
+           1. CORE SYSTEM & NEON FUT THEME STYLES
+           ========================================================================== */
+        :root {
+            --primary: #00ffcc;
+            --primary-glow: rgba(0, 255, 204, 0.5);
+            --gold: #fbbf24;
+            --gold-glow: rgba(251, 191, 36, 0.5);
+            --purple-hero: #a855f7;
+            --hero-glow: rgba(168, 85, 247, 0.5);
+            --red-accent: #ef4444;
+            --bg-dark: #020617;
+            --bg-panel: #0f172a;
+            --bg-card: #1e293b;
+            --border-line: #334155;
+            --text-muted: #94a3b8;
+        }
+
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
             user-select: none;
+            -webkit-tap-highlight-color: transparent;
         }
 
         body {
-            background: #020617;
+            background-color: var(--bg-dark);
             color: #fff;
             display: flex;
             justify-content: center;
@@ -23,542 +42,1120 @@
             overflow-x: hidden;
         }
 
-        .app-container {
+        .app-viewport {
             width: 100vw;
-            max-width: 480px;
+            max-width: 500px;
             height: 100vh;
-            background: #0f172a;
+            background: var(--bg-panel);
             display: flex;
             flex-direction: column;
             position: relative;
-            box-shadow: 0 0 50px rgba(0, 255, 204, 0.2);
-            border: 1px solid #1e293b;
+            box-shadow: 0 0 60px var(--primary-glow);
+            border: 1px solid var(--border-line);
+            overflow: hidden;
         }
 
-        /* Top Bar Header */
-        .top-bar {
-            background: linear-gradient(180deg, #020617, #0f172a);
+        /* Top Header Bar */
+        .top-header {
+            background: linear-gradient(180deg, #020617 0%, #0f172a 100%);
             padding: 12px 16px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-bottom: 2px solid #00ffcc;
+            border-bottom: 2px solid var(--primary);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
+            z-index: 50;
         }
 
-        .club-title {
-            font-size: 16px;
+        .header-title {
+            font-size: 18px;
             font-weight: 900;
-            color: #00ffcc;
-            text-shadow: 0 0 10px rgba(0,255,204,0.3);
+            color: var(--primary);
+            text-shadow: 0 0 12px var(--primary-glow);
+            letter-spacing: 0.5px;
         }
 
-        .squad-power {
-            font-size: 11px;
-            color: #94a3b8;
-        }
-
-        .wallet-box {
-            background: #000;
-            padding: 5px 12px;
-            border-radius: 20px;
-            border: 1px solid #fbbf24;
-            font-size: 12px;
-            font-weight: 900;
-            color: #fbbf24;
-        }
-
-        /* Screen Wrapper */
-        .screen {
-            flex: 1;
-            overflow-y: auto;
-            padding: 12px;
+        .header-stats {
             display: flex;
-            flex-direction: column;
             gap: 10px;
         }
 
-        /* Category Label */
-        .section-label {
+        .stat-pill {
+            background: rgba(0, 0, 0, 0.7);
+            padding: 5px 12px;
+            border-radius: 20px;
             font-size: 12px;
             font-weight: 900;
-            color: #00ffcc;
-            margin-top: 4px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            border: 1px solid var(--border-line);
         }
 
-        /* Horizontal Scroll Chips */
-        .chip-container {
+        .stat-pill.coins { border-color: var(--gold); color: var(--gold); box-shadow: 0 0 8px var(--gold-glow); }
+        .stat-pill.ovr { border-color: var(--primary); color: var(--primary); box-shadow: 0 0 8px var(--primary-glow); }
+
+        /* Screens Switcher Area */
+        .screen-container {
+            flex: 1;
+            position: relative;
+            overflow-y: auto;
+            padding: 14px;
             display: flex;
-            gap: 6px;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .screen-container::-webkit-scrollbar { display: none; }
+
+        .tab-content {
+            display: none;
+            flex-direction: column;
+            gap: 12px;
+            width: 100%;
+        }
+
+        .tab-content.active {
+            display: flex;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Section Titles */
+        .ui-label {
+            font-size: 13px;
+            font-weight: 900;
+            color: var(--primary);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            text-shadow: 0 0 6px var(--primary-glow);
+        }
+
+        /* Horizontal Scroll Lists */
+        .chips-scroll {
+            display: flex;
+            gap: 8px;
             overflow-x: auto;
-            padding-bottom: 4px;
+            padding-bottom: 6px;
             scrollbar-width: none;
         }
 
-        .chip-container::-webkit-scrollbar { display: none; }
+        .chips-scroll::-webkit-scrollbar { display: none; }
 
         .chip-btn {
             background: #1e293b;
             border: 1px solid #334155;
-            color: #94a3b8;
-            padding: 8px 14px;
+            color: var(--text-muted);
+            padding: 9px 16px;
             border-radius: 20px;
-            font-size: 11px;
+            font-size: 12px;
             font-weight: 800;
             cursor: pointer;
             white-space: nowrap;
-            transition: 0.2s;
+            transition: all 0.2s ease;
         }
 
         .chip-btn.active {
-            background: #00ffcc;
+            background: var(--primary);
             color: #000;
-            border-color: #00ffcc;
-            box-shadow: 0 0 10px rgba(0,255,204,0.3);
+            border-color: var(--primary);
+            box-shadow: 0 0 12px var(--primary-glow);
         }
 
-        /* PRO FIFA FUT CARD DESIGN */
+        /* FUT 3D CARD DESIGNS */
         .cards-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            gap: 10px;
+            gap: 12px;
+            padding-bottom: 20px;
         }
 
         .fut-card {
             width: 100%;
-            height: 215px;
-            border-radius: 16px;
+            height: 240px;
+            border-radius: 18px;
             position: relative;
-            padding: 10px;
+            padding: 12px;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.8);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.85);
             border: 2px solid rgba(255, 255, 255, 0.15);
-            transition: transform 0.2s;
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
             cursor: pointer;
             overflow: hidden;
+            background-size: cover;
         }
 
+        .fut-card:hover { transform: translateY(-5px) scale(1.02); }
         .fut-card:active { transform: scale(0.95); }
 
-        .card-gold { background: linear-gradient(135deg, #bf953f 0%, #fcf6ba 50%, #b38728 100%); color: #1e1100; }
-        .card-icon { background: linear-gradient(135deg, #090d16 0%, #1e293b 100%); color: #00ffcc; border-color: #00ffcc; }
-        .card-special { background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 50%, #db2777 100%); color: #fff; }
+        .fut-card.selected {
+            border-color: var(--primary) !important;
+            box-shadow: 0 0 30px var(--primary-glow) !important;
+        }
+
+        /* Card Rarity Background Themes */
+        .card-gold {
+            background: linear-gradient(135deg, #bf953f 0%, #fcf6ba 50%, #b38728 100%);
+            color: #1e1100;
+        }
+
+        .card-special {
+            background: linear-gradient(135deg, #0f172a 0%, #3b82f6 50%, #1e1b4b 100%);
+            color: #fff;
+            border-color: #60a5fa;
+        }
+
+        .card-hero {
+            background: linear-gradient(135deg, #4c0519 0%, #831843 50%, #be123c 100%);
+            color: #fff;
+            border-color: #fb7185;
+        }
 
         .card-header { display: flex; justify-content: space-between; align-items: flex-start; }
-        .card-ovr { font-size: 26px; font-weight: 900; line-height: 1; }
-        .card-pos { font-size: 10px; font-weight: 900; }
+        .card-ovr { font-size: 30px; font-weight: 900; line-height: 1; }
+        .card-pos { font-size: 11px; font-weight: 900; opacity: 0.9; }
 
-        .card-avatar { font-size: 44px; text-align: center; margin: 2px 0; }
-        .card-name { text-align: center; font-weight: 900; font-size: 11px; text-transform: uppercase; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .card-avatar { font-size: 50px; text-align: center; margin: 2px 0; filter: drop-shadow(0 6px 10px rgba(0,0,0,0.5)); }
+        .card-name { text-align: center; font-weight: 900; font-size: 12px; text-transform: uppercase; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
         .card-stats {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             gap: 2px;
-            background: rgba(0,0,0,0.35);
-            padding: 4px;
-            border-radius: 6px;
-            font-size: 9px;
+            background: rgba(0, 0, 0, 0.5);
+            padding: 6px 4px;
+            border-radius: 8px;
+            font-size: 10px;
             font-weight: 800;
             text-align: center;
+            backdrop-filter: blur(4px);
         }
 
-        .card-footer { display: flex; justify-content: space-between; align-items: center; font-size: 10px; font-weight: bold; }
-
-        /* Action Buttons */
-        .btn-action {
-            width: 100%;
-            padding: 14px;
-            border: none;
-            border-radius: 12px;
-            font-size: 14px;
-            font-weight: 900;
-            cursor: pointer;
-            background: linear-gradient(135deg, #00ffcc, #0284c7);
-            color: #000;
-            box-shadow: 0 4px 20px rgba(0, 255, 204, 0.3);
-            text-align: center;
-        }
-
-        .btn-skip { background: linear-gradient(135deg, #f59e0b, #d97706); color: #fff; }
-
-        /* Match Overlay */
-        .match-overlay {
-            position: absolute;
-            inset: 0;
-            background: #020617;
-            z-index: 100;
-            display: none;
-            flex-direction: column;
-            padding: 16px;
-        }
-
-        .match-overlay.active { display: flex; }
-
-        .scoreboard {
-            background: #0f172a;
-            border-radius: 16px;
-            padding: 16px;
-            border: 2px solid #00ffcc;
+        .card-footer {
             display: flex;
             justify-content: space-between;
             align-items: center;
+            font-size: 11px;
+            font-weight: bold;
+            background: rgba(0, 0, 0, 0.35);
+            padding: 4px 8px;
+            border-radius: 6px;
         }
 
-        .score-num { font-size: 38px; font-weight: 900; color: #00ffcc; }
-
-        .ai-log {
-            flex: 1;
-            background: #000;
-            border-radius: 12px;
-            padding: 12px;
-            margin: 10px 0;
-            overflow-y: auto;
+        /* Interactive Pitch View (Tashkila) */
+        .pitch-container {
+            width: 100%;
+            height: 380px;
+            background: linear-gradient(180deg, #15803d 0%, #166534 100%);
+            border-radius: 16px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            position: relative;
             display: flex;
             flex-direction: column;
-            gap: 6px;
-            font-size: 12px;
-            text-align: right;
-            border: 1px solid #1e293b;
+            justify-content: space-around;
+            padding: 10px;
+            box-shadow: inset 0 0 40px rgba(0, 0, 0, 0.6);
+            overflow: hidden;
         }
 
-        .log-item { background: #111827; padding: 8px; border-radius: 6px; border-right: 3px solid #00ffcc; }
-        .log-item.goal { border-right-color: #fbbf24; background: rgba(251, 191, 36, 0.15); }
+        .pitch-line {
+            position: absolute;
+            left: 0; right: 0;
+            height: 2px;
+            background: rgba(255, 255, 255, 0.25);
+        }
+        .pitch-center-circle {
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            width: 90px; height: 90px;
+            border: 2px solid rgba(255, 255, 255, 0.25);
+            border-radius: 50%;
+        }
+
+        .pitch-row {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            z-index: 5;
+        }
+
+        .pitch-slot {
+            width: 55px;
+            height: 70px;
+            background: rgba(15, 23, 42, 0.7);
+            border: 2px dashed var(--primary);
+            border-radius: 10px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            font-size: 9px;
+            font-weight: bold;
+            color: #fff;
+            text-shadow: 0 1px 3px #000;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+        }
+
+        .pitch-slot.filled {
+            border-style: solid;
+            background: rgba(0, 255, 204, 0.2);
+        }
+
+        /* Action Buttons & Bottom Navigation */
+        .btn-main {
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 14px;
+            font-size: 15px;
+            font-weight: 900;
+            cursor: pointer;
+            background: linear-gradient(135deg, var(--primary), #0284c7);
+            color: #000;
+            box-shadow: 0 4px 20px var(--primary-glow);
+            text-align: center;
+            transition: 0.2s;
+        }
+
+        .btn-main:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+
+        .bottom-nav {
+            background: #020617;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            padding: 10px 0;
+            border-top: 2px solid var(--border-line);
+            z-index: 50;
+        }
+
+        .nav-btn {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            font-size: 11px;
+            font-weight: 800;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .nav-btn .icon { font-size: 20px; }
+        .nav-btn.active { color: var(--primary); }
     </style>
 </head>
 <body>
 
-    <div class="app-container">
-        <div class="top-bar">
-            <div>
-                <div class="club-title">JOKER ULTIMATE 👑</div>
-                <div class="squad-power">قوة التشكيلة: <span id="squadOvr" style="color:#00ffcc; font-weight:900;">0</span></div>
+    <div class="app-viewport">
+        <div class="top-header">
+            <div class="header-title">JOKER ULTIMATE 👑</div>
+            <div class="header-stats">
+                <div class="stat-pill ovr">⭐ <span id="squadOvr">0</span></div>
+                <div class="stat-pill coins">🪙 <span id="userCoins">5000</span></div>
             </div>
-            <div class="wallet-box">🪙 <span id="coins">5000</span></div>
         </div>
 
-        <div class="screen">
-            <div class="section-label">🌐 اختر الدوري:</div>
-            <div class="chip-container" id="leagueChips">
-                <button class="chip-btn active" onclick="selectLeague('Premier', this)">الإنجليزي 🏴󠁧󠁢󠁥ᱸ󠁧󠁢󠁥️</button>
-                <button class="chip-btn" onclick="selectLeague('LaLiga', this)">الإسباني 🇪🇸</button>
-                <button class="chip-btn" onclick="selectLeague('SerieA', this)">الإيطالي 🇮🇹</button>
-                <button class="chip-btn" onclick="selectLeague('Bundesliga', this)">الألماني 🇩🇪</button>
-                <button class="chip-btn" onclick="selectLeague('Ligue1', this)">الفرنسي 🇫🇷</button>
-                <button class="chip-btn" onclick="selectLeague('Egyptian', this)">المصري 🇪🇬</button>
+        <div class="screen-container">
+            
+            <div class="tab-content active" id="tabDraft">
+                <div class="ui-label">🌐 اختر الدوري:</div>
+                <div class="chips-scroll" id="leagueChips"></div>
+
+                <div class="ui-label">🛡️ اختر النادي:</div>
+                <div class="chips-scroll" id="clubChips"></div>
+
+                <div class="ui-label">
+                    <span>لاعبو الفريق:</span>
+                    <span>المختارون: <strong id="pickedCount" style="color:var(--primary);">0 / 11</strong></span>
+                </div>
+
+                <div class="cards-grid" id="cardsGrid"></div>
+
+                <button class="btn-main" id="readyBtn" onclick="switchTab('match')" disabled>اختر 11 لاعباً لبدء المباراة 🔒</button>
             </div>
 
-            <div class="section-label">🛡️ اختر النادي:</div>
-            <div class="chip-container" id="clubsChipList"></div>
-
-            <div style="font-size: 11px; color: #94a3b8; display: flex; justify-content: space-between; font-weight: bold;">
-                <span>لاعبو النادي:</span>
-                <span>المختارون: <strong id="pickedCount" style="color: #00ffcc;">0 / 17</strong></span>
+            <div class="tab-content" id="tabSquad">
+                <div class="ui-label">🏟️ أرضية الملعب (التشكيلة 4-3-3):</div>
+                <div class="pitch-container">
+                    <div class="pitch-center-circle"></div>
+                    <div class="pitch-line" style="top: 50%;"></div>
+                    
+                    <div class="pitch-row">
+                        <div class="pitch-slot" id="slot-0">LW</div>
+                        <div class="pitch-slot" id="slot-1">ST</div>
+                        <div class="pitch-slot" id="slot-2">RW</div>
+                    </div>
+                    <div class="pitch-row">
+                        <div class="pitch-slot" id="slot-3">CM</div>
+                        <div class="pitch-slot" id="slot-4">CAM</div>
+                        <div class="pitch-slot" id="slot-5">CM</div>
+                    </div>
+                    <div class="pitch-row">
+                        <div class="pitch-slot" id="slot-6">LB</div>
+                        <div class="pitch-slot" id="slot-7">CB</div>
+                        <div class="pitch-slot" id="slot-8">CB</div>
+                        <div class="pitch-slot" id="slot-9">RB</div>
+                    </div>
+                    <div class="pitch-row">
+                        <div class="pitch-slot" id="slot-10">GK</div>
+                    </div>
+                </div>
             </div>
 
-            <div class="cards-grid" id="cardsGrid"></div>
+            <div class="tab-content" id="tabShop">
+                <div class="ui-label">🛒 متجر بكجات الأسطورة:</div>
+                <div style="background:#1e293b; padding:15px; border-radius:16px; border:2px solid var(--gold); text-align:center;">
+                    <div style="font-size:40px;">🎁</div>
+                    <h3 style="color:var(--gold); margin:6px 0;">بكج الأبطال الخارق</h3>
+                    <p style="font-size:11px; color:#94a3b8; margin-bottom:12px;">يحتوي على لاعبين بطاقة +88 مضمونة!</p>
+                    <button class="btn-main" style="background:linear-gradient(135deg, var(--gold), #d97706);" onclick="buyPack()">شراء بكج (🪙 1000)</button>
+                </div>
+            </div>
 
-            <button class="btn-action" id="readyBtn" onclick="openMatchOverlay()" disabled style="opacity: 0.4;">حدد 17 لاعباً لبدء الماتش 🔒</button>
+            <div class="tab-content" id="tabMatch">
+                <div class="ui-label">🏆 محاكاة المباراة بالذكاء الاصطناعي:</div>
+                <div style="background:#000; padding:16px; border-radius:16px; border:2px solid var(--primary); text-align:center;">
+                    <div style="font-size:12px; color:#94a3b8;">النتيجة المباشرة</div>
+                    <div style="font-size:36px; font-weight:900; color:var(--primary); margin:8px 0;" id="scoreBoard">0 - 0</div>
+                    <div style="font-size:16px; color:var(--red-accent); font-weight:bold;" id="matchClock">00'</div>
+                </div>
+                <div id="matchLogs" style="background:#000; height:180px; border-radius:12px; padding:10px; overflow-y:auto; font-size:12px; border:1px solid var(--border-line);">
+                    <div style="color:var(--text-muted);">اضغط بدء المباراة لبدء المحاكاة...</div>
+                </div>
+                <button class="btn-main" id="startMatchBtn" onclick="runSim()">بدء الصفارة ⏱️</button>
+            </div>
+
         </div>
 
-        <div class="match-overlay" id="matchOverlay">
-            <h3 style="text-align: center; color: #00ffcc; margin-bottom: 12px;">🤖 محاكاة الذكاء الاصطناعي (90 دقيقة)</h3>
-
-            <div class="scoreboard">
-                <div style="text-align: center;">
-                    <div style="font-size: 11px; color: #94a3b8;">فريقك المختاط</div>
-                    <div class="score-num" id="homeScore">0</div>
-                </div>
-                <div style="font-size: 18px; font-weight: 900; color: #ef4444;" id="matchClock">00'</div>
-                <div style="text-align: center;">
-                    <div style="font-size: 11px; color: #94a3b8;">أساطير أوروبا AI</div>
-                    <div class="score-num" id="awayScore">0</div>
-                </div>
-            </div>
-
-            <div class="ai-log" id="aiLogBox">
-                <div class="log-item">الذكاء الاصطناعي جاهز لتحليل تشكيلتك الـ 17...</div>
-            </div>
-
-            <div style="display: flex; gap: 8px;">
-                <button class="btn-action" id="startSimBtn" onclick="runMatch(false)">تشغيل المحاكاة ⏱️</button>
-                <button class="btn-action btn-skip" id="skipBtn" onclick="runMatch(true)">تخطي للنتيجة (Skip) ⚡</button>
-            </div>
-            <button class="btn-action" id="exitBtn" onclick="closeMatch()" style="display: none; margin-top: 8px;">خروج وإعادة التحدي 🔄</button>
+        <div class="bottom-nav">
+            <button class="nav-btn active" id="nav-tabDraft" onclick="switchTab('tabDraft')">
+                <span class="icon">⚽</span>
+                <span>الدرافت</span>
+            </button>
+            <button class="nav-btn" id="nav-tabSquad" onclick="switchTab('tabSquad')">
+                <span class="icon">📋</span>
+                <span>التشكيلة</span>
+            </button>
+            <button class="nav-btn" id="nav-tabShop" onclick="switchTab('tabShop')">
+                <span class="icon">🛒</span>
+                <span>المتجر</span>
+            </button>
+            <button class="nav-btn" id="nav-tabMatch" onclick="switchTab('tabMatch')">
+                <span class="icon">🏆</span>
+                <span>المباراة</span>
+            </button>
         </div>
     </div>
 
-    <script>
-        // هيكل الدوريات والأندية الكبرى مع إضافة باقي أندية الدوريات الـ 5 الكبرى والمصري
-        const bigLeaguesData = {
-            Premier: [
-                { clubName: "ليفربول", badge: "🔴", players: [
-                    { id: 101, name: "محمد صلاح", ovr: 92, pos: "ST", flag: "🇪🇬", price: 650, type: "card-gold", emoji: "👑", pac: 93, sho: 89, pas: 84 },
-                    { id: 102, name: "فان دايك", ovr: 89, pos: "DEF", flag: "🇳🇱", price: 500, type: "card-gold", emoji: "🧱", pac: 78, sho: 60, pas: 71 },
-                    { id: 103, name: "أليسون", ovr: 89, pos: "GK", flag: "🇧🇷", price: 480, type: "card-gold", emoji: "🧤", pac: 55, sho: 20, pas: 85 }
-                ]},
-                { clubName: "مانشستر سيتي", badge: "🩵", players: [
-                    { id: 104, name: "هالاند", ovr: 91, pos: "ST", flag: "🇳🇴", price: 600, type: "card-gold", emoji: "🤖", pac: 89, sho: 92, pas: 66 },
-                    { id: 105, name: "دي بروين", ovr: 91, pos: "MID", flag: "🇧🇪", price: 580, type: "card-gold", emoji: "🎯", pac: 74, sho: 88, pas: 93 }
-                ]},
-                { clubName: "أرسنال", badge: "🔴", players: [
-                    { id: 106, name: "بوكايو ساكا", ovr: 88, pos: "ST", flag: "🏴󠁧󠁢󠁥ᱸ󠁧󠁢󠁥️", price: 450, type: "card-special", emoji: "⚡", pac: 89, sho: 83, pas: 82 },
-                    { id: 107, name: "أوديغارد", ovr: 87, pos: "MID", flag: "🇳🇴", price: 410, type: "card-gold", emoji: "🪄", pac: 77, sho: 81, pas: 89 }
-                ]},
-                { clubName: "مانشستر يونايتد", badge: "🔴", players: [
-                    { id: 108, name: "برونو فيرنانديز", ovr: 87, pos: "MID", flag: "🇵🇹", price: 400, type: "card-gold", emoji: "🎯", pac: 75, sho: 84, pas: 88 },
-                    { id: 109, name: "راشفورد", ovr: 84, pos: "ST", flag: "🏴󠁧󠁢󠁥ᱸ󠁧󠁢󠁥️", price: 320, type: "card-gold", emoji: "⚡", pac: 90, sho: 82, pas: 76 }
-                ]},
-                { clubName: "تشيلسي", badge: "🔵", players: [
-                    { id: 110, name: "كول بالمر", ovr: 85, pos: "MID", flag: "🏴󠁧󠁢󠁥ᱸ󠁧󠁢󠁥️", price: 380, type: "card-special", emoji: "🥶", pac: 82, sho: 83, pas: 84 },
-                    { id: 111, name: "إنزو فيرنانديز", ovr: 83, pos: "MID", flag: "🇦🇷", price: 300, type: "card-gold", emoji: "🎯", pac: 72, sho: 75, pas: 83 }
-                ]}
-            ],
-            LaLiga: [
-                { clubName: "ريال مدريد", badge: "⚪", players: [
-                    { id: 201, name: "إمبابي", ovr: 93, pos: "ST", flag: "🇫🇷", price: 750, type: "card-special", emoji: "⚡", pac: 97, sho: 90, pas: 80 },
-                    { id: 202, name: "بيلينجهام", ovr: 90, pos: "MID", flag: "🏴󠁧󠁢󠁥ᱸ󠁧󠁢󠁥️", price: 520, type: "card-special", emoji: "🌟", pac: 80, sho: 86, pas: 85 },
-                    { id: 203, name: "فينيسيوس", ovr: 90, pos: "ST", flag: "🇧🇷", price: 530, type: "card-special", emoji: "🕺", pac: 95, sho: 84, pas: 81 }
-                ]},
-                { clubName: "برشلونة", badge: "🔵🔴", players: [
-                    { id: 204, name: "ليفاندوفسكي", ovr: 89, pos: "ST", flag: "🇵🇱", price: 420, type: "card-gold", emoji: "⚽", pac: 75, sho: 89, pas: 79 },
-                    { id: 205, name: "لامين يامال", ovr: 86, pos: "ST", flag: "🇪🇸", price: 480, type: "card-special", emoji: "💎", pac: 91, sho: 80, pas: 83 }
-                ]},
-                { clubName: "أتلتيكو مدريد", badge: "🔴⚪", players: [
-                    { id: 206, name: "جريزمان", ovr: 88, pos: "ST", flag: "🇫🇷", price: 430, type: "card-gold", emoji: "🪄", pac: 80, sho: 87, pas: 86 },
-                    { id: 207, name: "ألفاريز", ovr: 85, pos: "ST", flag: "🇦🇷", price: 370, type: "card-gold", emoji: "🕷️", pac: 84, sho: 85, pas: 78 }
-                ]}
-            ],
-            SerieA: [
-                { clubName: "إنتر ميلان", badge: "🔵
-⚫, players: [
-                    { id: 301, name: "لاوتارو مارتينيز", ovr: 89, pos: "ST", flag: "🇦🇷", price: 460, type: "card-gold", emoji: "🐂", pac: 83, sho: 88, pas: 75 },
-                    { id: 302, name: "باريللا", ovr: 87, pos: "MID", flag: "🇮🇹", price: 410, type: "card-gold", emoji: "⚙️", pac: 78, sho: 76, pas: 85 }
-                ]},
-                { clubName: "يوفنتوس", badge: "⚪⚫", players: [
-                    { id: 303, name: "فلاهوفيتش", ovr: 85, pos: "ST", flag: "🇷🇸", price: 360, type: "card-gold", emoji: "🏹", pac: 80, sho: 86, pas: 66 },
-                    { id: 304, name: "كييزا", ovr: 84, pos: "ST", flag: "🇮🇹", price: 330, type: "card-gold", emoji: "⚡", pac: 89, sho: 81, pas: 76 }
-                ]},
-                { clubName: "إيه سي ميلان", badge: "🔴⚫", players: [
-                    { id: 305, name: "لياو", ovr: 87, pos: "ST", flag: "🇵🇹", price: 440, type: "card-special", emoji: "🏄‍♂️", pac: 93, sho: 80, pas: 81 },
-                    { id: 306, name: "ثيو هيرنانديز", ovr: 87, pos: "DEF", flag: "🇫🇷", price: 420, type: "card-gold", emoji: "🏎️", pac: 92, sho: 72, pas: 78 }
-                ]}
-            ],
-            Bundesliga: [
-                { clubName: "بايرن ميونخ", badge: "🔴", players: [
-                    { id: 401, name: "هاري كين", ovr: 90, pos: "ST", flag: "🏴󠁧󠁢󠁥ᱸ󠁧󠁢󠁥️", price: 510, type: "card-gold", emoji: "🎯", pac: 70, sho: 93, pas: 85 },
-                    { id: 402, name: "جمال موسيالا", ovr: 88, pos: "MID", flag: "🇩🇪", price: 470, type: "card-special", emoji: "🪄", pac: 85, sho: 82, pas: 86 }
-                ]},
-                { clubName: "باير ليفركوزن", badge: "🔴⚫", players: [
-                    { id: 403, name: "فلوريان فيرتز", ovr: 88, pos: "MID", flag: "🇩🇪", price: 480, type: "card-special", emoji: "💎", pac: 82, sho: 81, pas: 89 }
-                ]},
-                { clubName: "بروسيا دورتموند", badge: "🟡⚫", players: [
-                    { id: 404, name: "براندت", ovr: 84, pos: "MID", flag: "🇩🇪", price: 310, type: "card-gold", emoji: "🎨", pac: 77, sho: 79, pas: 85 }
-                ]}
-            ],
-            Ligue1: [
-                { clubName: "باريس سان جيرمان", badge: "🔵🔴", players: [
-                    { id: 501, name: "عثمان ديمبيلي", ovr: 86, pos: "ST", flag: "🇫🇷", price: 400, type: "card-special", emoji: "⚡", pac: 93, sho: 78, pas: 82 },
-                    { id: 502, name: "أشرف حكيمي", ovr: 85, pos: "DEF", flag: "🇲🇦", price: 390, type: "card-gold", emoji: "🚀", pac: 92, sho: 75, pas: 80 }
-                ]},
-                { clubName: "أولمبيك مارسيليا", badge: "⚪🔵", players: [
-                    { id: 503, name: "جرينوود", ovr: 81, pos: "ST", flag: "🏴󠁧󠁢󠁥ᱸ󠁧󠁢󠁥️", price: 230, type: "card-gold", emoji: "🚀", pac: 86, sho: 82, pas: 74 }
-                ]}
-            ],
-            Egyptian: [
-                { clubName: "الأهلي", badge: "🔴", players: [
-                    { id: 601, name: "إمام عاشور", ovr: 81, pos: "MID", flag: "🇪🇬", price: 240, type: "card-special", emoji: "🔥", pac: 80, sho: 78, pas: 80 },
-                    { id: 602, name: "الشناوي", ovr: 81, pos: "GK", flag: "🇪🇬", price: 220, type: "card-gold", emoji: "🧤", pac: 50, sho: 20, pas: 72 },
-                    { id: 603, name: "وسام أبو علي", ovr: 80, pos: "ST", flag: "🇵🇸", price: 210, type: "card-gold", emoji: "🏹", pac: 82, sho: 81, pas: 68 }
-                ]},
-                { clubName: "الزمالك", badge: "⚪🔴", players: [
-                    { id: 604, name: "أحمد سيد زيزو", ovr: 82, pos: "ST", flag: "🇪🇬", price: 260, type: "card-special", emoji: "🎯", pac: 85, sho: 80, pas: 82 },
-                    { id: 605, name: "عبدالله السعيد", ovr: 79, pos: "MID", flag: "🇪🇬", price: 180, type: "card-gold", emoji: "🎩", pac: 62, sho: 78, pas: 84 }
-                ]},
-                { clubName: "بيراميدز", badge: "🔵", players: [
-                    { id: 606, name: "مصطفى فتحي", ovr: 80, pos: "ST", flag: "🇪🇬", price: 210, type: "card-gold", emoji: "🎨", pac: 83, sho: 77, pas: 79 },
-                    { id: 607, name: "رمضان صبحي", ovr: 79, pos: "ST", flag: "🇪🇬", price: 190, type: "card-gold", emoji: "⚡", pac: 80, sho: 75, pas: 77 }
-                ]}
-            ]
-        };
+    ```
 
+---
+
+الفرن شغال والكود ماشي زى الفل! 🚀 
+جاهز للجزء اللي بعده؟ رد عليّ وقولي **"كمل الجزء التالي"** وهبعتلك كود قاعدة البيانات الشاملة والدوريات والمنطق البرمجي السلس بحيث تضيفه تحته مباشرة دون قفل للملف!
+    <script>
+        // ======================== GLOBAL GAME STATE ========================
+        let userCoins = parseInt(localStorage.getItem("joker_coins")) || 5000;
+        let mySquad = [];
         let currentLeagueKey = "Premier";
         let currentClubIndex = 0;
-        let mySquad = [];
 
-        function selectLeague(leagueKey, btn) {
-            currentLeagueKey = leagueKey;
-            currentClubIndex = 0;
+        // ======================== COMPREHENSIVE DATABASE ========================
+        const leaguesData = {
+            Premier: {
+                name: "الإنجليزي 🏴󠁧󠁢󠁥ᱸ󠁧󠁢󠁥️",
+                clubs: [
+                    {
+                        clubName: "ليفربول",
+                        badge: "🔴",
+                        players: [
+                            { id: 101, name: "محمد صلاح", ovr: 92, pos: "RW", flag: "🇪🇬", price: 650, type: "card-hero", emoji: "👑", pac: 93, sho: 89, pas: 84 },
+                            { id: 102, name: "فان دايك", ovr: 89, pos: "CB", flag: "🇳🇱", price: 500, type: "card-gold", emoji: "🧱", pac: 78, sho: 60, pas: 71 },
+                            { id: 103, name: "أليسون", ovr: 89, pos: "GK", flag: "🇧🇷", price: 480, type: "card-gold", emoji: "🧤", pac: 55, sho: 20, pas: 85 },
+                            { id: 104, name: "ألكسندر أرنولد", ovr: 86, pos: "RB", flag: "🏴󠁧󠁢󠁥ᱸ󠁧󠁢󠁥️", price: 390, type: "card-gold", emoji: "🎯", pac: 76, sho: 71, pas: 90 },
+                            { id: 105, name: "لويس دياز", ovr: 85, pos: "LW", flag: "🇨🇴", price: 350, type: "card-special", emoji: "⚡", pac: 91, sho: 80, pas: 78 },
+                            { id: 106, name: "ماك أليستر", ovr: 85, pos: "CM", flag: "🇦🇷", price: 340, type: "card-gold", emoji: "🪄", pac: 72, sho: 79, pas: 84 }
+                        ]
+                    },
+                    {
+                        clubName: "مانشستر سيتي",
+                        badge: "🩵",
+                        players: [
+                            { id: 107, name: "هالاند", ovr: 91, pos: "ST", flag: "🇳🇴", price: 600, type: "card-special", emoji: "🤖", pac: 89, sho: 92, pas: 66 },
+                            { id: 108, name: "دي بروين", ovr: 91, pos: "CAM", flag: "🇧🇪", price: 580, type: "card-gold", emoji: "🎯", pac: 74, sho: 88, pas: 93 },
+                            { id: 109, name: "رودري", ovr: 91, pos: "CM", flag: "🇪🇸", price: 570, type: "card-gold", emoji: "⚙️", pac: 58, sho: 73, pas: 86 },
+                            { id: 110, name: "فودين", ovr: 88, pos: "RW", flag: "🏴󠁧󠁢󠁥ᱸ󠁧󠁢󠁥️", price: 460, type: "card-special", emoji: "🪄", pac: 86, sho: 83, pas: 85 },
+                            { id: 111, name: "روبن دياز", ovr: 88, pos: "CB", flag: "🇵🇹", price: 440, type: "card-gold", emoji: "🛡️", pac: 68, sho: 39, pas: 70 },
+                            { id: 112, name: "جفارديول", ovr: 84, pos: "LB", flag: "🇭🇷", price: 320, type: "card-gold", emoji: "🧱", pac: 78, sho: 64, pas: 74 }
+                        ]
+                    },
+                    {
+                        clubName: "أرسنال",
+                        badge: "🔴",
+                        players: [
+                            { id: 113, name: "بوكايو ساكا", ovr: 88, pos: "RW", flag: "🏴󠁧󠁢󠁥ᱸ󠁧󠁢󠁥️", price: 450, type: "card-special", emoji: "⚡", pac: 89, sho: 83, pas: 82 },
+                            { id: 114, name: "أوديغارد", ovr: 87, pos: "CAM", flag: "🇳🇴", price: 410, type: "card-gold", emoji: "🪄", pac: 77, sho: 81, pas: 89 },
+                            { id: 115, name: "ديكلان رايس", ovr: 87, pos: "CM", flag: "🏴󠁧󠁢󠁥ᱸ󠁧󠁢󠁥️", price: 420, type: "card-gold", emoji: "🛡️", pac: 74, sho: 67, pas: 82 },
+                            { id: 116, name: "ساليبا", ovr: 87, pos: "CB", flag: "🇫🇷", price: 400, type: "card-gold", emoji: "🧱", pac: 82, sho: 39, pas: 69 },
+                            { id: 117, name: "مارتينلي", ovr: 84, pos: "LW", flag: "🇧🇷", price: 330, type: "card-gold", emoji: "🚀", pac: 89, sho: 78, pas: 77 }
+                        ]
+                    }
+                ]
+            },
+            LaLiga: {
+                name: "الإسباني 🇪🇸",
+                clubs: [
+                    {
+                        clubName: "ريال مدريد",
+                        badge: "⚪",
+                        players: [
+                            { id: 201, name: "كيليان مبابي", ovr: 93, pos: "ST", flag: "🇫🇷", price: 750, type: "card-hero", emoji: "⚡", pac: 97, sho: 90, pas: 80 },
+                            { id: 202, name: "بيلينجهام", ovr: 90, pos: "CAM", flag: "🏴󠁧󠁢󠁥ᱸ󠁧󠁢󠁥️", price: 520, type: "card-special", emoji: "🌟", pac: 80, sho: 86, pas: 85 },
+                            { id: 203, name: "فينيسيوس جونيور", ovr: 90, pos: "LW", flag: "🇧🇷", price: 530, type: "card-special", emoji: "🕺", pac: 95, sho: 84, pas: 81 },
+                            { id: 204, name: "كورتوا", ovr: 90, pos: "GK", flag: "🇧🇪", price: 500, type: "card-gold", emoji: "🧤", pac: 48, sho: 18, pas: 74 },
+                            { id: 205, name: "كارفاخال", ovr: 86, pos: "RB", flag: "🇪🇸", price: 380, type: "card-gold", emoji: "🛡️", pac: 81, sho: 65, pas: 78 },
+                            { id: 206, name: "رودريجو", ovr: 86, pos: "RW", flag: "🇧🇷", price: 390, type: "card-gold", emoji: "🎯", pac: 88, sho: 82, pas: 79 }
+                        ]
+                    },
+                    {
+                        clubName: "برشلونة",
+                        badge: "🔵🔴",
+                        players: [
+                            { id: 207, name: "ليفاندوفسكي", ovr: 89, pos: "ST", flag: "🇵🇱", price: 420, type: "card-gold", emoji: "⚽", pac: 75, sho: 89, pas: 79 },
+                            { id: 208, name: "لامين يامال", ovr: 87, pos: "RW", flag: "🇪🇸", price: 500, type: "card-special", emoji: "💎", pac: 92, sho: 82, pas: 84 },
+                            { id: 209, name: "بيدري", ovr: 86, pos: "CM", flag: "🇪🇸", price: 390, type: "card-gold", emoji: "🎨", pac: 78, sho: 69, pas: 85 },
+                            { id: 210, name: "رافينيا", ovr: 86, pos: "LW", flag: "🇧🇷", price: 400, type: "card-special", emoji: "🚀", pac: 90, sho: 82, pas: 81 },
+                            { id: 211, name: "كوندي", ovr: 85, pos: "CB", flag: "🇫🇷", price: 350, type: "card-gold", emoji: "🧱", pac: 84, sho: 45, pas: 72 }
+                        ]
+                    }
+                ]
+            },
+            Egyptian: {
+                name: "المصري 🇪🇬",
+                clubs: [
+                    {
+                        clubName: "الأهلي",
+                        badge: "🔴",
+                        players: [
+                            { id: 301, name: "إمام عاشور", ovr: 82, pos: "CAM", flag: "🇪🇬", price: 300, type: "card-hero", emoji: "🔥", pac: 82, sho: 80, pas: 82 },
+                            { id: 302, name: "محمد الشناوي", ovr: 81, pos: "GK", flag: "🇪🇬", price: 250, type: "card-gold", emoji: "🧤", pac: 50, sho: 20, pas: 72 },
+                            { id: 303, name: "وسام أبو علي", ovr: 81, pos: "ST", flag: "🇵🇸", price: 270, type: "card-special", emoji: "🏹", pac: 84, sho: 82, pas: 70 },
+                            { id: 304, name: "مروان عطية", ovr: 79, pos: "CM", flag: "🇪🇬", price: 200, type: "card-gold", emoji: "⚙️", pac: 72, sho: 65, pas: 78 },
+                            { id: 305, name: "علي معلول", ovr: 80, pos: "LB", flag: "🇹🇳", price: 220, type: "card-gold", emoji: "🎯", pac: 75, sho: 74, pas: 81 },
+                            { id: 306, name: "حسين الشحات", ovr: 80, pos: "LW", flag: "🇪🇬", price: 210, type: "card-gold", emoji: "🎨", pac: 81, sho: 76, pas: 75 }
+                        ]
+                    },
+                    {
+                        clubName: "الزمالك",
+                        badge: "⚪🔴",
+                        players: [
+                            { id: 307, name: "أحمد سيد زيزو", ovr: 83, pos: "RW", flag: "🇪🇬", price: 320, type: "card-hero", emoji: "🎯", pac: 86, sho: 82, pas: 84 },
+                            { id: 308, name: "عبدالله السعيد", ovr: 80, pos: "CAM", flag: "🇪🇬", price: 220, type: "card-gold", emoji: "🎩", pac: 62, sho: 78, pas: 85 },
+                            { id: 309, name: "حمزة المثلوثي", ovr: 78, pos: "CB", flag: "🇹🇳", price: 180, type: "card-gold", emoji: "🛡️", pac: 74, sho: 55, pas: 70 },
+                            { id: 310, name: "سيف الجزيري", ovr: 79, pos: "ST", flag: "🇹🇳", price: 190, type: "card-gold", emoji: "⚽", pac: 80, sho: 77, pas: 65 }
+                        ]
+                    }
+                ]
+            }
+        };
+            // ==========================================================================
+            // CONTINUATION OF FULL LEAGUES DATABASE (EXTENDED ROSTERS)
+            // ==========================================================================
+            
+            // 1. الدوري الإيطالي (SERIE A - FULL CLUBS)
+            SerieA: {
+                name: "الإيطالي 🇮🇹",
+                clubs: [
+                    {
+                        clubName: "إنتر ميلان",
+                        badge: "🔵⚫",
+                        players: [
+                            { id: 401, name: "لاوتارو مارتينيز", ovr: 89, pos: "ST", flag: "🇦🇷", price: 480, type: "card-gold", emoji: "🐂", pac: 83, sho: 88, pas: 75 },
+                            { id: 402, name: "نيكولو باريللا", ovr: 87, pos: "CM", flag: "🇮🇹", price: 420, type: "card-gold", emoji: "⚙️", pac: 78, sho: 76, pas: 85 },
+                            { id: 403, name: "أليساندرو باستوني", ovr: 87, pos: "CB", flag: "🇮🇹", price: 410, type: "card-gold", emoji: "🛡️", pac: 76, sho: 40, pas: 74 },
+                            { id: 404, name: "هاكان تشالهان أوغلو", ovr: 86, pos: "CM", flag: "🇹🇷", price: 380, type: "card-gold", emoji: "🎯", pac: 68, sho: 84, pas: 88 },
+                            { id: 405, name: "ماركوس تورام", ovr: 85, pos: "ST", flag: "🇫🇷", price: 360, type: "card-special", emoji: "⚡", pac: 88, sho: 82, pas: 74 },
+                            { id: 406, name: "فيديريكو ديماركو", ovr: 85, pos: "LB", flag: "🇮🇹", price: 350, type: "card-gold", emoji: "🚀", pac: 85, sho: 76, pas: 83 },
+                            { id: 407, name: "يان سومر", ovr: 85, pos: "GK", flag: "🇨🇭", price: 340, type: "card-gold", emoji: "🧤", pac: 50, sho: 20, pas: 78 }
+                        ]
+                    },
+                    {
+                        clubName: "إيه سي ميلان",
+                        badge: "🔴⚫",
+                        players: [
+                            { id: 408, name: "رافايل لياو", ovr: 87, pos: "LW", flag: "🇵🇹", price: 450, type: "card-special", emoji: "🏄‍♂️", pac: 94, sho: 81, pas: 80 },
+                            { id: 409, name: "ثيو هيرنانديز", ovr: 87, pos: "LB", flag: "🇫🇷", price: 440, type: "card-gold", emoji: "🏎️", pac: 93, sho: 72, pas: 78 },
+                            { id: 410, name: "مايك ماينان", ovr: 87, pos: "GK", flag: "🇫🇷", price: 420, type: "card-gold", emoji: "🧤", pac: 50, sho: 20, pas: 82 },
+                            { id: 411, name: "كريستيان بوليسيتش", ovr: 84, pos: "RW", flag: "🇺🇸", price: 320, type: "card-gold", emoji: "⚡", pac: 86, sho: 79, pas: 78 },
+                            { id: 412, name: "فيكايو توموري", ovr: 83, pos: "CB", flag: "🏴󠁧󠁢󠁥ᱸ󠁧󠁢󠁥️", price: 290, type: "card-gold", emoji: "🧱", pac: 82, sho: 40, pas: 66 }
+                        ]
+                    },
+                    {
+                        clubName: "يوفنتوس",
+                        badge: "⚪⚫",
+                        players: [
+                            { id: 413, name: "دوسان فلاهوفيتش", ovr: 85, pos: "ST", flag: "🇷🇸", price: 360, type: "card-gold", emoji: "🏹", pac: 80, sho: 85, pas: 68 },
+                            { id: 414, name: "جليسون بريمر", ovr: 86, pos: "CB", flag: "🇧🇷", price: 380, type: "card-gold", emoji: "🧱", pac: 80, sho: 35, pas: 58 },
+                            { id: 415, name: "تيون كوبماينرز", ovr: 84, pos: "CM", flag: "🇳🇱", price: 310, type: "card-gold", emoji: "🎯", pac: 74, sho: 81, pas: 82 },
+                            { id: 416, name: "كينجسلي كينان يلدز", ovr: 81, pos: "LW", flag: "🇹🇷", price: 250, type: "card-special", emoji: "💎", pac: 85, sho: 76, pas: 77 }
+                        ]
+                    }
+                ]
+            },
 
-            document.querySelectorAll('#leagueChips .chip-btn').forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
+            // 2. الدوري الألماني (BUNDESLIGA)
+            Bundesliga: {
+                name: "الألماني 🇩🇪",
+                clubs: [
+                    {
+                        clubName: "بايرن ميونخ",
+                        badge: "🔴",
+                        players: [
+                            { id: 501, name: "هاري كين", ovr: 90, pos: "ST", flag: "🏴󠁧󠁢󠁥ᱸ󠁧󠁢󠁥️", price: 520, type: "card-gold", emoji: "🎯", pac: 70, sho: 93, pas: 85 },
+                            { id: 502, name: "جمال موسيالا", ovr: 88, pos: "CAM", flag: "🇩🇪", price: 480, type: "card-special", emoji: "🪄", pac: 85, sho: 82, pas: 86 },
+                            { id: 503, name: "ليروي ساني", ovr: 85, pos: "RW", flag: "🇩🇪", price: 350, type: "card-gold", emoji: "⚡", pac: 91, sho: 81, pas: 79 },
+                            { id: 504, name: "ألونسو ديفيز", ovr: 84, pos: "LB", flag: "🇨🇦", price: 340, type: "card-gold", emoji: "🚀", pac: 95, sho: 68, pas: 77 },
+                            { id: 505, name: "جوشوا كيميش", ovr: 86, pos: "CM", flag: "🇩🇪", price: 390, type: "card-gold", emoji: "🧠", pac: 68, sho: 72, pas: 87 },
+                            { id: 506, name: "مانويل نوير", ovr: 86, pos: "GK", flag: "🇩🇪", price: 380, type: "card-gold", emoji: "🧤", pac: 52, sho: 25, pas: 88 }
+                        ]
+                    },
+                    {
+                        clubName: "باير ليفركوزن",
+                        badge: "🔴⚫",
+                        players: [
+                            { id: 507, name: "فلوريان فيرتز", ovr: 88, pos: "CAM", flag: "🇩🇪", price: 490, type: "card-special", emoji: "💎", pac: 82, sho: 81, pas: 89 },
+                            { id: 508, name: "أليخاندرو جريمالدو", ovr: 86, pos: "LB", flag: "🇪🇸", price: 380, type: "card-gold", emoji: "🎯", pac: 80, sho: 78, pas: 86 },
+                            { id: 509, name: "جيريمي فريمبونج", ovr: 85, pos: "RB", flag: "🇳🇱", price: 370, type: "card-gold", emoji: "⚡", pac: 94, sho: 74, pas: 78 },
+                            { id: 510, name: "جوناثان تاه", ovr: 84, pos: "CB", flag: "🇩🇪", price: 310, type: "card-gold", emoji: "🧱", pac: 75, sho: 35, pas: 65 }
+                        ]
+                    },
+                    {
+                        clubName: "بوروسيا دورتموند",
+                        badge: "🟡⚫",
+                        players: [
+                            { id: 511, name: "جوليان براندت", ovr: 84, pos: "CAM", flag: "🇩🇪", price: 310, type: "card-gold", emoji: "🎨", pac: 77, sho: 78, pas: 84 },
+                            { id: 512, name: "نيكو شلوتربيك", ovr: 85, pos: "CB", flag: "🇩🇪", price: 330, type: "card-gold", emoji: "🛡️", pac: 78, sho: 45, pas: 73 },
+                            { id: 513, name: "كريم أديمي", ovr: 82, pos: "LW", flag: "🇩🇪", price: 270, type: "card-special", emoji: "🚀", pac: 96, sho: 75, pas: 70 }
+                        ]
+                    }
+                ]
+            },
 
-            renderClubs();
-            renderCards();
+            // 3. الدوري الجزائري (ALGERIAN LIGUE 1)
+            Algeria: {
+                name: "الجزائري 🇩🇿",
+                clubs: [
+                    {
+                        clubName: "مولودية الجزائر",
+                        badge: "🟢🔴",
+                        players: [
+                            { id: 601, name: "يوسف بلايلي", ovr: 82, pos: "LW", flag: "🇩🇿", price: 300, type: "card-hero", emoji: "🪄", pac: 84, sho: 81, pas: 83 },
+                            { id: 602, name: "أندي ديلور", ovr: 79, pos: "ST", flag: "🇩🇿", price: 210, type: "card-gold", emoji: "🎯", pac: 78, sho: 81, pas: 68 },
+                            { id: 603, name: "زكريا نعيجي", ovr: 78, pos: "RW", flag: "🇩🇿", price: 190, type: "card-gold", emoji: "⚡", pac: 82, sho: 76, pas: 74 },
+                            { id: 604, name: "أوباما بايزيد", ovr: 76, pos: "ST", flag: "🇩🇿", price: 150, type: "card-gold", emoji: "⚽", pac: 80, sho: 74, pas: 62 }
+                        ]
+                    },
+                    {
+                        clubName: "شباب بلوزداد",
+                        badge: "🔴⚪",
+                        players: [
+                            { id: 605, name: "إسلام سليماني", ovr: 80, pos: "ST", flag: "🇩🇿", price: 230, type: "card-hero", emoji: "🦅", pac: 72, sho: 82, pas: 66 },
+                            { id: 606, name: "عبد الرؤوف بن غيث", ovr: 77, pos: "CM", flag: "🇩🇿", price: 170, type: "card-gold", emoji: "⚙️", pac: 73, sho: 70, pas: 78 },
+                            { id: 607, name: "مصطفى زغبة", ovr: 76, pos: "GK", flag: "🇩🇿", price: 150, type: "card-gold", emoji: "🧤", pac: 50, sho: 20, pas: 70 }
+                        ]
+                    },
+                    {
+                        clubName: "شبيبة القبائل",
+                        badge: "🟡🟢",
+                        players: [
+                            { id: 608, name: "رياض بودبوز", ovr: 79, pos: "CAM", flag: "🇩🇿", price: 200, type: "card-hero", emoji: "🎩", pac: 68, sho: 75, pas: 82 },
+                            { id: 609, name: "كسيلة بوعاليا", ovr: 76, pos: "RW", flag: "🇩🇿", price: 150, type: "card-gold", emoji: "⚡", pac: 84, sho: 71, pas: 70 }
+                        ]
+                    },
+                    {
+                        clubName: "اتحاد الجزائر",
+                        badge: "🔴⚫",
+                        players: [
+                            { id: 610, name: "حسام غشة", ovr: 77, pos: "LW", flag: "🇩🇿", price: 170, type: "card-gold", emoji: "🎨", pac: 81, sho: 72, pas: 74 },
+                            { id: 611, name: "أسامة شتاير", ovr: 75, pos: "CB", flag: "🇩🇿", price: 140, type: "card-gold", emoji: "🛡️", pac: 71, sho: 40, pas: 60 }
+                        ]
+                    }
+                ]
+            },
+
+            // 4. الدوري التركي (SUPER LIG)
+            Turkish: {
+                name: "التركي 🇹🇷",
+                clubs: [
+                    {
+                        clubName: "غلطة سراي",
+                        badge: "🟡🔴",
+                        players: [
+                            { id: 701, name: "فيكتور أوسيمين", ovr: 87, pos: "ST", flag: "🇳🇬", price: 440, type: "card-special", emoji: "🎭", pac: 89, sho: 85, pas: 66 },
+                            { id: 702, name: "ماورو إيكاردي", ovr: 83, pos: "ST", flag: "🇦🇷", price: 290, type: "card-gold", emoji: "🎯", pac: 71, sho: 86, pas: 67 },
+                            { id: 703, name: "حكيم زياش", ovr: 82, pos: "RW", flag: "🇲🇦", price: 280, type: "card-hero", emoji: "🪄", pac: 74, sho: 79, pas: 86 },
+                            { id: 704, name: "لوكاس توريرا", ovr: 82, pos: "CM", flag: "🇺🇾", price: 260, type: "card-gold", emoji: "⚙️", pac: 73, sho: 65, pas: 77 },
+                            { id: 705, name: "فرناندو موسليرا", ovr: 81, pos: "GK", flag: "🇺🇾", price: 240, type: "card-gold", emoji: "🧤", pac: 50, sho: 20, pas: 75 }
+                        ]
+                    },
+                    {
+                        clubName: "فنربخشة",
+                        badge: "🟡🔵",
+                        players: [
+                            { id: 706, name: "يوسف النصيري", ovr: 82, pos: "ST", flag: "🇲🇦", price: 270, type: "card-gold", emoji: "🇲🇦", pac: 80, sho: 82, pas: 64 },
+                            { id: 707, name: "أدين دجيكو", ovr: 82, pos: "ST", flag: "🇧🇦", price: 260, type: "card-gold", emoji: "⚽", pac: 63, sho: 84, pas: 71 },
+                            { id: 708, name: "سفيان أمرابط", ovr: 81, pos: "CM", flag: "🇲🇦", price: 250, type: "card-gold", emoji: "🛡️", pac: 70, sho: 66, pas: 77 },
+                            { id: 709, name: "فردي كادي أوغلو", ovr: 80, pos: "LB", flag: "🇹🇷", price: 230, type: "card-gold", emoji: "🚀", pac: 84, sho: 70, pas: 78 }
+                        ]
+                    },
+                    {
+                        clubName: "بشكتاش",
+                        badge: "⚪⚫",
+                        players: [
+                            { id: 710, name: "تشيرو إيموبيلي", ovr: 82, pos: "ST", flag: "🇮🇹", price: 270, type: "card-gold", emoji: "🏹", pac: 78, sho: 84, pas: 67 },
+                            { id: 711, name: "رافا سيلفا", ovr: 82, pos: "CAM", flag: "🇵🇹", price: 280, type: "card-gold", emoji: "⚡", pac: 88, sho: 78, pas: 80 },
+                            { id: 712, name: "أرتور ماسواكو", ovr: 77, pos: "LB", flag: "🇨🇩", price: 160, type: "card-gold", emoji: "🏃‍♂️", pac: 82, sho: 63, pas: 72 }
+                        ]
+                    }
+                ]
+            }
+        };
+            // 5. الدوري الفرنسي (LIGUE 1)
+            Ligue1: {
+                name: "الفرنسي 🇫🇷",
+                clubs: [
+                    {
+                        clubName: "باريس سان جيرمان",
+                        badge: "🔵🔴",
+                        players: [
+                            { id: 801, name: "عثمان ديمبيلي", ovr: 86, pos: "RW", flag: "🇫🇷", price: 410, type: "card-special", emoji: "⚡", pac: 93, sho: 78, pas: 82 },
+                            { id: 802, name: "أشرف حكيمي", ovr: 85, pos: "RB", flag: "🇲🇦", price: 390, type: "card-gold", emoji: "🚀", pac: 92, sho: 75, pas: 80 },
+                            { id: 803, name: "جيانلويجي دوناروما", ovr: 87, pos: "GK", flag: "🇮🇹", price: 400, type: "card-gold", emoji: "🧤", pac: 50, sho: 20, pas: 70 },
+                            { id: 804, name: "ماركينيوس", ovr: 87, pos: "CB", flag: "🇧🇷", price: 420, type: "card-gold", emoji: "🧱", pac: 78, sho: 55, pas: 75 },
+                            { id: 805, name: "فيتينيا", ovr: 85, pos: "CM", flag: "🇵🇹", price: 350, type: "card-gold", emoji: "⚙️", pac: 76, sho: 74, pas: 84 },
+                            { id: 806, name: "برادلي باركولا", ovr: 82, pos: "LW", flag: "🇫🇷", price: 280, type: "card-special", emoji: "💎", pac: 91, sho: 76, pas: 75 }
+                        ]
+                    },
+                    {
+                        clubName: "أولمبيك مارسيليا",
+                        badge: "⚪🔵",
+                        players: [
+                            { id: 807, name: "ميسون الجرينوود", ovr: 82, pos: "RW", flag: "🏴󠁧󠁢󠁥ᱸ󠁧󠁢󠁥️", price: 290, type: "card-special", emoji: "🎯", pac: 87, sho: 83, pas: 76 },
+                            { id: 808, name: "أدريان رابيو", ovr: 82, pos: "CM", flag: "🇫🇷", price: 270, type: "card-gold", emoji: "⚙️", pac: 74, sho: 76, pas: 80 },
+                            { id: 809, name: "إيلي واهي", ovr: 80, pos: "ST", flag: "🇫🇷", price: 220, type: "card-gold", emoji: "⚡", pac: 88, sho: 78, pas: 68 }
+                        ]
+                    },
+                    {
+                        clubName: "أولمبيك ليون",
+                        badge: "🔴🔵",
+                        players: [
+                            { id: 810, name: "الكسندر لاكازيت", ovr: 82, pos: "ST", flag: "🇫🇷", price: 260, type: "card-gold", emoji: "🎯", pac: 74, sho: 83, pas: 73 },
+                            { id: 811, name: "سعادت بن رحمة", ovr: 80, pos: "LW", flag: "🇩🇿", price: 220, type: "card-hero", emoji: "🪄", pac: 80, sho: 77, pas: 79 }
+                        ]
+                    }
+                ]
+            },
+
+            // 6. الدوري السعودي للمحترفين (SAUDI PRO LEAGUE)
+            Saudi: {
+                name: "السعودي 🇸🇦",
+                clubs: [
+                    {
+                        clubName: "النصر",
+                        badge: "🟡🔵",
+                        players: [
+                            { id: 901, name: "كريستيانو رونالدو", ovr: 89, pos: "ST", flag: "🇵🇹", price: 550, type: "card-hero", emoji: "🐐", pac: 79, sho: 90, pas: 75 },
+                            { id: 902, name: "ساديو ماني", ovr: 84, pos: "LW", flag: "🇸🇳", price: 330, type: "card-gold", emoji: "⚡", pac: 86, sho: 81, pas: 78 },
+                            { id: 903, name: "مارسيلو بروزوفيتش", ovr: 83, pos: "CM", flag: "🇭🇷", price: 290, type: "card-gold", emoji: "🫁", pac: 68, sho: 74, pas: 83 },
+                            { id: 904, name: "إيميريك لابورت", ovr: 84, pos: "CB", flag: "🇪🇸", price: 310, type: "card-gold", emoji: "🧱", pac: 66, sho: 50, pas: 72 },
+                            { id: 905, name: "أوتافيو", ovr: 82, pos: "CAM", flag: "🇵🇹", price: 260, type: "card-gold", emoji: "🪄", pac: 78, sho: 75, pas: 81 }
+                        ]
+                    },
+                    {
+                        clubName: "الهلال",
+                        badge: "🔵⚪",
+                        players: [
+                            { id: 906, name: "نيمار جونيور", ovr: 88, pos: "CAM", flag: "🇧🇷", price: 500, type: "card-hero", emoji: "🕺", pac: 85, sho: 83, pas: 87 },
+                            { id: 907, name: "ألكسندر ميتروفيتش", ovr: 84, pos: "ST", flag: "🇷🇸", price: 320, type: "card-gold", emoji: "🥊", pac: 72, sho: 85, pas: 68 },
+                            { id: 908, name: "روبن نيفيز", ovr: 84, pos: "CM", flag: "🇵🇹", price: 310, type: "card-gold", emoji: "🎯", pac: 65, sho: 78, pas: 86 },
+                            { id: 909, name: "سيرجي ميلينكوفيتش سافيتش", ovr: 85, pos: "CM", flag: "🇷🇸", price: 340, type: "card-gold", emoji: "💪", pac: 70, sho: 81, pas: 82 },
+                            { id: 910, name: "ياسين بونو", ovr: 85, pos: "GK", flag: "🇲🇦", price: 350, type: "card-hero", emoji: "🧤", pac: 50, sho: 20, pas: 78 },
+                            { id: 911, name: "كوليبالي", ovr: 84, pos: "CB", flag: "🇸🇳", price: 300, type: "card-gold", emoji: "🛡️", pac: 75, sho: 40, pas: 62 }
+                        ]
+                    },
+                    {
+                        clubName: "الافتتاح / الاتحاد",
+                        badge: "🟡⚫",
+                        players: [
+                            { id: 912, name: "كريم بنزيما", ovr: 87, pos: "ST", flag: "🇫🇷", price: 430, type: "card-hero", emoji: "⚔️", pac: 78, sho: 87, pas: 82 },
+                            { id: 913, name: "نجولو كانتي", ovr: 85, pos: "CM", flag: "🇫🇷", price: 360, type: "card-gold", emoji: "🫁", pac: 76, sho: 66, pas: 76 },
+                            { id: 914, name: "موسى ديابي", ovr: 83, pos: "RW", flag: "🇫🇷", price: 300, type: "card-gold", emoji: "🚀", pac: 93, sho: 76, pas: 75 },
+                            { id: 915, name: "حسام عوار", ovr: 80, pos: "CAM", flag: "🇩🇿", price: 220, type: "card-gold", emoji: "🎨", pac: 76, sho: 74, pas: 80 }
+                        ]
+                    },
+                    {
+                        clubName: "الأهلي",
+                        badge: "🟢⚪",
+                        players: [
+                            { id: 916, name: "رياض محرز", ovr: 85, pos: "RW", flag: "🇩🇿", price: 380, type: "card-hero", emoji: "🪄", pac: 80, sho: 82, pas: 85 },
+                            { id: 917, name: "روبرتو فيرمينو", ovr: 82, pos: "ST", flag: "🇧🇷", price: 260, type: "card-gold", emoji: "🎩", pac: 73, sho: 78, pas: 79 },
+                            { id: 918, name: "إدوارد ميندي", ovr: 82, pos: "GK", flag: "🇸🇳", price: 250, type: "card-gold", emoji: "🧤", pac: 50, sho: 20, pas: 70 },
+                            { id: 919, name: "فرانك كيسيه", ovr: 83, pos: "CM", flag: "🇨🇮", price: 290, type: "card-gold", emoji: "🦏", pac: 75, sho: 75, pas: 76 }
+                        ]
+                    }
+                ]
+            },
+
+            // 7. الدوري المغربي (BOTOLA PRO)
+            Morocco: {
+                name: "المغربي 🇲🇦",
+                clubs: [
+                    {
+                        clubName: "الرجاء البيضاوي",
+                        badge: "🟢⚪",
+                        players: [
+                            { id: 1001, name: "يوسوفو أولو", ovr: 77, pos: "ST", flag: "🇳🇬", price: 170, type: "card-gold", emoji: "⚽", pac: 81, sho: 76, pas: 62 },
+                            { id: 1002, name: "أنش الزنيتي", ovr: 77, pos: "GK", flag: "🇲🇦", price: 160, type: "card-gold", emoji: "🧤", pac: 50, sho: 20, pas: 72 },
+                            { id: 1003, name: "مروان زيلا", ovr: 75, pos: "LW", flag: "🇲🇦", price: 140, type: "card-gold", emoji: "⚡", pac: 83, sho: 70, pas: 68 }
+                        ]
+                    },
+                    {
+                        clubName: "الوداد البيضاوي",
+                        badge: "🔴⚪",
+                        players: [
+                            { id: 1004, name: "نور الدين أمرابط", ovr: 78, pos: "RW", flag: "🇲🇦", price: 180, type: "card-hero", emoji: "💪", pac: 75, sho: 72, pas: 74 },
+                            { id: 1005, name: "يحيى جبران", ovr: 77, pos: "CM", flag: "🇲🇦", price: 160, type: "card-gold", emoji: "⚙️", pac: 68, sho: 70, pas: 76 },
+                            { id: 1006, name: "أيوب العملود", ovr: 76, pos: "RB", flag: "🇲🇦", price: 150, type: "card-gold", emoji: "🛡️", pac: 79, sho: 60, pas: 70 }
+                        ]
+                    },
+                    {
+                        clubName: "الجيش الملكي",
+                        badge: "🔴⚫🟢",
+                        players: [
+                            { id: 1007, name: "حمزة إكمان", ovr: 76, pos: "ST", flag: "🇲🇦", price: 150, type: "card-gold", emoji: "🎯", pac: 80, sho: 75, pas: 64 },
+                            { id: 1008, name: "محمد ربيع حريمات", ovr: 77, pos: "CM", flag: "🇲🇦", price: 160, type: "card-gold", emoji: "🎯", pac: 70, sho: 72, pas: 78 }
+                        ]
+                    }
+                ]
+            }
+        }; // إغلاق كائن leaguesData الموحد بنجاح!
+        // ==========================================================================
+        // 3. CORE LOGIC ENGINE & INTERACTIVE CONTROLLERS
+        // ==========================================================================
+
+        // Initialize App on DOM Load
+        window.addEventListener("DOMContentLoaded", () => {
+            renderLeaguesNav();
+            renderClubsNav();
+            renderCardsGrid();
+            updateHeaderStats();
+            renderPitchSlots();
+        });
+
+        // ------------------ SWITCH TABS ------------------
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+            document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
+
+            const targetTab = document.getElementById(tabId);
+            const targetNav = document.getElementById('nav-' + tabId);
+
+            if (targetTab) targetTab.classList.add('active');
+            if (targetNav) targetNav.classList.add('active');
+
+            if (tabId === 'tabSquad') {
+                renderPitchSlots();
+            }
         }
 
-        function renderClubs() {
-            const clubsList = document.getElementById('clubsChipList');
-            clubsList.innerHTML = '';
+        // ------------------ RENDER LEAGUES ------------------
+        function renderLeaguesNav() {
+            const container = document.getElementById('leagueChips');
+            if (!container) return;
+            container.innerHTML = '';
 
-            const clubs = bigLeaguesData[currentLeagueKey];
-            clubs.forEach((club, index) => {
-                const activeClass = index === currentClubIndex ? 'active' : '';
-                clubsList.innerHTML += `
-                    <button class="chip-btn ${activeClass}" onclick="selectClub(${index}, this)">
-                        ${club.badge} ${club.clubName}
-                    </button>
-                `;
+            Object.keys(leaguesData).forEach(key => {
+                const league = leaguesData[key];
+                const btn = document.createElement('button');
+                btn.className = `chip-btn ${key === currentLeagueKey ? 'active' : ''}`;
+                btn.innerText = league.name;
+                btn.onclick = () => {
+                    currentLeagueKey = key;
+                    currentClubIndex = 0;
+                    renderLeaguesNav();
+                    renderClubsNav();
+                    renderCardsGrid();
+                };
+                container.appendChild(btn);
             });
         }
 
-        function selectClub(clubIndex, btn) {
-            currentClubIndex = clubIndex;
-            document.querySelectorAll('#clubsChipList .chip-btn').forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-            renderCards();
+        // ------------------ RENDER CLUBS ------------------
+        function renderClubsNav() {
+            const container = document.getElementById('clubChips');
+            if (!container) return;
+            container.innerHTML = '';
+
+            const currentLeague = leaguesData[currentLeagueKey];
+            if (!currentLeague || !currentLeague.clubs) return;
+
+            currentLeague.clubs.forEach((club, index) => {
+                const btn = document.createElement('button');
+                btn.className = `chip-btn ${index === currentClubIndex ? 'active' : ''}`;
+                btn.innerText = `${club.badge} ${club.clubName}`;
+                btn.onclick = () => {
+                    currentClubIndex = index;
+                    renderClubsNav();
+                    renderCardsGrid();
+                };
+                container.appendChild(btn);
+            });
         }
 
-        function renderCards() {
+        // ------------------ RENDER PLAYER CARDS ------------------
+        function renderCardsGrid() {
             const grid = document.getElementById('cardsGrid');
+            if (!grid) return;
             grid.innerHTML = '';
 
-            const activeClub = bigLeaguesData[currentLeagueKey][currentClubIndex];
-            if (!activeClub) return;
+            const currentLeague = leaguesData[currentLeagueKey];
+            if (!currentLeague) return;
+            const currentClub = currentLeague.clubs[currentClubIndex];
+            if (!currentClub) return;
 
-            activeClub.players.forEach(player => {
-                const isSelected = mySquad.some(item => item.id === player.id);
+            currentClub.players.forEach(player => {
+                const isSelected = mySquad.some(p => p.id === player.id);
+                
+                const card = document.createElement('div');
+                card.className = `fut-card ${player.type} ${isSelected ? 'selected' : ''}`;
+                card.onclick = () => toggleSelectPlayer(player);
 
-                grid.innerHTML += `
-                    <div class="fut-card ${player.type}" onclick="togglePlayer(${player.id})">
-                        <div class="card-header">
-                            <div>
-                                <div class="card-ovr">${player.ovr}</div>
-                                <div class="card-pos">${player.pos}</div>
-                            </div>
-                            <div style="font-size: 15px;">${player.flag}</div>
+                card.innerHTML = `
+                    <div class="card-header">
+                        <div>
+                            <div class="card-ovr">${player.ovr}</div>
+                            <div class="card-pos">${player.pos}</div>
                         </div>
-                        <div class="card-avatar">${player.emoji}</div>
-                        <div class="card-name">${player.name}</div>
-                        <div class="card-stats">
-                            <div>PAC<br>${player.pac}</div>
-                            <div>SHO<br>${player.sho}</div>
-                            <div>PAS<br>${player.pas}</div>
-                        </div>
-                        <div class="card-footer">
-                            <span style="color:#fbbf24;">${player.price} 🪙</span>
-                            <span style="color:${isSelected ? '#00ffcc' : '#fff'}; font-weight:900;">
-                                ${isSelected ? 'محدد ✓' : 'إضافة ➕'}
-                            </span>
-                        </div>
+                        <div style="font-size:18px;">${player.flag}</div>
+                    </div>
+                    <div class="card-avatar">${player.emoji}</div>
+                    <div class="card-name">${player.name}</div>
+                    <div class="card-stats">
+                        <div>PAC <span>${player.pac}</span></div>
+                        <div>SHO <span>${player.sho}</span></div>
+                        <div>PAS <span>${player.pas}</span></div>
+                    </div>
+                    <div class="card-footer">
+                        <span>🪙 ${player.price}</span>
+                        <span>${isSelected ? '✔️ تم الاختيار' : '➕ إضافة'}</span>
                     </div>
                 `;
+                grid.appendChild(card);
             });
+
+            updatePickedCount();
         }
 
-        function togglePlayer(id) {
-            let playerFound = null;
-            Object.keys(bigLeaguesData).forEach(lKey => {
-                bigLeaguesData[lKey].forEach(club => {
-                    const p = club.players.find(item => item.id === id);
-                    if (p) playerFound = p;
-                });
-            });
+        // ------------------ SELECTION SYSTEM ------------------
+        function toggleSelectPlayer(player) {
+            const index = mySquad.findIndex(p => p.id === player.id);
 
-            if (!playerFound) return;
-
-            const index = mySquad.findIndex(p => p.id === id);
             if (index > -1) {
                 mySquad.splice(index, 1);
             } else {
-                if (mySquad.length >= 17) {
-                    alert("اكتمل القوام الأقصى! (17 لاعباً)");
+                if (mySquad.length >= 11) {
+                    alert("⚠️ لقد اكتملت التشكيلة (11 لاعباً كحد أقصى)!");
                     return;
                 }
-                mySquad.push(playerFound);
+                mySquad.push(player);
             }
 
-            document.getElementById('pickedCount').innerText = `${mySquad.length} / 17`;
+            renderCardsGrid();
+            updatePickedCount();
+            calculateOvr();
+        }
 
-            const totalOvr = mySquad.reduce((acc, curr) => acc + curr.ovr, 0);
-            const avg = mySquad.length > 0 ? Math.round(totalOvr / mySquad.length) : 0;
+        function updatePickedCount() {
+            const countElem = document.getElementById('pickedCount');
+            const readyBtn = document.getElementById('readyBtn');
+            if (countElem) countElem.innerText = `${mySquad.length} / 11`;
+
+            if (readyBtn) {
+                if (mySquad.length === 11) {
+                    readyBtn.disabled = false;
+                    readyBtn.innerText = "التشكيلة مكتملة! خوض المباراة الآن 🏆";
+                } else {
+                    readyBtn.disabled = true;
+                    readyBtn.innerText = `اختر ${11 - mySquad.length} لاعبين إضافيين لبدء المباراة 🔒`;
+                }
+            }
+        }
+
+        function calculateOvr() {
+            if (mySquad.length === 0) {
+                document.getElementById('squadOvr').innerText = '0';
+                return;
+            }
+            const totalOvr = mySquad.reduce((sum, p) => sum + p.ovr, 0);
+            const avg = Math.round(totalOvr / mySquad.length);
             document.getElementById('squadOvr').innerText = avg;
+        }
 
-            const btn = document.getElementById('readyBtn');
-            if (mySquad.length === 17) {
-                btn.disabled = false;
-                btn.style.opacity = 1;
-                btn.innerText = "جاهز لبدء المباراة 🚀";
-            } else {
-                btn.disabled = true;
-                btn.style.opacity = 0.4;
-                btn.innerText = `حدد 17 لاعباً للاستمرار (${mySquad.length}/17)`;
+        function updateHeaderStats() {
+            document.getElementById('userCoins').innerText = userCoins;
+            calculateOvr();
+        }
+
+        // ------------------ PITCH SYSTEM (التشكيلة 4-3-3) ------------------
+        function renderPitchSlots() {
+            for (let i = 0; i < 11; i++) {
+                const slot = document.getElementById(`slot-${i}`);
+                if (!slot) continue;
+
+                if (mySquad[i]) {
+                    const p = mySquad[i];
+                    slot.classList.add('filled');
+                    slot.innerHTML = `
+                        <span style="font-size:16px;">${p.emoji}</span>
+                        <strong style="color:var(--primary); font-size:10px;">${p.ovr} ${p.pos}</strong>
+                        <span style="font-size:8px; text-overflow:ellipsis; overflow:hidden; white-space:nowrap; max-width:50px;">${p.name.split(' ')[0]}</span>
+                    `;
+                } else {
+                    slot.classList.remove('filled');
+                    slot.innerHTML = `<span>شاجر</span>`;
+                }
             }
-
-            renderCards();
         }
 
-        function openMatchOverlay() {
-            document.getElementById('matchOverlay').classList.add('active');
-        }
-
-        function closeMatch() {
-            location.reload();
-        }
-
-        function runMatch(isSkip) {
-            document.getElementById('startSimBtn').style.display = 'none';
-            document.getElementById('skipBtn').style.display = 'none';
-
-            const logBox = document.getElementById('aiLogBox');
-            logBox.innerHTML = '';
-
-            const avgOvr = parseInt(document.getElementById('squadOvr').innerText) || 80;
-            let home = 0;
-            let away = 0;
-
-            if (isSkip) {
-                home = Math.floor(Math.random() * 3) + (avgOvr > 85 ? 2 : 0);
-                away = Math.floor(Math.random() * 2);
-
-                document.getElementById('homeScore').innerText = home;
-                document.getElementById('awayScore').innerText = away;
-                document.getElementById('matchClock').innerText = "90'";
-
-                logBox.innerHTML = `<div class="log-item goal">⚡ نتيجة التخطي المباشرة بالذكاء الاصطناعي: ${home} - ${away}</div>`;
-                document.getElementById('exitBtn').style.display = 'block';
+        // ------------------ SHOP & PACK OPENING ------------------
+        function buyPack() {
+            if (userCoins < 1000) {
+                alert("❌ لا تملك كوينز كافية! يلزمك 1000 كوينز.");
                 return;
             }
 
-            let min = 0;
-            const timer = setInterval(() => {
-                min += 6;
-                document.getElementById('matchClock').innerText = `${min}'`;
+            userCoins -= 1000;
+            localStorage.setItem("joker_coins", userCoins);
+            updateHeaderStats();
 
-                if (Math.random() * 100 < (avgOvr / 2.3)) {
-                    home++;
-                    const scorer = mySquad[Math.floor(Math.random() * mySquad.length)];
-                    logBox.innerHTML = `<div class="log-item goal">⚽ دقيقة ${min}': جووووول! ${scorer.name} يسجل هدفاً رائعاً!</div>` + logBox.innerHTML;
-                } else if (Math.random() * 100 > 82) {
-                    away++;
-                    logBox.innerHTML = `<div class="log-item">⚠️ دقيقة ${min}': هدف للخصم بعد هجمة مرتدة!</div>` + logBox.innerHTML;
-                }
+            // Collect all high overall players
+            let allPlayers = [];
+            Object.keys(leaguesData).forEach(lKey => {
+                leaguesData[lKey].clubs.forEach(c => {
+                    allPlayers.push(...c.players);
+                });
+            });
 
-                document.getElementById('homeScore').innerText = home;
-                document.getElementById('awayScore').innerText = away;
+            const highTier = allPlayers.filter(p => p.ovr >= 85);
+            const luckyPlayer = highTier[Math.floor(Math.random() * highTier.length)];
 
-                if (min >= 90) {
-                    clearInterval(timer);
-                    logBox.innerHTML = `<div class="log-item goal">🏁 أطلق الحكم صافرة النهاية!</div>` + logBox.innerHTML;
-                    document.getElementById('exitBtn').style.display = 'block';
-                }
-            }, 500);
+            alert(`🎉 مبروك! فتحت بكج الأبطال وحصلت على:\n\n⭐ ${luckyPlayer.name} (${luckyPlayer.ovr}) - ${luckyPlayer.pos}\n🏴 ${luckyPlayer.flag}`);
+            
+            if (!mySquad.some(p => p.id === luckyPlayer.id) && mySquad.length < 11) {
+                mySquad.push(luckyPlayer);
+                renderCardsGrid();
+            }
         }
 
-        // تشغيل العرض الأولي
-        renderClubs();
-        renderCards();
+        // ------------------ MATCH SIMULATOR ENGINE ------------------
+        let matchInterval = null;
+
+        function runSim() {
+            if (mySquad.length < 11) {
+                alert("⚠️ يجب عليك اختيار 11 لاعباً أولاً في قسم الدرافت!");
+                return;
+            }
+
+            const startBtn = document.getElementById('startMatchBtn');
+            const logsContainer = document.getElementById('matchLogs');
+            const scoreBoard = document.getElementById('scoreBoard');
+            const clock = document.getElementById('matchClock');
+
+            startBtn.disabled = true;
+            logsContainer.innerHTML = '';
+
+            let myScore = 0;
+            let oppScore = 0;
+            let minute = 0;
+
+            const squadAvg = parseInt(document.getElementById('squadOvr').innerText) || 80;
+            const oppAvg = Math.floor(Math.random() * 10) + 80; // Enemy dynamic rating
+
+            addMatchLog("🏁 انطلقت صافرة البداية!", "var(--primary)");
+
+            matchInterval = setInterval(() => {
+                minute += 5;
+                clock.innerText = `${minute}'`;
+
+                // Events Chance Logic
+                const rand = Math.random() * 100;
+
+                if (rand < 22) {
+                    // Chance for user to score based on OVR
+                    if (Math.random() * squadAvg > 35) {
+                        myScore++;
+                        const scorer = mySquad[Math.floor(Math.random() * mySquad.length)];
+                        addMatchLog(`⚽ جووووول! هدف لصالحك عن طريق ${scorer.name} (${scorer.emoji}) في الدقيقة ${minute}'`, "var(--primary)");
+                    }
+                } else if (rand > 80) {
+                    // Chance for Opponent to score
+                    if (Math.random() * oppAvg > 40) {
+                        oppScore++;
+                        addMatchLog(`🚨 هدف للمنافس! تسديدة قوية تسكن الشباك في الدقيقة ${minute}'`, "var(--red-accent)");
+                    }
+                } else if (rand >= 45 && rand <= 50) {
+                    addMatchLog(`🟨 بطاقة صفراء إثر تدخل خشن في منتصف الملعب (${minute}')`, "var(--gold)");
+                }
+
+                scoreBoard.innerText = `${myScore} - ${oppScore}`;
+
+                if (minute >= 90) {
+                    clearInterval(matchInterval);
+                    startBtn.disabled = false;
+                    addMatchLog("🔔 انتهت المباراة!", "#fff");
+
+                    let reward = 300;
+                    if (myScore > oppScore) {
+                        reward = 1000;
+                        addMatchLog(`🏆 فوز ساحق! مكافأة الفوز: +🪙 ${reward}`, "var(--primary)");
+                    } else if (myScore === oppScore) {
+                        reward = 500;
+                        addMatchLog(`🤝 تعادل حماسي! مكافأة التعادل: +🪙 ${reward}`, "var(--gold)");
+                    } else {
+                        addMatchLog(`💔 هزيمة! مكافأة المشاركة: +🪙 ${reward}`, "var(--red-accent)");
+                    }
+
+                    userCoins += reward;
+                    localStorage.setItem("joker_coins", userCoins);
+                    updateHeaderStats();
+                }
+            }, 300);
+        }
+
+        function addMatchLog(msg, color) {
+            const logsContainer = document.getElementById('matchLogs');
+            if (!logsContainer) return;
+
+            const item = document.createElement('div');
+            item.style.color = color || '#fff';
+            item.style.marginBottom = '6px';
+            item.innerText = msg;
+            logsContainer.prepend(item);
+        }
     </script>
 </body>
 </html>
