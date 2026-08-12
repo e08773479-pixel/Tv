@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>الجوكر جيم - أسطورة كرة القدم</title>
+    <title>Joker Game</title>
     <style>
         :root {
             --bg-dark: #020408;
             --accent: #00ff88;
-            --accent-glow: rgba(0, 255, 136, 0.8);
+            --accent-glow: rgba(0, 255, 136, 0.9);
             --gold: #ffd700;
-            --gold-glow: rgba(255, 215, 0, 0.8);
+            --gold-glow: rgba(255, 215, 0, 0.9);
             --pink: #ff007f;
             --cyan: #00f0ff;
             --text-main: #ffffff;
@@ -21,7 +21,6 @@
             user-select: none;
         }
 
-        /* تثبيت الشاشة تماماً ومنع أي حركة أو تمدد مزعج */
         html, body {
             margin: 0;
             padding: 0;
@@ -35,44 +34,26 @@
             align-items: center;
         }
 
-        /* إطار اللعبة الثابت بجرافيك عالي وألوان زاهية */
         .game-viewport {
             width: 900px;
             height: 600px;
-            background: linear-gradient(135deg, rgba(13, 27, 42, 0.95) 0%, rgba(5, 11, 20, 0.98) 100%);
+            background: linear-gradient(135deg, rgba(13, 27, 42, 0.98) 0%, rgba(5, 11, 20, 0.99) 100%);
             border-radius: 28px;
-            box-shadow: 0 0 60px rgba(0, 255, 136, 0.3), inset 0 0 25px rgba(0, 240, 255, 0.1);
-            border: 2px solid rgba(0, 255, 136, 0.4);
+            box-shadow: 0 0 80px rgba(0, 255, 136, 0.4), inset 0 0 35px rgba(0, 240, 255, 0.2);
+            border: 3px solid rgba(0, 255, 136, 0.6);
             position: relative;
             overflow: hidden;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
             align-items: center;
-            padding: 35px;
+            padding: 40px;
         }
 
-        /* كور قدم ملونة ومتحركة في الخلفية بألوان عالية الجودة */
-        .color-ball {
-            position: absolute;
-            font-size: 40px;
-            opacity: 0.85;
-            pointer-events: none;
-            filter: drop-shadow(0 0 15px currentColor);
-            animation: moveBalls 7s infinite linear;
-        }
-
-        @keyframes moveBalls {
-            0% { transform: translate(0, 0) rotate(0deg) scale(1); }
-            50% { transform: translate(70px, -50px) rotate(180deg) scale(1.1); }
-            100% { transform: translate(0, 0) rotate(360deg) scale(1); }
-        }
-
-        /* الشاشات داخل نفس الملف */
         .game-screen {
             width: 100%;
             height: 100%;
-            display: none;
+            display: flex;
             flex-direction: column;
             justify-content: space-between;
             align-items: center;
@@ -80,469 +61,88 @@
             position: absolute;
             top: 0;
             left: 0;
-            padding: 35px;
+            padding: 40px;
             z-index: 2;
         }
 
-        .game-screen.active {
-            display: flex;
-        }
-
-        /* شريط الكلام الكثير عن كرة القدم في الأعلى متحرك وملون */
-        .football-ticker {
-            background: rgba(0, 0, 0, 0.7);
-            border: 2px solid var(--gold);
-            padding: 12px 20px;
-            border-radius: 50px;
-            width: 100%;
-            max-width: 750px;
-            overflow: hidden;
-            white-space: nowrap;
-            box-shadow: 0 0 20px var(--gold-glow);
-            flex-shrink: 0;
-        }
-
-        .ticker-inner {
-            display: inline-block;
-            animation: textScroll 16s linear infinite;
-            font-size: 17px;
-            font-weight: 900;
-            color: var(--gold);
-            text-shadow: 0 0 10px rgba(255, 215, 0, 0.6);
-        }
-
-        @keyframes textScroll {
-            0% { transform: translateX(100%); }
-            100% { transform: translateX(-100%); }
-        }
-
-        /* لوجو اللعبة (الجوكر جيم) مائل واحترافي بجرافيك عالي */
         .logo-container {
-            margin: 10px 0;
+            margin: auto 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .joker-image-header {
+            font-size: 75px;
+            filter: drop-shadow(0 0 30px var(--pink));
+            animation: floatJoker 3s infinite ease-in-out;
+        }
+
+        @keyframes floatJoker {
+            0%, 100% { transform: translateY(0) scale(1); }
+            50% { transform: translateY(-15px) scale(1.05); }
         }
 
         .game-logo-main {
-            font-size: 64px;
+            font-size: 68px;
             font-weight: 900;
             font-style: italic;
             background: linear-gradient(45deg, var(--accent), var(--cyan), var(--gold), var(--pink));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            filter: drop-shadow(0 0 25px var(--accent-glow));
+            filter: drop-shadow(0 0 30px var(--accent-glow));
             transform: skew(-6deg);
             display: inline-block;
-            letter-spacing: 3px;
+            letter-spacing: 5px;
         }
 
         .game-logo-sub {
-            font-size: 15px;
-            font-weight: bold;
+            font-size: 16px;
+            font-weight: 800;
             color: var(--cyan);
-            letter-spacing: 4px;
+            letter-spacing: 6px;
             text-transform: uppercase;
-            margin-top: -5px;
-            text-shadow: 0 0 10px rgba(0, 240, 255, 0.5);
+            text-shadow: 0 0 15px rgba(0, 240, 255, 0.7);
         }
 
-        /* كور القدم المتحركة في المنتصف بألوان مذهلة */
-        .center-balls {
-            display: flex;
-            gap: 30px;
-            font-size: 70px;
-            margin: 10px 0;
-            animation: floatBall 3s infinite ease-in-out;
-        }
-
-        @keyframes floatBall {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-15px); }
-        }
-
-        /* الزر الوحيد في الأسفل بتصميم احترافي مبهر */
         .action-btn {
             background: linear-gradient(135deg, var(--accent) 0%, #008844 100%);
             color: #020408;
             border: none;
-            padding: 18px 50px;
+            padding: 20px 55px;
             border-radius: 50px;
-            font-size: 21px;
+            font-size: 23px;
             font-weight: 900;
             cursor: pointer;
-            box-shadow: 0 8px 30px var(--accent-glow);
+            box-shadow: 0 10px 40px var(--accent-glow);
             transition: 0.2s ease;
-            letter-spacing: 0.5px;
-            margin-bottom: 10px;
+            letter-spacing: 0.8px;
+            margin-bottom: 20px;
         }
 
         .action-btn:hover {
-            transform: scale(1.06);
+            transform: scale(1.08);
             background: linear-gradient(135deg, #1aff99 0%, var(--accent) 100%);
-            box-shadow: 0 12px 40px #00ff88;
-        }
-
-        .action-btn:active {
-            transform: scale(0.97);
-        }
-
-        /* شاشة اختيار الدوريات (الـ 50 دوري المخصصين بملفاتهم الفريدة) */
-        .leagues-container {
-            width: 100%;
-            max-width: 800px;
-            height: 320px;
-            background: rgba(0, 0, 0, 0.4);
-            border: 2px solid rgba(0, 240, 255, 0.3);
-            border-radius: 15px;
-            overflow-y: auto;
-            padding: 15px;
-            margin: 10px 0;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-
-        .leagues-container::-webkit-scrollbar {
-            width: 8px;
-        }
-        .leagues-container::-webkit-scrollbar-track {
-            background: rgba(0,0,0,0.3);
-            border-radius: 10px;
-        }
-        .leagues-container::-webkit-scrollbar-thumb {
-            background: var(--cyan);
-            border-radius: 10px;
-        }
-
-        .league-item {
-            background: linear-gradient(135deg, rgba(13, 27, 42, 0.8) 0%, rgba(20, 40, 65, 0.9) 100%);
-            border: 2px solid rgba(255, 255, 255, 0.1);
-            border-radius: 12px;
-            padding: 12px 20px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            cursor: pointer;
-            transition: 0.2s;
-        }
-
-        .league-item:hover {
-            border-color: var(--cyan);
-            box-shadow: 0 0 15px rgba(0, 240, 255, 0.3);
-            transform: scale(1.01);
-        }
-
-        .league-item.selected {
-            border-color: var(--accent);
-            background: linear-gradient(135deg, rgba(0, 255, 136, 0.15) 0%, rgba(13, 27, 42, 0.9) 100%);
-            box-shadow: 0 0 20px rgba(0, 255, 136, 0.4);
-        }
-
-        .league-info {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            font-size: 18px;
-            font-weight: bold;
-            color: var(--text-main);
-        }
-
-        .league-flag {
-            font-size: 26px;
-        }
-
-        .league-rank {
-            background: rgba(255, 215, 0, 0.2);
-            color: var(--gold);
-            border: 1px solid var(--gold);
-            padding: 4px 10px;
-            border-radius: 20px;
-            font-size: 13px;
-            font-weight: 900;
-        }
-
-        /* أزرار التنقل السفلية */
-        .nav-buttons-container {
-            display: flex;
-            gap: 20px;
-            width: 100%;
-            justify-content: center;
-            margin-top: 5px;
-        }
-
-        .back-btn {
-            background: transparent;
-            border: 2px solid var(--cyan);
-            color: var(--cyan);
-            padding: 12px 35px;
-            border-radius: 30px;
-            cursor: pointer;
-            font-size: 16px;
-            font-weight: bold;
-            transition: 0.2s;
-            box-shadow: 0 0 10px rgba(0, 240, 255, 0.2);
-        }
-
-        .back-btn:hover {
-            background: var(--cyan);
-            color: #020408;
-            box-shadow: 0 0 20px var(--cyan);
-            transform: scale(1.05);
-        }
-
-        .next-btn {
-            background: linear-gradient(135deg, var(--cyan) 0%, #0088cc 100%);
-            border: none;
-            color: #020408;
-            padding: 12px 45px;
-            border-radius: 30px;
-            cursor: pointer;
-            font-size: 16px;
-            font-weight: 900;
-            transition: 0.2s;
-            box-shadow: 0 0 15px rgba(0, 240, 255, 0.4);
-            opacity: 0.5;
-            pointer-events: none;
-        }
-
-        .next-btn.active-next {
-            opacity: 1;
-            pointer-events: auto;
-        }
-
-        .next-btn.active-next:hover {
-            transform: scale(1.05);
-            box-shadow: 0 0 25px var(--cyan);
-        }
-
-        /* ملف الدوري الفرعي المخصص (الشاشة الثالثة التي تفتح لكل دوري بناءً على ملفه الخاص) */
-        .league-file-content {
-            width: 100%;
-            max-width: 800px;
-            background: rgba(0, 0, 0, 0.5);
-            border: 2px solid var(--accent);
-            border-radius: 20px;
-            padding: 30px;
-            box-shadow: 0 0 30px rgba(0, 255, 136, 0.3);
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-            align-items: center;
-            margin: auto;
-        }
-
-        .league-file-header {
-            display: flex;
-            align-items: center;
-            gap: 20px;
-            font-size: 30px;
-            font-weight: 900;
-            color: var(--gold);
-            text-shadow: 0 0 15px var(--gold-glow);
-        }
-
-        .league-file-details {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
-            width: 100%;
-            text-align: right;
-        }
-
-        .detail-box {
-            background: rgba(13, 27, 42, 0.9);
-            border: 1px solid rgba(0, 240, 255, 0.3);
-            padding: 15px;
-            border-radius: 12px;
-            font-size: 16px;
-            color: var(--text-main);
-        }
-
-        .detail-box span {
-            color: var(--cyan);
-            font-weight: bold;
+            box-shadow: 0 15px 50px #00ff88;
         }
     </style>
 </head>
 <body>
 
     <div class="game-viewport">
-
-        <div class="color-ball" style="color: var(--pink); top: 12%; left: 8%;">⚽</div>
-        <div class="color-ball" style="color: var(--cyan); top: 68%; left: 12%; animation-delay: 2s;">⚽</div>
-        <div class="color-ball" style="color: var(--gold); top: 18%; right: 10%; animation-delay: 1s;">⚽</div>
-        <div class="color-ball" style="color: var(--accent); top: 72%; right: 15%; animation-delay: 3s;">⚽</div>
-
-        <div id="screen-main" class="game-screen active">
-            <div class="football-ticker">
-                <span class="ticker-inner">⚽🔥 الشغف، الإثارة، الأساطير، والروح القتالية في عالم كرة القدم الحقيقي • انطلق نحو المجد الأبدي والبطولات الكبرى 🏆⭐</span>
-            </div>
-
+        <div class="game-screen">
+            <div></div>
             <div class="logo-container">
-                <div class="game-logo-main">الجوكر جيم</div>
-                <div class="game-logo-sub">Ultimate Football Experience</div>
+                <div class="joker-image-header">🃏</div>
+                <div class="game-logo-main">JOKER GAME</div>
+                <div class="game-logo-sub">Ultimate Football Edition</div>
             </div>
-
-            <div class="center-balls">
-                <span style="color: var(--pink); filter: drop-shadow(0 0 12px var(--pink));">⚽</span>
-                <span style="color: var(--accent); filter: drop-shadow(0 0 12px var(--accent));">⚽</span>
-                <span style="color: var(--gold); filter: drop-shadow(0 0 12px var(--gold));">⚽</span>
-            </div>
-
             <div>
-                <button class="action-btn" onclick="goToScreen('screen-leagues')">اختر الدوري الخاص بك الآن</button>
+                <button class="action-btn" onclick="window.location.href='game5.html'">اختر الان الدوري الخاص بك</button>
             </div>
         </div>
-
-        <div id="screen-leagues" class="game-screen">
-            <div class="football-ticker">
-                <span class="ticker-inner">🏆 50 دوري عالمي وعربي مرتبة باحترافية • اختر دوريك المفضل (مثل الدوري المصري أو الإنجليزي) ثم اضغط التالي لفتح ملفه الخاص ⚽</span>
-            </div>
-
-            <div class="leagues-container" id="leaguesListContainer">
-                </div>
-
-            <div class="nav-buttons-container">
-                <button class="back-btn" onclick="goToScreen('screen-main')">← الرجوع للقائمة السابقة</button>
-                <button id="nextBtn" class="next-btn" onclick="openSelectedLeagueFile()">التالي →</button>
-            </div>
-        </div>
-
-        <div id="screen-league-file" class="game-screen">
-            <div class="football-ticker">
-                <span class="ticker-inner">📂 تم فتح ملف الدوري الخاص بنجاح • استعرض خصائص وبيانات البطولة وانطلق نحو حصد الألقاب 🌟</span>
-            </div>
-
-            <div class="league-file-content">
-                <div class="league-file-header" id="fileHeaderTitle">
-                    </div>
-                
-                <div class="league-file-details">
-                    <div class="detail-box">ترتيب الدوري العالمي: <span id="fileRank">#1</span></div>
-                    <div class="detail-box">حالة الملف: <span>تم تحميل قاعدة البيانات بنجاح ✅</span></div>
-                    <div class="detail-box">عدد الفرق المشاركة: <span id="fileTeamsCount">20 فريق</span></div>
-                    <div class="detail-box">مستوى المنافسة: <span id="fileLevel">أسطوري 🔥</span></div>
-                </div>
-            </div>
-
-            <div class="nav-buttons-container">
-                <button class="back-btn" onclick="goToScreen('screen-leagues')">← الرجوع لقائمة الدوريات</button>
-            </div>
-        </div>
-
     </div>
-
-    <script>
-        // قاعدة بيانات دقيقة تضم 50 دوري (من الأفضل للأقل) مع ملفات وخصائص لكل دوري منفرد
-        const leaguesData = [
-            { id: 1, name: "الدوري الإنجليزي الممتاز (Premier League)", flag: "🏴󠁧󠁢󠁥󠁮󠁧󠁿", teams: "20 فريق", level: "أعلى مستوى عالمي 🔥" },
-            { id: 2, name: "الدوري الإسباني (La Liga)", flag: "🇪🇸", teams: "20 فريق", level: "ملوك المهارة والسيطرة 🌟" },
-            { id: 3, name: "الدوري الإيطالي (Serie A)", flag: "🇮🇹", teams: "20 فريق", level: "فن التكتيك والدفاع الصارم 🛡️" },
-            { id: 4, name: "الدوري الألماني (Bundesliga)", flag: "🇩🇪", teams: "18 فريق", level: "سرعة وقوة هجومية مذهلة ⚡" },
-            { id: 5, name: "الدوري الفرنسي (Ligue 1)", flag: "🇫🇷", teams: "18 فريق", level: "نجوم ومهارات خارقة ✨" },
-            { id: 6, name: "دوري أبطال أوروبا (UEFA Champions League)", flag: "🇪🇺", teams: "36 فريق", level: "البطولة الأعظم في التاريخ 🏆" },
-            { id: 7, name: "الدوري البرتغالي الممتاز", flag: "🇵🇹", teams: "18 فريق", level: "مصنع المواهب الأبرز ⚽" },
-            { id: 8, name: "الدوري الهولندي الممتاز (Eredivisie)", flag: "🇳🇱", teams: "18 فريق", level: "كرة هجومية ممتعة 🌀" },
-            { id: 9, name: "الدوري البرازيلي الدرجة الأولى", flag: "🇧🇷", teams: "20 فريق", level: "متعة السامبا والبهجة الفنية 💃" },
-            { id: 10, name: "الدوري الأرجنتيني الممتاز", flag: "🇦🇷", teams: "28 فريق", level: "روح قتالية وشغف لا ينتهي 💪" },
-            { id: 11, name: "الدوري السعودي للمحترفين (روشن)", flag: "🇸🇦", teams: "18 فريق", level: "نجوم عالميين ومنافسة شرسة 🔥" },
-            { id: 12, name: "الدوري التركي الممتاز", flag: "🇹🇷", teams: "19 فريق", level: "جماهير نارية وحماس جبار 🌋" },
-            { id: 13, name: "الدوري البلجيكي للمحترفين", flag: "🇧🇪", teams: "16 فريق", level: "تطوير مواهب وإثارة عالية 🎯" },
-            { id: 14, name: "الدوري الأمريكي لكرة القدم (MLS)", flag: "🇺🇸", teams: "29 فريق", level: "استثمار وتطور مستمر 🚀" },
-            { id: 15, name: "الدوري المكسيكي الممتاز", flag: "🇲🇽", teams: "18 فريق", level: "سرعة وإثارة قوية 🇲🇽" },
-            { id: 16, name: "الدوري الاسكتلندي الممتاز", flag: "🏴󠁧󠁢󠁳󠁣󠁴󠁿", teams: "12 فريق", level: "ديربيات تاريخية عريقة ⚔️" },
-            { id: 17, name: "الدوري اليوناني الممتاز", flag: "🇬🇷", teams: "14 فريق", level: "أجواء جماهيرية صاخبة 🏟️" },
-            { id: 18, name: "الدوري الروسي الممتاز", flag: "🇷🇺", teams: "16 فريق", level: "قوة بدنية وصلابة ❄️" },
-            { id: 19, name: "الدوري الدنماركي الممتاز", flag: "🇩🇰", teams: "12 فريق", level: "تنظيم تكتيكي مميز 🇩🇰" },
-            { id: 20, name: "الدوري النمساوي الممتاز", flag: "🇦🇹", teams: "12 فريق", level: "سريع ومفعم بالحيوية 🇦🇹" },
-            { id: 21, name: "الدوري السويسري الممتاز", flag: "🇨🇭", teams: "12 فريق", level: "منافسة متوازنة ونظيفة 🇨🇭" },
-            { id: 22, name: "الدوري التشيكي لكرة القدم", flag: "🇨🇿", teams: "16 فريق", level: "أداء تكتيكي صلب 🇨🇿" },
-            { id: 23, name: "الدوري الكرواتي الممتاز", flag: "🇭🇷", teams: "10 فرق", level: "مصنع أبطال العالم 🇭🇷" },
-            { id: 24, name: "الدوري السويدي الممتاز", flag: "🇸🇪", teams: "16 فريق", level: "إثارة وحماس جماعي 🇸🇪" },
-            { id: 25, name: "الدوري النرويجي الممتاز", flag: "🇳🇴", teams: "16 فريق", level: "تطور بدني وفني ملحوظ 🇳🇴" },
-            { id: 26, name: "الدوري البولندي الممتاز", flag: "🇵🇱", teams: "18 فريق", level: "ندية وقوة تنافسية 🇵🇱" },
-            { id: 27, name: "الدوري الأوكراني الممتاز", flag: "🇺🇦", teams: "16 فريق", level: "عزيمة وروح قتالية عالية 🇺🇦" },
-            { id: 28, name: "الدوري الإسكتلندي الدرجة الأولى", flag: "🏴󠁧󠁢󠁳󠁣󠁴󠁿", teams: "10 فرق", level: "صراع الصعود للقمة 🏴󠁧󠁢󠁳󠁣󠁴󠁿" },
-            { id: 29, name: "الدوري الصربي الممتاز", flag: "🇷🇸", teams: "16 فريق", level: "أداء جماهيري مميز 🇷🇸" },
-            { id: 30, name: "الدوري الروماني الممتاز", flag: "🇷🇴", teams: "16 فريق", level: "تاريخ عريق ومنافسة 🇷🇴" },
-            { id: 31, name: "الدوري المجري الممتاز", flag: "🇭🇺", teams: "12 فريق", level: "روح كلاسيكية ممتعة 🇭🇺" },
-            { id: 32, name: "الدوري القبرصي الممتاز", flag: "🇨🇾", teams: "14 فريق", level: "مفاجآت مستمرة 🇨🇾" },
-            { id: 33, name: "الدوري البلغاري الممتاز", flag: "🇧🇬", teams: "16 فريق", level: "تنافس محتدم على الصدارة 🇧🇬" },
-            { id: 34, name: "الدوري الإماراتي (ادنوك للمحترفين)", flag: "🇦🇪", teams: "14 فريق", level: "نجوم وأداء متميز في الخليج 🇦🇪" },
-            { id: 35, name: "الدوري المصري الممتاز", flag: "🇪🇬", teams: "18 فريق", level: "عراقة، جماهير جبارة، وإثارة لا تنتهي 🦅🔥" },
-            { id: 36, name: "الدوري القطري (دوري نجوم قطر)", flag: "🇶🇦", teams: "12 فريق", level: "تنظيم عالمي ونجوم بارزون 🇶🇦" },
-            { id: 37, name: "الدوري الكوري الجنوبي الممتاز", flag: "🇰🇷", teams: "12 فريق", level: "سرعة فائقة ولياقة بدنية مذهلة 🇰🇷" },
-            { id: 38, name: "الدوري الياباني (J1 League)", flag: "🇯🇵", teams: "20 فريق", level: "انضباط تكتيكي وجمال بصري 🇯🇵" },
-            { id: 39, name: "الدوري الأسترالي الممتاز", flag: "🇦🇺", teams: "12 فريق", level: "أهداف غزيرة ومتعة هجومية 🇦🇺" },
-            { id: 40, name: "الدوري المغربي (البطولة الاحترافية)", flag: "🇲🇦", teams: "16 فريق", level: "أجواء جماهيرية عالمية وإبداع 🇲🇦" },
-            { id: 41, name: "الدوري التونسي الممتاز", flag: "🇹🇳", teams: "14 فريق", level: "ندية تاريخية وصراع قوي 🇹🇳" },
-            { id: 42, name: "الدوري الجزائري المحترف الأول", flag: "🇩🇿", teams: "16 فريق", level: "شغف جماهيري لا مثيل له 🇩🇿" },
-            { id: 43, name: "الدوري الجنوب إفريقي الممتاز", flag: "🇿🇦", teams: "16 فريق", level: "مهارات إفريقية فريدة 🇿🇦" },
-            { id: 44, name: "الدوري الكولومبي الممتاز", flag: "🇨🇴", teams: "20 فريق", level: "كرة ممتعة وأداء هجومي 🇨🇴" },
-            { id: 45, name: "الدوري التشيلي الممتاز", flag: "🇨🇱", teams: "16 فريق", level: "ندية وحماس لاتيني 🇨🇱" },
-            { id: 46, name: "الدوري الأوروغواياني الممتاز", flag: "🇺🇾", teams: "16 فريق", level: "صلابة وروح قتالية لاتينية 🇺🇾" },
-            { id: 47, name: "الدوري الصيني الممتاز", flag: "🇨🇳", teams: "16 فريق", level: "تطور واستثمار ضخم 🇨🇳" },
-            { id: 48, name: "الدوري الهندي الممتاز", flag: "🇮🇳", teams: "12 فريق", level: "نمو متسارع وجماهير غفيرة 🇮🇳" },
-            { id: 49, name: "الدوري الهولندي الدرجة الثانية", flag: "🇳🇱", teams: "20 فريق", level: "مصنع نجوم المستقبل 🇳🇱" },
-            { id: 50, name: "الدوري الإنجليزي الدرجة الأولى (Championship)", flag: "🏴󠁧󠁢󠁥󠁮󠁧󠁿", teams: "24 فريق", level: "أشرس دوري درجة ثانية في العالم 🔥" }
-        ];
-
-        let selectedLeague = null;
-
-        // بناء قائمة الدوريات الـ 50 مع ملفاتها
-        function renderLeagues() {
-            const container = document.getElementById('leaguesListContainer');
-            container.innerHTML = "";
-
-            leaguesData.forEach((league, index) => {
-                const item = document.createElement('div');
-                item.className = 'league-item';
-                item.innerHTML = `
-                    <div class="league-info">
-                        <span class="league-flag">${league.flag}</span>
-                        <span>${league.name}</span>
-                    </div>
-                    <span class="league-rank">المركز #${index + 1}</span>
-                `;
-
-                item.onclick = () => {
-                    document.querySelectorAll('.league-item').forEach(el => el.classList.remove('selected'));
-                    item.classList.add('selected');
-                    selectedLeague = league;
-                    
-                    // تفعيل زر التالي لفتح ملف الدوري
-                    document.getElementById('nextBtn').classList.add('active-next');
-                };
-
-                container.appendChild(item);
-            });
-        }
-
-        // فتح ملف الدوري المخصص بناءً على الدوري الذي تم الضغط عليه وتحديد التالي
-        function openSelectedLeagueFile() {
-            if (!selectedLeague) return;
-
-            // تحديث بيانات ملف الدوري الفرعي
-            document.getElementById('fileHeaderTitle').innerHTML = `${selectedLeague.flag} ${selectedLeague.name}`;
-            document.getElementById('fileRank').innerText = `#${selectedLeague.id} (من الأفضل)`;
-            document.getElementById('fileTeamsCount').innerText = selectedLeague.teams;
-            document.getElementById('fileLevel').innerText = selectedLeague.level;
-
-            // الانتقال لشاشة ملف الدوري الخاص
-            goToScreen('screen-league-file');
-        }
-
-        // دالة التنقل العامة بين الشاشات
-        function goToScreen(screenId) {
-            document.querySelectorAll('.game-screen').forEach(screen => {
-                screen.classList.remove('active');
-            });
-            document.getElementById(screenId).classList.add('active');
-        }
-
-        // تشغيل الوظيفة عند تحميل الصفحة
-        window.onload = function() {
-            renderLeagues();
-        };
-    </script>
 
 </body>
 </html>
