@@ -6,12 +6,14 @@
     <title>الجوكر جيم - أسطورة كرة القدم</title>
     <style>
         :root {
-            --bg-dark: #05070b;
+            --bg-dark: #020408;
             --accent: #00ff88;
-            --accent-glow: rgba(0, 255, 136, 0.6);
-            --gold: #f39c12;
+            --accent-glow: rgba(0, 255, 136, 0.8);
+            --gold: #ffd700;
+            --gold-glow: rgba(255, 215, 0, 0.8);
+            --pink: #ff007f;
+            --cyan: #00f0ff;
             --text-main: #ffffff;
-            --text-secondary: #a0aec0;
         }
         
         * {
@@ -19,172 +21,249 @@
             user-select: none;
         }
 
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #090d16 0%, #111b2b 50%, #05070b 100%);
-            color: var(--text-main);
+        /* تثبيت الشاشة تماماً ومنع أي حركة أو تمدد مزعج */
+        html, body {
             margin: 0;
             padding: 0;
+            width: 100%;
+            height: 100vh;
+            overflow: hidden;
+            background: radial-gradient(circle at center, #0a192f 0%, #020408 100%);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             display: flex;
             justify-content: center;
             align-items: center;
-            min-height: 100vh;
-            overflow: hidden;
-            position: relative;
         }
 
-        /* خلفية تفاعلية متحركة (أشكال مضيئة وكرات في الخلفية) */
-        .bg-particles {
+        /* إطار اللعبة الثابت بجرافيك عالي وألوان زاهية */
+        .game-viewport {
+            width: 900px;
+            height: 600px;
+            background: linear-gradient(135deg, rgba(13, 27, 42, 0.95) 0%, rgba(5, 11, 20, 0.98) 100%);
+            border-radius: 28px;
+            box-shadow: 0 0 60px rgba(0, 255, 136, 0.3), inset 0 0 25px rgba(0, 240, 255, 0.1);
+            border: 2px solid rgba(0, 255, 136, 0.4);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            padding: 35px;
+        }
+
+        /* كور قدم ملونة ومتحركة في الخلفية بألوان عالية الجودة */
+        .color-ball {
             position: absolute;
+            font-size: 40px;
+            opacity: 0.85;
+            pointer-events: none;
+            filter: drop-shadow(0 0 15px currentColor);
+            animation: moveBalls 7s infinite linear;
+        }
+
+        @keyframes moveBalls {
+            0% { transform: translate(0, 0) rotate(0deg) scale(1); }
+            50% { transform: translate(70px, -50px) rotate(180deg) scale(1.1); }
+            100% { transform: translate(0, 0) rotate(360deg) scale(1); }
+        }
+
+        /* الشاشات داخل نفس الملف */
+        .game-screen {
             width: 100%;
             height: 100%;
-            overflow: hidden;
-            z-index: 1;
-        }
-
-        .floating-ball {
-            position: absolute;
-            font-size: 30px;
-            opacity: 0.15;
-            animation: floatAround 12s infinite linear;
-        }
-
-        @keyframes floatAround {
-            0% { transform: translateY(100vh) translateX(0) rotate(0deg); }
-            100% { transform: translateY(-100vh) translateX(100px) rotate(360deg); }
-        }
-
-        /* الحاوية الرئيسية بتصميم زجاجي احترافي */
-        .game-container {
-            width: 100%;
-            max-width: 850px;
-            background: rgba(18, 24, 36, 0.85);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border-radius: 24px;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.9), 0 0 30px rgba(0, 255, 136, 0.1);
-            overflow: hidden;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            display: none;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
             text-align: center;
-            padding: 55px 35px;
-            position: relative;
+            position: absolute;
+            top: 0;
+            left: 0;
+            padding: 35px;
             z-index: 2;
         }
 
-        /* شريط الكلام المتحرك في الأعلى (تأثير انزلاق وتوهج) */
-        .ticker-container {
+        .game-screen.active {
+            display: flex;
+        }
+
+        /* شريط الكلام الكثير عن كرة القدم في الأعلى متحرك وملون */
+        .football-ticker {
+            background: rgba(0, 0, 0, 0.7);
+            border: 2px solid var(--gold);
+            padding: 12px 20px;
+            border-radius: 50px;
             width: 100%;
+            max-width: 750px;
             overflow: hidden;
             white-space: nowrap;
-            margin-bottom: 25px;
-            background: rgba(0, 0, 0, 0.4);
-            padding: 10px 0;
-            border-radius: 50px;
-            border: 1px solid rgba(243, 156, 18, 0.3);
+            box-shadow: 0 0 20px var(--gold-glow);
         }
 
-        .ticker-text {
+        .ticker-inner {
             display: inline-block;
-            animation: tickerScroll 15s linear infinite;
-            font-size: 16px;
-            font-weight: 700;
+            animation: textScroll 16s linear infinite;
+            font-size: 17px;
+            font-weight: 900;
             color: var(--gold);
-            text-shadow: 0 0 10px rgba(243, 156, 18, 0.5);
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.6);
         }
 
-        @keyframes tickerScroll {
+        @keyframes textScroll {
             0% { transform: translateX(100%); }
             100% { transform: translateX(-100%); }
         }
 
-        /* اسم اللعبة الرئيسي مع تأثير تدرج ألوان ونبض */
-        .game-logo {
-            font-size: 48px;
+        /* لوجو اللعبة (الجوكر جيم) مائل واحترافي بجرافيك عالي */
+        .logo-container {
+            margin: 10px 0;
+        }
+
+        .game-logo-main {
+            font-size: 64px;
             font-weight: 900;
-            background: linear-gradient(45deg, var(--accent), #ffffff, var(--gold));
+            font-style: italic;
+            background: linear-gradient(45deg, var(--accent), var(--cyan), var(--gold), var(--pink));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            text-shadow: 0 0 30px var(--accent-glow);
-            margin-bottom: 15px;
-            animation: pulseGlow 3s infinite alternate;
+            filter: drop-shadow(0 0 25px var(--accent-glow));
+            transform: skew(-6deg);
+            display: inline-block;
+            letter-spacing: 3px;
         }
 
-        @keyframes pulseGlow {
-            0% { filter: drop-shadow(0 0 5px rgba(0,255,136,0.3)); }
-            100% { filter: drop-shadow(0 0 20px rgba(0,255,136,0.8)); }
+        .game-logo-sub {
+            font-size: 15px;
+            font-weight: bold;
+            color: var(--cyan);
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            margin-top: -5px;
+            text-shadow: 0 0 10px rgba(0, 240, 255, 0.5);
         }
 
-        /* كورة متحركة بجرافيك عالي في المنتصف */
-        .ball-graphics {
-            font-size: 85px;
-            margin: 25px 0 35px 0;
-            animation: bounceAndSpin 3s infinite ease-in-out;
-            filter: drop-shadow(0 10px 15px rgba(0,0,0,0.6));
+        /* كور القدم المتحركة في المنتصف بألوان مذهلة */
+        .center-balls {
+            display: flex;
+            gap: 30px;
+            font-size: 70px;
+            margin: 10px 0;
+            animation: floatBall 3s infinite ease-in-out;
         }
 
-        @keyframes bounceAndSpin {
-            0%, 100% { transform: translateY(0) rotate(0deg); }
-            50% { transform: translateY(-15px) rotate(180deg); }
+        @keyframes floatBall {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
         }
 
-        /* الزر الوحيد المطلوب في الأسفل */
-        .btn-wrapper {
-            margin-top: 25px;
-        }
-
-        .main-btn {
-            background: linear-gradient(135deg, var(--accent) 0%, #00b359 100%);
-            color: #05070b;
+        /* الزر الوحيد في الأسفل بتصميم احترافي مبهر */
+        .action-btn {
+            background: linear-gradient(135deg, var(--accent) 0%, #008844 100%);
+            color: #020408;
             border: none;
             padding: 18px 50px;
             border-radius: 50px;
+            font-size: 21px;
             font-weight: 900;
             cursor: pointer;
-            font-size: 21px;
-            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            box-shadow: 0 8px 25px rgba(0, 255, 136, 0.4);
-            display: inline-block;
+            box-shadow: 0 8px 30px var(--accent-glow);
+            transition: 0.2s ease;
             letter-spacing: 0.5px;
+            margin-bottom: 10px;
         }
 
-        .main-btn:hover {
-            transform: scale(1.08) translateY(-3px);
-            box-shadow: 0 12px 35px rgba(0, 255, 136, 0.7);
+        .action-btn:hover {
+            transform: scale(1.06);
             background: linear-gradient(135deg, #1aff99 0%, var(--accent) 100%);
+            box-shadow: 0 12px 40px #00ff88;
         }
 
-        .main-btn:active {
-            transform: scale(0.96);
+        .action-btn:active {
+            transform: scale(0.97);
+        }
+
+        /* الشاشة الثانية (للانتقال إليها مباشرة) */
+        .next-screen-content {
+            color: var(--text-main);
+            font-size: 26px;
+            font-weight: bold;
+            margin: auto;
+            text-shadow: 0 0 15px rgba(255,255,255,0.4);
+        }
+
+        .back-btn {
+            background: transparent;
+            border: 2px solid var(--cyan);
+            color: var(--cyan);
+            padding: 10px 25px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 15px;
+            font-weight: bold;
+            transition: 0.2s;
+            box-shadow: 0 0 10px rgba(0, 240, 255, 0.2);
+        }
+
+        .back-btn:hover {
+            background: var(--cyan);
+            color: #020408;
+            box-shadow: 0 0 20px var(--cyan);
         }
     </style>
 </head>
 <body>
 
-    <div class="bg-particles">
-        <div class="floating-ball" style="left: 10%; animation-duration: 9s;">⚽</div>
-        <div class="floating-ball" style="left: 30%; animation-duration: 14s; animation-delay: 2s;">⚽</div>
-        <div class="floating-ball" style="left: 70%; animation-duration: 11s; animation-delay: 1s;">⚽</div>
-        <div class="floating-ball" style="left: 85%; animation-duration: 16s; animation-delay: 4s;">⚽</div>
-    </div>
+    <div class="game-viewport">
 
-    <div class="game-container">
-        <div class="ticker-container">
-            <div class="ticker-text">🔥 الشغف الحقيقي، المجد، والبطولات الكبرى في انتظارك! أنشئ تاريخك الكروي الآن وابدأ التحدي الاحترافي ⚽🏆</div>
+        <div class="color-ball" style="color: var(--pink); top: 12%; left: 8%;">⚽</div>
+        <div class="color-ball" style="color: var(--cyan); top: 68%; left: 12%; animation-delay: 2s;">⚽</div>
+        <div class="color-ball" style="color: var(--gold); top: 18%; right: 10%; animation-delay: 1s;">⚽</div>
+        <div class="color-ball" style="color: var(--accent); top: 72%; right: 15%; animation-delay: 3s;">⚽</div>
+
+        <div id="screen-main" class="game-screen active">
+            <div class="football-ticker">
+                <span class="ticker-inner">⚽🔥 الشغف، الإثارة، الأساطير، والروح القتالية في عالم كرة القدم الحقيقي • انطلق نحو المجد الأبدي والبطولات الكبرى 🏆⭐</span>
+            </div>
+
+            <div class="logo-container">
+                <div class="game-logo-main">الجوكر جيم</div>
+                <div class="game-logo-sub">Ultimate Football Experience</div>
+            </div>
+
+            <div class="center-balls">
+                <span style="color: var(--pink); filter: drop-shadow(0 0 12px var(--pink));">⚽</span>
+                <span style="color: var(--accent); filter: drop-shadow(0 0 12px var(--accent));">⚽</span>
+                <span style="color: var(--gold); filter: drop-shadow(0 0 12px var(--gold));">⚽</span>
+            </div>
+
+            <div>
+                <button class="action-btn" onclick="goToNext()">اختر الدوري الخاص بك الآن</button>
+            </div>
         </div>
 
-        <div class="game-logo">الجوكر جيم</div>
-        
-        <div class="ball-graphics">⚽</div>
-
-        <div class="btn-wrapper">
-            <button class="main-btn" onclick="openLeagueSelection()">اختر الدوري الخاص بك الآن</button>
+        <div id="screen-next" class="game-screen">
+            <div class="next-screen-content">
+                ✨ تم الانتقال بنجاح! جاهز لإضافة الدوريات والخصائص في الخطوة القادمة.
+            </div>
+            <div>
+                <button class="back-btn" onclick="goToBack()">← العودة للرئيسية</button>
+            </div>
         </div>
+
     </div>
 
     <script>
-        // دالة تفاعلية للزر للانتقال للخطوة القادمة لاحقاً
-        function openLeagueSelection() {
-            alert('تم تفعيل المؤثرات البصرية بنجاح! جاهز للانتقال لقائمة الدوريات في الجزء القادم.');
+        // دالة الانتقال الفوري للشاشة التالية عند النقر على الزر
+        function goToNext() {
+            document.getElementById('screen-main').classList.remove('active');
+            document.getElementById('screen-next').classList.add('active');
+        }
+
+        // دالة العودة للرئيسية
+        function goToBack() {
+            document.getElementById('screen-next').classList.remove('active');
+            document.getElementById('screen-main').classList.add('active');
         }
     </script>
 
