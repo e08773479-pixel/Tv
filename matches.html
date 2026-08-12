@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Joker Game - Pro Career & European Tournaments</title>
+    <title>Joker Game - Ultimate Career & European Path</title>
     <style>
         :root {
             --bg-dark: #020408;
@@ -103,9 +103,7 @@
             padding: 5px 15px; border-radius: 30px; cursor: pointer; font-size: 12px; font-weight: bold; text-decoration: none;
         }
 
-        .mode-nav {
-            display: flex; gap: 5px;
-        }
+        .mode-nav { display: flex; gap: 5px; }
     </style>
 </head>
 <body>
@@ -145,7 +143,7 @@
                     <div id="teamAway" style="color: var(--pink);">في انتظار القرعة</div>
                 </div>
 
-                <div id="matchOutcome" class="match-result-text">اضغط للانتقال إلى ملعب المباراة الحي 🚀</div>
+                <div id="matchOutcome" class="match-result-text">اضغط للدخول إلى ملعب المباراة الحي 🚀</div>
 
                 <button id="actionBtn" class="play-btn" onclick="goToLiveMatch()">دخول الماتش الحي 🏟️</button>
             </div>
@@ -156,7 +154,7 @@
                 <div style="font-size: 45px;" id="trophyIcon">🏆</div>
                 <h2 id="seasonResultTitle" style="color: var(--gold); margin: 10px 0; font-size: 20px;">نهاية الموسم الكروي!</h2>
                 <p id="seasonResultDesc" style="font-size: 13px; line-height: 1.5;"></p>
-                <button class="play-btn" id="modalNextBtn" style="margin-top: 15px;" onclick="proceedNextStage()">متابعة البطولات الأوروبية ⭐</button>
+                <button class="play-btn" id="modalNextBtn" style="margin-top: 15px;" onclick="proceedNextStage()">متابعة البطولات أو الموسم الجديد ⭐</button>
             </div>
         </div>
 
@@ -164,8 +162,8 @@
             <a href="welcome.html" class="back-btn">← رجوع للنادي</a>
             <div class="mode-nav">
                 <button onclick="switchMode('league')" id="btnLeague" style="background:var(--accent); border:none; padding:5px 10px; border-radius:12px; font-weight:bold; font-size:11px; cursor:pointer;">الدوري</button>
-                <button onclick="switchMode('ucl')" id="btnUcl" style="background:rgba(255,255,255,0.2); color:#fff; border:none; padding:5px 10px; border-radius:12px; font-weight:bold; font-size:11px; cursor:pointer;">دوري الأبطال</button>
-                <button onclick="switchMode('uel')" id="btnUel" style="background:rgba(255,255,255,0.2); color:#fff; border:none; padding:5px 10px; border-radius:12px; font-weight:bold; font-size:11px; cursor:pointer;">الدوري الأوروبي</button>
+                <button onclick="switchMode('ucl')" id="btnUcl" style="background:rgba(255,255,255,0.2); color:#fff; border:none; padding:5px 10px; border-radius:12px; font-weight:bold; font-size:11px; cursor:pointer; display:none;">دوري الأبطال</button>
+                <button onclick="switchMode('uel')" id="btnUel" style="background:rgba(255,255,255,0.2); color:#fff; border:none; padding:5px 10px; border-radius:12px; font-weight:bold; font-size:11px; cursor:pointer; display:none;">الدوري الأوروبي</button>
                 <button onclick="switchMode('super')" id="btnSuper" style="background:rgba(255,215,0,0.3); color:var(--gold); border:1px solid var(--gold); padding:5px 10px; border-radius:12px; font-weight:bold; font-size:11px; cursor:pointer; display:none;">السوبر الأوروبي</button>
             </div>
         </div>
@@ -176,18 +174,22 @@
         let coins = parseInt(localStorage.getItem('userCoins')) || 1000;
         document.getElementById('playerCoins').innerText = coins;
 
-        let currentMode = localStorage.getItem('careerMode') || 'league'; // 'league', 'ucl', 'uel', 'super'
+        let currentMode = localStorage.getItem('careerMode') || 'league'; 
         let currentRound = parseInt(localStorage.getItem('leagueRound')) || 1;
         let uclRound = parseInt(localStorage.getItem('uclRound')) || 1;
         let uelRound = parseInt(localStorage.getItem('uelRound')) || 1;
 
-        // جداول الترتيب والفرق
+        // التحقق من فتح البطولات في الواجهة
+        if(localStorage.getItem('unlockedUCL') === 'true') document.getElementById('btnUcl').style.display = 'block';
+        if(localStorage.getItem('unlockedUEL') === 'true') document.getElementById('btnUel').style.display = 'block';
+        if(localStorage.getItem('unlockedSuper') === 'true') document.getElementById('btnSuper').style.display = 'block';
+
         let premierTeams = JSON.parse(localStorage.getItem('leagueStandings')) || [
             { name: userTeam, played: 0, pts: 0 }, { name: "أرسنال", played: 0, pts: 0 },
             { name: "مانشستر سيتي", played: 0, pts: 0 }, { name: "ليفربول", played: 0, pts: 0 },
             { name: "تشيلسي", played: 0, pts: 0 }, { name: "أستون فيلا", played: 0, pts: 0 },
-            { name: "توتنهام هوتسبير", played: 0, pts: 0 }, { name: "نيوكاسل يونايتد", played: 0, pts: 0 },
-            { name: "مانشستر يونايتد", played: 0, pts: 0 }, { name: "وست هام يونايتد", played: 0, pts: 0 },
+            { name: "توتنهام", played: 0, pts: 0 }, { name: "نيوكاسل", played: 0, pts: 0 },
+            { name: "مانشستر يونايتد", played: 0, pts: 0 }, { name: "وست هام", played: 0, pts: 0 },
             { name: "كريستال بالاس", played: 0, pts: 0 }, { name: "برايتون", played: 0, pts: 0 },
             { name: "بورنموث", played: 0, pts: 0 }, { name: "فولهام", played: 0, pts: 0 },
             { name: "وولفرهامبتون", played: 0, pts: 0 }, { name: "إيفرتون", played: 0, pts: 0 },
@@ -199,7 +201,7 @@
             { name: userTeam, played: 0, pts: 0 }, { name: "ريال مدريد", played: 0, pts: 0 },
             { name: "برشلونة", played: 0, pts: 0 }, { name: "بايرن ميونخ", played: 0, pts: 0 },
             { name: "باريس سان جيرمان", played: 0, pts: 0 }, { name: "يوفنتوس", played: 0, pts: 0 },
-            { name: "بروسيا دورتموند", played: 0, pts: 0 }, { name: "إنتر ميلان", played: 0, pts: 0 }
+            { name: "دورتموند", played: 0, pts: 0 }, { name: "إنتر ميلان", played: 0, pts: 0 }
         ];
 
         let uelTeams = JSON.parse(localStorage.getItem('uelStandings')) || [
@@ -219,34 +221,25 @@
 
         function goToLiveMatch() {
             if (currentMode === 'league') {
-                if (currentRound > 38) {
-                    checkLeagueEnd();
-                    return;
-                }
+                if (currentRound > 38) { checkLeagueEnd(); return; }
                 let opponents = premierTeams.filter(t => t.name !== userTeam);
                 let chosenOpp = opponents[Math.floor(Math.random() * opponents.length)];
                 localStorage.setItem('currentOpponent', chosenOpp.name);
             } 
             else if (currentMode === 'ucl') {
-                if (uclRound > 6) {
-                    checkUCLEnd();
-                    return;
-                }
+                if (uclRound > 6) { checkUCLEnd(); return; }
                 let opponents = uclTeams.filter(t => t.name !== userTeam);
                 let chosenOpp = opponents[Math.floor(Math.random() * opponents.length)];
                 localStorage.setItem('currentOpponent', chosenOpp.name);
             }
             else if (currentMode === 'uel') {
-                if (uelRound > 6) {
-                    checkUELEnd();
-                    return;
-                }
+                if (uelRound > 6) { checkUELEnd(); return; }
                 let opponents = uelTeams.filter(t => t.name !== userTeam);
                 let chosenOpp = opponents[Math.floor(Math.random() * opponents.length)];
                 localStorage.setItem('currentOpponent', chosenOpp.name);
             }
             else if (currentMode === 'super') {
-                localStorage.setItem('currentOpponent', "بطل الدوري الأوروبي الخصم");
+                localStorage.setItem('currentOpponent', "بطل الدوري الأوروبي القوي");
             }
 
             window.location.href = 'live_match.html';
@@ -256,7 +249,6 @@
             let tbody = document.getElementById('standingsTableBody');
             tbody.innerHTML = '';
 
-            // تحديث الأزرار النشطة
             ['league', 'ucl', 'uel', 'super'].forEach(m => {
                 let btn = document.getElementById('btn' + m.charAt(0).toUpperCase() + m.slice(1));
                 if(btn) {
@@ -276,17 +268,14 @@
                     tbody.innerHTML += `<tr style="${isUser}"><td>${index + 1}. ${team.name}</td><td>${team.played}</td><td>${team.pts}</td></tr>`;
                 });
 
-                if (currentRound > 38) {
-                    checkLeagueEnd();
-                    return;
-                }
+                if (currentRound > 38) { checkLeagueEnd(); return; }
                 let opponents = premierTeams.filter(t => t.name !== userTeam);
                 document.getElementById('teamHome').innerText = userTeam;
                 document.getElementById('teamAway').innerText = opponents[Math.floor(Math.random() * opponents.length)].name;
             }
             else if (currentMode === 'ucl') {
                 uclTeams.sort((a, b) => b.pts - a.pts);
-                document.getElementById('activeTournamentTitle').innerText = `⭐ دوري أبطال أوروبا (المجموعة)`;
+                document.getElementById('activeTournamentTitle').innerText = `⭐ دوري أبطال أوروبا`;
                 document.getElementById('roundIndicator').innerText = `الجولة الأوروبية: ${uclRound} من 6`;
                 document.getElementById('tableHeading').innerText = "📊 جدول مجموعة دوري الأبطال";
 
@@ -295,17 +284,14 @@
                     tbody.innerHTML += `<tr style="${isUser}"><td>${index + 1}. ${team.name}</td><td>${team.played}</td><td>${team.pts}</td></tr>`;
                 });
 
-                if (uclRound > 6) {
-                    checkUCLEnd();
-                    return;
-                }
+                if (uclRound > 6) { checkUCLEnd(); return; }
                 let opponents = uclTeams.filter(t => t.name !== userTeam);
                 document.getElementById('teamHome').innerText = userTeam;
                 document.getElementById('teamAway').innerText = opponents[Math.floor(Math.random() * opponents.length)].name;
             }
             else if (currentMode === 'uel') {
                 uelTeams.sort((a, b) => b.pts - a.pts);
-                document.getElementById('activeTournamentTitle').innerText = `🛡️ الدوري الأوروبي (المجموعة)`;
+                document.getElementById('activeTournamentTitle').innerText = `🛡️ الدوري الأوروبي`;
                 document.getElementById('roundIndicator').innerText = `الجولة الأوروبية: ${uelRound} من 6`;
                 document.getElementById('tableHeading').innerText = "📊 جدول مجموعة الدوري الأوروبي";
 
@@ -314,10 +300,7 @@
                     tbody.innerHTML += `<tr style="${isUser}"><td>${index + 1}. ${team.name}</td><td>${team.played}</td><td>${team.pts}</td></tr>`;
                 });
 
-                if (uelRound > 6) {
-                    checkUELEnd();
-                    return;
-                }
+                if (uelRound > 6) { checkUELEnd(); return; }
                 let opponents = uelTeams.filter(t => t.name !== userTeam);
                 document.getElementById('teamHome').innerText = userTeam;
                 document.getElementById('teamAway').innerText = opponents[Math.floor(Math.random() * opponents.length)].name;
@@ -338,24 +321,21 @@
             let userRank = premierTeams.findIndex(t => t.name === userTeam) + 1;
             
             let title = "", desc = "";
-            if (userRank === 1) {
-                title = "🏆 تهانينا! فزت بلقب الدوري الإنجليزي!";
-                desc = `أداء أسطوري تصدرت به الترتيب! حصلت على 5000 عملة وتأهلت رسمياً إلى "دوري أبطال أوروبا".`;
+            if (userRank >= 1 && userRank <= 4) {
+                title = `🏆 مبروك! المركز ${userRank} في الدوري`;
+                desc = `تأهلت رسمياً إلى "دوري أبطال أوروبا"! حصلت على مكافأة ضخمة 5000 عملة.`;
                 coins += 5000;
                 localStorage.setItem('unlockedUCL', 'true');
-            } else if (userRank >= 2 && userRank <= 4) {
-                title = `✨ رائع جداً! أنهيت الدوري في المركز ${userRank}`;
-                desc = `تأهلت بنجاح إلى بطولة "دوري أبطال أوروبا"! حصلت على 3000 عملة.`;
-                coins += 3000;
-                localStorage.setItem('unlockedUCL', 'true');
+                document.getElementById('btnUcl').style.display = 'block';
             } else if (userRank >= 5 && userRank <= 8) {
-                title = `🛡️ أنهيت الدوري في المركز ${userRank}`;
-                desc = `تأهلت إلى منافسات "الدوري الأوروبي (Europa League)"! حصلت على 2000 عملة.`;
-                coins += 2000;
+                title = `🛡️ المركز ${userRank} في الدوري`;
+                desc = `تأهلت إلى منافسات "الدوري الأوروبي"! حصلت على مكافأة 3000 عملة.`;
+                coins += 3000;
                 localStorage.setItem('unlockedUEL', 'true');
+                document.getElementById('btnUel').style.display = 'block';
             } else {
                 title = `أنهيت الدوري في المركز ${userRank}`;
-                desc = `لم تتأهل للبطولات الأوروبية هذا الموسم. عزز فريقك وحاول مجدداً!`;
+                desc = `لم تتأهل للبطولات الأوروبية هذا الموسم. حسّن فريقك من المتجر وحاول مجدداً!`;
             }
 
             localStorage.setItem('userCoins', coins);
@@ -369,13 +349,14 @@
             let rank = uclTeams.findIndex(t => t.name === userTeam) + 1;
             let title = "", desc = "";
             if (rank === 1) {
-                title = "⭐ أسطورة أوروبا! بطل دوري الأبطال! ⭐";
-                desc = `رفعت الكأس الأغلى! حصلت على 8000 عملة وتأهلت لخوض "نهائي السوبر الأوروبي" ضد بطل الدوري الأوروبي!`;
+                title = "⭐ بطل دوري أبطال أوروبا! ⭐";
+                desc = `إنجاز أسطوري! توجت بذات الأذنين وحصلت على 8000 عملة. وتأهلت رسمياً لخوض "نهائي السوبر الأوروبي"!`;
                 coins += 8000;
                 document.getElementById('btnSuper').style.display = 'block';
                 localStorage.setItem('unlockedSuper', 'true');
             } else {
-                title = `مشوار مشرف في دوري الأبطال (المركز ${rank})`;
+                title = `نهاية مشوار دوري الأبطال (المركز ${rank})`;
+                desc = `مشاركة أوروبية قوية.`;
             }
             localStorage.setItem('userCoins', coins);
             document.getElementById('seasonResultTitle').innerText = title;
@@ -389,7 +370,7 @@
             let title = "", desc = "";
             if (rank === 1) {
                 title = "🛡️ بطل الدوري الأوروبي (Europa League)!";
-                desc = `إنجاز رائع! توجت باللقب وحصلت على 6000 عملة وتأهلت لنهائي "السوبر الأوروبي"!`;
+                desc = `توجت بلقب الدوري الأوروبي وحصلت على 6000 عملة! وتأهلت لنهائي "السوبر الأوروبي"!`;
                 coins += 6000;
                 document.getElementById('btnSuper').style.display = 'block';
                 localStorage.setItem('unlockedSuper', 'true');
@@ -404,12 +385,13 @@
 
         function proceedNextStage() {
             document.getElementById('seasonModal').style.display = 'none';
-            let uclUnlocked = localStorage.getItem('unlockedUCL') === 'true';
-            let uelUnlocked = localStorage.getItem('unlockedUEL') === 'true';
-            
-            if (uclUnlocked) switchMode('ucl');
-            else if (uelUnlocked) switchMode('uel');
-            else {
+            if (localStorage.getItem('unlockedUCL') === 'true' && currentMode === 'league') {
+                switchMode('ucl');
+            } else if (localStorage.getItem('unlockedUEL') === 'true' && currentMode === 'league') {
+                switchMode('uel');
+            } else if (localStorage.getItem('unlockedSuper') === 'true') {
+                switchMode('super');
+            } else {
                 localStorage.setItem('leagueRound', '1');
                 location.reload();
             }
