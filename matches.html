@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Joker Game - Ultimate Career & Super Cup Hub</title>
+    <title>Joker Game - Ultimate Career & Match Engine</title>
     <style>
         :root {
             --bg-dark: #020408;
@@ -65,7 +65,7 @@
         .table-wrapper::-webkit-scrollbar-thumb { background: var(--cyan); border-radius: 10px; }
 
         table { width: 100%; border-collapse: collapse; font-size: 12px; color: var(--text-main); text-align: center; }
-        th, td { padding: 5px; border-bottom: 1px solid rgba(255,255,255,0.1); }
+        th, td { padding: 6px; border-bottom: 1px solid rgba(255,255,255,0.1); }
         th { color: var(--gold); background: rgba(0,0,0,0.6); }
 
         .match-center-box { display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; gap: 10px; }
@@ -111,7 +111,7 @@
 
     <div class="game-viewport">
         <div class="top-bar">
-            <div id="activeTournamentTitle" class="match-title">🏆 الدوري الإنجليزي</div>
+            <div id="activeTournamentTitle" class="match-title">🏆 إدارة البطولات</div>
             <div class="coins-container">
                 <span>🪙</span>
                 <span id="playerCoins">1000</span>
@@ -120,7 +120,7 @@
 
         <div class="league-container">
             <div class="card-box">
-                <div id="tableHeading" class="section-heading">📊 جدول ترتيب الدوري</div>
+                <div id="tableHeading" class="section-heading">📊 جدول الترتيب</div>
                 <div class="table-wrapper">
                     <table>
                         <thead>
@@ -136,12 +136,12 @@
             </div>
 
             <div class="card-box match-center-box">
-                <div id="roundIndicator" class="section-heading">الجولة: 1 / 38</div>
+                <div id="roundIndicator" class="section-heading">الجولة: 1</div>
                 
                 <div class="vs-display">
                     <div id="teamHome">ناديك</div>
                     <div style="font-size: 11px; color: var(--gold); margin: 2px 0;">VS</div>
-                    <div id="teamAway" style="color: var(--pink);">الخصم</div>
+                    <div id="teamAway" style="color: var(--pink);">جاري التحميل...</div>
                 </div>
 
                 <div id="matchOutcome" class="match-result-text">جاهز لدخول المعركة 🚀</div>
@@ -162,10 +162,10 @@
         <div style="display: flex; justify-content: space-between; align-items: center;">
             <a href="welcome.html" class="back-btn">← رجوع للنادي</a>
             <div class="mode-nav">
-                <button onclick="switchMode('league')" id="btnLeague" style="background:var(--accent); color:#020408;">الدوري</button>
-                <button onclick="switchMode('ucl')" id="btnUcl" style="background:rgba(255,255,255,0.2); color:#fff; display:none;">دوري الأبطال</button>
-                <button onclick="switchMode('uel')" id="btnUel" style="background:rgba(255,255,255,0.2); color:#fff; display:none;">الدوري الأوروبي</button>
-                <button onclick="switchMode('super')" id="btnSuper" style="background:rgba(255,215,0,0.3); color:var(--gold); border:1px solid var(--gold); display:none;">كأس السوبر</button>
+                <button onclick="switchMode('league')" id="btnLeague">الدوري</button>
+                <button onclick="switchMode('ucl')" id="btnUcl" style="display:none;">دوري الأبطال</button>
+                <button onclick="switchMode('uel')" id="btnUel" style="display:none;">الدوري الأوروبي</button>
+                <button onclick="switchMode('super')" id="btnSuper" style="display:none;">كأس السوبر</button>
             </div>
         </div>
     </div>
@@ -180,11 +180,12 @@
         let uclRound = parseInt(localStorage.getItem('uclRound')) || 1;
         let uelRound = parseInt(localStorage.getItem('uelRound')) || 1;
 
-        // إظهار أزرار البطولات حسب الإنجازات المحفوظة
+        // إظهار الأزرار بناءً على التقدم
         if(localStorage.getItem('unlockedUCL') === 'true') document.getElementById('btnUcl').style.display = 'block';
         if(localStorage.getItem('unlockedUEL') === 'true') document.getElementById('btnUel').style.display = 'block';
         if(localStorage.getItem('unlockedSuper') === 'true') document.getElementById('btnSuper').style.display = 'block';
 
+        // بيانات الجداول الأساسية
         let premierTeams = JSON.parse(localStorage.getItem('leagueStandings')) || [
             { name: userTeam, played: 0, pts: 0 }, { name: "أرسنال", played: 0, pts: 0 },
             { name: "مانشستر سيتي", played: 0, pts: 0 }, { name: "ليفربول", played: 0, pts: 0 },
@@ -212,6 +213,11 @@
             { name: "مارسيليا", played: 0, pts: 0 }, { name: "بورتو", played: 0, pts: 0 }
         ];
 
+        // حفظهم إجباري لضمان عدم ظهور الشاشة السوداء
+        localStorage.setItem('leagueStandings', JSON.stringify(premierTeams));
+        localStorage.setItem('uclStandings', JSON.stringify(uclTeams));
+        localStorage.setItem('uelStandings', JSON.stringify(uelTeams));
+
         updateUI();
 
         function switchMode(mode) {
@@ -226,10 +232,6 @@
                 window.location.href = 'live_match.html';
                 return;
             }
-
-            if (currentMode === 'league' && leagueRound > 38) { checkLeagueEnd(); return; }
-            if (currentMode === 'ucl' && uclRound > 6) { checkUCLEnd(); return; }
-            if (currentMode === 'uel' && uelRound > 6) { checkUELEnd(); return; }
 
             let activeList = currentMode === 'league' ? premierTeams : (currentMode === 'ucl' ? uclTeams : uelTeams);
             let opponents = activeList.filter(t => t.name !== userTeam);
@@ -255,7 +257,7 @@
                 document.getElementById('activeTournamentTitle').innerText = `✨ نهائي كأس السوبر الأوروبي`;
                 document.getElementById('roundIndicator').innerText = `المباراة النهائية الكبرى`;
                 document.getElementById('tableHeading').innerText = "🏆 نهائي السوبر";
-                tbody.innerHTML = `<tr><td colspan="3" style="padding:40px; color:var(--gold); font-weight:bold;">مواجهة حاسمة من مباراة واحدة لتتويج بطل السوبر!</td></tr>`;
+                tbody.innerHTML = `<tr><td colspan="3" style="padding:40px; color:var(--gold); font-weight:bold;">مواجهة حاسمة لتتويج بطل السوبر!</td></tr>`;
                 document.getElementById('teamHome').innerText = userTeam;
                 document.getElementById('teamAway').innerText = "بطل الكأس المنافس";
                 return;
@@ -319,7 +321,7 @@
                 document.getElementById('btnUel').style.display = 'block';
             } else {
                 title = `أنهيت الدوري في المركز ${userRank}`;
-                desc = `لم تتأهل للبطولات الأوروبية. حسّن فريقك وحاول مجدداً!`;
+                desc = `لم تتأهل للبطولات الأوروبية.`;
             }
 
             localStorage.setItem('userCoins', coins);
@@ -332,7 +334,7 @@
             uclTeams.sort((a, b) => b.pts - a.pts);
             let rank = uclTeams.findIndex(t => t.name === userTeam) + 1;
             let title = rank === 1 ? "⭐ بطل دوري أبطال أوروبا! ⭐" : `نهاية دوري الأبطال (المركز ${rank})`;
-            let desc = rank === 1 ? "توجت باللقب الأغلى وحصلت على 8000 عملة! وتأهلت رسمياً لنهائي 'كأس السوبر'!" : "أداء أوروبي رائع.";
+            let desc = rank === 1 ? "توجت باللقب الأغلى وحصلت على 8000 عملة وتأهلت لنهائي السوبر!" : "أداء أوروبي رائع.";
             if(rank === 1) {
                 coins += 8000;
                 localStorage.setItem('unlockedSuper', 'true');
@@ -348,7 +350,7 @@
             uelTeams.sort((a, b) => b.pts - a.pts);
             let rank = uelTeams.findIndex(t => t.name === userTeam) + 1;
             let title = rank === 1 ? "🛡️ بطل الدوري الأوروبي!" : `نهاية الدوري الأوروبي (المركز ${rank})`;
-            let desc = rank === 1 ? "توجت باللقب الأوروبي وحصلت على 6000 عملة! وتأهلت لنهائي 'كأس السوبر'!" : "مشاركة ممتازة.";
+            let desc = rank === 1 ? "توجت باللقب وحصلت على 6000 عملة وتأهلت لنهائي السوبر!" : "مشاركة ممتازة.";
             if(rank === 1) {
                 coins += 6000;
                 localStorage.setItem('unlockedSuper', 'true');
@@ -366,6 +368,8 @@
                 switchMode('super');
             } else if (localStorage.getItem('unlockedUCL') === 'true') {
                 switchMode('ucl');
+            } else if (localStorage.getItem('unlockedUEL') === 'true') {
+                switchMode('uel');
             } else {
                 localStorage.setItem('leagueRound', '1');
                 location.reload();
