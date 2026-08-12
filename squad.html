@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Joker Game - Store Players & Squad Management</title>
+    <title>Joker Game - Advanced Squad & Formations Hub</title>
     <style>
         :root {
             --bg-dark: #020408;
@@ -50,7 +50,7 @@
         }
 
         .squad-container {
-            display: grid; grid-template-columns: 2fr 1fr; gap: 15px; height: 410px;
+            display: grid; grid-template-columns: 1fr 1fr; gap: 15px; height: 410px;
         }
 
         .card-box {
@@ -60,7 +60,7 @@
 
         .section-heading { font-size: 14px; font-weight: bold; color: var(--cyan); margin-bottom: 8px; text-align: center; }
 
-        .players-wrapper { overflow-y: auto; height: 300px; display: flex; flex-direction: column; gap: 8px; }
+        .players-wrapper { overflow-y: auto; height: 320px; display: flex; flex-direction: column; gap: 8px; }
         .players-wrapper::-webkit-scrollbar { width: 5px; }
         .players-wrapper::-webkit-scrollbar-thumb { background: var(--cyan); border-radius: 10px; }
 
@@ -81,12 +81,17 @@
         }
         .sell-btn:hover { background: var(--pink); color: #fff; }
 
-        .controls-panel { display: flex; flex-direction: column; justify-content: center; gap: 15px; align-items: center; }
+        .controls-panel { display: flex; flex-direction: column; justify-content: space-between; gap: 10px; }
+
+        .formation-select {
+            background: rgba(0,0,0,0.6); border: 2px solid var(--cyan); color: var(--text-main);
+            padding: 8px; border-radius: 12px; font-weight: bold; font-size: 13px; width: 100%; text-align: center; cursor: pointer;
+        }
 
         .play-btn {
             background: linear-gradient(45deg, var(--accent), var(--cyan));
-            border: none; color: #020408; padding: 12px 20px; border-radius: 25px;
-            font-weight: 900; font-size: 14px; cursor: pointer; transition: 0.3s;
+            border: none; color: #020408; padding: 10px 15px; border-radius: 25px;
+            font-weight: 900; font-size: 13px; cursor: pointer; transition: 0.3s;
             box-shadow: 0 0 15px var(--accent-glow); width: 100%; text-align: center;
         }
         .play-btn:hover { transform: scale(1.03); }
@@ -101,7 +106,7 @@
 
     <div class="game-viewport">
         <div class="top-bar">
-            <div class="match-title">🛡️ لاعبو المتجر وإدارة الفريق</div>
+            <div class="match-title">🛡️ إدارة التشكيلة والخطط وبيع النجوم</div>
             <div class="coins-container">
                 <span>🪙</span>
                 <span id="playerCoins">1000</span>
@@ -110,23 +115,36 @@
 
         <div class="squad-container">
             <div class="card-box">
-                <div class="section-heading">👥 لاعبوك المشتراة من المتجر</div>
-                <div class="players-wrapper" id="playersListContainer">
-                    </div>
+                <div class="section-heading">👥 لاعبو ناديك المشتراة (قادر على بيعهم)</div>
+                <div class="players-wrapper" id="playersListContainer"></div>
             </div>
 
             <div class="card-box controls-panel">
-                <div class="section-heading">⚡ خيارات الفريق الذكية</div>
-                <p style="font-size: 11px; color: #aaa; text-align: center; line-height: 1.4;">
-                    بيع اللاعبين غير المحتاجين لاسترداد أموالهم، أو رتب تشكيلتك بأعلى تقييم لكل مركز بدون تكرار الأسماء تلقائياً!
-                </p>
+                <div>
+                    <div class="section-heading">⚙️ اختيار خطة اللعب (5 خطط عالمية)</div>
+                    <select id="formationSelect" class="formation-select" onchange="saveFormation()">
+                        <option value="4-3-3">خطة 4-3-3 (هجومية متوازنة)</option>
+                        <option value="4-4-2">خطة 4-4-2 (الكلاسيكية الصلبة)</option>
+                        <option value="4-2-3-1">خطة 4-2-3-1 (سيطرة الوسط)</option>
+                        <option value="3-4-3">خطة 3-4-3 (هجوم ضاغظ مكثف)</option>
+                        <option value="5-3-2">خطة 5-3-2 (دفاع حديدي ومارتدات)</option>
+                    </select>
+                </div>
 
-                <button class="play-btn" onclick="autoOptimizeSquad()">تعديل التشكيلة بأعلى تقييم ⚡</button>
-                <div id="statusMsg" style="font-size: 11px; color: var(--accent); text-align: center; min-height: 20px;"></div>
+                <div style="background: rgba(0,0,0,0.3); padding: 10px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.1);">
+                    <div style="font-size: 12px; color: var(--gold); font-weight: bold; margin-bottom: 5px;">⚡ التشكيلة الذكية المعينة:</div>
+                    <div id="activeSquadView" style="font-size: 11px; color: var(--text-main); line-height: 1.4; min-height: 40px;">لم يتم تفعيل التشكيلة بعد.</div>
+                </div>
+
+                <div>
+                    <button class="play-btn" onclick="autoOptimizeSquad()">تعديل التشكيلة تلقائياً بأعلى تقييم ⭐</button>
+                    <div id="statusMsg" style="font-size: 11px; color: var(--accent); text-align: center; margin-top: 5px; min-height: 18px;"></div>
+                </div>
             </div>
         </div>
 
         <div style="display: flex; justify-content: space-between; align-items: center;">
+            <a href="store.html" class="back-btn" style="border-color:var(--gold); color:var(--gold);">← الذهاب للمتجر لشراء لاعبين</a>
             <a href="welcome.html" class="back-btn">← رجوع للنادي</a>
         </div>
     </div>
@@ -135,17 +153,19 @@
         let coins = parseInt(localStorage.getItem('userCoins')) || 1000;
         document.getElementById('playerCoins').innerText = coins;
 
-        // قراءة اللاعبين الذين اشتريتهم من المتجر فقط (تخزينهم يتم في مفتاح purchasedPlayers أو userSquadPlayers القادم من المتجر)
-        let squadPlayers = JSON.parse(localStorage.getItem('purchasedPlayers')) || JSON.parse(localStorage.getItem('userSquadPlayers')) || [];
+        let squadPlayers = JSON.parse(localStorage.getItem('purchasedPlayers')) || [];
+        let savedFormation = localStorage.getItem('userFormation') || '4-3-3';
+        document.getElementById('formationSelect').value = savedFormation;
 
         renderSquad();
+        displayActiveSquad();
 
         function renderSquad() {
             let container = document.getElementById('playersListContainer');
             container.innerHTML = '';
 
             if (squadPlayers.length === 0) {
-                container.innerHTML = `<div style="text-align:center; color:#888; padding:40px; font-size:12px;">لم تقرّر شراء أي لاعب من المتجر حتى الآن!<br>توجه للمتجر لاكتساب نجوم جدد.</div>`;
+                container.innerHTML = `<div style="text-align:center; color:#888; padding:50px; font-size:12px;">ليس لديك لاعبون في النادي حالياً!<br>توجه إلى المتجر لشراء نجوم جدد.</div>`;
                 return;
             }
 
@@ -153,57 +173,80 @@
                 container.innerHTML += `
                     <div class="player-row">
                         <div class="player-info">
-                            <span class="player-pos">${p.pos || 'PRO'}</span>
+                            <span class="player-pos">${p.pos}</span>
                             <span style="font-weight:bold;">${p.name}</span>
-                            <span class="player-rating">⭐ ${p.rating || 85}</span>
+                            <span class="player-rating">⭐ ${p.rating}</span>
                         </div>
                         <div class="action-btns">
-                            <span style="font-size:11px; color:var(--gold); margin-left:5px;">🪙 ${p.price || 300}</span>
+                            <span style="font-size:11px; color:var(--gold); margin-left:5px;">🪙 ${p.price}</span>
                             <button class="sell-btn" onclick="sellPlayer(${index})">بيع</button>
                         </div>
                     </div>
                 `;
             });
-            // حفظ التحديثات
             localStorage.setItem('purchasedPlayers', JSON.stringify(squadPlayers));
         }
 
         function sellPlayer(index) {
             let soldPlayer = squadPlayers[index];
-            let refundPrice = soldPlayer.price || 300;
-            
-            coins += refundPrice;
+            coins += soldPlayer.price; // استرداد نفس القيمة كاملة
             document.getElementById('playerCoins').innerText = coins;
             localStorage.setItem('userCoins', coins);
 
             squadPlayers.splice(index, 1);
             renderSquad();
+            autoOptimizeSquad(); // إعادة تحديث التشكيلة بعد البيع
 
-            document.getElementById('statusMsg').innerText = `تم بيع ${soldPlayer.name} بنجاح واسترداد ${refundPrice} عملة!`;
+            document.getElementById('statusMsg').innerText = `تم بيع ${soldPlayer.name} واسترداد ${soldPlayer.price} عملة بالتمام والكمال!`;
+        }
+
+        function saveFormation() {
+            let form = document.getElementById('formationSelect').value;
+            localStorage.setItem('userFormation', form);
+            autoOptimizeSquad();
         }
 
         function autoOptimizeSquad() {
             if (squadPlayers.length === 0) {
-                document.getElementById('statusMsg').innerText = "ليس لديك لاعبين لترتيبهم!";
+                document.getElementById('activeSquadView').innerText = "فريقك فارغ تماماً.";
+                document.getElementById('statusMsg').innerText = "اشتر لاعبين من المتجر أولاً!";
                 return;
             }
 
-            // منع تكرار الأسماء واختيار أعلى اللاعبين تقييماً لكل مركز بدون أي تكرار
+            // منع تكرار الأسماء تماماً واختيار أعلى اللاعبين تقييماً
             let usedNames = new Set();
-            let optimized = [];
+            let uniquePlayers = [];
+            let sorted = [...squadPlayers].sort((a, b) => b.rating - a.rating);
 
-            // ترتيب تنازلي حسب التقييم
-            let sorted = [...squadPlayers].sort((a, b) => (b.rating || 85) - (a.rating || 85));
-
-            for (let player of sorted) {
-                if (!usedNames.has(player.name)) {
-                    usedNames.add(player.name);
-                    optimized.push(player);
+            for (let p of sorted) {
+                if (!usedNames.has(p.name)) {
+                    usedNames.add(p.name);
+                    uniquePlayers.push(p);
                 }
             }
 
-            localStorage.setItem('optimizedSquad', JSON.stringify(optimized));
-            document.getElementById('statusMsg').innerText = "تم ترتيب التشكيلة تلقائياً (أعلى تقييم وبدون تكرار أسماء)!";
+            let formation = document.getElementById('formationSelect').value;
+            let countNeeded = 11;
+            if (formation === '4-4-2') countNeeded = 11;
+            else if (formation === '4-3-3') countNeeded = 11;
+            else if (formation === '4-2-3-1') countNeeded = 11;
+            else if (formation === '3-4-3') countNeeded = 11;
+            else if (formation === '5-3-2') countNeeded = 11;
+
+            let finalSquad = uniquePlayers.slice(0, countNeeded);
+            localStorage.setItem('optimizedSquad', JSON.stringify(finalSquad));
+
+            let namesList = finalSquad.map(p => `${p.name} (${p.pos} - ⭐${p.rating})`).join(', ');
+            document.getElementById('activeSquadView').innerText = namesList || "لا توجد عناصر كافية.";
+            document.getElementById('statusMsg').innerText = `تم تطبيق خطة (${formation}) واختيار أعلى اللاعبين بدون تكرار!`;
+        }
+
+        function displayActiveSquad() {
+            let currentOptimized = JSON.parse(localStorage.getItem('optimizedSquad')) || [];
+            if (currentOptimized.length > 0) {
+                let namesList = currentOptimized.map(p => `${p.name} (${p.pos} - ⭐${p.rating})`).join(', ');
+                document.getElementById('activeSquadView').innerText = namesList;
+            }
         }
     </script>
 
