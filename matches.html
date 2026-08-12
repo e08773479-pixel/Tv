@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Joker Game - Ultimate Career & Match Engine</title>
+    <title>Joker Game - Ultimate 20-Team League & 32-Team UCL System</title>
     <style>
         :root {
             --bg-dark: #020408;
@@ -15,7 +15,7 @@
             --pink: #ff007f;
             --text-main: #ffffff;
         }
-        
+
         * { box-sizing: border-box; user-select: none; }
 
         html, body {
@@ -41,7 +41,7 @@
             padding: 8px 20px; border-radius: 15px;
         }
 
-        .match-title { font-size: 15px; font-weight: 900; color: var(--gold); }
+        .match-title { font-size: 14px; font-weight: 900; color: var(--gold); }
 
         .coins-container {
             display: flex; align-items: center; gap: 8px;
@@ -58,60 +58,48 @@
             border-radius: 18px; padding: 15px; display: flex; flex-direction: column; justify-content: space-between;
         }
 
-        .section-heading { font-size: 14px; font-weight: bold; color: var(--cyan); margin-bottom: 8px; text-align: center; }
+        .section-heading { font-size: 13px; font-weight: bold; color: var(--cyan); margin-bottom: 8px; text-align: center; }
 
-        .table-wrapper { overflow-y: auto; height: 300px; }
+        .table-wrapper { overflow-y: auto; height: 290px; }
         .table-wrapper::-webkit-scrollbar { width: 5px; }
         .table-wrapper::-webkit-scrollbar-thumb { background: var(--cyan); border-radius: 10px; }
 
-        table { width: 100%; border-collapse: collapse; font-size: 12px; color: var(--text-main); text-align: center; }
-        th, td { padding: 6px; border-bottom: 1px solid rgba(255,255,255,0.1); }
+        table { width: 100%; border-collapse: collapse; font-size: 11px; color: var(--text-main); text-align: center; }
+        th, td { padding: 5px; border-bottom: 1px solid rgba(255,255,255,0.1); }
         th { color: var(--gold); background: rgba(0,0,0,0.6); }
 
         .match-center-box { display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; gap: 10px; }
 
         .vs-display {
-            font-size: 16px; font-weight: bold; color: var(--text-main);
+            font-size: 15px; font-weight: bold; color: var(--text-main);
             background: rgba(0,0,0,0.5); border: 2px solid var(--pink);
             padding: 10px; border-radius: 15px; width: 100%;
         }
 
-        .match-result-text { font-size: 12px; color: var(--accent); min-height: 30px; }
+        .match-result-text { font-size: 11px; color: var(--accent); min-height: 25px; line-height: 1.4; }
 
         .play-btn {
             background: linear-gradient(45deg, var(--accent), var(--cyan));
             border: none; color: #020408; padding: 10px 20px; border-radius: 25px;
-            font-weight: 900; font-size: 14px; cursor: pointer; transition: 0.3s;
-            box-shadow: 0 0 15px var(--accent-glow); width: 100%;
+            font-weight: 900; font-size: 13px; cursor: pointer; transition: 0.3s;
+            box-shadow: 0 0 15px var(--accent-glow); width: 100%; text-align: center;
         }
         .play-btn:hover { transform: scale(1.03); }
-
-        .modal-overlay {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(2, 4, 8, 0.95); display: flex; flex-direction: column;
-            align-items: center; justify-content: center; gap: 15px; z-index: 20; display: none;
-        }
-
-        .trophy-card {
-            background: linear-gradient(135deg, #111, #222); border: 3px solid var(--gold);
-            border-radius: 20px; padding: 25px; width: 400px; text-align: center;
-            box-shadow: 0 0 50px var(--gold-glow); color: var(--text-main);
-        }
 
         .back-btn {
             background: transparent; border: 2px solid var(--cyan); color: var(--cyan);
             padding: 5px 15px; border-radius: 30px; cursor: pointer; font-size: 12px; font-weight: bold; text-decoration: none;
         }
 
-        .mode-nav { display: flex; gap: 4px; flex-wrap: wrap; justify-content: flex-end; }
-        .mode-nav button { border: none; padding: 5px 8px; border-radius: 10px; font-weight: bold; font-size: 11px; cursor: pointer; }
+        .mode-nav { display: flex; gap: 5px; }
+        .mode-btn { background: rgba(255,255,255,0.1); border: 1px solid var(--cyan); color: #fff; padding: 5px 10px; border-radius: 10px; font-size: 11px; font-weight: bold; cursor: pointer; }
     </style>
 </head>
 <body>
 
     <div class="game-viewport">
         <div class="top-bar">
-            <div id="activeTournamentTitle" class="match-title">🏆 إدارة البطولات</div>
+            <div id="tournamentTitle" class="match-title">🏆 دوري الـ 20 نادياً ودوري أبطال أوروبا (32 فريقاً)</div>
             <div class="coins-container">
                 <span>🪙</span>
                 <span id="playerCoins">1000</span>
@@ -136,244 +124,161 @@
             </div>
 
             <div class="card-box match-center-box">
-                <div id="roundIndicator" class="section-heading">الجولة: 1</div>
+                <div id="roundIndicator" class="section-heading">الجولة: 1 / 38</div>
                 
                 <div class="vs-display">
                     <div id="teamHome">ناديك</div>
-                    <div style="font-size: 11px; color: var(--gold); margin: 2px 0;">VS</div>
-                    <div id="teamAway" style="color: var(--pink);">جاري التحميل...</div>
+                    <div style="font-size: 10px; color: var(--gold); margin: 2px 0;">VS (حسب قوة تشكيلتك ⭐)</div>
+                    <div id="teamAway" style="color: var(--pink);">جاري تحديد الخصم...</div>
                 </div>
 
-                <div id="matchOutcome" class="match-result-text">جاهز لدخول المعركة 🚀</div>
+                <div id="matchOutcome" class="match-result-text">قوة تشكيلتك الأساسية تحدد تفوقك وفرص الفوز بالألقاب! ⚡</div>
 
-                <button id="actionBtn" class="play-btn" onclick="goToLiveMatch()">دخول الماتش الحي 🏟️</button>
-            </div>
-        </div>
-
-        <div id="seasonModal" class="modal-overlay">
-            <div class="trophy-card">
-                <div style="font-size: 40px;" id="trophyIcon">🏆</div>
-                <h2 id="seasonResultTitle" style="color: var(--gold); margin: 10px 0; font-size: 18px;">نهاية المرحلة!</h2>
-                <p id="seasonResultDesc" style="font-size: 12px; line-height: 1.5;"></p>
-                <button class="play-btn" id="modalNextBtn" style="margin-top: 15px;" onclick="proceedNextStage()">متابعة ⭐</button>
+                <button class="play-btn" onclick="startLiveMatch()">دخول الماتش الحي وتطبيق النتيجة 🏟️</button>
             </div>
         </div>
 
         <div style="display: flex; justify-content: space-between; align-items: center;">
             <a href="welcome.html" class="back-btn">← رجوع للنادي</a>
             <div class="mode-nav">
-                <button onclick="switchMode('league')" id="btnLeague">الدوري</button>
-                <button onclick="switchMode('ucl')" id="btnUcl" style="display:none;">دوري الأبطال</button>
-                <button onclick="switchMode('uel')" id="btnUel" style="display:none;">الدوري الأوروبي</button>
-                <button onclick="switchMode('super')" id="btnSuper" style="display:none;">كأس السوبر</button>
+                <button class="mode-btn" onclick="switchMode('league')">الدوري (20 فريق)</button>
+                <button class="mode-btn" onclick="switchMode('ucl')" style="border-color:var(--gold); color:var(--gold);">دوري الأبطال (32 فريق)</button>
             </div>
         </div>
     </div>
 
     <script>
-        const userTeam = localStorage.getItem('selectedTeam') || 'ناديك';
+        let userTeam = localStorage.getItem('selectedTeam') || 'ناديك';
         let coins = parseInt(localStorage.getItem('userCoins')) || 1000;
         document.getElementById('playerCoins').innerText = coins;
 
-        let currentMode = localStorage.getItem('careerMode') || 'league'; 
+        let currentMode = localStorage.getItem('careerMode') || 'league';
         let leagueRound = parseInt(localStorage.getItem('leagueRound')) || 1;
         let uclRound = parseInt(localStorage.getItem('uclRound')) || 1;
-        let uelRound = parseInt(localStorage.getItem('uelRound')) || 1;
 
-        // إظهار الأزرار بناءً على التقدم
-        if(localStorage.getItem('unlockedUCL') === 'true') document.getElementById('btnUcl').style.display = 'block';
-        if(localStorage.getItem('unlockedUEL') === 'true') document.getElementById('btnUel').style.display = 'block';
-        if(localStorage.getItem('unlockedSuper') === 'true') document.getElementById('btnSuper').style.display = 'block';
-
-        // بيانات الجداول الأساسية
-        let premierTeams = JSON.parse(localStorage.getItem('leagueStandings')) || [
-            { name: userTeam, played: 0, pts: 0 }, { name: "أرسنال", played: 0, pts: 0 },
-            { name: "مانشستر سيتي", played: 0, pts: 0 }, { name: "ليفربول", played: 0, pts: 0 },
-            { name: "تشيلسي", played: 0, pts: 0 }, { name: "أستون فيلا", played: 0, pts: 0 },
-            { name: "توتنهام", played: 0, pts: 0 }, { name: "نيوكاسل", played: 0, pts: 0 },
-            { name: "مانشستر يونايتد", played: 0, pts: 0 }, { name: "وست هام", played: 0, pts: 0 },
-            { name: "كريستال بالاس", played: 0, pts: 0 }, { name: "برايتون", played: 0, pts: 0 },
-            { name: "بورنموث", played: 0, pts: 0 }, { name: "فولهام", played: 0, pts: 0 },
-            { name: "وولفرهامبتون", played: 0, pts: 0 }, { name: "إيفرتون", played: 0, pts: 0 },
-            { name: "برينتفورد", played: 0, pts: 0 }, { name: "نوتنغهام", played: 0, pts: 0 },
-            { name: "ليستر سيتي", played: 0, pts: 0 }, { name: "إبسويتش", played: 0, pts: 0 }
+        // 1. جدول الـ 20 فريقاً الحقيقيين في الدوري الإنجليزي الممتاز
+        let premier20 = JSON.parse(localStorage.getItem('premierLeague20')) || [
+            { name: userTeam, played: 0, pts: 0 },
+            { name: "أرسنال", played: 0, pts: 0 },
+            { name: "مانشستر سيتي", played: 0, pts: 0 },
+            { name: "ليفربول", played: 0, pts: 0 },
+            { name: "تشيلسي", played: 0, pts: 0 },
+            { name: "توتنهام", played: 0, pts: 0 },
+            { name: "مانشستر يونايتد", played: 0, pts: 0 },
+            { name: "نيوكاسل يونايتد", played: 0, pts: 0 },
+            { name: "أستون فيلا", played: 0, pts: 0 },
+            { name: "برايتون", played: 0, pts: 0 },
+            { name: "وست هام يونايتد", played: 0, pts: 0 },
+            { name: "كريستال بالاس", played: 0, pts: 0 },
+            { name: "فولهام", played: 0, pts: 0 },
+            { name: "برينتفورد", played: 0, pts: 0 },
+            { name: "وولفرهامبتون", played: 0, pts: 0 },
+            { name: "إيفرتون", played: 0, pts: 0 },
+            { name: "نوتنغهام فورست", played: 0, pts: 0 },
+            { name: "بورنموث", played: 0, pts: 0 },
+            { name: "ليستر سيتي", played: 0, pts: 0 },
+            { name: "إيبسويتش تاون", played: 0, pts: 0 }
         ];
 
-        let uclTeams = JSON.parse(localStorage.getItem('uclStandings')) || [
-            { name: userTeam, played: 0, pts: 0 }, { name: "ريال مدريد", played: 0, pts: 0 },
-            { name: "برشلونة", played: 0, pts: 0 }, { name: "بايرن ميونخ", played: 0, pts: 0 },
-            { name: "باريس سان جيرمان", played: 0, pts: 0 }, { name: "يوفنتوس", played: 0, pts: 0 },
-            { name: "بوروسيا دورتموند", played: 0, pts: 0 }, { name: "إنتر ميلان", played: 0, pts: 0 }
+        // 2. جدول الـ 32 فريقاً الحقيقيين في دوري أبطال أوروبا (تشمل الأربعة الأوائل المتأهلين من الدوري + الكبار)
+        let ucl32 = JSON.parse(localStorage.getItem('uclLeague32')) || [
+            { name: userTeam, played: 0, pts: 0 },
+            { name: "ريال مدريد", played: 0, pts: 0 },
+            { name: "برشلونة", played: 0, pts: 0 },
+            { name: "أتلتيكو مدريد",played: 0, pts: 0 },
+            { name: "جيرونا", played: 0, pts: 0 },
+            { name: "مانشستر سيتي", played: 0, pts: 0 },
+            { name: "أرسنال", played: 0, pts: 0 },
+            { name: "ليفربول", played: 0, pts: 0 },
+            { name: "أستون فيلا", played: 0, pts: 0 },
+            { name: "بايرن ميونخ", played: 0, pts: 0 },
+            { name: "بوروسيا دورتموند", played: 0, pts: 0 },
+            { name: "باير ليفركوزن", played: 0, pts: 0 },
+            { name: "لايبزيغ", played: 0, pts: 0 },
+            { name: "شتوتغارت", played: 0, pts: 0 },
+            { name: "إنتر ميلان", played: 0, pts: 0 },
+            { name: "إياسي ميلان", played: 0, pts: 0 },
+            { name: "يوفنتوس", played: 0, pts: 0 },
+            { name: "أتلانتا", played: 0, pts: 0 },
+            { name: "بولونيا", played: 0, pts: 0 },
+            { name: "باريس سان جيرمان", played: 0, pts: 0 },
+            { name: "موناكو", played: 0, pts: 0 },
+            { name: "بريست", played: 0, pts: 0 },
+            { name: "ليل", played: 0, pts: 0 },
+            { name: "سبورتنج لشبونة", played: 0, pts: 0 },
+            { name: "بنفيكا", played: 0, pts: 0 },
+            { name: "بورتو", played: 0, pts: 0 },
+            { name: "أياكس أمستردام", played: 0, pts: 0 },
+            { name: "آيندهوفن", played: 0, pts: 0 },
+            { name: "سلتيك", played: 0, pts: 0 },
+            { name: "شاختار دونيتسك", played: 0, pts: 0 },
+            { name: "غلطة سراي", played: 0, pts: 0 },
+            { name: "ريد بول سالزبورغ", played: 0, pts: 0 }
         ];
 
-        let uelTeams = JSON.parse(localStorage.getItem('uelStandings')) || [
-            { name: userTeam, played: 0, pts: 0 }, { name: "روما", played: 0, pts: 0 },
-            { name: "إشبيلية", played: 0, pts: 0 }, { name: "فياريال", played: 0, pts: 0 },
-            { name: "باير ليفركوزن", played: 0, pts: 0 }, { name: "أياكس", played: 0, pts: 0 },
-            { name: "مارسيليا", played: 0, pts: 0 }, { name: "بورتو", played: 0, pts: 0 }
-        ];
+        // التأكد من وجود فريق المستخدم في الجداول
+        if(!premier20.some(t => t.name === userTeam)) premier20[0].name = userTeam;
+        if(!ucl32.some(t => t.name === userTeam)) ucl32[0].name = userTeam;
 
-        // حفظهم إجباري لضمان عدم ظهور الشاشة السوداء
-        localStorage.setItem('leagueStandings', JSON.stringify(premierTeams));
-        localStorage.setItem('uclStandings', JSON.stringify(uclTeams));
-        localStorage.setItem('uelStandings', JSON.stringify(uelTeams));
+        localStorage.setItem('premierLeague20', JSON.stringify(premier20));
+        localStorage.setItem('uclLeague32', JSON.stringify(ucl32));
 
-        updateUI();
+        renderUI();
 
         function switchMode(mode) {
             currentMode = mode;
             localStorage.setItem('careerMode', mode);
-            updateUI();
+            renderUI();
         }
 
-        function goToLiveMatch() {
-            if (currentMode === 'super') {
-                localStorage.setItem('currentOpponent', 'بطل القارة المنافس');
-                window.location.href = 'live_match.html';
-                return;
-            }
-
-            let activeList = currentMode === 'league' ? premierTeams : (currentMode === 'ucl' ? uclTeams : uelTeams);
-            let opponents = activeList.filter(t => t.name !== userTeam);
-            let chosenOpp = opponents[Math.floor(Math.random() * opponents.length)];
-            
-            localStorage.setItem('currentOpponent', chosenOpp.name);
-            window.location.href = 'live_match.html';
-        }
-
-        function updateUI() {
+        function renderUI() {
             let tbody = document.getElementById('standingsTableBody');
             tbody.innerHTML = '';
 
-            ['league', 'ucl', 'uel', 'super'].forEach(m => {
-                let btn = document.getElementById('btn' + m.charAt(0).toUpperCase() + m.slice(1));
-                if(btn) {
-                    btn.style.background = currentMode === m ? 'var(--accent)' : (m === 'super' ? 'rgba(255,215,0,0.3)' : 'rgba(255,255,255,0.2)');
-                    btn.style.color = currentMode === m ? '#020408' : (m === 'super' ? 'var(--gold)' : '#fff');
-                }
-            });
-
-            if (currentMode === 'super') {
-                document.getElementById('activeTournamentTitle').innerText = `✨ نهائي كأس السوبر الأوروبي`;
-                document.getElementById('roundIndicator').innerText = `المباراة النهائية الكبرى`;
-                document.getElementById('tableHeading').innerText = "🏆 نهائي السوبر";
-                tbody.innerHTML = `<tr><td colspan="3" style="padding:40px; color:var(--gold); font-weight:bold;">مواجهة حاسمة لتتويج بطل السوبر!</td></tr>`;
-                document.getElementById('teamHome').innerText = userTeam;
-                document.getElementById('teamAway').innerText = "بطل الكأس المنافس";
-                return;
-            }
-
-            let activeList, titleText, roundText, headingText;
-
+            let activeList, title;
             if (currentMode === 'league') {
-                if (leagueRound > 38) { checkLeagueEnd(); return; }
-                activeList = premierTeams;
-                titleText = `🏆 الدوري الإنجليزي`;
-                roundText = `الجولة: ${leagueRound} / 38`;
-                headingText = "📊 جدول ترتيب البريميرليج";
-            } else if (currentMode === 'ucl') {
-                if (uclRound > 6) { checkUCLEnd(); return; }
-                activeList = uclTeams;
-                titleText = `⭐ دوري أبطال أوروبا`;
-                roundText = `الجولة الأوروبية: ${uclRound} / 6`;
-                headingText = "📊 جدول مجموعة دوري الأبطال";
+                activeList = premier20;
+                title = `📊 جدول الدوري الإنجليزي (20 فريقاً) - جولة ${leagueRound}/38`;
+                document.getElementById('tournamentTitle').innerText = "🏆 البريميرليج (20 فريق حقيقي)";
+                document.getElementById('roundIndicator').innerText = `الجولة: ${leagueRound} / 38`;
             } else {
-                if (uelRound > 6) { checkUELEnd(); return; }
-                activeList = uelTeams;
-                titleText = `🛡️ الدوري الأوروبي`;
-                roundText = `الجولة الأوروبية: ${uelRound} / 6`;
-                headingText = "📊 جدول مجموعة الدوري الأوروبي";
+                activeList = ucl32;
+                title = `⭐ دوري أبطال أوروبا (32 فريقاً) - جولة ${uclRound}/8`;
+                document.getElementById('tournamentTitle').innerText = "⭐ دوري أبطال أوروبا (32 فريقاً مع المتأهلين)";
+                document.getElementById('roundIndicator').innerText = `الجولة الأوروبية: ${uclRound} / 8`;
             }
 
-            document.getElementById('activeTournamentTitle').innerText = titleText;
-            document.getElementById('roundIndicator').innerText = roundText;
-            document.getElementById('tableHeading').innerText = headingText;
+            document.getElementById('tableHeading').innerText = title;
 
             activeList.sort((a, b) => b.pts - a.pts);
-            activeList.forEach((team, index) => {
-                let isUser = team.name === userTeam ? "color: var(--accent); font-weight:900;" : "";
-                tbody.innerHTML += `<tr style="${isUser}"><td>${index + 1}. ${team.name}</td><td>${team.played}</td><td>${team.pts}</td></tr>`;
+            activeList.forEach((t, i) => {
+                let isUser = t.name === userTeam ? "color: var(--accent); font-weight:900;" : "";
+                tbody.innerHTML += `<tr style="${isUser}"><td>${i + 1}. ${t.name}</td><td>${t.played}</td><td>${t.pts}</td></tr>`;
             });
 
+            // اختيار الخصم القادم
             let opponents = activeList.filter(t => t.name !== userTeam);
-            let chosenOpp = opponents[Math.floor(Math.random() * opponents.length)];
+            let chosenOpp = opponents[Math.floor(Math.random() * opponents.length)] || { name: "العملاق الأوروبي" };
+            
             document.getElementById('teamHome').innerText = userTeam;
             document.getElementById('teamAway').innerText = chosenOpp.name;
             localStorage.setItem('currentOpponent', chosenOpp.name);
         }
 
-        function checkLeagueEnd() {
-            premierTeams.sort((a, b) => b.pts - a.pts);
-            let userRank = premierTeams.findIndex(t => t.name === userTeam) + 1;
+        // دخول الماتش الحي وربط النتيجة بقوة التشكيلة
+        function startLiveMatch() {
+            // جلب تشكيلة اللاعب المحسوبة من squad.html وحساب متوسط تقييمها
+            let optimizedSquad = JSON.parse(localStorage.getItem('optimizedSquad')) || [];
+            let squadRating = 85; // تقييم افتراضي أساسي
             
-            let title = "", desc = "";
-            if (userRank >= 1 && userRank <= 4) {
-                title = `🏆 مبروك! المركز ${userRank} في الدوري`;
-                desc = `تأهلت رسمياً إلى "دوري أبطال أوروبا"! حصلت على 5000 عملة.`;
-                coins += 5000;
-                localStorage.setItem('unlockedUCL', 'true');
-                document.getElementById('btnUcl').style.display = 'block';
-            } else if (userRank >= 5 && userRank <= 8) {
-                title = `🛡️ المركز ${userRank} في الدوري`;
-                desc = `تأهلت رسمياً إلى منافسات "الدوري الأوروبي"! حصلت على 3000 عملة.`;
-                coins += 3000;
-                localStorage.setItem('unlockedUEL', 'true');
-                document.getElementById('btnUel').style.display = 'block';
-            } else {
-                title = `أنهيت الدوري في المركز ${userRank}`;
-                desc = `لم تتأهل للبطولات الأوروبية.`;
+            if (optimizedSquad.length > 0) {
+                let total = optimizedSquad.reduce((sum, p) => sum + (p.rating || 90), 0);
+                squadRating = Math.round(total / optimizedSquad.length);
             }
 
-            localStorage.setItem('userCoins', coins);
-            document.getElementById('seasonResultTitle').innerText = title;
-            document.getElementById('seasonResultDesc').innerText = desc;
-            document.getElementById('seasonModal').style.display = 'flex';
-        }
-
-        function checkUCLEnd() {
-            uclTeams.sort((a, b) => b.pts - a.pts);
-            let rank = uclTeams.findIndex(t => t.name === userTeam) + 1;
-            let title = rank === 1 ? "⭐ بطل دوري أبطال أوروبا! ⭐" : `نهاية دوري الأبطال (المركز ${rank})`;
-            let desc = rank === 1 ? "توجت باللقب الأغلى وحصلت على 8000 عملة وتأهلت لنهائي السوبر!" : "أداء أوروبي رائع.";
-            if(rank === 1) {
-                coins += 8000;
-                localStorage.setItem('unlockedSuper', 'true');
-                document.getElementById('btnSuper').style.display = 'block';
-            }
-            localStorage.setItem('userCoins', coins);
-            document.getElementById('seasonResultTitle').innerText = title;
-            document.getElementById('seasonResultDesc').innerText = desc;
-            document.getElementById('seasonModal').style.display = 'flex';
-        }
-
-        function checkUELEnd() {
-            uelTeams.sort((a, b) => b.pts - a.pts);
-            let rank = uelTeams.findIndex(t => t.name === userTeam) + 1;
-            let title = rank === 1 ? "🛡️ بطل الدوري الأوروبي!" : `نهاية الدوري الأوروبي (المركز ${rank})`;
-            let desc = rank === 1 ? "توجت باللقب وحصلت على 6000 عملة وتأهلت لنهائي السوبر!" : "مشاركة ممتازة.";
-            if(rank === 1) {
-                coins += 6000;
-                localStorage.setItem('unlockedSuper', 'true');
-                document.getElementById('btnSuper').style.display = 'block';
-            }
-            localStorage.setItem('userCoins', coins);
-            document.getElementById('seasonResultTitle').innerText = title;
-            document.getElementById('seasonResultDesc').innerText = desc;
-            document.getElementById('seasonModal').style.display = 'flex';
-        }
-
-        function proceedNextStage() {
-            document.getElementById('seasonModal').style.display = 'none';
-            if (localStorage.getItem('unlockedSuper') === 'true') {
-                switchMode('super');
-            } else if (localStorage.getItem('unlockedUCL') === 'true') {
-                switchMode('ucl');
-            } else if (localStorage.getItem('unlockedUEL') === 'true') {
-                switchMode('uel');
-            } else {
-                localStorage.setItem('leagueRound', '1');
-                location.reload();
-            }
+            // حفظ قوة التشكيلة لتحديد نسبة الفوز والأهداف في صفحة الماتش الحي
+            localStorage.setItem('userSquadPower', squadRating);
+            window.location.href = 'live_match.html';
         }
     </script>
 
