@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Joker Game - Ultimate 20-Team League & 32-Team UCL System</title>
+    <title>Joker Game - Pro Active League & UCL Tables</title>
     <style>
         :root {
             --bg-dark: #020408;
@@ -108,7 +108,7 @@
 
         <div class="league-container">
             <div class="card-box">
-                <div id="tableHeading" class="section-heading">📊 جدول الترتيب</div>
+                <div id="tableHeading" class="section-heading">📊 جدول الترتيب والنقاط</div>
                 <div class="table-wrapper">
                     <table>
                         <thead>
@@ -132,9 +132,9 @@
                     <div id="teamAway" style="color: var(--pink);">جاري تحديد الخصم...</div>
                 </div>
 
-                <div id="matchOutcome" class="match-result-text">قوة تشكيلتك الأساسية تحدد تفوقك وفرص الفوز بالألقاب! ⚡</div>
+                <div id="matchOutcome" class="match-result-text">الفوز في الماتش الحي يضيف نقاطك للجدول فوراً! ⚡</div>
 
-                <button class="play-btn" onclick="startLiveMatch()">دخول الماتش الحي وتطبيق النتيجة 🏟️</button>
+                <button class="play-btn" onclick="startLiveMatch()">دخول الماتش الحي وتحديث الجدول 🏟️</button>
             </div>
         </div>
 
@@ -156,73 +156,41 @@
         let leagueRound = parseInt(localStorage.getItem('leagueRound')) || 1;
         let uclRound = parseInt(localStorage.getItem('uclRound')) || 1;
 
-        // 1. جدول الـ 20 فريقاً الحقيقيين في الدوري الإنجليزي الممتاز
+        // تهيئة الجداول ببيانات 20 فريق و 32 فريق
         let premier20 = JSON.parse(localStorage.getItem('premierLeague20')) || [
-            { name: userTeam, played: 0, pts: 0 },
-            { name: "أرسنال", played: 0, pts: 0 },
-            { name: "مانشستر سيتي", played: 0, pts: 0 },
-            { name: "ليفربول", played: 0, pts: 0 },
-            { name: "تشيلسي", played: 0, pts: 0 },
-            { name: "توتنهام", played: 0, pts: 0 },
-            { name: "مانشستر يونايتد", played: 0, pts: 0 },
-            { name: "نيوكاسل يونايتد", played: 0, pts: 0 },
-            { name: "أستون فيلا", played: 0, pts: 0 },
-            { name: "برايتون", played: 0, pts: 0 },
-            { name: "وست هام يونايتد", played: 0, pts: 0 },
-            { name: "كريستال بالاس", played: 0, pts: 0 },
-            { name: "فولهام", played: 0, pts: 0 },
-            { name: "برينتفورد", played: 0, pts: 0 },
-            { name: "وولفرهامبتون", played: 0, pts: 0 },
-            { name: "إيفرتون", played: 0, pts: 0 },
-            { name: "نوتنغهام فورست", played: 0, pts: 0 },
-            { name: "بورنموث", played: 0, pts: 0 },
-            { name: "ليستر سيتي", played: 0, pts: 0 },
-            { name: "إيبسويتش تاون", played: 0, pts: 0 }
+            { name: userTeam, played: 0, pts: 0 }, { name: "أرسنال", played: 0, pts: 0 },
+            { name: "مانشستر سيتي", played: 0, pts: 0 }, { name: "ليفربول", played: 0, pts: 0 },
+            { name: "تشيلسي", played: 0, pts: 0 }, { name: "توتنهام", played: 0, pts: 0 },
+            { name: "مانشستر يونايتد", played: 0, pts: 0 }, { name: "نيوكاسل يونايتد", played: 0, pts: 0 },
+            { name: "أستون فيلا", played: 0, pts: 0 }, { name: "برايتون", played: 0, pts: 0 },
+            { name: "وست هام يونايتد", played: 0, pts: 0 }, { name: "كريستال بالاس", played: 0, pts: 0 },
+            { name: "فولهام", played: 0, pts: 0 }, { name: "برينتفورد", played: 0, pts: 0 },
+            { name: "وولفرهامبتون", played: 0, pts: 0 }, { name: "إيفرتون", played: 0, pts: 0 },
+            { name: "نوتنغهام فورست", played: 0, pts: 0 }, { name: "بورنموث", played: 0, pts: 0 },
+            { name: "ليستر سيتي", played: 0, pts: 0 }, { name: "إيبسويتش تاون", played: 0, pts: 0 }
         ];
 
-        // 2. جدول الـ 32 فريقاً الحقيقيين في دوري أبطال أوروبا (تشمل الأربعة الأوائل المتأهلين من الدوري + الكبار)
         let ucl32 = JSON.parse(localStorage.getItem('uclLeague32')) || [
-            { name: userTeam, played: 0, pts: 0 },
-            { name: "ريال مدريد", played: 0, pts: 0 },
-            { name: "برشلونة", played: 0, pts: 0 },
-            { name: "أتلتيكو مدريد",played: 0, pts: 0 },
-            { name: "جيرونا", played: 0, pts: 0 },
-            { name: "مانشستر سيتي", played: 0, pts: 0 },
-            { name: "أرسنال", played: 0, pts: 0 },
-            { name: "ليفربول", played: 0, pts: 0 },
-            { name: "أستون فيلا", played: 0, pts: 0 },
-            { name: "بايرن ميونخ", played: 0, pts: 0 },
-            { name: "بوروسيا دورتموند", played: 0, pts: 0 },
-            { name: "باير ليفركوزن", played: 0, pts: 0 },
-            { name: "لايبزيغ", played: 0, pts: 0 },
-            { name: "شتوتغارت", played: 0, pts: 0 },
-            { name: "إنتر ميلان", played: 0, pts: 0 },
-            { name: "إياسي ميلان", played: 0, pts: 0 },
-            { name: "يوفنتوس", played: 0, pts: 0 },
-            { name: "أتلانتا", played: 0, pts: 0 },
-            { name: "بولونيا", played: 0, pts: 0 },
-            { name: "باريس سان جيرمان", played: 0, pts: 0 },
-            { name: "موناكو", played: 0, pts: 0 },
-            { name: "بريست", played: 0, pts: 0 },
-            { name: "ليل", played: 0, pts: 0 },
-            { name: "سبورتنج لشبونة", played: 0, pts: 0 },
-            { name: "بنفيكا", played: 0, pts: 0 },
-            { name: "بورتو", played: 0, pts: 0 },
-            { name: "أياكس أمستردام", played: 0, pts: 0 },
-            { name: "آيندهوفن", played: 0, pts: 0 },
-            { name: "سلتيك", played: 0, pts: 0 },
-            { name: "شاختار دونيتسك", played: 0, pts: 0 },
-            { name: "غلطة سراي", played: 0, pts: 0 },
-            { name: "ريد بول سالزبورغ", played: 0, pts: 0 }
+            { name: userTeam, played: 0, pts: 0 }, { name: "ريال مدريد", played: 0, pts: 0 },
+            { name: "برشلونة", played: 0, pts: 0 }, { name: "أتلتيكو مدريد", played: 0, pts: 0 },
+            { name: "جيرونا", played: 0, pts: 0 }, { name: "مانشستر سيتي", played: 0, pts: 0 },
+            { name: "أرسنال", played: 0, pts: 0 }, { name: "ليفربول", played: 0, pts: 0 },
+            { name: "أستون فيلا", played: 0, pts: 0 }, { name: "بايرن ميونخ", played: 0, pts: 0 },
+            { name: "بوروسيا دورتموند", played: 0, pts: 0 }, { name: "باير ليفركوزن", played: 0, pts: 0 },
+            { name: "لايبزيغ", played: 0, pts: 0 }, { name: "شتوتغارت", played: 0, pts: 0 },
+            { name: "إنتر ميلان", played: 0, pts: 0 }, { name: "إيه سي ميلان", played: 0, pts: 0 },
+            { name: "يوفنتوس", played: 0, pts: 0 }, { name: "أتلانتا", played: 0, pts: 0 },
+            { name: "بولونيا", played: 0, pts: 0 }, { name: "باريس سان جيرمان", played: 0, pts: 0 },
+            { name: "موناكو", played: 0, pts: 0 }, { name: "بريست", played: 0, pts: 0 },
+            { name: "ليل", played: 0, pts: 0 }, { name: "سبورتنج لشبونة", played: 0, pts: 0 },
+            { name: "بنفيكا", played: 0, pts: 0 }, { name: "بورتو", played: 0, pts: 0 },
+            { name: "أياكس أمستردام", played: 0, pts: 0 }, { name: "آيندهوفن", played: 0, pts: 0 },
+            { name: "سلتيك", played: 0, pts: 0 }, { name: "شاختار دونيتسك", played: 0, pts: 0 },
+            { name: "غلطة سراي", played: 0, pts: 0 }, { name: "ريد بول سالزبورغ", played: 0, pts: 0 }
         ];
 
-        // التأكد من وجود فريق المستخدم في الجداول
-        if(!premier20.some(t => t.name === userTeam)) premier20[0].name = userTeam;
-        if(!ucl32.some(t => t.name === userTeam)) ucl32[0].name = userTeam;
-
-        localStorage.setItem('premierLeague20', JSON.stringify(premier20));
-        localStorage.setItem('uclLeague32', JSON.stringify(ucl32));
-
+        // تحديث النقاط تلقائياً إذا كانت مسجلة من ماتش سابقة
+        checkPendingMatchResults();
         renderUI();
 
         function switchMode(mode) {
@@ -244,7 +212,7 @@
             } else {
                 activeList = ucl32;
                 title = `⭐ دوري أبطال أوروبا (32 فريقاً) - جولة ${uclRound}/8`;
-                document.getElementById('tournamentTitle').innerText = "⭐ دوري أبطال أوروبا (32 فريقاً مع المتأهلين)";
+                document.getElementById('tournamentTitle').innerText = "⭐ دوري أبطال أوروبا (تأهل أول 8 للإقصائيات)";
                 document.getElementById('roundIndicator').innerText = `الجولة الأوروبية: ${uclRound} / 8`;
             }
 
@@ -253,32 +221,69 @@
             activeList.sort((a, b) => b.pts - a.pts);
             activeList.forEach((t, i) => {
                 let isUser = t.name === userTeam ? "color: var(--accent); font-weight:900;" : "";
-                tbody.innerHTML += `<tr style="${isUser}"><td>${i + 1}. ${t.name}</td><td>${t.played}</td><td>${t.pts}</td></tr>`;
+                let topTag = (currentMode === 'ucl' && i < 8) ? " ⭐ [تأهل]" : "";
+                tbody.innerHTML += `<tr style="${isUser}"><td>${i + 1}. ${t.name}${topTag}</td><td>${t.played}</td><td>${t.pts}</td></tr>`;
             });
 
-            // اختيار الخصم القادم
             let opponents = activeList.filter(t => t.name !== userTeam);
-            let chosenOpp = opponents[Math.floor(Math.random() * opponents.length)] || { name: "العملاق الأوروبي" };
+            let chosenOpp = opponents[Math.floor(Math.random() * opponents.length)] || { name: "الخصم القادم" };
             
             document.getElementById('teamHome').innerText = userTeam;
             document.getElementById('teamAway').innerText = chosenOpp.name;
             localStorage.setItem('currentOpponent', chosenOpp.name);
         }
 
-        // دخول الماتش الحي وربط النتيجة بقوة التشكيلة
         function startLiveMatch() {
-            // جلب تشكيلة اللاعب المحسوبة من squad.html وحساب متوسط تقييمها
             let optimizedSquad = JSON.parse(localStorage.getItem('optimizedSquad')) || [];
-            let squadRating = 85; // تقييم افتراضي أساسي
-            
+            let squadRating = 85;
             if (optimizedSquad.length > 0) {
                 let total = optimizedSquad.reduce((sum, p) => sum + (p.rating || 90), 0);
                 squadRating = Math.round(total / optimizedSquad.length);
             }
 
-            // حفظ قوة التشكيلة لتحديد نسبة الفوز والأهداف في صفحة الماتش الحي
             localStorage.setItem('userSquadPower', squadRating);
             window.location.href = 'live_match.html';
+        }
+
+        // فحص وتسجيل نتيجة الماتش الحي فوراً في الجدول
+        function checkPendingMatchResults() {
+            let lastResult = localStorage.getItem('lastMatchResult'); // يفترض أن يكتبه الماتش الحي (win, draw, loss)
+            let matchProcessed = localStorage.getItem('matchProcessed');
+
+            if (lastResult && matchProcessed !== 'true') {
+                let activeList = currentMode === 'league' ? premier20 : ucl32;
+                let userObj = activeList.find(t => t.name === userTeam);
+
+                if (userObj) {
+                    userObj.played += 1;
+                    if (lastResult === 'win') userObj.pts += 3;
+                    else if (lastResult === 'draw') userObj.pts += 1;
+
+                    // محاكاة سريعة لباقي الفرق في الجولة لكي يتحرك الجدول واقعياً
+                    activeList.forEach(t => {
+                        if (t.name !== userTeam) {
+                            t.played += 1;
+                            let r = Math.random();
+                            if (r > 0.6) t.pts += 3;
+                            else if (r > 0.3) t.pts += 1;
+                        }
+                    });
+
+                    if (currentMode === 'league') {
+                        leagueRound++;
+                        if (leagueRound > 38) leagueRound = 38;
+                        localStorage.setItem('leagueRound', leagueRound);
+                        localStorage.setItem('premierLeague20', JSON.stringify(activeList));
+                    } else {
+                        uclRound++;
+                        if (uclRound > 8) uclRound = 8;
+                        localStorage.setItem('uclRound', uclRound);
+                        localStorage.setItem('uclLeague32', JSON.stringify(activeList));
+                    }
+                }
+                localStorage.setItem('matchProcessed', 'true');
+                localStorage.removeItem('lastMatchResult');
+            }
         }
     </script>
 
