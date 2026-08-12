@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Joker Game - Pro Ultimate Store</title>
+    <title>Joker Game - Pro Massive Packs Store</title>
     <style>
         :root {
             --bg-dark: #020408;
@@ -12,247 +12,100 @@
             --gold: #ffd700;
             --gold-glow: rgba(255, 215, 0, 0.9);
             --cyan: #00f0ff;
-            --pink: #ff007f;
             --text-main: #ffffff;
         }
         
-        * {
-            box-sizing: border-box;
-            user-select: none;
-        }
+        * { box-sizing: border-box; user-select: none; }
 
         html, body {
-            margin: 0;
-            padding: 0;
-            width: 100%;
-            height: 100vh;
-            overflow: hidden;
+            margin: 0; padding: 0; width: 100%; height: 100vh; overflow: hidden;
             background: radial-gradient(circle at center, #0a192f 0%, #020408 100%);
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            display: flex; justify-content: center; align-items: center;
         }
 
         .game-viewport {
-            width: 900px;
-            height: 600px;
+            width: 900px; height: 600px;
             background: linear-gradient(135deg, rgba(13, 27, 42, 0.98) 0%, rgba(5, 11, 20, 0.99) 100%);
             border-radius: 28px;
             box-shadow: 0 0 80px rgba(0, 255, 136, 0.4), inset 0 0 35px rgba(0, 240, 255, 0.2);
             border: 3px solid rgba(0, 255, 136, 0.6);
-            position: relative;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
+            position: relative; display: flex; flex-direction: column; justify-content: space-between;
             padding: 25px 35px;
         }
 
         .top-bar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: rgba(0, 0, 0, 0.5);
-            border: 2px solid rgba(0, 240, 255, 0.3);
-            padding: 10px 20px;
-            border-radius: 15px;
+            display: flex; justify-content: space-between; align-items: center;
+            background: rgba(0, 0, 0, 0.5); border: 2px solid rgba(0, 240, 255, 0.3);
+            padding: 10px 20px; border-radius: 15px;
         }
 
-        .store-title {
-            font-size: 20px;
-            font-weight: 900;
-            color: var(--gold);
-            text-shadow: 0 0 10px var(--gold-glow);
-        }
+        .store-title { font-size: 20px; font-weight: 900; color: var(--gold); text-shadow: 0 0 10px var(--gold-glow); }
 
         .coins-container {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            background: rgba(255, 215, 0, 0.15);
-            border: 1px solid var(--gold);
-            padding: 5px 15px;
-            border-radius: 20px;
-            color: var(--gold);
-            font-weight: bold;
-            font-size: 18px;
-            box-shadow: 0 0 15px var(--gold-glow);
+            display: flex; align-items: center; gap: 8px;
+            background: rgba(255, 215, 0, 0.15); border: 1px solid var(--gold);
+            padding: 5px 15px; border-radius: 20px; color: var(--gold); font-weight: bold; font-size: 18px;
         }
 
         .packs-container {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 15px;
-            margin: 15px 0;
+            display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin: 15px 0;
         }
 
         .pack-card {
             background: linear-gradient(135deg, rgba(13, 27, 42, 0.9) 0%, rgba(20, 40, 65, 0.95) 100%);
-            border: 2px solid rgba(255, 215, 0, 0.4);
-            border-radius: 20px;
-            height: 310px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: space-between;
-            padding: 20px;
-            text-align: center;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.4);
-            transition: 0.3s ease;
+            border: 2px solid rgba(255, 215, 0, 0.4); border-radius: 20px; height: 310px;
+            display: flex; flex-direction: column; align-items: center; justify-content: space-between;
+            padding: 20px; text-align: center; transition: 0.3s ease;
         }
+        .pack-card:hover { border-color: var(--gold); transform: translateY(-5px); }
 
-        .pack-card:hover {
-            border-color: var(--gold);
-            box-shadow: 0 0 25px rgba(255, 215, 0, 0.6);
-            transform: translateY(-5px);
-        }
-
-        .pack-icon {
-            font-size: 50px;
-            filter: drop-shadow(0 0 15px var(--gold));
-        }
-
-        .pack-name {
-            font-size: 20px;
-            font-weight: 900;
-            color: var(--text-main);
-        }
-
-        .pack-price {
-            font-size: 16px;
-            color: var(--gold);
-            font-weight: bold;
-        }
+        .pack-icon { font-size: 50px; filter: drop-shadow(0 0 15px var(--gold)); }
+        .pack-name { font-size: 20px; font-weight: 900; color: var(--text-main); }
+        .pack-price { font-size: 16px; color: var(--gold); font-weight: bold; }
 
         .buy-btn {
-            background: linear-gradient(45deg, var(--gold), #ffaa00);
-            border: none;
-            color: #020408;
-            padding: 10px 20px;
-            border-radius: 25px;
-            font-weight: bold;
-            font-size: 15px;
-            cursor: pointer;
-            transition: 0.2s;
-            box-shadow: 0 0 10px var(--gold-glow);
-            width: 100%;
+            background: linear-gradient(45deg, var(--gold), #ffaa00); border: none;
+            color: #020408; padding: 10px 20px; border-radius: 25px; font-weight: bold;
+            font-size: 15px; cursor: pointer; width: 100%; box-shadow: 0 0 10px var(--gold-glow);
         }
 
-        .buy-btn:hover {
-            transform: scale(1.05);
-        }
-
-        /* نافذة كارت اللاعب الاحترافي (شكل فيفا الحقيقي) */
         .modal-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(2, 4, 8, 0.94);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            gap: 15px;
-            z-index: 10;
-            display: none;
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(2, 4, 8, 0.94); display: flex; flex-direction: column;
+            align-items: center; justify-content: center; gap: 15px; z-index: 10; display: none;
         }
 
         .fut-card {
-            width: 240px;
-            height: 340px;
+            width: 240px; height: 340px;
             background: linear-gradient(135deg, #2c2200 0%, #b8860b 40%, #ffd700 70%, #fff8dc 100%);
-            border-radius: 18px;
-            padding: 18px;
-            text-align: center;
-            color: #111;
-            box-shadow: 0 0 50px var(--gold-glow), inset 0 0 15px rgba(255, 255, 255, 0.6);
-            position: relative;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: space-between;
-            animation: popInCard 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border-radius: 18px; padding: 18px; text-align: center; color: #111;
+            box-shadow: 0 0 50px var(--gold-glow); position: relative;
+            display: flex; flex-direction: column; align-items: center; justify-content: space-between;
             border: 3px solid #fff;
         }
 
-        @keyframes popInCard {
-            0% { transform: scale(0.3) rotate(-15deg); opacity: 0; }
-            100% { transform: scale(1) rotate(0deg); opacity: 1; }
-        }
-
-        .fut-card-header {
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-            width: 100%;
-            line-height: 1.1;
-        }
-
-        .fut-rating {
-            font-size: 38px;
-            font-weight: 900;
-            color: #1a1a1a;
-            text-shadow: 1px 1px 2px rgba(255,255,255,0.5);
-        }
-
-        .fut-pos {
-            font-size: 15px;
-            font-weight: bold;
-            color: #333;
-        }
-
-        .fut-name {
-            font-size: 19px;
-            font-weight: 900;
-            background: linear-gradient(90deg, #111, #333);
-            color: #ffd700;
-            width: 100%;
-            padding: 8px;
-            border-radius: 8px;
-            letter-spacing: 0.5px;
-            box-shadow: inset 0 0 5px rgba(0,0,0,0.5);
-            border: 1px solid #d4af37;
-        }
+        .fut-rating { font-size: 40px; font-weight: 900; color: #1a1a1a; }
+        .fut-pos { font-size: 15px; font-weight: bold; color: #333; }
+        .fut-name { font-size: 19px; font-weight: 900; background: #111; color: #ffd700; width: 100%; padding: 8px; border-radius: 8px; border: 1px solid #d4af37; }
 
         .close-modal-btn {
-            background: transparent;
-            border: 2px solid var(--accent);
-            color: var(--accent);
-            padding: 8px 30px;
-            border-radius: 20px;
-            cursor: pointer;
-            font-weight: bold;
-            transition: 0.2s;
-            box-shadow: 0 0 15px rgba(0, 255, 136, 0.3);
+            background: transparent; border: 2px solid var(--accent); color: var(--accent);
+            padding: 8px 30px; border-radius: 20px; cursor: pointer; font-weight: bold;
         }
-
-        .close-modal-btn:hover {
-            background: var(--accent);
-            color: #020408;
-            box-shadow: 0 0 25px var(--accent);
-        }
+        .close-modal-btn:hover { background: var(--accent); color: #020408; }
 
         .back-btn {
-            background: transparent;
-            border: 2px solid var(--cyan);
-            color: var(--cyan);
-            padding: 8px 25px;
-            border-radius: 30px;
-            cursor: pointer;
-            font-size: 14px;
-            font-weight: bold;
-            text-decoration: none;
+            background: transparent; border: 2px solid var(--cyan); color: var(--cyan);
+            padding: 8px 25px; border-radius: 30px; cursor: pointer; font-size: 14px; font-weight: bold; text-decoration: none;
         }
-        .back-btn:hover { background: var(--cyan); color: #020408; }
     </style>
 </head>
 <body>
 
     <div class="game-viewport">
         <div class="top-bar">
-            <div class="store-title">🎁 متجر الباكيدجات الأسطوري (FUT Style)</div>
+            <div class="store-title">🎁 متجر الباكيدجات بطلاقات خرافية</div>
             <div class="coins-container">
                 <span>🪙</span>
                 <span id="playerCoins">1000</span>
@@ -263,41 +116,41 @@
             <div class="pack-card">
                 <div class="pack-icon">📦</div>
                 <div>
-                    <div class="pack-name">الباكيدج البرونزي</div>
-                    <div class="pack-price">🪙 200 عملة</div>
+                    <div class="pack-name">باكيدج المدافعين والحراس</div>
+                    <div class="pack-price">🪙 250 عملة</div>
                 </div>
-                <button class="buy-btn" onclick="openPack(200, 'bronze')">فتح الباكيدج</button>
+                <button class="buy-btn" onclick="openPack(250, 'defenders')">فتح الباكيدج</button>
             </div>
 
             <div class="pack-card">
-                <div class="pack-icon" style="filter: drop-shadow(0 0 15px var(--cyan));">🥈</div>
+                <div class="pack-icon" style="filter: drop-shadow(0 0 15px var(--cyan));">🛡️</div>
                 <div>
-                    <div class="pack-name">الباكيدج الفضي</div>
-                    <div class="pack-price">🪙 500 عملة</div>
+                    <div class="pack-name">باكيدج النجوم المميزين</div>
+                    <div class="pack-price">🪙 600 عملة</div>
                 </div>
-                <button class="buy-btn" onclick="openPack(500, 'silver')">فتح الباكيدج</button>
+                <button class="buy-btn" onclick="openPack(600, 'silver')">فتح الباكيدج</button>
             </div>
 
             <div class="pack-card">
                 <div class="pack-icon" style="filter: drop-shadow(0 0 15px var(--gold));">🌟</div>
                 <div>
-                    <div class="pack-name">باكيدج الأساطير</div>
-                    <div class="pack-price">🪙 1000 عملة</div>
+                    <div class="pack-name">باكيدج الأساطير الخارقة</div>
+                    <div class="pack-price">🪙 1200 عملة</div>
                 </div>
-                <button class="buy-btn" onclick="openPack(1000, 'gold')">فتح الباكيدج</button>
+                <button class="buy-btn" onclick="openPack(1200, 'gold')">فتح الباكيدج</button>
             </div>
         </div>
 
         <div id="rewardModal" class="modal-overlay">
-            <div style="font-size: 21px; color: var(--gold); font-weight: bold; text-shadow: 0 0 10px var(--gold-glow);">✨ مبروك! لقد سحبت أسطورة جديدة:</div>
+            <div style="font-size: 21px; color: var(--gold); font-weight: bold;">✨ مبروك! حصلت على لاعب بطاقة عالية:</div>
             
             <div class="fut-card">
-                <div class="fut-card-header">
-                    <div id="cardRating" class="fut-rating">94</div>
-                    <div id="cardPos" class="fut-pos">ST</div>
+                <div style="width:100%; display:flex; flex-direction:column; align-items:flex-start;">
+                    <div id="cardRating" class="fut-rating">96</div>
+                    <div id="cardPos" class="fut-pos">CB</div>
                 </div>
-                <div style="font-size: 60px; filter: drop-shadow(0 5px 10px rgba(0,0,0,0.5);">⚽</div>
-                <div id="cardName" class="fut-name">ليونيل ميسي</div>
+                <div style="font-size: 60px;">🛡️</div>
+                <div id="cardName" class="fut-name">فيرجيل فان دايك</div>
             </div>
 
             <button class="close-modal-btn" onclick="closeModal()">إضافة للنادي واستمرار 🚀</button>
@@ -305,7 +158,7 @@
 
         <div style="display: flex; justify-content: space-between; align-items: center;">
             <a href="welcome.html" class="back-btn">← رجوع للنادي</a>
-            <div style="font-size: 13px; color: rgba(255,255,255,0.5);">Joker FUT Cards Pro 2026</div>
+            <div style="font-size: 13px; color: rgba(255,255,255,0.5);">Joker Pro Stacking 2026</div>
         </div>
     </div>
 
@@ -313,37 +166,47 @@
         let coins = parseInt(localStorage.getItem('userCoins')) || 1000;
         document.getElementById('playerCoins').innerText = coins;
 
-        // قائمة ضخمة جداً وشاملة بمئات اللاعبين في كل المراكز
-        const bronzePlayers = [
-            { name: "أحمد سمير", rating: 71, pos: "DEF" }, { name: "محمود حسن", rating: 73, pos: "MID" },
-            { name: "كريم البدري", rating: 74, pos: "ATT" }, { name: "إسلام عادل", rating: 70, pos: "GK" },
-            { name: "رامي سعيد", rating: 72, pos: "DEF" }, { name: "هيثم نبيل", rating: 75, pos: "MID" },
-            { name: "عمر زهران", rating: 69, pos: "LW" }, { name: "يوسف الدسوقي", rating: 71, pos: "RW" },
-            { name: "مصطفى فتحي", rating: 74, pos: "CM" }, { name: "طارق العشري", rating: 72, pos: "CB" }
+        // قوائم ضخمة جداً ومكدسة بالحراس والمدافعين بطاقات عالية جداً
+        const defenderPlayers = [
+            { name: "فيرجيل فان دايك (أسطوري)", rating: 95, pos: "CB" },
+            { name: "مانويل نوير (حارس عملاق)", rating: 94, pos: "GK" },
+            { name: "تيبو كورتوا (حارس خارق)", rating: 96, pos: "GK" },
+            { name: "روبن دياز (صخرة الدفاع)", rating: 93, pos: "CB" },
+            { name: "سيرجيو راموس (الأسطورة)", rating: 94, pos: "CB" },
+            { name: "أليسون بيكر (جدار بريد)", rating: 93, pos: "GK" },
+            { name: "كارليس بويول (قلب الأسد)", rating: 95, pos: "CB" },
+            { name: "باولو مالديني (أعظم مدافع)", rating: 98, pos: "CB" },
+            { name: "جيانلويجي بوفون (ملك الحراس)", rating: 97, pos: "GK" },
+            { name: "ماركينيوس", rating: 91, pos: "CB" },
+            { name: "أنطونيو روديجر", rating: 92, pos: "CB" },
+            { name: "إيدرسون مواريس", rating: 92, pos: "GK" },
+            { name: "كايل ووكر", rating: 91, pos: "RB" }
         ];
 
         const silverPlayers = [
-            { name: "كيفين دي بروين", rating: 85, pos: "CM" }, { name: "محمد صلاح", rating: 88, pos: "RW" },
-            { name: "فيرجيل فان دايك", rating: 86, pos: "CB" }, { name: "سون هيونغ مين", rating: 84, pos: "LW" },
-            { name: "أليسون بيكر", rating: 87, pos: "GK" }, { name: "برونو فرنانديز", rating: 83, pos: "CM" },
-            { name: "بوكايو ساكا", rating: 85, pos: "RW" }, { name: "فيل فودين", rating: 84, pos: "LM" },
-            { name: "أندرو روبيرتسون", rating: 82, pos: "LB" }, { name: "ترينت ألكسندر أرنولد", rating: 84, pos: "RB" },
-            { name: "ديكلان رايس", rating: 85, pos: "CM" }, { name: "ماركوس راشفورد", rating: 81, pos: "LW" }
+            { name: "كيفين دي بروين (الماجيك)", rating: 96, pos: "CM" },
+            { name: "محمد صلاح (الملك المصري)", rating: 97, pos: "RW" },
+            { name: "نيمار جونيور", rating: 95, pos: "LW" },
+            { name: "لوكا مودريتش", rating: 94, pos: "CM" },
+            { name: "توني كروس", rating: 94, pos: "CM" },
+            { name: "برونو فرنانديز", rating: 93, pos: "CAM" },
+            { name: "بوكايو ساكا", rating: 92, pos: "RW" },
+            { name: "فيل فودين", rating: 92, pos: "LW" }
         ];
 
         const goldPlayers = [
-            { name: "ليونيل ميسي", rating: 94, pos: "RW" }, { name: "كريستيانو رونالدو", rating: 93, pos: "ST" },
-            { name: "كيليان مبابي", rating: 92, pos: "ST" }, { name: "إيرلينغ هالاند", rating: 91, pos: "ST" },
-            { name: "فينيسيوس جونيور", rating: 90, pos: "LW" }, { name: "جود بيلينغهام", rating: 90, pos: "CM" },
-            { name: "رودري", rating: 91, pos: "CM" }, { name: "أنطوان غريزمان", rating: 88, pos: "ST" },
-            { name: "كريم بنزيما", rating: 90, pos: "ST" }, { name: "روبرت ليفاندوفسكي", rating: 89, pos: "ST" },
-            { name: "نيمار جونيور", rating: 89, pos: "LW" }, { name: "تيبو كورتوا", rating: 90, pos: "GK" },
-            { name: "روبن دياز", rating: 89, pos: "CB" }, { name: "محمد صلاح (نسخة أسطورية)", rating: 91, pos: "RW" }
+            { name: "ليونيل ميسي (GOAT)", rating: 99, pos: "RW" },
+            { name: "كريستيانو رونالدو (CR7)", rating: 99, pos: "ST" },
+            { name: "كيليان مبابي (الصاروخ)", rating: 98, pos: "ST" },
+            { name: "إيرلينغ هالاند (الماكينة)", rating: 97, pos: "ST" },
+            { name: "جود بيلينغهام (الجوهرة)", rating: 96, pos: "CM" },
+            { name: "فينيسيوس جونيور", rating: 96, pos: "LW" },
+            { name: "رودري (أفضل متوسط ميدان)", rating: 96, pos: "CDM" }
         ];
 
         function openPack(price, type) {
             if (coins < price) {
-                alert("عذراً، رصيدك غير كافٍ! العب مباريات بالدوري لجمع العملات.");
+                alert("عذراً، رصيدك غير كافٍ! العب مباريات الدوري لجمع العملات.");
                 return;
             }
 
@@ -351,7 +214,7 @@
             localStorage.setItem('userCoins', coins);
             document.getElementById('playerCoins').innerText = coins;
 
-            let pool = bronzePlayers;
+            let pool = defenderPlayers;
             if (type === 'silver') pool = silverPlayers;
             if (type === 'gold') pool = goldPlayers;
 
