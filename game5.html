@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Joker Game - Leagues</title>
+    <style>
+        :root {
+            --bg-dark: #020408;
+            --accent: #00ff88;
+            --accent-glow: rgba(0, 255, 136, 0.9);
+            --gold: #ffd700;
+            --gold-glow: rgba(255, 215, 0, 0.9);
+            --pink: #ff007f;
+            --cyan: #00f0ff;
+            --text-main: #ffffff;
+        }
+        
+        * {
+            box-sizing: border-box;
+            user-select: none;
+        }
+
+        html, body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100vh;
+            overflow: hidden;
+            background: radial-gradient(circle at center, #0a192f 0%, #020408 100%);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .game-viewport {
+            width: 900px;
+            height: 600px;
+            background: linear-gradient(135deg, rgba(13, 27, 42, 0.98) 0%, rgba(5, 11, 20, 0.99) 100%);
+            border-radius: 28px;
+            box-shadow: 0 0 80px rgba(0, 255, 136, 0.4), inset 0 0 35px rgba(0, 240, 255, 0.2);
+            border: 3px solid rgba(0, 255, 136, 0.6);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            padding: 30px;
+        }
+
+        .header-title {
+            font-size: 28px;
+            font-weight: 900;
+            background: linear-gradient(45deg, var(--gold), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 20px var(--gold-glow);
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+        }
+
+        /* حاوية الدوريات مع شريط تمرير بنفس الجرافيك */
+        .leagues-container {
+            width: 100%;
+            max-width: 820px;
+            height: 420px;
+            background: rgba(0, 0, 0, 0.5);
+            border: 2px solid rgba(0, 240, 255, 0.4);
+            border-radius: 18px;
+            overflow-y: auto;
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            box-shadow: inset 0 0 15px rgba(0, 240, 255, 0.2);
+        }
+
+        .leagues-container::-webkit-scrollbar {
+            width: 8px;
+        }
+        .leagues-container::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+        }
+        .leagues-container::-webkit-scrollbar-thumb {
+            background: var(--cyan);
+            border-radius: 10px;
+            box-shadow: 0 0 10px var(--cyan);
+        }
+
+        /* أزرار الدوريات */
+        .league-btn {
+            background: linear-gradient(135deg, rgba(13, 27, 42, 0.9) 0%, rgba(20, 40, 65, 0.95) 100%);
+            border: 2px solid rgba(0, 255, 136, 0.4);
+            border-radius: 12px;
+            padding: 15px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            color: var(--text-main);
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.2s ease;
+            text-decoration: none;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .league-btn:hover {
+            border-color: var(--accent);
+            background: linear-gradient(135deg, rgba(0, 255, 136, 0.2) 0%, rgba(13, 27, 42, 0.95) 100%);
+            box-shadow: 0 0 20px rgba(0, 255, 136, 0.5);
+            transform: scale(1.01);
+        }
+
+        .league-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .league-badge {
+            background: rgba(255, 215, 0, 0.2);
+            color: var(--gold);
+            border: 1px solid var(--gold);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 900;
+        }
+
+        /* زر الرجوع */
+        .back-btn {
+            background: transparent;
+            border: 2px solid var(--cyan);
+            color: var(--cyan);
+            padding: 10px 30px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 15px;
+            font-weight: bold;
+            transition: 0.2s;
+            box-shadow: 0 0 10px rgba(0, 240, 255, 0.2);
+            text-decoration: none;
+        }
+
+        .back-btn:hover {
+            background: var(--cyan);
+            color: #020408;
+            box-shadow: 0 0 20px var(--cyan);
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="game-viewport">
+        <div class="header-title">🏆 اختر الدوري المطلوب (أهم 25 دورياً)</div>
+
+        <div class="leagues-container">
+            <a href="game6.html" class="league-btn">
+                <div class="league-info"><span>🏴󠁧󠁢󠁥󠁮󠁧󠁿</span><span>الدوري الإنجليزي الممتاز</span></div>
+                <span class="league-badge">ملف جيم 6</span>
+            </a>
+
+            <a href="game7.html" class="league-btn">
+                <div class="league-info"><span>🇪🇸</span><span>الدوري الإسباني (لا ليغا)</span></div>
+                <span class="league-badge">ملف جيم 7</span>
+            </a>
+
+            <a href="game8.html" class="league-btn">
+                <div class="league-info"><span>🇮🇹</span><span>الدوري الإيطالي (سري آ)</span></div>
+                <span class="league-badge">ملف جيم 8</span>
+            </a>
+
+            <a href="game9.html" class="league-btn">
+                <div class="league-info"><span>🇩🇪</span><span>الدوري الألماني (بوندسليغا)</span></div>
+                <span class="league-badge">ملف جيم 9</span>
+            </a>
+
+            <a href="game10.html" class="league-btn">
+                <div class="league-info"><span>🇫🇷</span><span>الدوري الفرنسي (ليغ 1)</span></div>
+                <span class="league-badge">ملف جيم 10</span>
+            </a>
+
+            <a href="game11.html" class="league-btn">
+                <div class="league-info"><span>🇪🇺</span><span>دوري أبطال أوروبا</span></div>
+                <span class="league-badge">ملف جيم 11</span>
+            </a>
+
+            <a href="game12.html" class="league-btn">
+                <div class="league-info"><span>🇸🇦</span><span>الدوري السعودي للمحترفين (روشن)</span></div>
+                <span class="league-badge">ملف جيم 12</span>
+            </a>
+
+            <a href="game13.html" class="league-btn">
+                <div class="league-info"><span>🇵🇹</span><span>الدوري البرتغالي الممتاز</span></div>
+                <span class="league-badge">ملف جيم 13</span>
+            </a>
+
+            <a href="game14.html" class="league-btn">
+                <div class="league-info"><span>🇳🇱</span><span>الدوري الهولندي الممتاز</span></div>
+                <span class="league-badge">ملف جيم 14</span>
+            </a>
+
+            <a href="game15.html" class="league-btn">
+                <div class="league-info"><span>🇧🇷</span><span>الدوري البرازيلي الدرجة الأولى</span></div>
+                <span class="league-badge">ملف جيم 15</span>
+            </a>
+
+            <a href="game16.html" class="league-btn">
+                <div class="league-info"><span>🇦🇷</span><span>الدوري الأرجنتيني الممتاز</span></div>
+                <span class="league-badge">ملف جيم 16</span>
+            </a>
+
+            <a href="game17.html" class="league-btn">
+                <div class="league-info"><span>🇹🇷</span><span>الدوري التركي الممتاز</span></div>
+                <span class="league-badge">ملف جيم 17</span>
+            </a>
+
+            <a href="game18.html" class="league-btn">
+                <div class="league-info"><span>🇺🇸</span><span>الدوري الأمريكي (MLS)</span></div>
+                <span class="league-badge">ملف جيم 18</span>
+            </a>
+
+            <a href="game19.html" class="league-btn">
+                <div class="league-info"><span>🇲🇽</span><span>الدوري المكسيكي الممتاز</span></div>
+                <span class="league-badge">ملف جيم 19</span>
+            </a>
+
+            <a href="game20.html" class="league-btn">
+                <div class="league-info"><span>🏴󠁧󠁢󠁳󠁣󠁴󠁿</span><span>الدوري الاسكتلندي الممتاز</span></div>
+                <span class="league-badge">ملف جيم 20</span>
+            </a>
+
+            <a href="game21.html" class="league-btn">
+                <div class="league-info"><span>🇷🇺</span><span>الدوري الروسي الممتاز</span></div>
+                <span class="league-badge">ملف جيم 21</span>
+            </a>
+
+            <a href="game22.html" class="league-btn">
+                <div class="league-info"><span>🇧🇪</span><span>الدوري البلجيكي للمحترفين</span></div>
+                <span class="league-badge">ملف جيم 22</span>
+            </a>
+
+            <a href="game23.html" class="league-btn">
+                <div class="league-info"><span>🇬🇷</span><span>الدوري اليوناني الممتاز</span></div>
+                <span class="league-badge">ملف جيم 23</span>
+            </a>
+
+            <a href="game24.html" class="league-btn">
+                <div class="league-info"><span>🇦🇪</span><span>الدوري الإماراتي (ادنوك)</span></div>
+                <span class="league-badge">ملف جيم 24</span>
+            </a>
+
+            <a href="game25.html" class="league-btn">
+                <div class="league-info"><span>🇪🇬</span><span>الدوري المصري الممتاز</span></div>
+                <span class="league-badge">ملف جيم 25</span>
+            </a>
+
+            <a href="game26.html" class="league-btn">
+                <div class="league-info"><span>🇶🇦</span><span>الدوري القطري (نجوم قطر)</span></div>
+                <span class="league-badge">ملف جيم 26</span>
+            </a>
+
+            <a href="game27.html" class="league-btn">
+                <div class="league-info"><span>🇲🇦</span><span>الدوري المغربي (البطولة الاحترافية)</span></div>
+                <span class="league-badge">ملف جيم 27</span>
+            </a>
+
+            <a href="game28.html" class="league-btn">
+                <div class="league-info"><span>🇹🇳</span><span>الدوري التونسي الممتاز</span></div>
+                <span class="league-badge">ملف جيم 28</span>
+            </a>
+
+            <a href="game29.html" class="league-btn">
+                <div class="league-info"><span>🇩🇿</span><span>الدوري الجزائري المحترف الأول</span></div>
+                <span class="league-badge">ملف جيم 29</span>
+            </a>
+
+            <a href="game30.html" class="league-btn">
+                <div class="league-info"><span>🇯🇵</span><span>الدوري الياباني (J1 League)</span></div>
+                <span class="league-badge">ملف جيم 30</span>
+            </a>
+        </div>
+
+        <div>
+            <a href="index.html" class="back-btn">← رجوع للرئيسية</a>
+        </div>
+    </div>
+
+</body>
+</html>
