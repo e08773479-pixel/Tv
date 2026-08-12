@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Joker Game - Match Center</title>
+    <title>Joker Game - League Table & Matches</title>
     <style>
         :root {
             --bg-dark: #020408;
@@ -45,7 +45,7 @@
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            padding: 25px 35px;
+            padding: 20px 30px;
         }
 
         .top-bar {
@@ -54,15 +54,14 @@
             align-items: center;
             background: rgba(0, 0, 0, 0.5);
             border: 2px solid rgba(0, 240, 255, 0.3);
-            padding: 10px 20px;
+            padding: 8px 20px;
             border-radius: 15px;
         }
 
         .match-title {
-            font-size: 20px;
+            font-size: 18px;
             font-weight: 900;
-            color: var(--pink);
-            text-shadow: 0 0 10px rgba(255, 0, 127, 0.6);
+            color: var(--gold);
         }
 
         .coins-container {
@@ -71,97 +70,120 @@
             gap: 8px;
             background: rgba(255, 215, 0, 0.15);
             border: 1px solid var(--gold);
-            padding: 5px 15px;
+            padding: 4px 12px;
             border-radius: 20px;
             color: var(--gold);
             font-weight: bold;
-            font-size: 18px;
-            box-shadow: 0 0 15px var(--gold-glow);
+            font-size: 16px;
         }
 
-        /* ملعب المباراة */
-        .match-arena {
-            background: linear-gradient(135deg, rgba(0, 50, 20, 0.6), rgba(0, 20, 10, 0.8));
-            border: 2px solid var(--accent);
-            border-radius: 20px;
-            height: 380px;
+        /* حاوية محتوى الدوري والمباريات */
+        .league-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            height: 410px;
+        }
+
+        .card-box {
+            background: rgba(0, 0, 0, 0.4);
+            border: 2px solid rgba(0, 255, 136, 0.3);
+            border-radius: 18px;
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .section-heading {
+            font-size: 16px;
+            font-weight: bold;
+            color: var(--cyan);
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        /* جدول ترتيب الدوري المصغر */
+        .table-wrapper {
+            overflow-y: auto;
+            height: 310px;
+        }
+        .table-wrapper::-webkit-scrollbar { width: 5px; }
+        .table-wrapper::-webkit-scrollbar-thumb { background: var(--cyan); border-radius: 10px; }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+            color: var(--text-main);
+            text-align: center;
+        }
+
+        th, td {
+            padding: 6px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        th {
+            color: var(--gold);
+            background: rgba(0,0,0,0.6);
+        }
+
+        /* قسم خوض الجولة والقرعة */
+        .match-center-box {
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            gap: 25px;
-            padding: 20px;
-            box-shadow: inset 0 0 30px rgba(0, 255, 136, 0.2);
             text-align: center;
+            gap: 15px;
         }
 
-        .match-scoreboard {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 40px;
-            font-size: 28px;
-            font-weight: 900;
-            color: var(--text-main);
-        }
-
-        .team-box {
-            background: rgba(0, 0, 0, 0.6);
-            border: 2px solid var(--cyan);
-            padding: 15px 25px;
-            border-radius: 15px;
-            min-width: 220px;
-            box-shadow: 0 0 15px rgba(0, 240, 255, 0.3);
-        }
-
-        .score-number {
-            font-size: 45px;
-            color: var(--gold);
-            text-shadow: 0 0 15px var(--gold-glow);
-        }
-
-        .match-status {
-            font-size: 18px;
-            color: var(--accent);
+        .vs-display {
+            font-size: 20px;
             font-weight: bold;
-            letter-spacing: 1px;
-            min-height: 30px;
+            color: var(--text-main);
+            background: rgba(0,0,0,0.5);
+            border: 2px solid var(--pink);
+            padding: 12px;
+            border-radius: 15px;
+            width: 100%;
         }
 
-        .play-match-btn {
+        .match-result-text {
+            font-size: 14px;
+            color: var(--accent);
+            min-height: 45px;
+        }
+
+        .play-btn {
             background: linear-gradient(45deg, var(--accent), var(--cyan));
             border: none;
             color: #020408;
-            padding: 12px 35px;
-            border-radius: 30px;
+            padding: 12px 25px;
+            border-radius: 25px;
             font-weight: 900;
-            font-size: 18px;
+            font-size: 16px;
             cursor: pointer;
             transition: 0.3s;
-            box-shadow: 0 0 20px var(--accent-glow);
+            box-shadow: 0 0 15px var(--accent-glow);
+            width: 100%;
         }
 
-        .play-match-btn:hover {
-            transform: scale(1.08);
-            box-shadow: 0 0 30px var(--accent-glow);
+        .play-btn:hover {
+            transform: scale(1.03);
         }
 
         .back-btn {
             background: transparent;
             border: 2px solid var(--cyan);
             color: var(--cyan);
-            padding: 8px 25px;
+            padding: 6px 20px;
             border-radius: 30px;
             cursor: pointer;
-            font-size: 14px;
+            font-size: 13px;
             font-weight: bold;
-            transition: 0.2s;
             text-decoration: none;
-        }
-
-        .back-btn:hover {
-            background: var(--cyan);
-            color: #020408;
         }
     </style>
 </head>
@@ -169,88 +191,162 @@
 
     <div class="game-viewport">
         <div class="top-bar">
-            <div class="match-title">⚽ جولة الدوري الإنجليزي الممتاز</div>
+            <div class="match-title">🏆 دوري البريميرليج ونظام القرعة الشامل</div>
             <div class="coins-container">
                 <span>🪙</span>
                 <span id="playerCoins">1000</span>
             </div>
         </div>
 
-        <div class="match-arena">
-            <div id="matchStatusText" class="match-status">استعد لدخول الميدان ومواجهة أحد أندية البريميرليج!</div>
-            
-            <div class="match-scoreboard">
-                <div class="team-box">
-                    <div id="userTeamName" style="color: var(--cyan);">ناديك</div>
-                    <div id="userScore" class="score-number">0</div>
-                </div>
-                <div style="font-size: 25px; color: var(--gold);">VS</div>
-                <div class="team-box">
-                    <div id="opponentTeamName" style="color: var(--pink);">في انتظار الخصم...</div>
-                    <div id="opponentScore" class="score-number">0</div>
+        <div class="league-container">
+            <div class="card-box">
+                <div class="section-heading">📊 جدول ترتيب الدوري العام</div>
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>النادي</th>
+                                <th>لعب</th>
+                                <th>نقاط</th>
+                            </tr>
+                        </thead>
+                        <tbody id="standingsTableBody">
+                            </tbody>
+                    </table>
                 </div>
             </div>
 
-            <button id="actionBtn" class="play-match-btn" onclick="playMatch()">انطلاق صافرة المباراة 🚀</button>
+            <div class="card-box match-center-box">
+                <div class="section-heading" id="currentRoundTitle">الجولة رقم: 1</div>
+                
+                <div class="vs-display">
+                    <div id="teamHome">ناديك</div>
+                    <div style="font-size: 14px; color: var(--gold); margin: 5px 0;">VS</div>
+                    <div id="teamAway" style="color: var(--pink);">خصم الجولة</div>
+                </div>
+
+                <div id="matchOutcome" class="match-result-text">اضغط على زر خوض الجولة لبدء مباريات الفرق والقرعة!</div>
+
+                <button class="play-btn" onclick="simulateLeagueRound()">لعب جولة الدوري الحالية 🚀</button>
+            </div>
         </div>
 
         <div style="display: flex; justify-content: space-between; align-items: center;">
             <a href="welcome.html" class="back-btn">← رجوع للنادي</a>
-            <div style="font-size: 13px; color: rgba(255,255,255,0.5);">Joker League Pro Simulation</div>
+            <div style="font-size: 12px; color: rgba(255,255,255,0.5);">Joker Full League Engine</div>
         </div>
     </div>
 
     <script>
-        // عرض اسم الفريق والعملات الحالية
-        const selectedTeam = localStorage.getItem('selectedTeam') || 'ناديك';
-        document.getElementById('userTeamName').innerText = selectedTeam;
-
-        // قائمة كل أندية الدوري الإنجليزي الـ 20
-        const allPremierTeams = [
-            "أرسنال", "أستون فيلا", "برايتون آند هوف ألبيون", "بورنموث", 
-            "برينتفورد", "تشيلسي", "كريستال بالاس", "إيفرتون", 
-            "فولهام", "إبسويتش تاون", "ليستر سيتي", "ليفربول", 
-            "مانشستر سيتي", "مانشستر يونايتد", "نيوكاسل يونايتد", 
-            "نوتنغهام فورست", "ساوثهامبتون", "توتنهام هوتسبير", 
-            "وولفرهامبتون", "وست هام يونايتد"
-        ];
-        
+        const userTeam = localStorage.getItem('selectedTeam') || 'ناديك';
         let coins = parseInt(localStorage.getItem('userCoins')) || 1000;
         document.getElementById('playerCoins').innerText = coins;
 
-        function playMatch() {
-            // اختيار خصم عشوائي (يتم استبعاد نادي المستخدم لو كان موجوداً في القائمة لعدم تكراره)
-            let availableOpponents = allPremierTeams.filter(team => team !== selectedTeam);
-            let randomOpponent = availableOpponents[Math.floor(Math.random() * availableOpponents.length)];
-            document.getElementById('opponentTeamName').innerText = randomOpponent;
+        // قائمة كل الأندية الـ 20 وتوليد نقاط وترتيب ابتدائي لو مش موجود
+        let allTeams = JSON.parse(localStorage.getItem('leagueStandings')) || [
+            { name: userTeam, played: 0, pts: 0 },
+            { name: "أرسنال", played: 0, pts: 0 },
+            { name: "مانشستر سيتي", played: 0, pts: 0 },
+            { name: "ليفربول", played: 0, pts: 0 },
+            { name: "تشيلسي", played: 0, pts: 0 },
+            { name: "أستون فيلا", played: 0, pts: 0 },
+            { name: "توتنهام هوتسبير", played: 0, pts: 0 },
+            { name: "نيوكاسل يونايتد", played: 0, pts: 0 },
+            { name: "مانشستر يونايتد", played: 0, pts: 0 },
+            { name: "وست هام يونايتد", played: 0, pts: 0 },
+            { name: "كريستال بالاس", played: 0, pts: 0 },
+            { name: "برايتون آند هوف ألبيون", played: 0, pts: 0 },
+            { name: "بورنموث", played: 0, pts: 0 },
+            { name: "فولهام", played: 0, pts: 0 },
+            { name: "وولفرهامبتون", played: 0, pts: 0 },
+            { name: "إيفرتون", played: 0, pts: 0 },
+            { name: "برينتفورد", played: 0, pts: 0 },
+            { name: "نوتنغهام فورست", played: 0, pts: 0 },
+            { name: "ليستر سيتي", played: 0, pts: 0 },
+            { name: "إبسويتش تاون", played: 0, pts: 0 },
+            { name: "ساوثهامبتون", played: 0, pts: 0 }
+        ];
 
-            // نظام نتائج عشوائي غير متوقع بالكامل (من 0 إلى 5 أهداف لكل فريق)
-            let userGoals = Math.floor(Math.random() * 6);
-            let opponentGoals = Math.floor(Math.random() * 6);
+        let currentRound = parseInt(localStorage.getItem('leagueRound')) || 1;
+        document.getElementById('currentRoundTitle').innerText = "الجولة رقم: " + currentRound;
 
-            document.getElementById('userScore').innerText = userGoals;
-            document.getElementById('opponentScore').innerText = opponentGoals;
+        updateTableUI();
 
-            let statusText = document.getElementById('matchStatusText');
-            let btn = document.getElementById('actionBtn');
+        function simulateLeagueRound() {
+            // اختيار خصم عشوائي لنادي المستخدم من القرعة
+            let opponentsList = allTeams.filter(t => t.name !== userTeam);
+            let chosenOpponent = opponentsList[Math.floor(Math.random() * opponentsList.length)];
+            
+            document.getElementById('teamHome').innerText = userTeam;
+            document.getElementById('teamAway').innerText = chosenOpponent.name;
 
+            // حساب قوة فريق المستخدم بناءً على اللعيبة المشترية (لو فيه لاعبين في الـ squad)
+            let myPlayers = JSON.parse(localStorage.getItem('myTeamPlayers')) || [];
+            let squadBonus = myPlayers.reduce((sum, p) => sum + (p.rating || 75), 0) / (myPlayers.length || 1);
+            if (myPlayers.length === 0) squadBonus = 70; // قوة افتراضية لو مفيش لاعبين
+
+            // محاكاة أهداف غير متوقعة تعتمد نسبياً على قوة الفريق
+            let userGoals = Math.floor(Math.random() * (squadBonus > 85 ? 5 : 4));
+            let opponentGoals = Math.floor(Math.random() * 4);
+
+            let userObj = allTeams.find(t => t.name === userTeam);
+            let oppObj = allTeams.find(t => t.name === chosenOpponent.name);
+
+            userObj.played += 1;
+            oppObj.played += 1;
+
+            let resultMsg = "";
             if (userGoals > opponentGoals) {
-                let reward = (userGoals - opponentGoals >= 3) ? 400 : 250;
-                statusText.innerHTML = `🔥 فوز تاريخي ومذهل أمام ${randomOpponent}! كسبت <span style='color: var(--gold);'>${reward} عملة</span>!`;
-                coins += reward;
+                userObj.pts += 3;
+                coins += 300;
+                resultMsg = `🎉 انتصار عظيم (${userGoals}-${opponentGoals}) على ${chosenOpponent.name}! كسبت 350 عملة.`;
             } else if (userGoals === opponentGoals) {
-                statusText.innerHTML = `🤝 تعادل دراماتيكي بنتيجة (${userGoals}-${opponentGoals}) مع ${randomOpponent}! كسبت <span style='color: var(--gold);'>120 عملة</span>.`;
+                userObj.pts += 1;
+                oppObj.pts += 1;
                 coins += 120;
+                resultMsg = `🤝 تعادل مثير (${userGoals}-${opponentGoals}) مع ${chosenOpponent.name}. كسبت 120 عملة.`;
             } else {
-                statusText.innerHTML = `💔 خسارة قاسية ومفاجئة أمام ${randomOpponent} (${userGoals}-${opponentGoals}). رتب صفوف ناديك!`;
+                oppObj.pts += 3;
+                resultMsg = `❌ هزيمة مريرة (${userGoals}-${opponentGoals}) أمام ${chosenOpponent.name}. عزز فريقك من المتجر!`;
             }
 
-            // تحديث العملات وحفظها
+            // محاكاة باقي نتائج فرق الدوري في هذه الجولة لكي يتغير الجدول بالكامل
+            allTeams.forEach(team => {
+                if (team.name !== userTeam && team.name !== chosenOpponent.name) {
+                    team.played += 1;
+                    let randOutcome = Math.random();
+                    if (randOutcome < 0.4) team.pts += 3; // فوز
+                    else if (randOutcome < 0.7) team.pts += 1; // تعادل
+                }
+            });
+
+            currentRound++;
+            localStorage.setItem('leagueRound', currentRound);
+            localStorage.setItem('leagueStandings', JSON.stringify(allTeams));
             localStorage.setItem('userCoins', coins);
             document.getElementById('playerCoins').innerText = coins;
+            document.getElementById('currentRoundTitle').innerText = "الجولة رقم: " + (currentRound - 1);
+            document.getElementById('matchOutcome').innerHTML = resultMsg;
 
-            // تغيير نص الزر للجولة القادمة
-            btn.innerText = "خوض الجولة القادمة ⚽";
+            updateTableUI();
+        }
+
+        function updateTableUI() {
+            // ترتيب الجدول تنازلياً حسب النقاط
+            allTeams.sort((a, b) => b.pts - a.pts);
+            
+            let tbody = document.getElementById('standingsTableBody');
+            tbody.innerHTML = '';
+            allTeams.forEach((team, index) => {
+                let isUser = team.name === userTeam ? "color: var(--accent); font-weight:900;" : "";
+                tbody.innerHTML += `
+                    <tr style="${isUser}">
+                        <td>${index + 1}. ${team.name}</td>
+                        <td>${team.played}</td>
+                        <td>${team.pts}</td>
+                    </tr>
+                `;
+            });
         }
     </script>
 
