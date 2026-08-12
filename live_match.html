@@ -3,11 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Joker Game - Live Match Engine</title>
+    <title>Joker Game - Ultimate Live Match Commentary & Squad Engine</title>
     <style>
         :root {
             --bg-dark: #020408;
             --accent: #00ff88;
+            --accent-glow: rgba(0, 255, 136, 0.9);
             --gold: #ffd700;
             --cyan: #00f0ff;
             --pink: #ff007f;
@@ -35,61 +36,81 @@
 
         .scoreboard {
             background: rgba(0, 0, 0, 0.6); border: 2px solid var(--cyan);
-            border-radius: 20px; padding: 20px; display: flex; justify-content: space-around; align-items: center;
+            border-radius: 20px; padding: 15px; display: flex; justify-content: space-around; align-items: center;
         }
 
-        .team-name { font-size: 20px; font-weight: bold; color: var(--gold); }
-        .score-box { font-size: 40px; font-weight: 900; color: var(--accent); background: rgba(0,0,0,0.8); padding: 5px 25px; border-radius: 15px; border: 1px solid var(--accent); }
+        .team-name { font-size: 18px; font-weight: bold; color: var(--gold); }
+        .score-box { font-size: 38px; font-weight: 900; color: var(--accent); background: rgba(0,0,0,0.8); padding: 2px 20px; border-radius: 12px; border: 1px solid var(--accent); }
 
         .live-commentary {
-            background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.1);
-            border-radius: 15px; height: 180px; padding: 15px; overflow-y: auto;
+            background: rgba(0,0,0,0.5); border: 1px solid rgba(0, 255, 136, 0.3);
+            border-radius: 15px; height: 190px; padding: 15px; overflow-y: auto;
             color: var(--text-main); font-size: 13px; text-align: right; line-height: 1.6;
         }
+        .live-commentary::-webkit-scrollbar { width: 5px; }
+        .live-commentary::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 10px; }
+
+        .control-panel { display: flex; gap: 15px; justify-content: center; align-items: center; }
 
         .action-btn {
             background: linear-gradient(45deg, var(--accent), var(--cyan));
-            border: none; color: #020408; padding: 12px 30px; border-radius: 25px;
-            font-weight: 900; font-size: 15px; cursor: pointer; box-shadow: 0 0 20px rgba(0,255,136,0.5);
+            border: none; color: #020408; padding: 12px 25px; border-radius: 25px;
+            font-weight: 900; font-size: 14px; cursor: pointer; box-shadow: 0 0 20px var(--accent-glow);
             transition: 0.3s;
         }
-        .action-btn:hover { transform: scale(1.05); }
+        .action-btn:hover { transform: scale(1.03); }
+
+        .tactics-box {
+            background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 215, 0, 0.3);
+            padding: 8px 15px; border-radius: 12px; font-size: 12px; color: var(--gold); display: flex; gap: 15px; justify-content: center;
+        }
     </style>
 </head>
 <body>
 
     <div class="game-viewport">
-        <div style="font-size: 16px; font-weight: bold; color: var(--gold);">🏟️ أرضية الملعب - الماتش الحي الحاسم</div>
+        <div style="font-size: 15px; font-weight: bold; color: var(--gold);">🏟️ الماتش الحي الحماسي - تفاعل نجوم تشكيلتك</div>
 
         <div class="scoreboard">
             <div>
                 <div class="team-name" id="homeTeamName">ناديك</div>
-                <div style="font-size: 11px; color: var(--cyan);">قوة التشكيلة: <span id="squadPowerDisplay">85</span> ⭐</div>
+                <div style="font-size: 11px; color: var(--cyan);">قوة التشكيلة: <span id="squadPowerDisplay">90</span> ⭐</div>
             </div>
             <div class="score-box"><span id="homeGoals">0</span> : <span id="awayGoals">0</span></div>
             <div>
                 <div class="team-name" id="awayTeamName">الخصم</div>
-                <div style="font-size: 11px; color: var(--pink);">دوري أبطال / محلي</div>
+                <div style="font-size: 11px; color: var(--pink);">معركة حاسمة</div>
             </div>
         </div>
 
+        <div class="tactics-box">
+            <div>⚡ العقلية: <span id="currentTactics" style="color:#fff;">هجوم ضاغط 🚀</span></div>
+            <div>🛡️ الحالة البدنية: <span style="color:var(--accent);">ممتازة 100%</span></div>
+        </div>
+
         <div class="live-commentary" id="commentaryBox">
-            <div>🚀 صافرة البداية! تبدأ أحداث اللقاء الناري الآن...</div>
+            <div>🚀 صافرة البداية! اللاعبين في الملعب وجاهزون لحسم اللقاء لصالح ناديك...</div>
+        </div>
+
+        <div class="control-panel">
+            <button id="matchActionBtn" class="action-btn" onclick="simulateMatchStep()">▶️ ضغطة لتقدم الدقائق وهجمات الأساطير</button>
+            <button class="action-btn" style="background: linear-gradient(45deg, var(--pink), var(--gold)); color:#fff;" onclick="changeTactics()">🔄 تبديل التكتيك (هجوم/دفاع)</button>
         </div>
 
         <div>
-            <button id="matchActionBtn" class="action-btn" onclick="simulateMatchStep()">محاكاة الأجواء وتقدم الدقائق ⚡</button>
-        </div>
-
-        <div>
-            <a href="matches.html" id="backToTableBtn" style="color: var(--cyan); font-weight: bold; text-decoration: none; display: none;">← العودة لجدول الترتيب والبطولات</a>
+            <a href="matches.html" id="backToTableBtn" style="color: var(--cyan); font-weight: bold; text-decoration: none; display: none; font-size: 14px;">← العودة لجدول الترتيب والبطولات وتحديث النقاط</a>
         </div>
     </div>
 
     <script>
         let userTeam = localStorage.getItem('selectedTeam') || 'ناديك';
         let opponentTeam = localStorage.getItem('currentOpponent') || 'الخصم المنافس';
-        let squadPower = parseInt(localStorage.getItem('userSquadPower')) || 85;
+        let squadPower = parseInt(localStorage.getItem('userSquadPower')) || 92;
+
+        // جلب أسماء لاعبي تشكيلة المستخدم الحقيقيين لذكرهم في التعليق الحماسي
+        let optimizedSquad = JSON.parse(localStorage.getItem('optimizedSquad')) || [];
+        let playerNames = optimizedSquad.map(p => p.name).filter(Boolean);
+        if (playerNames.length === 0) playerNames = ["نجم الهجوم الأول", "المايسترو", "صاروخ الدفاع", "حارس الأساطير"];
 
         document.getElementById('homeTeamName').innerText = userTeam;
         document.getElementById('awayTeamName').innerText = opponentTeam;
@@ -99,6 +120,22 @@
         let awayGoals = 0;
         let minute = 0;
         let matchFinished = false;
+        let tacticMode = 'attack'; // attack, defense, balanced
+
+        function changeTactics() {
+            if (matchFinished) return;
+            const tacticsText = document.getElementById('currentTactics');
+            if (tacticMode === 'attack') {
+                tacticMode = 'balanced';
+                tacticsText.innerText = "توازن وسط الملعب ⚖️";
+            } else if (tacticMode === 'balanced') {
+                tacticMode = 'defense';
+                tacticsText.innerText = "دفاع حصين وتأمين 🛡️";
+            } else {
+                tacticMode = 'attack';
+                tacticsText.innerText = "هجوم ضاغط ناري 🚀";
+            }
+        }
 
         function simulateMatchStep() {
             if (matchFinished) return;
@@ -106,33 +143,43 @@
             minute += 15;
             if (minute > 90) minute = 90;
 
-            // حساب الأهداف بناءً على قوة التشكيلة الخاصة بك
-            let powerFactor = squadPower >= 95 ? 0.7 : (squadPower >= 90 ? 0.5 : 0.3);
-            if (Math.random() < powerFactor) homeGoals += Math.floor(Math.random() * 2);
-            if (Math.random() < 0.35) awayGoals += Math.floor(Math.random() * 2);
+            let randomStar = playerNames[Math.floor(Math.random() * playerNames.length)];
+            let commentary = document.getElementById('commentaryBox');
+
+            // حساب فرص التهديف بناءً على قوة التشكيلة وتكتيك اللاعب
+            let successChance = squadPower >= 95 ? 0.75 : 0.55;
+            if (tacticMode === 'attack') successChance += 0.15;
+            if (tacticMode === 'defense') successChance -= 0.1;
+
+            if (Math.random() < successChance) {
+                homeGoals += 1;
+                commentary.innerHTML += `<div style="color:var(--accent);">⚽ **هدفرائع!** النجم **${randomStar}** يسدد صاروخية لا ترد في الدقيقة ${minute}! تسطو على الشباك لصالح ${userTeam}! 🔥</div>`;
+            } else if (Math.random() < 0.3) {
+                awayGoals += 1;
+                commentary.innerHTML += `<div style="color:var(--pink);">⚠️ هجمة مرتدة خطيرة للخصم، ويسجلون هدفاً في الدقيقة ${minute}.</div>`;
+            } else {
+                commentary.innerHTML += `<div>⏱️ الدقيقة ${minute}: ضغط قوي من **${randomStar}** وتمريرات متقنة في منتصف الملعب، اللعب اشتعل!</div>`;
+            }
 
             document.getElementById('homeGoals').innerText = homeGoals;
             document.getElementById('awayGoals').innerText = awayGoals;
-
-            let commentary = document.getElementById('commentaryBox');
-            commentary.innerHTML += `<div>⏱️ الدقيقة ${minute}: هجمة منظمة، النتيجة الحالية ${homeGoals} مقابل ${awayGoals}...</div>`;
             commentary.scrollTop = commentary.scrollHeight;
 
             if (minute === 90) {
                 matchFinished = true;
-                document.getElementById('matchActionBtn').innerText = "🏁 نهاية اللقاء! حفظ النتيجة وتحديث الجدول";
-                processMatchResultAndSave();
+                document.getElementById('matchActionBtn').innerText = "🏁 صافرة النهاية! تم حفظ النتيجة وتحديث جدول الترتيب";
+                saveMatchResultToStandings();
             }
         }
 
-        function processMatchResultAndSave() {
+        function saveMatchResultToStandings() {
             let resultType = 'draw';
             if (homeGoals > awayGoals) resultType = 'win';
             else if (homeGoals < awayGoals) resultType = 'loss';
 
-            let currentMode = localStorage.getItem('careerMode') || 'league';
+            let careerMode = localStorage.getItem('careerMode') || 'league';
 
-            if (currentMode === 'league') {
+            if (careerMode === 'league') {
                 let premier20 = JSON.parse(localStorage.getItem('premierLeague20')) || [];
                 let userObj = premier20.find(t => t.name === userTeam);
                 if (userObj) {
@@ -140,13 +187,13 @@
                     if (resultType === 'win') userObj.pts += 3;
                     else if (resultType === 'draw') userObj.pts += 1;
 
-                    // تحديث باقي الفرق عشوائياً لواقعية الدوري
+                    // محاكاة سريعة لباقي فرق الدوري الـ 20
                     premier20.forEach(t => {
                         if (t.name !== userTeam) {
                             t.played += 1;
                             let r = Math.random();
-                            if (r > 0.6) t.pts += 3;
-                            else if (r > 0.3) t.pts += 1;
+                            if (r > 0.5) t.pts += 3;
+                            else if (r > 0.2) t.pts += 1;
                         }
                     });
                 }
@@ -155,63 +202,38 @@
                 if (leagueRound > 38) leagueRound = 38;
                 localStorage.setItem('leagueRound', leagueRound);
                 localStorage.setItem('premierLeague20', JSON.stringify(premier20));
-
             } else {
-                // دوري أبطال أوروبا
-                let uclPhase = localStorage.getItem('uclPhase') || 'league';
+                // دوري أبطال أوروبا (32 فريق - 31 ماتش مرحلة الدوري ثم أول 16 للإقصائيات)
                 let ucl32 = JSON.parse(localStorage.getItem('uclLeague32')) || [];
+                let userObj = ucl32.find(t => t.name === userTeam);
+                if (userObj) {
+                    userObj.played += 1;
+                    if (resultType === 'win') userObj.pts += 3;
+                    else if (resultType === 'draw') userObj.pts += 1;
 
-                if (uclPhase === 'league') {
-                    let userObj = ucl32.find(t => t.name === userTeam);
-                    if (userObj) {
-                        userObj.played += 1;
-                        if (resultType === 'win') userObj.pts += 3;
-                        else if (resultType === 'draw') userObj.pts += 1;
-
-                        ucl32.forEach(t => {
-                            if (t.name !== userTeam) {
-                                t.played += 1;
-                                let r = Math.random();
-                                if (r > 0.6) t.pts += 3;
-                                else if (r > 0.3) t.pts += 1;
-                            }
-                        });
-                    }
-                    let uclRound = parseInt(localStorage.getItem('uclRound')) || 1;
-                    uclRound++;
-                    if (uclRound > 8) {
-                        // انتهاء مرحلة الدوري، التحقق من تأهل أول 8 فرق لأدوار الإقصاء
-                        ucl32.sort((a, b) => b.pts - a.pts);
-                        let userRank = ucl32.findIndex(t => t.name === userTeam) + 1;
-                        if (userRank <= 8) {
-                            localStorage.setItem('uclPhase', 'r16_first'); // تأهل لدور الـ 16
-                            alert(`🌟 مبروك! أنهيت مرحلة الدوري في المركز ${userRank} وتأهلت رسمياً إلى دور الـ 16 (مرحلة الإقصائيات بنظام الذهاب والعودة)!`);
-                        } else {
-                            alert(`تم إقصاؤك من دوري أبطال أوروبا بعد إنهاء مرحلة الدوري في المركز ${userRank}.`);
-                            localStorage.setItem('uclPhase', 'league');
+                    ucl32.forEach(t => {
+                        if (t.name !== userTeam) {
+                            t.played += 1;
+                            let r = Math.random();
+                            if (r > 0.5) t.pts += 3;
+                            else if (r > 0.2) t.pts += 1;
                         }
-                        uclRound = 8;
-                    }
-                    localStorage.setItem('uclRound', uclRound);
-                    localStorage.setItem('uclLeague32', JSON.stringify(ucl32));
-                } else {
-                    // إدارة مراحل الإقصاء (دور 16، ربع، نصف، نهائي ذهاب وعودة)
-                    if (resultType === 'win' || resultType === 'draw') {
-                        if (uclPhase === 'r16_first') localStorage.setItem('uclPhase', 'r16_second');
-                        else if (uclPhase === 'r16_second') localStorage.setItem('uclPhase', 'qf_first');
-                        else if (uclPhase === 'qf_first') localStorage.setItem('uclPhase', 'qf_second');
-                        else if (uclPhase === 'qf_second') localStorage.setItem('uclPhase', 'sf_first');
-                        else if (uclPhase === 'sf_first') localStorage.setItem('uclPhase', 'sf_second');
-                        else if (uclPhase === 'sf_second') localStorage.setItem('uclPhase', 'final');
-                        else if (uclPhase === 'final') {
-                            alert('🏆 مبروك أسطورة! لقد توجت رسمياً بلقب دوري أبطال أوروبا الخرافي!');
-                            localStorage.setItem('uclPhase', 'league');
-                        }
-                    } else {
-                        alert('❌ خسارة مواجهة الإقصاء! تم خروجك من البطولة.');
-                        localStorage.setItem('uclPhase', 'league');
-                    }
+                    });
                 }
+                let uclRound = parseInt(localStorage.getItem('uclRound')) || 1;
+                uclRound++;
+                if (uclRound > 31) {
+                    ucl32.sort((a, b) => b.pts - a.pts);
+                    let userRank = ucl32.findIndex(t => t.name === userTeam) + 1;
+                    if (userRank <= 16) {
+                        alert(`🌟 إنجاز تاريخي! أنهيت مرحلة دوري الأبطال في المركز ${userRank} وتأهلت رسمياً لدور الـ 16 (مرحلة الإقصائيات بنظام الذهاب والعودة)!`);
+                    } else {
+                        alert(`تم إقصاؤك من دوري الأبطال بعد إنهاء مرحلة الدوري في المركز ${userRank}.`);
+                    }
+                    uclRound = 31;
+                }
+                localStorage.setItem('uclRound', uclRound);
+                localStorage.setItem('uclLeague32', JSON.stringify(ucl32));
             }
 
             document.getElementById('matchActionBtn').style.display = 'none';
