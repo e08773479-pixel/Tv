@@ -1,54 +1,1963 @@
-<!doctype html><html lang="ar" dir="rtl"><head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>بوابة الامتحان الذكية | الكيمياء العضوية</title>
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#07101b">
+<title>امتحان الكيمياء العضوية | من المقدمة حتى التسمية</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@500;700;900&family=Amiri:wght@700&display=swap');
-:root{--bg:#050713;--card:#0b1020;--line:#27355d;--blue:#5aa7ff;--violet:#8f72ff;--cyan:#52e4ff;--text:#f4f7ff;--muted:#a8b3cc}
-*{box-sizing:border-box}body{margin:0;color:var(--text);font-family:Cairo,Arial;background:radial-gradient(circle at 10% 0,#17254b,#050713 42%),radial-gradient(circle at 90% 15%,#211548,#050713 45%);min-height:100vh}
-body:before{content:"";position:fixed;inset:0;pointer-events:none;background:linear-gradient(#ffffff03 1px,transparent 1px),linear-gradient(90deg,#ffffff03 1px,transparent 1px);background-size:38px 38px}
-header{position:sticky;top:0;z-index:30;background:#050713eF;backdrop-filter:blur(18px);border-bottom:1px solid var(--line);padding:13px 18px;display:flex;justify-content:space-between;align-items:center}
-.logo{font-weight:900;font-size:18px}.logo span{color:var(--cyan)}.clock{border:1px solid #34466f;background:#0b1122;border-radius:14px;padding:7px 14px;font-weight:900}.clock b{color:var(--cyan);font-size:20px}
-main{max-width:1150px;margin:auto;padding:25px 15px 65px}.hero{display:grid;grid-template-columns:1.25fr .75fr;gap:18px}.card{background:linear-gradient(145deg,#11182ff7,#080b19f7);border:1px solid var(--line);border-radius:25px;box-shadow:0 24px 80px #0007;padding:25px}
-.kicker{display:flex;gap:8px;flex-wrap:wrap}.pill{padding:7px 12px;border:1px solid #354a78;border-radius:999px;background:#0c142a;color:#cfe7ff;font-size:13px}
-h1{font:700 clamp(48px,8vw,82px) Amiri;line-height:1;margin:15px 0 8px;background:linear-gradient(90deg,#fff,var(--cyan),#a98cff);-webkit-background-clip:text;color:transparent}h2{font-size:28px;margin-top:0}p{color:var(--muted);line-height:1.9}.big{font-size:18px}
-.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:9px;margin:18px 0}.stat{background:#080e1d;border:1px solid #233152;border-radius:17px;padding:14px;text-align:center}.stat b{display:block;font-size:25px;color:var(--cyan)}
-label{font-weight:800;display:block;margin:8px 0}input,textarea{width:100%;border:1px solid #33466f;background:#070c1b;color:#fff;border-radius:14px;padding:14px;font:inherit;outline:0}input:focus,textarea:focus{border-color:var(--cyan);box-shadow:0 0 0 3px #52e4ff18}
-.btn{border:0;border-radius:14px;padding:13px 19px;font:900 15px Cairo;cursor:pointer;background:linear-gradient(135deg,var(--cyan),var(--violet));color:#050713;margin:4px;box-shadow:0 10px 28px #5aa7ff20}.btn.alt{background:#0a1123;color:#dce7ff;border:1px solid var(--line);box-shadow:none}.hidden{display:none!important}
-.visual{min-height:320px;position:relative;overflow:hidden;border-radius:22px;border:1px solid #334b82;background:radial-gradient(circle at 50% 40%,#283d7a,#101633 42%,#070a16 75%)}.ring{position:absolute;border:1px solid #63dfff55;border-radius:50%;left:50%;top:50%;transform:translate(-50%,-50%)}.r1{width:230px;height:230px}.r2{width:330px;height:170px;transform:translate(-50%,-50%) rotate(25deg)}.r3{width:330px;height:170px;transform:translate(-50%,-50%) rotate(-25deg)}.node{position:absolute;width:72px;height:72px;border-radius:50%;display:grid;place-items:center;background:#0c1630;border:2px solid var(--cyan);box-shadow:0 0 35px #52e4ff55;font-weight:900;color:var(--cyan)}.n1{top:18%;right:18%}.n2{top:50%;left:12%}.n3{bottom:15%;right:28%}.n4{top:43%;right:45%;border-color:#a98cff;color:#c4b9ff}
-.warn{background:#21190b;border:1px solid #735323;color:#efd6a0;padding:12px;border-radius:13px;font-size:13px;margin:12px 0}.sectionbar{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:10px}.progress{height:11px;background:#070b17;border:1px solid #253352;border-radius:99px;overflow:hidden}.progress i{display:block;height:100%;background:linear-gradient(90deg,var(--violet),var(--cyan));width:0}
-.question{font:700 27px/1.8 Amiri;margin:18px 0}.formula{direction:ltr;text-align:center;font:24px Georgia;background:#070d1c;border:1px dashed #3d5b8e;padding:15px;border-radius:14px;margin:12px 0;color:#dffaff}.opts{display:grid;gap:10px}.opt{display:flex;gap:12px;align-items:center;padding:15px;border:1px solid #27375b;border-radius:15px;background:#080e1c;cursor:pointer}.opt:hover,.opt.sel{border-color:var(--cyan);background:#0c1730}.letter{min-width:37px;height:37px;border-radius:10px;background:#121d39;color:var(--cyan);display:grid;place-items:center;font-weight:900}
-.nav{display:flex;justify-content:space-between;gap:10px;margin-top:20px}.written{border:1px solid #2c3d66;border-radius:16px;padding:16px;background:#070c19;margin:10px 0}textarea{min-height:170px;resize:vertical}.result{text-align:center}.score{font:900 78px Amiri;color:var(--cyan)}.resultgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:9px}.resultbox{background:#080e1c;border:1px solid var(--line);border-radius:15px;padding:14px}.resultbox b{display:block;font-size:27px;color:var(--cyan)}.review{text-align:right;margin-top:20px}.review .row{border-bottom:1px solid #22304e;padding:10px 0}.ok{color:#54e4a2}.bad{color:#ff7890}
-@media(max-width:800px){.hero{grid-template-columns:1fr}.stats,.resultgrid{grid-template-columns:repeat(2,1fr)}.question{font-size:23px}}
-</style></head><body>
-<header><div class="logo">◈ <span>بوابة الامتحان الذكية</span> | الكيمياء العضوية</div><div class="clock">⏱ <b id="clock">90:00</b></div></header>
-<main>
-<section id="start" class="hero">
-<div class="card"><div class="kicker"><span class="pill">80 سؤال</span><span class="pill">60 اختيار + 20 مقالي</span><span class="pill">100 درجة</span><span class="pill">المقالي = 40 درجة</span><span class="pill">90 دقيقة</span></div>
-<h1>امتحان<br>الكيمياء العضوية</h1>
-<p class="big">نموذج تدريبي طويل بصياغة امتحانية واضحة، وتدرج في التفكير، والصيغ البنائية، والتسمية، والمتشكلات والتطبيق.</p>
-<div class="stats"><div class="stat"><b>60</b>اختيار</div><div class="stat"><b>20</b>مقالي</div><div class="stat"><b>80</b>الإجمالي</div><div class="stat"><b>90</b>دقيقة</div></div>
-<label>اسم الطالب</label><input id="studentName" placeholder="اكتب اسم الطالب كاملًا">
-<label>الفصل / المجموعة <span style="color:#8190ad">(اختياري)</span></label><input id="className" placeholder="مثال: 3/1">
-<div class="warn">القسم المقالي يُكتب في خانات إجابة مستقلة. التصحيح الإلكتروني يعطي الدرجة بناءً على الكلمات العلمية الأساسية ويقبل الإجابة القريبة، وليس التطابق الحرفي فقط.</div>
-<button class="btn" onclick="begin()">دخول الامتحان 🚀</button></div>
-<div class="visual"><div class="ring r1"></div><div class="ring r2"></div><div class="ring r3"></div><div class="node n1">C</div><div class="node n2">H</div><div class="node n3">C</div><div class="node n4">π</div></div>
+:root{
+--bg:#060b12;
+--paper:#0d1723;
+--paper2:#111e2d;
+--line:#26384c;
+--text:#f4f7fb;
+--muted:#9aaabd;
+--blue:#38a8ff;
+--cyan:#51d9ff;
+--green:#32d58b;
+--red:#ff526d;
+--gold:#e9bd58;
+}
+
+*{box-sizing:border-box}
+
+body{
+margin:0;
+background:
+radial-gradient(circle at 15% 5%,rgba(56,168,255,.10),transparent 25%),
+radial-gradient(circle at 85% 20%,rgba(81,217,255,.07),transparent 25%),
+linear-gradient(145deg,#03070c,#08121e 55%,#050a11);
+color:var(--text);
+font-family:Cairo,Arial,sans-serif;
+}
+
+button,input{font-family:inherit}
+
+button{cursor:pointer}
+
+.container{
+width:min(1100px,calc(100% - 24px));
+margin:auto;
+}
+
+header{
+position:sticky;
+top:0;
+z-index:100;
+height:64px;
+display:flex;
+align-items:center;
+justify-content:space-between;
+padding:0 22px;
+background:rgba(5,10,17,.93);
+backdrop-filter:blur(15px);
+border-bottom:1px solid var(--line);
+}
+
+.logo{
+display:flex;
+align-items:center;
+gap:11px;
+font-weight:900;
+}
+
+.logo-icon{
+width:40px;
+height:40px;
+display:grid;
+place-items:center;
+border-radius:12px;
+background:linear-gradient(135deg,var(--blue),var(--cyan));
+color:#03111b;
+font-size:21px;
+}
+
+.timer{
+border:1px solid rgba(81,217,255,.25);
+background:rgba(81,217,255,.06);
+padding:8px 14px;
+border-radius:12px;
+font-weight:900;
+direction:ltr;
+}
+
+main{
+padding:28px 0 60px;
+}
+
+.hero{
+position:relative;
+overflow:hidden;
+border:1px solid var(--line);
+border-radius:28px;
+background:
+linear-gradient(135deg,rgba(17,30,45,.97),rgba(7,14,23,.98));
+box-shadow:0 25px 80px rgba(0,0,0,.42);
+padding:35px;
+}
+
+.hero:after{
+content:"";
+position:absolute;
+width:400px;
+height:400px;
+border-radius:50%;
+border:1px solid rgba(81,217,255,.08);
+left:-220px;
+bottom:-270px;
+}
+
+.badge{
+display:inline-block;
+padding:6px 12px;
+border-radius:30px;
+font-size:11px;
+font-weight:800;
+color:var(--cyan);
+border:1px solid rgba(81,217,255,.2);
+background:rgba(81,217,255,.06);
+}
+
+.hero h1{
+font-size:clamp(30px,5vw,55px);
+line-height:1.15;
+margin:15px 0 10px;
+font-weight:900;
+}
+
+.hero h1 span{
+color:var(--cyan);
+}
+
+.hero p{
+max-width:750px;
+color:#aab8c8;
+line-height:2;
+font-size:13px;
+}
+
+.info{
+display:flex;
+flex-wrap:wrap;
+gap:8px;
+margin-top:20px;
+}
+
+.info span{
+padding:8px 12px;
+border-radius:10px;
+border:1px solid var(--line);
+background:rgba(255,255,255,.025);
+font-size:11px;
+color:#cbd5df;
+}
+
+.card{
+margin-top:18px;
+padding:24px;
+border:1px solid var(--line);
+border-radius:22px;
+background:linear-gradient(145deg,var(--paper),#09121d);
+box-shadow:0 15px 45px rgba(0,0,0,.25);
+}
+
+.section-title{
+font-size:18px;
+font-weight:900;
+margin-bottom:17px;
+}
+
+.grid{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:15px;
+}
+
+label{
+display:block;
+font-size:12px;
+font-weight:800;
+color:#b9c7d5;
+margin-bottom:7px;
+}
+
+input{
+width:100%;
+padding:13px;
+border:1px solid var(--line);
+border-radius:12px;
+background:#07101a;
+color:white;
+outline:none;
+}
+
+input:focus{
+border-color:var(--cyan);
+box-shadow:0 0 0 3px rgba(81,217,255,.07);
+}
+
+.notice{
+margin-top:16px;
+padding:13px;
+border-radius:12px;
+background:rgba(233,189,88,.05);
+border:1px solid rgba(233,189,88,.16);
+font-size:11px;
+line-height:1.9;
+color:#cdbd91;
+}
+
+.start{
+display:block;
+margin:20px auto 0;
+border:0;
+border-radius:13px;
+padding:14px 30px;
+font-weight:900;
+font-size:14px;
+color:#021018;
+background:linear-gradient(135deg,var(--cyan),var(--blue));
+}
+
+.exam-head{
+display:flex;
+align-items:center;
+justify-content:space-between;
+gap:15px;
+padding:17px;
+margin-bottom:18px;
+border:1px solid var(--line);
+border-radius:18px;
+background:rgba(13,23,35,.95);
+}
+
+.student{
+font-weight:900;
+}
+
+.student small{
+display:block;
+color:var(--muted);
+font-weight:400;
+font-size:10px;
+margin-top:3px;
+}
+
+.progress-box{
+width:230px;
+}
+
+.progress-text{
+display:flex;
+justify-content:space-between;
+font-size:10px;
+color:var(--muted);
+margin-bottom:6px;
+}
+
+.progress{
+height:7px;
+background:#07101a;
+border-radius:10px;
+overflow:hidden;
+}
+
+.progress i{
+display:block;
+height:100%;
+width:0;
+background:linear-gradient(90deg,var(--blue),var(--cyan));
+}
+
+.part{
+margin:25px 0 13px;
+padding:12px 15px;
+border-right:4px solid var(--cyan);
+background:linear-gradient(90deg,rgba(81,217,255,.07),transparent);
+border-radius:9px;
+}
+
+.part strong{
+font-size:15px;
+}
+
+.part small{
+display:block;
+font-size:10px;
+color:var(--muted);
+margin-top:2px;
+}
+
+.question{
+position:relative;
+padding:20px;
+margin:12px 0;
+border:1px solid var(--line);
+border-radius:18px;
+background:linear-gradient(145deg,#0e1926,#0a131e);
+}
+
+.question-number{
+display:flex;
+align-items:center;
+gap:9px;
+margin-bottom:13px;
+}
+
+.number{
+width:34px;
+height:34px;
+display:grid;
+place-items:center;
+border-radius:10px;
+background:#112d45;
+color:var(--cyan);
+font-weight:900;
+}
+
+.question-title{
+font-size:14px;
+font-weight:800;
+line-height:2;
+}
+
+.options{
+display:grid;
+gap:8px;
+margin-top:14px;
+}
+
+.option{
+position:relative;
+}
+
+.option input{
+position:absolute;
+opacity:0;
+pointer-events:none;
+}
+
+.option label{
+display:flex;
+align-items:flex-start;
+gap:9px;
+padding:11px 13px;
+border-radius:11px;
+border:1px solid #203145;
+background:rgba(255,255,255,.018);
+font-weight:500;
+line-height:1.8;
+cursor:pointer;
+transition:.18s;
+}
+
+.option label span{
+width:25px;
+height:25px;
+flex:0 0 25px;
+display:grid;
+place-items:center;
+border-radius:7px;
+border:1px solid #516277;
+color:#c7d3df;
+font-weight:900;
+font-size:11px;
+}
+
+.option input:checked+label{
+background:rgba(81,217,255,.08);
+border-color:rgba(81,217,255,.55);
+}
+
+.option input:checked+label span{
+background:var(--cyan);
+color:#03101a;
+border-color:var(--cyan);
+}
+
+.figure{
+margin:15px 0;
+padding:15px;
+border-radius:14px;
+background:#060d15;
+border:1px solid #1e3043;
+overflow:auto;
+text-align:center;
+}
+
+.chem{
+font-family:"Times New Roman",serif;
+font-size:25px;
+color:#f5f7fa;
+direction:ltr;
+display:inline-block;
+padding:10px;
+}
+
+.submit{
+text-align:center;
+margin-top:28px;
+padding:24px;
+border:1px solid rgba(50,213,139,.18);
+background:rgba(50,213,139,.04);
+border-radius:20px;
+}
+
+.submit p{
+font-size:11px;
+color:var(--muted);
+margin-bottom:13px;
+}
+
+.result{
+text-align:center;
+}
+
+.score{
+width:170px;
+height:170px;
+margin:10px auto 20px;
+border-radius:50%;
+display:grid;
+place-items:center;
+background:conic-gradient(var(--cyan) var(--percent),#1a2939 0);
+}
+
+.score-inner{
+width:137px;
+height:137px;
+border-radius:50%;
+display:grid;
+place-items:center;
+background:#09121d;
+}
+
+.score-inner strong{
+font-size:34px;
+display:block;
+}
+
+.score-inner small{
+color:var(--muted);
+}
+
+.result h2{
+font-size:25px;
+margin:8px 0;
+}
+
+.review{
+text-align:right;
+padding:15px;
+margin:9px 0;
+border-radius:13px;
+background:#09131f;
+border:1px solid var(--line);
+font-size:11px;
+line-height:2;
+}
+
+.review.correct{
+border-right:4px solid var(--green);
+}
+
+.review.wrong{
+border-right:4px solid var(--red);
+}
+
+.review b{
+color:white;
+}
+
+.whatsapp{
+margin-top:20px;
+padding:20px;
+border-radius:17px;
+background:rgba(37,211,102,.055);
+border:1px solid rgba(37,211,102,.2);
+}
+
+.whatsapp a{
+display:inline-block;
+margin-top:10px;
+padding:13px 23px;
+border-radius:12px;
+background:#25d366;
+color:#031008;
+text-decoration:none;
+font-weight:900;
+}
+
+.hidden{
+display:none!important;
+}
+
+footer{
+text-align:center;
+color:#526174;
+font-size:10px;
+padding:25px;
+}
+
+@media(max-width:650px){
+.grid{grid-template-columns:1fr}
+.hero{padding:22px}
+.card{padding:16px}
+.exam-head{align-items:flex-start;flex-direction:column}
+.progress-box{width:100%}
+.question{padding:16px}
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="logo">
+    <div class="logo-icon">⚗</div>
+    <div>
+      امتحان الكيمياء العضوية
+      <small style="display:block;color:#718194;font-size:9px">
+        من المقدمة حتى التسمية
+      </small>
+    </div>
+  </div>
+
+  <div class="timer" id="timer">60:00</div>
+</header>
+
+<main class="container">
+
+<!-- ================= البداية ================= -->
+
+<section id="startScreen">
+
+  <div class="hero">
+
+    <span class="badge">اختبار شامل • 50 سؤال</span>
+
+    <h1>
+      الكيمياء <span>العضوية</span>
+    </h1>
+
+    <p>
+      اختبار تدريبي شامل يغطي أساسيات الكيمياء العضوية حتى قواعد تسمية
+      المركبات الهيدروكربونية، مع أسئلة تعتمد على الفهم والتحليل وقراءة
+      الصيغ والتراكيب، وليس الحفظ المباشر فقط.
+    </p>
+
+    <div class="info">
+      <span>50 سؤال</span>
+      <span>اختيار من متعدد</span>
+      <span>أ / ب / ج / د</span>
+      <span>60 دقيقة</span>
+      <span>تصحيح إلكتروني</span>
+      <span>رسومات تركيبية</span>
+    </div>
+
+  </div>
+
+  <div class="card">
+
+    <div class="section-title">
+      بيانات الطالب
+    </div>
+
+    <div class="grid">
+
+      <div>
+        <label>الاسم بالكامل</label>
+        <input id="studentName" placeholder="اكتب اسم الطالب">
+      </div>
+
+      <div>
+        <label>الفصل / المجموعة</label>
+        <input id="studentClass" placeholder="مثال: 3 ثانوي علمي علوم">
+      </div>
+
+    </div>
+
+    <div class="notice">
+      تنبيه: بمجرد بدء الامتحان يبدأ عداد الـ60 دقيقة.
+      راجع إجاباتك قبل الضغط على زر التسليم.
+    </div>
+
+    <button class="start" onclick="startExam()">
+      بدء الامتحان
+    </button>
+
+  </div>
+
 </section>
-<section id="mcq" class="card hidden"><div class="sectionbar"><b id="mcqCounter"></b><span id="mcqAnswered"></span></div><div class="progress"><i id="mcqBar"></i></div><div id="mcqQuestion"></div><div class="nav"><button class="btn alt" id="mcqPrev" onclick="mcqPrev()">السابق</button><button class="btn" id="mcqNext" onclick="mcqNext()">التالي</button></div></section>
-<section id="essay" class="card hidden"><div class="sectionbar"><b id="essayCounter"></b><span>القسم المقالي • 20 سؤال • درجتان لكل سؤال</span></div><div class="progress"><i id="essayBar"></i></div><div id="essayQuestion"></div><div class="nav"><button class="btn alt" id="essayPrev" onclick="essayPrev()">السابق</button><button class="btn" id="essayNext" onclick="essayNext()">التالي</button></div></section>
-<section id="result" class="card result hidden"><h2>تم إنهاء الامتحان وتصحيحه ✅</h2><p id="resultStudent"></p><div class="score" id="totalScore">0 / 100</div><div class="resultgrid"><div class="resultbox"><b id="mcqRight">0</b>اختيار صحيح</div><div class="resultbox"><b id="essayScore">0</b>درجة مقالي</div><div class="resultbox"><b id="wrong">0</b>اختيار خاطئ</div><div class="resultbox"><b id="blank">0</b>غير مجاب</div></div><div class="warn">تم تثبيت النتيجة بعد التصحيح. لا يمكن تعديل إجابات الامتحان بعد ظهور النتيجة.</div><button class="btn" onclick="sendWhatsApp()">إرسال النتيجة على واتساب 📱</button><button class="btn alt" onclick="location.reload()">امتحان جديد</button><div id="review" class="review"></div></section>
+
+
+<!-- ================= الامتحان ================= -->
+
+<section id="examScreen" class="hidden">
+
+  <div class="exam-head">
+
+    <div class="student">
+      <span id="examName"></span>
+      <small>اختبار الكيمياء العضوية</small>
+    </div>
+
+    <div class="progress-box">
+      <div class="progress-text">
+        <span>نسبة الإجابة</span>
+        <span id="progressText">0 / 50</span>
+      </div>
+      <div class="progress">
+        <i id="progressBar"></i>
+      </div>
+    </div>
+
+  </div>
+
+  <form id="examForm">
+
+<!-- ================= الجزء الأول ================= -->
+
+<div class="part">
+  <strong>أولًا: مقدمة الكيمياء العضوية وخواص الكربون</strong>
+  <small>الأسئلة من 1 إلى 10</small>
+</div>
+
+
+<!-- 1 -->
+<div class="question">
+<div class="question-number"><div class="number">1</div><strong>السؤال الأول</strong></div>
+<div class="question-title">
+أي مما يأتي يمثل السبب الأكثر ارتباطًا باتساع عدد المركبات العضوية المعروفة؟
+</div>
+<div class="options">
+
+<div class="option"><input name="q1" value="A" id="q1a" type="radio">
+<label for="q1a"><span>أ</span>ارتفاع الكتلة الذرية للكربون بدرجة كبيرة.</label></div>
+
+<div class="option"><input name="q1" value="B" id="q1b" type="radio">
+<label for="q1b"><span>ب</span>قدرة ذرات الكربون على التكاتف وتكوين سلاسل وتفرعات وروابط متعددة.</label></div>
+
+<div class="option"><input name="q1" value="C" id="q1c" type="radio">
+<label for="q1c"><span>ج</span>ميل الكربون لتكوين أيونات حرة في جميع المركبات.</label></div>
+
+<div class="option"><input name="q1" value="D" id="q1d" type="radio">
+<label for="q1d"><span>د</span>عدم قدرة الكربون على تكوين روابط تساهمية.</label></div>
+
+</div>
+</div>
+
+
+<!-- 2 -->
+<div class="question">
+<div class="question-number"><div class="number">2</div><strong>السؤال الثاني</strong></div>
+<div class="question-title">
+إذا كان لذرة الكربون العدد الذري 6، فإن التوزيع الإلكتروني الذي يفسر تكافؤها الرباعي هو:
+</div>
+<div class="options">
+
+<div class="option"><input name="q2" value="A" id="q2a" type="radio"><label for="q2a"><span>أ</span>2 ، 4</label></div>
+<div class="option"><input name="q2" value="B" id="q2b" type="radio"><label for="q2b"><span>ب</span>2 ، 6</label></div>
+<div class="option"><input name="q2" value="C" id="q2c" type="radio"><label for="q2c"><span>ج</span>4 ، 2</label></div>
+<div class="option"><input name="q2" value="D" id="q2d" type="radio"><label for="q2d"><span>د</span>1 ، 5</label></div>
+
+</div>
+</div>
+
+
+<!-- 3 -->
+<div class="question">
+<div class="question-number"><div class="number">3</div><strong>السؤال الثالث</strong></div>
+<div class="question-title">
+أي مما يأتي يوضح الفرق الأساسي بين الرابطة الأحادية والثنائية بين ذرتي كربون؟
+</div>
+<div class="options">
+
+<div class="option"><input name="q3" value="A" id="q3a" type="radio"><label for="q3a"><span>أ</span>عدد الذرات في الجزيء فقط.</label></div>
+<div class="option"><input name="q3" value="B" id="q3b" type="radio"><label for="q3b"><span>ب</span>عدد أزواج الإلكترونات المشتركة بين الذرتين.</label></div>
+<div class="option"><input name="q3" value="C" id="q3c" type="radio"><label for="q3c"><span>ج</span>عدد البروتونات في ذرة الكربون.</label></div>
+<div class="option"><input name="q3" value="D" id="q3d" type="radio"><label for="q3d"><span>د</span>عدد مستويات الطاقة في الذرة.</label></div>
+
+</div>
+</div>
+
+
+<!-- 4 -->
+<div class="question">
+<div class="question-number"><div class="number">4</div><strong>السؤال الرابع</strong></div>
+<div class="question-title">
+أي الصيغ الآتية تحتوي أكبر عدد من ذرات الهيدروجين مع ثبات عدد ذرات الكربون؟
+</div>
+<div class="options">
+
+<div class="option"><input name="q4" value="A" id="q4a" type="radio"><label for="q4a"><span>أ</span>C₄H₆</label></div>
+<div class="option"><input name="q4" value="B" id="q4b" type="radio"><label for="q4b"><span>ب</span>C₄H₈</label></div>
+<div class="option"><input name="q4" value="C" id="q4c" type="radio"><label for="q4c"><span>ج</span>C₄H₁₀</label></div>
+<div class="option"><input name="q4" value="D" id="q4d" type="radio"><label for="q4d"><span>د</span>C₄H₄</label></div>
+
+</div>
+</div>
+
+
+<!-- 5 -->
+<div class="question">
+<div class="question-number"><div class="number">5</div><strong>السؤال الخامس</strong></div>
+<div class="question-title">
+أي مما يأتي لا يعد من صور قدرة الكربون على بناء الهياكل العضوية؟
+</div>
+<div class="options">
+
+<div class="option"><input name="q5" value="A" id="q5a" type="radio"><label for="q5a"><span>أ</span>تكوين سلاسل مستقيمة.</label></div>
+<div class="option"><input name="q5" value="B" id="q5b" type="radio"><label for="q5b"><span>ب</span>تكوين سلاسل متفرعة.</label></div>
+<div class="option"><input name="q5" value="C" id="q5c" type="radio"><label for="q5c"><span>ج</span>تكوين حلقات وتراكيب مختلفة.</label></div>
+<div class="option"><input name="q5" value="D" id="q5d" type="radio"><label for="q5d"><span>د</span>تكوين مركبات لا تحتوي على روابط تساهمية.</label></div>
+
+</div>
+</div>
+
+
+<!-- 6 -->
+<div class="question">
+<div class="question-number"><div class="number">6</div><strong>السؤال السادس</strong></div>
+<div class="question-title">
+أي نوع من الروابط يغلب على الروابط بين ذرات الكربون والهيدروجين في أغلب المركبات العضوية؟
+</div>
+<div class="options">
+<div class="option"><input name="q6" value="A" id="q6a" type="radio"><label for="q6a"><span>أ</span>تساهمية.</label></div>
+<div class="option"><input name="q6" value="B" id="q6b" type="radio"><label for="q6b"><span>ب</span>أيونية.</label></div>
+<div class="option"><input name="q6" value="C" id="q6c" type="radio"><label for="q6c"><span>ج</span>فلزية.</label></div>
+<div class="option"><input name="q6" value="D" id="q6d" type="radio"><label for="q6d"><span>د</span>هيدروجينية فقط.</label></div>
+</div>
+</div>
+
+
+<!-- 7 -->
+<div class="question">
+<div class="question-number"><div class="number">7</div><strong>السؤال السابع</strong></div>
+<div class="question-title">
+أي مما يأتي يفسر استقرار كثير من المركبات العضوية المحتوية على الكربون؟
+</div>
+<div class="options">
+<div class="option"><input name="q7" value="A" id="q7a" type="radio"><label for="q7a"><span>أ</span>قدرة الكربون على تكوين روابط تساهمية قوية.</label></div>
+<div class="option"><input name="q7" value="B" id="q7b" type="radio"><label for="q7b"><span>ب</span>تحول الكربون دائمًا إلى فلز.</label></div>
+<div class="option"><input name="q7" value="C" id="q7c" type="radio"><label for="q7c"><span>ج</span>اختفاء إلكترونات التكافؤ.</label></div>
+<div class="option"><input name="q7" value="D" id="q7d" type="radio"><label for="q7d"><span>د</span>عدم وجود روابط بين الذرات.</label></div>
+</div>
+</div>
+
+
+<!-- 8 -->
+<div class="question">
+<div class="question-number"><div class="number">8</div><strong>السؤال الثامن</strong></div>
+<div class="question-title">
+أي مجموعة تحتوي فقط على عناصر شائعة الوجود في المركبات العضوية؟
+</div>
+<div class="options">
+<div class="option"><input name="q8" value="A" id="q8a" type="radio"><label for="q8a"><span>أ</span>الكربون والهيدروجين والأكسجين والنيتروجين.</label></div>
+<div class="option"><input name="q8" value="B" id="q8b" type="radio"><label for="q8b"><span>ب</span>الصوديوم والبوتاسيوم فقط.</label></div>
+<div class="option"><input name="q8" value="C" id="q8c" type="radio"><label for="q8c"><span>ج</span>الحديد والنحاس والزنك فقط.</label></div>
+<div class="option"><input name="q8" value="D" id="q8d" type="radio"><label for="q8d"><span>د</span>الهيليوم والنيون والأرجون.</label></div>
+</div>
+</div>
+
+
+<!-- 9 -->
+<div class="question">
+<div class="question-number"><div class="number">9</div><strong>السؤال التاسع</strong></div>
+<div class="question-title">
+إذا ارتبطت ذرة كربون بأربع ذرات أخرى بروابط أحادية، فإن عدد روابطها التساهمية الأحادية يكون:
+</div>
+<div class="options">
+<div class="option"><input name="q9" value="A" id="q9a" type="radio"><label for="q9a"><span>أ</span>1</label></div>
+<div class="option"><input name="q9" value="B" id="q9b" type="radio"><label for="q9b"><span>ب</span>2</label></div>
+<div class="option"><input name="q9" value="C" id="q9c" type="radio"><label for="q9c"><span>ج</span>3</label></div>
+<div class="option"><input name="q9" value="D" id="q9d" type="radio"><label for="q9d"><span>د</span>4</label></div>
+</div>
+</div>
+
+
+<!-- 10 -->
+<div class="question">
+<div class="question-number"><div class="number">10</div><strong>السؤال العاشر</strong></div>
+<div class="question-title">
+أي مما يلي يمثل رابطة ثنائية بين ذرتي كربون؟
+</div>
+<div class="figure"><div class="chem">CH₃ — CH₃ &nbsp;&nbsp;&nbsp;&nbsp; CH₂ = CH₂</div></div>
+<div class="options">
+<div class="option"><input name="q10" value="A" id="q10a" type="radio"><label for="q10a"><span>أ</span>CH₃—CH₃</label></div>
+<div class="option"><input name="q10" value="B" id="q10b" type="radio"><label for="q10b"><span>ب</span>CH₂=CH₂</label></div>
+<div class="option"><input name="q10" value="C" id="q10c" type="radio"><label for="q10c"><span>ج</span>CH₄</label></div>
+<div class="option"><input name="q10" value="D" id="q10d" type="radio"><label for="q10d"><span>د</span>CH₃—H</label></div>
+</div>
+</div>
+
+
+<!-- ================= الجزء الثاني ================= -->
+
+<div class="part">
+<strong>ثانيًا: السلاسل والصيغ والتصنيف</strong>
+<small>الأسئلة من 11 إلى 25</small>
+</div>
+
+
+<!-- 11 -->
+<div class="question">
+<div class="question-number"><div class="number">11</div><strong>السؤال الحادي عشر</strong></div>
+<div class="question-title">
+ما الصيغة العامة للألكانات المفتوحة السلسلة؟
+</div>
+<div class="options">
+<div class="option"><input name="q11" value="A" id="q11a" type="radio"><label for="q11a"><span>أ</span>CₙH₂ₙ₊₂</label></div>
+<div class="option"><input name="q11" value="B" id="q11b" type="radio"><label for="q11b"><span>ب</span>CₙH₂ₙ</label></div>
+<div class="option"><input name="q11" value="C" id="q11c" type="radio"><label for="q11c"><span>ج</span>CₙH₂ₙ₋₂</label></div>
+<div class="option"><input name="q11" value="D" id="q11d" type="radio"><label for="q11d"><span>د</span>CₙHₙ</label></div>
+</div>
+</div>
+
+
+<!-- 12 -->
+<div class="question">
+<div class="question-number"><div class="number">12</div><strong>السؤال الثاني عشر</strong></div>
+<div class="question-title">
+الصيغة الجزيئية لألكان مفتوح السلسلة يحتوي على 7 ذرات كربون هي:
+</div>
+<div class="options">
+<div class="option"><input name="q12" value="A" id="q12a" type="radio"><label for="q12a"><span>أ</span>C₇H₁₂</label></div>
+<div class="option"><input name="q12" value="B" id="q12b" type="radio"><label for="q12b"><span>ب</span>C₇H₁₄</label></div>
+<div class="option"><input name="q12" value="C" id="q12c" type="radio"><label for="q12c"><span>ج</span>C₇H₁₆</label></div>
+<div class="option"><input name="q12" value="D" id="q12d" type="radio"><label for="q12d"><span>د</span>C₇H₁₈</label></div>
+</div>
+</div>
+
+
+<!-- 13 -->
+<div class="question">
+<div class="question-number"><div class="number">13</div><strong>السؤال الثالث عشر</strong></div>
+<div class="question-title">
+أي المركبات الآتية ينتمي إلى الألكينات؟
+</div>
+<div class="options">
+<div class="option"><input name="q13" value="A" id="q13a" type="radio"><label for="q13a"><span>أ</span>C₃H₈</label></div>
+<div class="option"><input name="q13" value="B" id="q13b" type="radio"><label for="q13b"><span>ب</span>C₃H₆</label></div>
+<div class="option"><input name="q13" value="C" id="q13c" type="radio"><label for="q13c"><span>ج</span>C₃H₄</label></div>
+<div class="option"><input name="q13" value="D" id="q13d" type="radio"><label for="q13d"><span>د</span>CH₄</label></div>
+</div>
+</div>
+
+
+<!-- 14 -->
+<div class="question">
+<div class="question-number"><div class="number">14</div><strong>السؤال الرابع عشر</strong></div>
+<div class="question-title">
+أي الصيغ الآتية يمكن أن تمثل ألكينًا مفتوح السلسلة يحتوي على 6 ذرات كربون؟
+</div>
+<div class="options">
+<div class="option"><input name="q14" value="A" id="q14a" type="radio"><label for="q14a"><span>أ</span>C₆H₁₄</label></div>
+<div class="option"><input name="q14" value="B" id="q14b" type="radio"><label for="q14b"><span>ب</span>C₆H₁₂</label></div>
+<div class="option"><input name="q14" value="C" id="q14c" type="radio"><label for="q14c"><span>ج</span>C₆H₁₀</label></div>
+<div class="option"><input name="q14" value="D" id="q14d" type="radio"><label for="q14d"><span>د</span>C₆H₈</label></div>
+</div>
+</div>
+
+
+<!-- 15 -->
+<div class="question">
+<div class="question-number"><div class="number">15</div><strong>السؤال الخامس عشر</strong></div>
+<div class="question-title">
+أي مما يأتي يؤدي إلى زيادة درجة عدم التشبع في المركب الهيدروكربوني؟
+</div>
+<div class="options">
+<div class="option"><input name="q15" value="A" id="q15a" type="radio"><label for="q15a"><span>أ</span>تحويل رابطة أحادية إلى رابطة مزدوجة.</label></div>
+<div class="option"><input name="q15" value="B" id="q15b" type="radio"><label for="q15b"><span>ب</span>إضافة ذرتي هيدروجين فقط.</label></div>
+<div class="option"><input name="q15" value="C" id="q15c" type="radio"><label for="q15c"><span>ج</span>تحويل الرابطة المزدوجة إلى أحادية.</label></div>
+<div class="option"><input name="q15" value="D" id="q15d" type="radio"><label for="q15d"><span>د</span>زيادة عدد ذرات الهيدروجين دون تغيير الكربون.</label></div>
+</div>
+</div>
+
+
+<!-- 16 -->
+<div class="question">
+<div class="question-number"><div class="number">16</div><strong>السؤال السادس عشر</strong></div>
+<div class="question-title">
+المركب الذي يحتوي على رابطة ثلاثية بين ذرتي كربون ينتمي إلى:
+</div>
+<div class="options">
+<div class="option"><input name="q16" value="A" id="q16a" type="radio"><label for="q16a"><span>أ</span>الألكانات.</label></div>
+<div class="option"><input name="q16" value="B" id="q16b" type="radio"><label for="q16b"><span>ب</span>الألكينات.</label></div>
+<div class="option"><input name="q16" value="C" id="q16c" type="radio"><label for="q16c"><span>ج</span>الألكاينات.</label></div>
+<div class="option"><input name="q16" value="D" id="q16d" type="radio"><label for="q16d"><span>د</span>الكحولات.</label></div>
+</div>
+</div>
+
+
+<!-- 17 -->
+<div class="question">
+<div class="question-number"><div class="number">17</div><strong>السؤال السابع عشر</strong></div>
+<div class="question-title">
+الصيغة العامة للألكاينات المفتوحة السلسلة هي:
+</div>
+<div class="options">
+<div class="option"><input name="q17" value="A" id="q17a" type="radio"><label for="q17a"><span>أ</span>CₙH₂ₙ₊₂</label></div>
+<div class="option"><input name="q17" value="B" id="q17b" type="radio"><label for="q17b"><span>ب</span>CₙH₂ₙ</label></div>
+<div class="option"><input name="q17" value="C" id="q17c" type="radio"><label for="q17c"><span>ج</span>CₙH₂ₙ₋₂</label></div>
+<div class="option"><input name="q17" value="D" id="q17d" type="radio"><label for="q17d"><span>د</span>CₙHₙ₊₂</label></div>
+</div>
+</div>
+
+
+<!-- 18 -->
+<div class="question">
+<div class="question-number"><div class="number">18</div><strong>السؤال الثامن عشر</strong></div>
+<div class="question-title">
+أي الصيغ الآتية يمكن أن تمثل ألكاينًا يحتوي على 5 ذرات كربون؟
+</div>
+<div class="options">
+<div class="option"><input name="q18" value="A" id="q18a" type="radio"><label for="q18a"><span>أ</span>C₅H₁₂</label></div>
+<div class="option"><input name="q18" value="B" id="q18b" type="radio"><label for="q18b"><span>ب</span>C₅H₁₀</label></div>
+<div class="option"><input name="q18" value="C" id="q18c" type="radio"><label for="q18c"><span>ج</span>C₅H₈</label></div>
+<div class="option"><input name="q18" value="D" id="q18d" type="radio"><label for="q18d"><span>د</span>C₅H₆</label></div>
+</div>
+</div>
+
+
+<!-- 19 -->
+<div class="question">
+<div class="question-number"><div class="number">19</div><strong>السؤال التاسع عشر</strong></div>
+<div class="question-title">
+أي ترتيب يوضح تصاعد درجة عدم التشبع؟
+</div>
+<div class="options">
+<div class="option"><input name="q19" value="A" id="q19a" type="radio"><label for="q19a"><span>أ</span>ألكان ← ألكين ← ألكاين.</label></div>
+<div class="option"><input name="q19" value="B" id="q19b" type="radio"><label for="q19b"><span>ب</span>ألكاين ← ألكين ← ألكان.</label></div>
+<div class="option"><input name="q19" value="C" id="q19c" type="radio"><label for="q19c"><span>ج</span>ألكين ← ألكان ← ألكاين.</label></div>
+<div class="option"><input name="q19" value="D" id="q19d" type="radio"><label for="q19d"><span>د</span>ألكان ← ألكاين ← ألكين.</label></div>
+</div>
+</div>
+
+
+<!-- 20 -->
+<div class="question">
+<div class="question-number"><div class="number">20</div><strong>السؤال العشرون</strong></div>
+<div class="question-title">
+أي مما يلي يمثل مركبًا مشبعًا؟
+</div>
+<div class="figure"><div class="chem">CH₃ — CH₂ — CH₂ — CH₃</div></div>
+<div class="options">
+<div class="option"><input name="q20" value="A" id="q20a" type="radio"><label for="q20a"><span>أ</span>بيوتان.</label></div>
+<div class="option"><input name="q20" value="B" id="q20b" type="radio"><label for="q20b"><span>ب</span>بيوتين.</label></div>
+<div class="option"><input name="q20" value="C" id="q20c" type="radio"><label for="q20c"><span>ج</span>بيوتاين.</label></div>
+<div class="option"><input name="q20" value="D" id="q20d" type="radio"><label for="q20d"><span>د</span>مركب عطري.</label></div>
+</div>
+</div>
+
+
+<!-- 21 -->
+<div class="question">
+<div class="question-number"><div class="number">21</div><strong>السؤال الحادي والعشرون</strong></div>
+<div class="question-title">
+عدد ذرات الهيدروجين في الألكان C₉Hₓ يساوي:
+</div>
+<div class="options">
+<div class="option"><input name="q21" value="A" id="q21a" type="radio"><label for="q21a"><span>أ</span>18</label></div>
+<div class="option"><input name="q21" value="B" id="q21b" type="radio"><label for="q21b"><span>ب</span>20</label></div>
+<div class="option"><input name="q21" value="C" id="q21c" type="radio"><label for="q21c"><span>ج</span>16</label></div>
+<div class="option"><input name="q21" value="D" id="q21d" type="radio"><label for="q21d"><span>د</span>22</label></div>
+</div>
+</div>
+
+
+<!-- 22 -->
+<div class="question">
+<div class="question-number"><div class="number">22</div><strong>السؤال الثاني والعشرون</strong></div>
+<div class="question-title">
+إذا كان مركب هيدروكربوني مفتوح السلسلة صيغته C₆H₁₂، فأي مما يأتي يمكن أن يكون صحيحًا؟
+</div>
+<div class="options">
+<div class="option"><input name="q22" value="A" id="q22a" type="radio"><label for="q22a"><span>أ</span>ينتمي بالضرورة إلى الألكانات.</label></div>
+<div class="option"><input name="q22" value="B" id="q22b" type="radio"><label for="q22b"><span>ب</span>يمكن أن يكون ألكينًا مفتوح السلسلة.</label></div>
+<div class="option"><input name="q22" value="C" id="q22c" type="radio"><label for="q22c"><span>ج</span>يجب أن يكون ألكاينًا.</label></div>
+<div class="option"><input name="q22" value="D" id="q22d" type="radio"><label for="q22d"><span>د</span>لا يمكن أن يكون هيدروكربونًا.</label></div>
+</div>
+</div>
+
+
+<!-- 23 -->
+<div class="question">
+<div class="question-number"><div class="number">23</div><strong>السؤال الثالث والعشرون</strong></div>
+<div class="question-title">
+أي تركيب من الآتي يمثل سلسلة كربونية متفرعة؟
+</div>
+<div class="figure"><div class="chem">CH₃—CH(CH₃)—CH₂—CH₃</div></div>
+<div class="options">
+<div class="option"><input name="q23" value="A" id="q23a" type="radio"><label for="q23a"><span>أ</span>التركيب الموضح في الشكل.</label></div>
+<div class="option"><input name="q23" value="B" id="q23b" type="radio"><label for="q23b"><span>ب</span>CH₃—CH₂—CH₂—CH₃ فقط.</label></div>
+<div class="option"><input name="q23" value="C" id="q23c" type="radio"><label for="q23c"><span>ج</span>CH₄ فقط.</label></div>
+<div class="option"><input name="q23" value="D" id="q23d" type="radio"><label for="q23d"><span>د</span>H₂ فقط.</label></div>
+</div>
+</div>
+
+
+<!-- 24 -->
+<div class="question">
+<div class="question-number"><div class="number">24</div><strong>السؤال الرابع والعشرون</strong></div>
+<div class="question-title">
+في المركب الموضح، ذرة الكربون التي ترتبط بثلاث ذرات كربون تسمى:
+</div>
+<div class="figure"><div class="chem">CH₃—CH₂—CH(CH₃)—CH₂—CH₃</div></div>
+<div class="options">
+<div class="option"><input name="q24" value="A" id="q24a" type="radio"><label for="q24a"><span>أ</span>أولية.</label></div>
+<div class="option"><input name="q24" value="B" id="q24b" type="radio"><label for="q24b"><span>ب</span>ثانوية.</label></div>
+<div class="option"><input name="q24" value="C" id="q24c" type="radio"><label for="q24c"><span>ج</span>ثالثية.</label></div>
+<div class="option"><input name="q24" value="D" id="q24d" type="radio"><label for="q24d"><span>د</span>رباعية الهيدروجين.</label></div>
+</div>
+</div>
+
+
+<!-- 25 -->
+<div class="question">
+<div class="question-number"><div class="number">25</div><strong>السؤال الخامس والعشرون</strong></div>
+<div class="question-title">
+عدد ذرات الكربون الثانوية في المركب:
+</div>
+<div class="figure"><div class="chem">CH₃—CH₂—CH(CH₃)—CH₂—CH₃</div></div>
+<div class="options">
+<div class="option"><input name="q25" value="A" id="q25a" type="radio"><label for="q25a"><span>أ</span>1</label></div>
+<div class="option"><input name="q25" value="B" id="q25b" type="radio"><label for="q25b"><span>ب</span>2</label></div>
+<div class="option"><input name="q25" value="C" id="q25c" type="radio"><label for="q25c"><span>ج</span>3</label></div>
+<div class="option"><input name="q25" value="D" id="q25d" type="radio"><label for="q25d"><span>د</span>4</label></div>
+</div>
+</div>
+
+
+<!-- ================= الجزء الثالث ================= -->
+
+<div class="part">
+<strong>ثالثًا: التماكب وقراءة التراكيب</strong>
+<small>الأسئلة من 26 إلى 35</small>
+</div>
+
+
+<!-- 26 -->
+<div class="question">
+<div class="question-number"><div class="number">26</div><strong>السؤال السادس والعشرون</strong></div>
+<div class="question-title">
+أي زوج يمثل متشابهات بنائية؟
+</div>
+<div class="options">
+<div class="option"><input name="q26" value="A" id="q26a" type="radio"><label for="q26a"><span>أ</span>CH₃CH₂CH₂CH₃ و CH₃CH(CH₃)CH₃.</label></div>
+<div class="option"><input name="q26" value="B" id="q26b" type="radio"><label for="q26b"><span>ب</span>CH₄ و C₂H₆.</label></div>
+<div class="option"><input name="q26" value="C" id="q26c" type="radio"><label for="q26c"><span>ج</span>C₂H₄ و C₂H₆.</label></div>
+<div class="option"><input name="q26" value="D" id="q26d" type="radio"><label for="q26d"><span>د</span>C₃H₈ و C₄H₁₀.</label></div>
+</div>
+</div>
+
+
+<!-- 27 -->
+<div class="question">
+<div class="question-number"><div class="number">27</div><strong>السؤال السابع والعشرون</strong></div>
+<div class="question-title">
+السبب في اعتبار مركبين متشابهين بنائيًا هو:
+</div>
+<div class="options">
+<div class="option"><input name="q27" value="A" id="q27a" type="radio"><label for="q27a"><span>أ</span>اختلاف الصيغة الجزيئية مع ثبات عدد الذرات.</label></div>
+<div class="option"><input name="q27" value="B" id="q27b" type="radio"><label for="q27b"><span>ب</span>اتفاق الصيغة الجزيئية واختلاف طريقة اتصال الذرات.</label></div>
+<div class="option"><input name="q27" value="C" id="q27c" type="radio"><label for="q27c"><span>ج</span>اختلاف عدد عناصر المركب.</label></div>
+<div class="option"><input name="q27" value="D" id="q27d" type="radio"><label for="q27d"><span>د</span>اتفاق الاسم فقط.</label></div>
+</div>
+</div>
+
+
+<!-- 28 -->
+<div class="question">
+<div class="question-number"><div class="number">28</div><strong>السؤال الثامن والعشرون</strong></div>
+<div class="question-title">
+عدد المتشابهات البنائية للألكان C₄H₁₀ هو:
+</div>
+<div class="options">
+<div class="option"><input name="q28" value="A" id="q28a" type="radio"><label for="q28a"><span>أ</span>1</label></div>
+<div class="option"><input name="q28" value="B" id="q28b" type="radio"><label for="q28b"><span>ب</span>2</label></div>
+<div class="option"><input name="q28" value="C" id="q28c" type="radio"><label for="q28c"><span>ج</span>3</label></div>
+<div class="option"><input name="q28" value="D" id="q28d" type="radio"><label for="q28d"><span>د</span>4</label></div>
+</div>
+</div>
+
+
+<!-- 29 -->
+<div class="question">
+<div class="question-number"><div class="number">29</div><strong>السؤال التاسع والعشرون</strong></div>
+<div class="question-title">
+أي تركيب يمثل السلسلة المستقيمة لـ C₅H₁₂؟
+</div>
+<div class="options">
+<div class="option"><input name="q29" value="A" id="q29a" type="radio"><label for="q29a"><span>أ</span>CH₃—CH₂—CH₂—CH₂—CH₃</label></div>
+<div class="option"><input name="q29" value="B" id="q29b" type="radio"><label for="q29b"><span>ب</span>CH₃—CH(CH₃)—CH₂—CH₃</label></div>
+<div class="option"><input name="q29" value="C" id="q29c" type="radio"><label for="q29c"><span>ج</span>C₃H₆</label></div>
+<div class="option"><input name="q29" value="D" id="q29d" type="radio"><label for="q29d"><span>د</span>C₂H₂</label></div>
+</div>
+</div>
+
+
+<!-- 30 -->
+<div class="question">
+<div class="question-number"><div class="number">30</div><strong>السؤال الثلاثون</strong></div>
+<div class="question-title">
+أي تركيب يحتوي على أربع ذرات كربون ولكنه ليس سلسلة مستقيمة؟
+</div>
+<div class="options">
+<div class="option"><input name="q30" value="A" id="q30a" type="radio"><label for="q30a"><span>أ</span>CH₃—CH₂—CH₂—CH₃</label></div>
+<div class="option"><input name="q30" value="B" id="q30b" type="radio"><label for="q30b"><span>ب</span>CH₃—CH(CH₃)—CH₃</label></div>
+<div class="option"><input name="q30" value="C" id="q30c" type="radio"><label for="q30c"><span>ج</span>CH₄</label></div>
+<div class="option"><input name="q30" value="D" id="q30d" type="radio"><label for="q30d"><span>د</span>C₂H₄</label></div>
+</div>
+</div>
+
+
+<!-- 31 -->
+<div class="question">
+<div class="question-number"><div class="number">31</div><strong>السؤال الحادي والثلاثون</strong></div>
+<div class="question-title">
+في التركيب الآتي، عدد ذرات الكربون الأولية يساوي:
+</div>
+<div class="figure"><div class="chem">CH₃—CH(CH₃)—CH₂—CH₃</div></div>
+<div class="options">
+<div class="option"><input name="q31" value="A" id="q31a" type="radio"><label for="q31a"><span>أ</span>1</label></div>
+<div class="option"><input name="q31" value="B" id="q31b" type="radio"><label for="q31b"><span>ب</span>2</label></div>
+<div class="option"><input name="q31" value="C" id="q31c" type="radio"><label for="q31c"><span>ج</span>3</label></div>
+<div class="option"><input name="q31" value="D" id="q31d" type="radio"><label for="q31d"><span>د</span>4</label></div>
+</div>
+</div>
+
+
+<!-- 32 -->
+<div class="question">
+<div class="question-number"><div class="number">32</div><strong>السؤال الثاني والثلاثون</strong></div>
+<div class="question-title">
+أي عبارة صحيحة عن الصيغة الجزيئية والصيغة البنائية؟
+</div>
+<div class="options">
+<div class="option"><input name="q32" value="A" id="q32a" type="radio"><label for="q32a"><span>أ</span>الصيغة الجزيئية توضح طريقة اتصال الذرات بالتفصيل.</label></div>
+<div class="option"><input name="q32" value="B" id="q32b" type="radio"><label for="q32b"><span>ب</span>الصيغة البنائية توضح ترتيب اتصال الذرات بصورة أكبر.</label></div>
+<div class="option"><input name="q32" value="C" id="q32c" type="radio"><label for="q32c"><span>ج</span>لا فرق بينهما.</label></div>
+<div class="option"><input name="q32" value="D" id="q32d" type="radio"><label for="q32d"><span>د</span>الصيغة البنائية لا تحتوي كربونًا.</label></div>
+</div>
+</div>
+
+
+<!-- 33 -->
+<div class="question">
+<div class="question-number"><div class="number">33</div><strong>السؤال الثالث والثلاثون</strong></div>
+<div class="question-title">
+المركبان اللذان لهما الصيغة نفسها ولكن تختلف خواصهما نتيجة اختلاف البناء هما:
+</div>
+<div class="options">
+<div class="option"><input name="q33" value="A" id="q33a" type="radio"><label for="q33a"><span>أ</span>نظائر.</label></div>
+<div class="option"><input name="q33" value="B" id="q33b" type="radio"><label for="q33b"><span>ب</span>متشابهات بنائية.</label></div>
+<div class="option"><input name="q33" value="C" id="q33c" type="radio"><label for="q33c"><span>ج</span>أيونات.</label></div>
+<div class="option"><input name="q33" value="D" id="q33d" type="radio"><label for="q33d"><span>د</span>فلزات.</label></div>
+</div>
+</div>
+
+
+<!-- 34 -->
+<div class="question">
+<div class="question-number"><div class="number">34</div><strong>السؤال الرابع والثلاثون</strong></div>
+<div class="question-title">
+إذا كان مركبان لهما الصيغة C₅H₁₂، فإن اختلاف ترتيب ذرات الكربون قد يؤدي إلى:
+</div>
+<div class="options">
+<div class="option"><input name="q34" value="A" id="q34a" type="radio"><label for="q34a"><span>أ</span>تكوين متشابهات بنائية.</label></div>
+<div class="option"><input name="q34" value="B" id="q34b" type="radio"><label for="q34b"><span>ب</span>اختفاء ذرات الكربون.</label></div>
+<div class="option"><input name="q34" value="C" id="q34c" type="radio"><label for="q34c"><span>ج</span>تحول المركب إلى عنصر.</label></div>
+<div class="option"><input name="q34" value="D" id="q34d" type="radio"><label for="q34d"><span>د</span>زيادة العدد الذري للكربون.</label></div>
+</div>
+</div>
+
+
+<!-- 35 -->
+<div class="question">
+<div class="question-number"><div class="number">35</div><strong>السؤال الخامس والثلاثون</strong></div>
+<div class="question-title">
+أي مما يلي ليس اختلافًا بنائيًا بين متشابهين بنائيين؟
+</div>
+<div class="options">
+<div class="option"><input name="q35" value="A" id="q35a" type="radio"><label for="q35a"><span>أ</span>ترتيب اتصال الذرات.</label></div>
+<div class="option"><input name="q35" value="B" id="q35b" type="radio"><label for="q35b"><span>ب</span>شكل السلسلة والتفرع.</label></div>
+<div class="option"><input name="q35" value="C" id="q35c" type="radio"><label for="q35c"><span>ج</span>الصيغة الجزيئية نفسها.</label></div>
+<div class="option"><input name="q35" value="D" id="q35d" type="radio"><label for="q35d"><span>د</span>موضع اتصال بعض الذرات.</label></div>
+</div>
+</div>
+
+
+<!-- ================= الجزء الرابع ================= -->
+
+<div class="part">
+<strong>رابعًا: أساسيات تسمية المركبات العضوية</strong>
+<small>الأسئلة من 36 إلى 50</small>
+</div>
+
+
+<!-- 36 -->
+<div class="question">
+<div class="question-number"><div class="number">36</div><strong>السؤال السادس والثلاثون</strong></div>
+<div class="question-title">
+عند تسمية ألكان متفرع، ما الخطوة التي تسبق تحديد مواقع التفرعات؟
+</div>
+<div class="options">
+<div class="option"><input name="q36" value="A" id="q36a" type="radio"><label for="q36a"><span>أ</span>اختيار أطول سلسلة كربونية متصلة مناسبة.</label></div>
+<div class="option"><input name="q36" value="B" id="q36b" type="radio"><label for="q36b"><span>ب</span>إضافة الأكسجين.</label></div>
+<div class="option"><input name="q36" value="C" id="q36c" type="radio"><label for="q36c"><span>ج</span>حذف الكربون.</label></div>
+<div class="option"><input name="q36" value="D" id="q36d" type="radio"><label for="q36d"><span>د</span>اختيار أقصر سلسلة.</label></div>
+</div>
+</div>
+
+
+<!-- 37 -->
+<div class="question">
+<div class="question-number"><div class="number">37</div><strong>السؤال السابع والثلاثون</strong></div>
+<div class="question-title">
+الاسم الأساسي لسلسلة تحتوي على ذرة كربون واحدة هو:
+</div>
+<div class="options">
+<div class="option"><input name="q37" value="A" id="q37a" type="radio"><label for="q37a"><span>أ</span>ميثان.</label></div>
+<div class="option"><input name="q37" value="B" id="q37b" type="radio"><label for="q37b"><span>ب</span>إيثان.</label></div>
+<div class="option"><input name="q37" value="C" id="q37c" type="radio"><label for="q37c"><span>ج</span>بروبان.</label></div>
+<div class="option"><input name="q37" value="D" id="q37d" type="radio"><label for="q37d"><span>د</span>بيوتان.</label></div>
+</div>
+</div>
+
+
+<!-- 38 -->
+<div class="question">
+<div class="question-number"><div class="number">38</div><strong>السؤال الثامن والثلاثون</strong></div>
+<div class="question-title">
+السلسلة التي تحتوي على ثلاث ذرات كربون يكون اسمها الأساسي:
+</div>
+<div class="options">
+<div class="option"><input name="q38" value="A" id="q38a" type="radio"><label for="q38a"><span>أ</span>ميثان.</label></div>
+<div class="option"><input name="q38" value="B" id="q38b" type="radio"><label for="q38b"><span>ب</span>إيثان.</label></div>
+<div class="option"><input name="q38" value="C" id="q38c" type="radio"><label for="q38c"><span>ج</span>بروبان.</label></div>
+<div class="option"><input name="q38" value="D" id="q38d" type="radio"><label for="q38d"><span>د</span>بيوتان.</label></div>
+</div>
+</div>
+
+
+<!-- 39 -->
+<div class="question">
+<div class="question-number"><div class="number">39</div><strong>السؤال التاسع والثلاثون</strong></div>
+<div class="question-title">
+المقطع المستخدم لسلسلة تحتوي على ست ذرات كربون هو:
+</div>
+<div class="options">
+<div class="option"><input name="q39" value="A" id="q39a" type="radio"><label for="q39a"><span>أ</span>بنت-</label></div>
+<div class="option"><input name="q39" value="B" id="q39b" type="radio"><label for="q39b"><span>ب</span>هكس-</label></div>
+<div class="option"><input name="q39" value="C" id="q39c" type="radio"><label for="q39c"><span>ج</span>هبت-</label></div>
+<div class="option"><input name="q39" value="D" id="q39d" type="radio"><label for="q39d"><span>د</span>أوكت-</label></div>
+</div>
+</div>
+
+
+<!-- 40 -->
+<div class="question">
+<div class="question-number"><div class="number">40</div><strong>السؤال الأربعون</strong></div>
+<div class="question-title">
+ما الاسم الصحيح للمركب التالي؟
+</div>
+<div class="figure"><div class="chem">CH₃—CH₂—CH₂—CH₃</div></div>
+<div class="options">
+<div class="option"><input name="q40" value="A" id="q40a" type="radio"><label for="q40a"><span>أ</span>بروبان.</label></div>
+<div class="option"><input name="q40" value="B" id="q40b" type="radio"><label for="q40b"><span>ب</span>بيوتان.</label></div>
+<div class="option"><input name="q40" value="C" id="q40c" type="radio"><label for="q40c"><span>ج</span>بنتان.</label></div>
+<div class="option"><input name="q40" value="D" id="q40d" type="radio"><label for="q40d"><span>د</span>هكسان.</label></div>
+</div>
+</div>
+
+
+<!-- 41 -->
+<div class="question">
+<div class="question-number"><div class="number">41</div><strong>السؤال الحادي والأربعون</strong></div>
+<div class="question-title">
+ما الاسم الصحيح للمركب التالي؟
+</div>
+<div class="figure"><div class="chem">CH₃—CH(CH₃)—CH₃</div></div>
+<div class="options">
+<div class="option"><input name="q41" value="A" id="q41a" type="radio"><label for="q41a"><span>أ</span>2-ميثيل بروبان.</label></div>
+<div class="option"><input name="q41" value="B" id="q41b" type="radio"><label for="q41b"><span>ب</span>1-ميثيل بروبان.</label></div>
+<div class="option"><input name="q41" value="C" id="q41c" type="radio"><label for="q41c"><span>ج</span>2-إيثيل إيثان.</label></div>
+<div class="option"><input name="q41" value="D" id="q41d" type="radio"><label for="q41d"><span>د</span>ميثان متفرع.</label></div>
+</div>
+</div>
+
+
+<!-- 42 -->
+<div class="question">
+<div class="question-number"><div class="number">42</div><strong>السؤال الثاني والأربعون</strong></div>
+<div class="question-title">
+عند ترقيم السلسلة الرئيسية لمركب متفرع، الهدف من الترقيم من الطرف المناسب هو:
+</div>
+<div class="options">
+<div class="option"><input name="q42" value="A" id="q42a" type="radio"><label for="q42a"><span>أ</span>الحصول على أكبر رقم للتفرع.</label></div>
+<div class="option"><input name="q42" value="B" id="q42b" type="radio"><label for="q42b"><span>ب</span>الحصول على أصغر رقم ممكن لموضع التفرع.</label></div>
+<div class="option"><input name="q42" value="C" id="q42c" type="radio"><label for="q42c"><span>ج</span>تغيير عدد ذرات الكربون.</label></div>
+<div class="option"><input name="q42" value="D" id="q42d" type="radio"><label for="q42d"><span>د</span>زيادة عدد الهيدروجينات.</label></div>
+</div>
+</div>
+
+
+<!-- 43 -->
+<div class="question">
+<div class="question-number"><div class="number">43</div><strong>السؤال الثالث والأربعون</strong></div>
+<div class="question-title">
+ما الاسم الصحيح للمركب؟
+</div>
+<div class="figure"><div class="chem">CH₃—CH₂—CH(CH₃)—CH₂—CH₃</div></div>
+<div class="options">
+<div class="option"><input name="q43" value="A" id="q43a" type="radio"><label for="q43a"><span>أ</span>2-ميثيل بنتان.</label></div>
+<div class="option"><input name="q43" value="B" id="q43b" type="radio"><label for="q43b"><span>ب</span>3-ميثيل بنتان.</label></div>
+<div class="option"><input name="q43" value="C" id="q43c" type="radio"><label for="q43c"><span>ج</span>3-إيثيل بيوتان.</label></div>
+<div class="option"><input name="q43" value="D" id="q43d" type="radio"><label for="q43d"><span>د</span>2-إيثيل بروبان.</label></div>
+</div>
+</div>
+
+
+<!-- 44 -->
+<div class="question">
+<div class="question-number"><div class="number">44</div><strong>السؤال الرابع والأربعون</strong></div>
+<div class="question-title">
+إذا كان التفرع يقع على الكربون الثالث في سلسلة مكونة من خمس ذرات كربون، فإن الاسم الصحيح لتفرع ميثيل يكون:
+</div>
+<div class="options">
+<div class="option"><input name="q44" value="A" id="q44a" type="radio"><label for="q44a"><span>أ</span>2-ميثيل بنتان.</label></div>
+<div class="option"><input name="q44" value="B" id="q44b" type="radio"><label for="q44b"><span>ب</span>3-ميثيل بنتان.</label></div>
+<div class="option"><input name="q44" value="C" id="q44c" type="radio"><label for="q44c"><span>ج</span>4-ميثيل بنتان.</label></div>
+<div class="option"><input name="q44" value="D" id="q44d" type="radio"><label for="q44d"><span>د</span>1-ميثيل بنتان.</label></div>
+</div>
+</div>
+
+
+<!-- 45 -->
+<div class="question">
+<div class="question-number"><div class="number">45</div><strong>السؤال الخامس والأربعون</strong></div>
+<div class="question-title">
+أي مما يأتي يمثل أطول سلسلة كربونية متصلة في التركيب الموضح؟
+</div>
+<div class="figure"><div class="chem">CH₃—CH(CH₃)—CH₂—CH₂—CH₃</div></div>
+<div class="options">
+<div class="option"><input name="q45" value="A" id="q45a" type="radio"><label for="q45a"><span>أ</span>3 ذرات كربون.</label></div>
+<div class="option"><input name="q45" value="B" id="q45b" type="radio"><label for="q45b"><span>ب</span>4 ذرات كربون.</label></div>
+<div class="option"><input name="q45" value="C" id="q45c" type="radio"><label for="q45c"><span>ج</span>5 ذرات كربون.</label></div>
+<div class="option"><input name="q45" value="D" id="q45d" type="radio"><label for="q45d"><span>د</span>6 ذرات كربون.</label></div>
+</div>
+</div>
+
+
+<!-- 46 -->
+<div class="question">
+<div class="question-number"><div class="number">46</div><strong>السؤال السادس والأربعون</strong></div>
+<div class="question-title">
+ما الاسم النظامي للمركب؟
+</div>
+<div class="figure"><div class="chem">CH₃—CH(CH₃)—CH₂—CH₂—CH₃</div></div>
+<div class="options">
+<div class="option"><input name="q46" value="A" id="q46a" type="radio"><label for="q46a"><span>أ</span>2-ميثيل بنتان.</label></div>
+<div class="option"><input name="q46" value="B" id="q46b" type="radio"><label for="q46b"><span>ب</span>3-ميثيل بنتان.</label></div>
+<div class="option"><input name="q46" value="C" id="q46c" type="radio"><label for="q46c"><span>ج</span>4-ميثيل بنتان.</label></div>
+<div class="option"><input name="q46" value="D" id="q46d" type="radio"><label for="q46d"><span>د</span>2-إيثيل بيوتان.</label></div>
+</div>
+</div>
+
+
+<!-- 47 -->
+<div class="question">
+<div class="question-number"><div class="number">47</div><strong>السؤال السابع والأربعون</strong></div>
+<div class="question-title">
+أي عبارة أدق عند المفاضلة بين اسمين محتملين لمركب متفرع؟
+</div>
+<div class="options">
+<div class="option"><input name="q47" value="A" id="q47a" type="radio"><label for="q47a"><span>أ</span>يُختار الاسم الذي يحتوي أطول سلسلة رئيسية صحيحة.</label></div>
+<div class="option"><input name="q47" value="B" id="q47b" type="radio"><label for="q47b"><span>ب</span>يُختار الاسم عشوائيًا.</label></div>
+<div class="option"><input name="q47" value="C" id="q47c" type="radio"><label for="q47c"><span>ج</span>يُختار الاسم الذي يحتوي أكبر عدد من الأرقام.</label></div>
+<div class="option"><input name="q47" value="D" id="q47d" type="radio"><label for="q47d"><span>د</span>يُهمل ترتيب الذرات.</label></div>
+</div>
+</div>
+
+
+<!-- 48 -->
+<div class="question">
+<div class="question-number"><div class="number">48</div><strong>السؤال الثامن والأربعون</strong></div>
+<div class="question-title">
+أي مما يلي يمثل الترتيب الصحيح لأسماء السلاسل حسب عدد ذرات الكربون؟
+</div>
+<div class="options">
+<div class="option"><input name="q48" value="A" id="q48a" type="radio"><label for="q48a"><span>أ</span>ميثان ← إيثان ← بروبان ← بيوتان.</label></div>
+<div class="option"><input name="q48" value="B" id="q48b" type="radio"><label for="q48b"><span>ب</span>إيثان ← ميثان ← بيوتان ← بروبان.</label></div>
+<div class="option"><input name="q48" value="C" id="q48c" type="radio"><label for="q48c"><span>ج</span>بروبان ← ميثان ← إيثان ← بيوتان.</label></div>
+<div class="option"><input name="q48" value="D" id="q48d" type="radio"><label for="q48d"><span>د</span>بيوتان ← بروبان ← إيثان ← ميثان.</label></div>
+</div>
+</div>
+
+
+<!-- 49 -->
+<div class="question">
+<div class="question-number"><div class="number">49</div><strong>السؤال التاسع والأربعون</strong></div>
+<div class="question-title">
+ما الاسم الصحيح للمركب الآتي؟
+</div>
+<div class="figure"><div class="chem">CH₃—CH₂—CH(CH₃)—CH₂—CH₂—CH₃</div></div>
+<div class="options">
+<div class="option"><input name="q49" value="A" id="q49a" type="radio"><label for="q49a"><span>أ</span>2-ميثيل هكسان.</label></div>
+<div class="option"><input name="q49" value="B" id="q49b" type="radio"><label for="q49b"><span>ب</span>3-ميثيل هكسان.</label></div>
+<div class="option"><input name="q49" value="C" id="q49c" type="radio"><label for="q49c"><span>ج</span>4-ميثيل هكسان.</label></div>
+<div class="option"><input name="q49" value="D" id="q49d" type="radio"><label for="q49d"><span>د</span>3-إيثيل بنتان.</label></div>
+</div>
+</div>
+
+
+<!-- 50 -->
+<div class="question">
+<div class="question-number"><div class="number">50</div><strong>السؤال الخمسون</strong></div>
+<div class="question-title">
+بالاعتماد على قواعد اختيار السلسلة الرئيسية والترقيم والتفرع، ما الاسم الصحيح للمركب الآتي؟
+</div>
+
+<div class="figure">
+<div class="chem">
+CH₃—CH₂—CH(CH₃)—CH₂—CH(CH₃)—CH₃
+</div>
+</div>
+
+<div class="options">
+<div class="option"><input name="q50" value="A" id="q50a" type="radio"><label for="q50a"><span>أ</span>2،4-ثنائي ميثيل هكسان.</label></div>
+<div class="option"><input name="q50" value="B" id="q50b" type="radio"><label for="q50b"><span>ب</span>2،4-ثنائي ميثيل بنتان.</label></div>
+<div class="option"><input name="q50" value="C" id="q50c" type="radio"><label for="q50c"><span>ج</span>3،5-ثنائي ميثيل هكسان.</label></div>
+<div class="option"><input name="q50" value="D" id="q50d" type="radio"><label for="q50d"><span>د</span>3-إيثيل هكسان.</label></div>
+</div>
+</div>
+
+
+<div class="submit">
+<p>
+تأكد من إجاباتك. بعد التسليم سيتم التصحيح تلقائيًا ولن تحتاج إلى تصحيح يدوي.
+</p>
+
+<button type="button" class="start" onclick="submitExam()">
+تسليم الامتحان
+</button>
+</div>
+
+</form>
+
+</section>
+
+
+<!-- ================= النتيجة ================= -->
+
+<section id="resultScreen" class="hidden">
+
+<div class="card result">
+
+<div class="score" id="scoreCircle">
+<div class="score-inner">
+<div>
+<strong id="score">0/50</strong>
+<small>الدرجة</small>
+</div>
+</div>
+</div>
+
+<h2 id="resultTitle">تم تصحيح الامتحان</h2>
+<p id="resultInfo" style="color:#91a1b2"></p>
+
+<div id="reviews"></div>
+
+<div class="whatsapp">
+<h3>إرسال النتيجة</h3>
+<p style="font-size:11px;color:#9caebe">
+تم تجهيز رسالة تحتوي اسم الطالب والدرجة وتفاصيل الإجابات.
+اضغط الزر لفتح WhatsApp.
+</p>
+<a id="wa" target="_blank">
+إرسال النتيجة على WhatsApp
+</a>
+</div>
+
+</div>
+
+<footer>
+اختبار الكيمياء العضوية • نظام امتحان إلكتروني
+</footer>
+
+</section>
+
 </main>
+
+
 <script>
-const DATA={"mcq": [{"q": "التفاعل المميز للهيدروكربونات غير المشبعة هو:", "opts": ["الإضافة", "الترسيب", "التعادل", "الإحلال"], "ans": 0}, {"q": "أي من الآتي يمثل أطول سلسلة كربونية مناسبة في تسمية مركب عضوي؟", "opts": ["السلسلة التي تحتوي على الرابطة المتعددة إن وجدت وتحقق أكبر طول مناسب", "أي سلسلة نختارها دون قاعدة", "السلسلة التي تحتوي على أكبر عدد من التفرعات", "أقصر مسار بين مجموعتين"], "ans": 0}, {"q": "إذا كان اسم المركب 3-ميثيل بنتان، فإن عدد ذرات الكربون في الجزيء يساوي ........", "opts": ["7", "5", "8", "6"], "ans": 3}, {"q": "الصيغة البنائية المكثفة لـ 2,3-ثنائي ميثيل بيوتان هي ........", "opts": ["CH₃–CH₂–CH(CH₃)–CH₂–CH₃", "CH₃–CH(CH₃)–CH₂–CH₂–CH₃", "CH₃–CH(CH₃)–CH(CH₃)–CH₃", "CH₃–C(CH₃)₂–CH₃"], "ans": 2}, {"q": "أي الصيغ الآتية تمثل 1-بيوتين؟", "opts": ["CH₃–CH=CH–CH₃", "CH₃–CH₂–CH₂–CH₃", "CH≡C–CH₂–CH₃", "CH₂=CH–CH₂–CH₃"], "ans": 3}, {"q": "عند اختيار السلسلة الرئيسة لمركب غير مشبع، يجب أن ........", "opts": ["تحتوي على الرابطة المتعددة وتكون أطول سلسلة مناسبة", "تكون أقصر سلسلة", "لا تحتوي على الرابطة المتعددة", "تحتوي على أكبر عدد من التفرعات فقط"], "ans": 0}, {"q": "ما الاسم الصحيح للصيغة CH₂=CH–CH(CH₃)–CH₃؟", "opts": ["2-ميثيل-1-بيوتين", "3-ميثيل-1-بيوتين", "2-ميثيل-2-بيوتين", "1-ميثيل-3-بيوتين"], "ans": 1}, {"q": "ما الصيغة البنائية الصحيحة لـ 2-ميثيل بيوتان؟", "opts": ["CH₃–C(CH₃)₃", "CH₃–CH₂–CH₂–CH₂–CH₃", "CH₃–CH(CH₃)–CH₂–CH₃", "CH₃–CH₂–CH(CH₃)–CH₂–CH₃"], "ans": 2}, {"q": "أي مما يأتي يوضح سبب عدم تشبع الألكاينات؟", "opts": ["وجود روابط أحادية فقط", "وجود أربع روابط هيدروجينية", "عدم وجود كربون", "وجود رابطة ثلاثية"], "ans": 3}, {"q": "عند تسمية 2,2-ثنائي ميثيل بروبان، عدد مجموعات الميثيل المرتبطة بذرة الكربون الوسطى يساوي ........", "opts": ["1", "2", "4", "3"], "ans": 2}, {"q": "أي نوع من الروابط يوجد بين ذرتي الكربون في الألكين؟", "opts": ["ثنائية", "ثلاثية", "أحادية فقط", "أيونية"], "ans": 0}, {"q": "المركب HC≡CH يسمى ........", "opts": ["إيثين", "بروباين", "إيثان", "إيثاين"], "ans": 3}, {"q": "تُعزى قدرة ذرة الكربون على تكوين هذا العدد الكبير من المركبات العضوية إلى ........", "opts": ["كبر نصف قطرها الذري فقط", "سهولة فقدها لجميع إلكترونات التكافؤ", "التكافؤ الأحادي فقط", "التكافؤ الرباعي والارتباط الذاتي"], "ans": 3}, {"q": "إذا كان المركب ألكانًا يحتوي على 7 ذرات كربون، فإن صيغته الجزيئية هي ........", "opts": ["C₇H₁₄", "C₇H₁₆", "C₇H₁₂", "C₇H₈"], "ans": 1}, {"q": "الصيغة الجزيئية للإيثين هي:", "opts": ["C₂H₆", "C₃H₆", "C₂H₄", "C₂H₂"], "ans": 2}, {"q": "عند مقارنة C₆H₁₄ و C₆H₁₂ فإن المركب C₆H₁₂ يحتوي على:", "opts": ["أربع ذرات H أقل", "نفس عدد H", "ذرتي H أكثر", "ذرتي H أقل"], "ans": 3}, {"q": "أي صيغة تمثل 2-ميثيل بروبان؟", "opts": ["CH₃–CH₂–CH₃", "CH₃–CH₂–CH₂–CH₃", "CH₃–CH(CH₃)–CH₃", "CH₃–C(CH₃)₂–CH₃"], "ans": 2}, {"q": "أي مما يأتي يمثل البروبن؟", "opts": ["CH₃–CH=CH–CH₃", "CH₂=CH–CH₃", "CH₃–CH₂–CH₃", "CH≡C–CH₃"], "ans": 1}, {"q": "أي المركبات الآتية أكثر تفرعًا؟", "opts": ["3-ميثيل بنتان", "2-ميثيل بيوتان", "البنتان", "2,2-ثنائي ميثيل بروبان"], "ans": 3}, {"q": "أي المركبات الآتية ينتمي إلى الألكينات؟", "opts": ["C₄H₁₀", "C₆H₁₄", "C₅H₁₀", "C₃H₈"], "ans": 2}, {"q": "أي صيغة من الآتي تحتوي على رابطة ثلاثية؟", "opts": ["CH₃–CH₂–CH₃", "CH₃–CH₃", "CH₂=CH₂", "CH≡CH"], "ans": 3}, {"q": "أي مما يأتي يمثل البروباين؟", "opts": ["CH₂=CH–CH₃", "CH₃–C≡C–CH₃", "CH≡C–CH₃", "CH₃–CH₂–CH₃"], "ans": 2}, {"q": "أي زوج من الآتي يمثل متشكلات تركيبية؟", "opts": ["إيثان وإيثين", "بنتان وهكسان", "بروبان وبيوتان", "بيوتان و2-ميثيل بروبان"], "ans": 3}, {"q": "أي الصيغ الآتية تمثل هيدروكربونًا مشبعًا مفتوح السلسلة؟", "opts": ["C₄H₁₂", "C₄H₈", "C₄H₆", "C₄H₁₀"], "ans": 3}, {"q": "إذا كان مركبان لهما الصيغة الجزيئية نفسها ولكن يختلفان في ترتيب اتصال ذرات الكربون، فهما ........", "opts": ["عنصران", "سلسلتان متجانستان مختلفتان", "متشكلات تركيبية", "نظيران"], "ans": 2}, {"q": "أي العبارات الآتية تصف المتشكلات التركيبية وصفًا صحيحًا؟", "opts": ["مركبات لها الصيغة البنائية نفسها وتختلف في الكتلة", "مركبات لها الصيغة الجزيئية نفسها وتختلف في طريقة اتصال الذرات", "مركبات لا تحتوي على الكربون", "مركبات تختلف في الصيغة الجزيئية فقط"], "ans": 1}, {"q": "الرابطة المزدوجة في الألكين تتكون من:", "opts": ["رابطة سيجما ورابطة باي", "رابطتي باي", "رابطة أيونية", "رابطتي سيجما"], "ans": 0}, {"q": "إذا كان عدد ذرات الكربون في ألكين مفتوح السلسلة 6، فعدد ذرات الهيدروجين يساوي:", "opts": ["12", "16", "10", "14"], "ans": 0}, {"q": "أي عبارة صحيحة عن السلسلة المتجانسة؟", "opts": ["كل أعضائها لها الصيغة الجزيئية نفسها", "كل عضو يختلف عن التالي في CH₂", "لا تتشابه أعضاؤها في الخواص الكيميائية", "لا يمكن أن تحتوي على ألكينات"], "ans": 1}, {"q": "أي الصيغ الآتية تمثل ألكينًا؟", "opts": ["C₅H₁₂", "C₆H₁₄", "C₄H₈", "C₃H₈"], "ans": 2}, {"q": "الرابطة الثلاثية في الألكاين تتكون من:", "opts": ["رابطتين سيجما ورابطة باي", "ثلاث روابط سيجما", "رابطة سيجما ورابطتي باي", "ثلاث روابط باي"], "ans": 2}, {"q": "المجموعة CH₃CH₂– عندما تكون تفرعًا تسمى ........", "opts": ["ميثيل", "إيثيل", "بروبيل", "إيزوبروبيل"], "ans": 1}, {"q": "عند مقارنة ألكين وألكان لهما العدد نفسه من ذرات الكربون، فإن الألكين يحتوي على عدد ذرات هيدروجين أقل بمقدار ........", "opts": ["أربع ذرات", "ست ذرات", "ذرتين", "ذرة واحدة"], "ans": 2}, {"q": "عدد ذرات الكربون في 2-ميثيل بروبين يساوي:", "opts": ["5", "4", "3", "6"], "ans": 1}, {"q": "أي مما يأتي يوضح سبب عدم تشبع الألكينات؟", "opts": ["وجود رابطة ثنائية بين ذرتي كربون", "زيادة عدد ذرات الهيدروجين", "وجود روابط أحادية فقط", "وجود رابطة أيونية"], "ans": 0}, {"q": "عند إضافة الهيدروجين إلى الإيثين في وجود النيكل ينتج:", "opts": ["الميثان", "البروبان", "الإيثان", "الإيثاين"], "ans": 2}, {"q": "عند ترقيم سلسلة ألكين، تكون الأولوية في إعطاء أقل رقم لـ ........", "opts": ["الرابطة المزدوجة", "أكبر ذرة كربون", "التفرع", "الاسم الأبجدي للتفرع"], "ans": 0}, {"q": "أي الأسماء الآتية غير صحيح وفق اختيار أطول سلسلة كربونية مناسبة؟", "opts": ["2-إيثيل بروبان", "3-ميثيل بنتان", "2-ميثيل بروبان", "2-ميثيل بيوتان"], "ans": 0}, {"q": "أي صيغة تمثل 2,2-ثنائي ميثيل بروبان؟", "opts": ["CH₃–CH(CH₃)–CH₂–CH₃", "CH₃–CH₂–CH₂–CH₃", "CH₃–CH(CH₃)–CH(CH₃)–CH₃", "CH₃–C(CH₃)₂–CH₃"], "ans": 3}, {"q": "إذا كان اسم المركب 3-إيثيل-2-ميثيل هكسان، فإن عدد ذرات الكربون في الجزيء يساوي ........", "opts": ["10", "8", "11", "9"], "ans": 3}, {"q": "أي المركبات الآتية يعطي عددًا أكبر من ذرات الهيدروجين؟", "opts": ["C₅H₆", "C₅H₁₂", "C₅H₁₀", "C₅H₈"], "ans": 1}, {"q": "أي صيغة مما يأتي تمثل ألكانًا وليس ألكينًا؟", "opts": ["C₅H₁₀", "C₆H₁₄", "C₄H₈", "C₆H₁₂"], "ans": 1}, {"q": "إذا كان ألكان يحتوي على 8 ذرات كربون، فإن عدد ذرات الهيدروجين به يساوي ........", "opts": ["16", "20", "14", "18"], "ans": 0}, {"q": "أي اسم صحيح للصيغة CH₃–CH=CH–CH₂–CH₃؟", "opts": ["3-بنتين", "2-ميثيل بيوتين", "1-بنتين", "2-بنتين"], "ans": 3}, {"q": "ما الاسم الصحيح للصيغة CH₃–CH(CH₃)–CH₂–CH₂–CH₃؟", "opts": ["2-إيثيل بيوتان", "3-ميثيل بنتان", "1-ميثيل بنتان", "2-ميثيل بنتان"], "ans": 3}, {"q": "عدد ذرات الكربون في 2,3-ثنائي ميثيل بيوتان يساوي ........", "opts": ["6", "7", "5", "8"], "ans": 0}, {"q": "عدد المتشكلات التركيبية للألكان C₄H₁₀ يساوي ........", "opts": ["4", "2", "3", "1"], "ans": 1}, {"q": "إذا كان عدد ذرات الكربون في ألكاين مفتوح السلسلة 6، فعدد ذرات الهيدروجين يساوي:", "opts": ["14", "12", "8", "10"], "ans": 2}, {"q": "أي مما يأتي يطابق القاعدة العامة للألكاينات المفتوحة السلسلة ذات الرابطة الثلاثية الواحدة؟", "opts": ["CₙH₂ₙ", "CₙH₂ₙ₊₂", "CₙH₂ₙ₋₂", "CₙH₂ₙ₋₄"], "ans": 2}, {"q": "الصيغة CH₂=C(CH₃)₂ تمثل ........", "opts": ["2-بيوتين", "1-بيوتين", "بيوتان", "2-ميثيل بروبين"], "ans": 3}, {"q": "أي مركب مما يأتي يختلف عن C₅H₁₂ في عدد ذرات الهيدروجين؟", "opts": ["C₆H₁₄", "C₄H₁₀", "C₅H₁₀", "C₃H₈"], "ans": 2}, {"q": "الألكان الذي يحتوي على 9 ذرات كربون تكون صيغته ........", "opts": ["C₉H₂₀", "C₉H₂₂", "C₉H₁₆", "C₉H₁₈"], "ans": 0}, {"q": "أي الصيغ الآتية تمثل 2-بيوتين؟", "opts": ["CH₃–CH₂–CH₂–CH₃", "CH₂=CH–CH₂–CH₃", "CH≡C–CH₂–CH₃", "CH₃–CH=CH–CH₃"], "ans": 3}, {"q": "عند تسمية الألكينات يبدأ الترقيم من الطرف الأقرب إلى:", "opts": ["آخر ذرة كربون", "التفرع فقط", "الرابطة المزدوجة", "الحرف الأبجدي الأول"], "ans": 2}, {"q": "أي صيغة تمثل البنتان النظامي؟", "opts": ["CH₃–CH(CH₃)–CH₂–CH₃", "CH₃–C(CH₃)₂–CH₃", "CH₃–CH₂–CH₂–CH₂–CH₃", "CH₃–CH₂–CH(CH₃)–CH₂–CH₃"], "ans": 2}, {"q": "عند إضافة مول واحد من H₂ إلى الإيثاين في ظروف مناسبة يمكن أن ينتج أولًا:", "opts": ["إيثان", "ميثان", "إيثين", "بروبان"], "ans": 2}, {"q": "الاسم الشائع للإيثاين هو:", "opts": ["البروبلين", "الميثان", "الأسيتيلين", "الإيثيلين"], "ans": 2}, {"q": "أي الصيغ الآتية تمثل 1-بيوتاين؟", "opts": ["CH₃–CH₂–CH₂–CH₃", "CH₂=CH–CH₂–CH₃", "CH≡C–CH₂–CH₃", "CH₃–C≡C–CH₃"], "ans": 2}, {"q": "أي المركبات الآتية ليس متشكلًا للصيغة C₅H₁₂؟", "opts": ["2-ميثيل بنتان", "2-ميثيل بيوتان", "بنتان", "2,2-ثنائي ميثيل بروبان"], "ans": 0}, {"q": "ما الاسم الصحيح للصيغة CH₃–C(CH₃)=CH–CH₃؟", "opts": ["3-ميثيل-1-بيوتين", "2-ميثيل-1-بيوتين", "3-ميثيل-2-بيوتين", "2-ميثيل-2-بيوتين"], "ans": 3}, {"q": "في مركب يحتوي على رابطة ثلاثية وتفرع، عند الترقيم يجب مراعاة ........", "opts": ["إلغاء الرابطة الثلاثية من الاسم", "إعطاء التفرع أصغر رقم مهما كان", "اختيار أقصر سلسلة", "إعطاء الرابطة الثلاثية أصغر رقم مناسب"], "ans": 3}, {"q": "ما الاسم الصحيح للمركب CH₃–CH(CH₃)–CH₃؟", "opts": ["2-ميثيل بروبان", "3-ميثيل بروبان", "بيوتان", "2-ميثيل بيوتان"], "ans": 0}, {"q": "المركب CH₂=CH₂ يسمى ........", "opts": ["إيثين", "إيثاين", "بروبين", "إيثان"], "ans": 0}, {"q": "المركب الذي صيغته C₆H₁₄ ينتمي إلى ........", "opts": ["المركبات العطرية", "الألكاينات", "الألكينات", "الألكانات"], "ans": 3}, {"q": "أي صيغة من الآتي تحتوي على رابطة مزدوجة؟", "opts": ["CH₃–CH₂–CH₃", "CH₂=CH–CH₃", "CH₃–CH₃", "CH₃–CH₂–CH₃"], "ans": 1}, {"q": "المركب CH₃–CH₂–CH₃ يسمى ........", "opts": ["إيثان", "بيوتان", "بروبان", "بروبين"], "ans": 2}, {"q": "أي الصيغ الآتية تمثل ألكاينًا؟", "opts": ["C₅H₈", "C₆H₁₄", "C₅H₁₂", "C₅H₁₀"], "ans": 0}, {"q": "عند وجود رابطة مزدوجة وتفرع في السلسلة، وعند حدوث تعارض في الترقيم، تعطى الأولوية في الحصول على الرقم الأصغر لـ ........", "opts": ["عدد ذرات الهيدروجين", "التفرع دائمًا", "الرابطة المتعددة", "الحرف الأول من الاسم"], "ans": 2}, {"q": "الفرق في الصيغة الجزيئية بين كل مركبين متتاليين في سلسلة متجانسة من الألكانات هو ........", "opts": ["H₂", "C₂H₂", "CH", "CH₂"], "ans": 3}, {"q": "المجموعة CH₃– عندما تكون تفرعًا تسمى ........", "opts": ["بيوتيل", "بروبيل", "ميثيل", "إيثيل"], "ans": 2}, {"q": "الصيغة الجزيئية للإيثاين هي:", "opts": ["C₂H₆", "C₂H₂", "CH₄", "C₂H₄"], "ans": 1}, {"q": "ما الاسم الصحيح للصيغة CH₃–CH₂–CH(CH₃)–CH₂–CH₃؟", "opts": ["2-إيثيل بيوتان", "2-ميثيل بنتان", "3-إيثيل بيوتان", "3-ميثيل بنتان"], "ans": 3}, {"q": "أي المركبات الآتية ينتمي إلى الألكاينات؟", "opts": ["C₅H₁₂", "C₄H₁₀", "C₄H₈", "C₄H₆"], "ans": 3}, {"q": "عدد المتشكلات التركيبية للصيغة C₅H₁₂ يساوي:", "opts": ["4", "3", "5", "2"], "ans": 1}, {"q": "أي من الآتي يمثل تغييرًا في ترتيب اتصال الذرات مع بقاء الصيغة الجزيئية ثابتة؟", "opts": ["التقطير", "التشاكل البنائي", "التسامي", "التأين"], "ans": 1}, {"q": "عند اختيار السلسلة الأساسية في تسمية الألكين يجب ألا نهمل:", "opts": ["ذرات الهيدروجين", "الرابطة المزدوجة", "الكتلة فقط", "لون المركب"], "ans": 1}, {"q": "إذا كان المركب يحتوي على ست ذرات كربون وصيغته C₆H₁₄، فعدد درجات عدم التشبع فيه يساوي ........", "opts": ["1", "0", "2", "3"], "ans": 1}, {"q": "أي تسمية أدق للصيغة CH₃–CH₂–CH(CH₃)–CH₂–CH₃؟", "opts": ["3-إيثيل بيوتان", "2-إيثيل بيوتان", "3-ميثيل بنتان", "2-ميثيل بنتان"], "ans": 2}, {"q": "أي مما يأتي يطابق القاعدة العامة للألكينات المفتوحة السلسلة ذات الرابطة المزدوجة الواحدة؟", "opts": ["CₙH₂ₙ₋₂", "CₙH₂ₙ", "CₙHₙ", "CₙH₂ₙ₊₂"], "ans": 1}, {"q": "التفاعل المميز للألكانات هو:", "opts": ["الأكسدة فقط", "الإضافة", "البلمرة فقط", "الاستبدال"], "ans": 3}], "essays": [{"q": "اكتب تعريف الكيمياء العضوية، واذكر سبب تنوع المركبات العضوية.", "keys": ["الكربون", "المركبات", "التكافؤ الرباعي", "التكاتف", "السلاسل"]}, {"q": "قارن بين الألكانات والألكينات والألكاينات من حيث التشبع ونوع الرابطة والصيغة العامة.", "keys": ["الألكانات", "الألكينات", "الألكاينات", "CnH2n+2", "CnH2n", "CnH2n-2"]}, {"q": "اكتب الصيغ الجزيئية لأول خمسة أعضاء في سلسلة الألكانات.", "keys": ["CH4", "C2H6", "C3H8", "C4H10", "C5H12"]}, {"q": "اكتب الصيغة البنائية لكل من: البروبان، البيوتان، البنتان.", "keys": ["CH3", "CH2", "CH3", "بروبان", "بيوتان", "بنتان"]}, {"q": "اشرح المقصود بالسلسلة المتجانسة، وما الفرق بين كل عضو والذي يليه؟", "keys": ["السلسلة المتجانسة", "CH2", "الخواص", "أعضاء"]}, {"q": "اكتب قواعد تسمية الألكانات المتفرعة بنظام الأيوباك بالترتيب.", "keys": ["أطول سلسلة", "ترقيم", "تفرع", "ميثيل", "إيثيل", "أبجدي"]}, {"q": "سم المركب: CH3–CH(CH3)–CH2–CH2–CH3.", "keys": ["2-ميثيل بنتان", "ميثيل", "بنتان"]}, {"q": "اكتب الصيغة البنائية لـ 2,3-ثنائي ميثيل بيوتان.", "keys": ["CH3", "CH", "ثنائي ميثيل", "بيوتان"]}, {"q": "وضح الفرق بين الصيغة الجزيئية والصيغة البنائية مع مثال.", "keys": ["الصيغة الجزيئية", "الصيغة البنائية", "C4H10", "بيوتان"]}, {"q": "اذكر نوع الرابطة الموجودة في الألكينات وكيف تتكون الرابطة المزدوجة.", "keys": ["سيجما", "باي", "رابطة مزدوجة"]}, {"q": "اذكر الصيغة العامة للألكينات والألكاينات.", "keys": ["CnH2n", "CnH2n-2", "الألكينات", "الألكاينات"]}, {"q": "اكتب اسم وصيغة الإيثين والإيثاين، واذكر الاسم الشائع للإيثاين.", "keys": ["إيثين", "C2H4", "إيثاين", "C2H2", "أسيتيلين"]}, {"q": "اشرح لماذا يبدأ ترقيم الألكين من الطرف الأقرب للرابطة المزدوجة.", "keys": ["الرابطة المزدوجة", "أقل رقم", "الترقيم"]}, {"q": "اكتب الصيغة البنائية لـ 1-بيوتين و2-بيوتين.", "keys": ["CH2=CH", "CH3", "1-بيوتين", "2-بيوتين"]}, {"q": "ما المقصود بالمتشكلات التركيبية؟ اذكر مثالًا مناسبًا.", "keys": ["الصيغة الجزيئية", "ترتيب اتصال", "بيوتان", "2-ميثيل بروبان"]}, {"q": "اكتب متشكلات C5H12 الثلاثة بأسمائها أو صيغها البنائية.", "keys": ["بنتان", "2-ميثيل بيوتان", "2,2-ثنائي ميثيل بروبان"]}, {"q": "اكتب معادلة هدرجة الإيثين موضحًا العامل الحفاز.", "keys": ["C2H4", "H2", "C2H6", "Ni", "هدرجة"]}, {"q": "اكتب معادلة تحضير الإيثاين من كربيد الكالسيوم والماء.", "keys": ["CaC2", "H2O", "C2H2", "Ca(OH)2"]}, {"q": "وضح الفرق بين تفاعل الإضافة وتفاعل الاستبدال مع مثال لكل منهما في العضوية.", "keys": ["الإضافة", "الاستبدال", "الألكين", "الألكان", "هالوجين"]}, {"q": "ارسم أو اكتب الصيغة البنائية لمركب 3-ميثيل بنتان، ثم اذكر عدد ذرات الكربون فيه.", "keys": ["CH3", "CH2", "CH", "3-ميثيل بنتان", "7"]}]};
-const L=["أ","ب","ج","د"];let mcqI=0,essayI=0,answers=Array(60).fill(null),essayAnswers=Array(20).fill(""),left=5400,started=false,finished=false,student="",cls="";
-function tick(){let m=Math.floor(left/60),s=left%60;document.getElementById("clock").textContent=String(m).padStart(2,"0")+":"+String(s).padStart(2,"0")}
-function begin(){student=document.getElementById("studentName").value.trim();cls=document.getElementById("className").value.trim();if(!student)return alert("اكتب اسم الطالب أولًا.");started=true;document.getElementById("start").classList.add("hidden");document.getElementById("mcq").classList.remove("hidden");renderMCQ();let timer=setInterval(()=>{if(finished){clearInterval(timer);return}left--;tick();if(left<=0)finish()},1000)}
-function renderMCQ(){let d=DATA.mcq[mcqI];document.getElementById("mcqCounter").textContent=`السؤال ${mcqI+1} من 60 — اختر الإجابة الصحيحة`;document.getElementById("mcqAnswered").textContent=`${answers.filter(x=>x!==null).length} / 60`;document.getElementById("mcqBar").style.width=((mcqI+1)/60*100)+"%";let f=/[–=≡₍₎]/.test(d.q)||d.opts.some(x=>/[–=≡₍₎]/.test(x));let h=`<div class="question">${mcqI+1}) ${d.q}</div>${f?'<div class="formula">⚗️ الصيغة / التركيب — اقرأه بدقة</div>':''}<div class="opts">`;d.opts.forEach((o,k)=>h+=`<div class="opt ${answers[mcqI]===k?'sel':''}" onclick="pick(${k})"><span class="letter">${L[k]}</span><span>${o}</span></div>`);h+="</div>";document.getElementById("mcqQuestion").innerHTML=h;document.getElementById("mcqPrev").disabled=mcqI===0;document.getElementById("mcqNext").textContent=mcqI===59?"الانتقال إلى المقالي":"التالي"}
-function pick(k){if(!finished){answers[mcqI]=k;renderMCQ()}}function mcqPrev(){if(mcqI>0){mcqI--;renderMCQ()}}function mcqNext(){if(mcqI<59){mcqI++;renderMCQ()}else{document.getElementById("mcq").classList.add("hidden");document.getElementById("essay").classList.remove("hidden");renderEssay()}}
-function renderEssay(){let d=DATA.essays[essayI];document.getElementById("essayCounter").textContent=`السؤال المقالي ${essayI+1} من 20`;document.getElementById("essayBar").style.width=((essayI+1)/20*100)+"%";document.getElementById("essayQuestion").innerHTML=`<div class="question">${essayI+1}) ${d.q}</div><div class="written"><label>اكتب إجابتك هنا</label><textarea oninput="essayAnswers[essayI]=this.value" placeholder="اكتب الإجابة كأنك في ورقة الامتحان...">${essayAnswers[essayI]||""}</textarea></div>`;document.getElementById("essayPrev").disabled=essayI===0;document.getElementById("essayNext").textContent=essayI===19?"إنهاء الامتحان":"التالي"}
-function essayPrev(){if(essayI>0){essayI--;renderEssay()}}function essayNext(){if(essayI<19){essayI++;renderEssay()}else if(confirm("هل تريد إنهاء الامتحان والتصحيح؟"))finish()}
-function normalize(s){return(s||"").toLowerCase().replace(/[أإآ]/g,"ا").replace(/ى/g,"ي").replace(/ة/g,"ه").replace(/[\\s\\-–—()]/g,"")}
-function essayMark(text,keys){let t=normalize(text),hits=0;for(const k of keys)if(t.includes(normalize(k)))hits++;if(!t)return 0;let ratio=hits/keys.length;return Math.min(2,Math.round(ratio*2*10)/10)}
-function finish(){if(finished)return;finished=true;let right=0;DATA.mcq.forEach((d,i)=>{if(answers[i]===d.ans)right++});let wrong=answers.filter((x,i)=>x!==null&&x!==DATA.mcq[i].ans).length,blank=answers.filter(x=>x===null).length,eScore=DATA.essays.reduce((sum,d,i)=>sum+essayMark(essayAnswers[i],d.keys),0),total=Math.round(right+eScore);document.getElementById("mcq").classList.add("hidden");document.getElementById("essay").classList.add("hidden");document.getElementById("result").classList.remove("hidden");document.getElementById("resultStudent").textContent=`الطالب: ${student}${cls?" • الفصل: "+cls:""}`;document.getElementById("totalScore").textContent=total+" / 100";document.getElementById("mcqRight").textContent=right+" / 60";document.getElementById("essayScore").textContent=eScore+" / 20";document.getElementById("wrong").textContent=wrong;document.getElementById("blank").textContent=blank;document.getElementById("review").innerHTML="<h3>مراجعة الاختيار من متعدد</h3>"+DATA.mcq.map((d,i)=>`<div class="row"><b>س${i+1}</b> — إجابتك: <span class="${answers[i]===d.ans?'ok':'bad'}">${answers[i]===null?'لم يجب':L[answers[i]]}</span> — الصحيح: ${L[d.ans]}</div>`).join("")}
-function sendWhatsApp(){let s=document.getElementById("totalScore").textContent,e=document.getElementById("essayScore").textContent,r=document.getElementById("mcqRight").textContent;let msg=`نتيجة امتحان الكيمياء العضوية%0Aالطالب: ${encodeURIComponent(student)}%0Aالفصل: ${encodeURIComponent(cls)}%0Aالنتيجة: ${encodeURIComponent(s)}%0Aالاختيار: ${encodeURIComponent(r)}%0Aالمقالي: ${encodeURIComponent(e)}%0Aعدد الأسئلة: 80`;window.open("https://wa.me/201102273068?text="+msg,"_blank")}
-tick();window.onbeforeunload=e=>{if(started&&!finished){e.preventDefault();e.returnValue=""}};
-</script></body></html>
+
+/* =========================================================
+   مفتاح الإجابات
+========================================================= */
+
+const answers={
+q1:"B",
+q2:"A",
+q3:"B",
+q4:"C",
+q5:"D",
+q6:"A",
+q7:"A",
+q8:"A",
+q9:"D",
+q10:"B",
+
+q11:"A",
+q12:"C",
+q13:"B",
+q14:"B",
+q15:"A",
+q16:"C",
+q17:"C",
+q18:"C",
+q19:"A",
+q20:"A",
+q21:"B",
+q22:"B",
+q23:"A",
+q24:"C",
+q25:"C",
+
+q26:"A",
+q27:"B",
+q28:"B",
+q29:"A",
+q30:"B",
+q31:"C",
+q32:"B",
+q33:"B",
+q34:"A",
+q35:"C",
+
+q36:"A",
+q37:"A",
+q38:"C",
+q39:"B",
+q40:"B",
+q41:"A",
+q42:"B",
+q43:"B",
+q44:"B",
+q45:"C",
+q46:"A",
+q47:"A",
+q48:"A",
+q49:"B",
+q50:"A"
+};
+
+
+/* =========================================================
+   متغيرات الامتحان
+========================================================= */
+
+let time=60*60;
+let timer=null;
+let started=false;
+let submitted=false;
+
+const whatsappNumber="201102273068";
+
+
+/* =========================================================
+   بدء الامتحان
+========================================================= */
+
+function startExam(){
+
+const name=document
+.getElementById("studentName")
+.value.trim();
+
+if(!name){
+alert("اكتب اسم الطالب أولًا.");
+return;
+}
+
+localStorage.setItem("organic_name",name);
+
+localStorage.setItem(
+"organic_class",
+document.getElementById("studentClass").value
+);
+
+document.getElementById("examName")
+.textContent=name;
+
+document.getElementById("startScreen")
+.classList.add("hidden");
+
+document.getElementById("examScreen")
+.classList.remove("hidden");
+
+started=true;
+
+window.scrollTo(0,0);
+
+startTimer();
+
+updateProgress();
+
+}
+
+
+/* =========================================================
+   المؤقت
+========================================================= */
+
+function startTimer(){
+
+updateTimer();
+
+timer=setInterval(()=>{
+
+time--;
+
+updateTimer();
+
+if(time<=0){
+
+clearInterval(timer);
+
+alert("انتهى وقت الامتحان وسيتم التسليم تلقائيًا.");
+
+submitExam();
+
+}
+
+},1000);
+
+}
+
+
+function updateTimer(){
+
+let m=Math.floor(time/60)
+.toString()
+.padStart(2,"0");
+
+let s=(time%60)
+.toString()
+.padStart(2,"0");
+
+document.getElementById("timer")
+.textContent=m+":"+s;
+
+if(time<=300){
+
+document.getElementById("timer")
+.style.color="var(--red)";
+
+}
+
+}
+
+
+/* =========================================================
+   التقدم
+========================================================= */
+
+function updateProgress(){
+
+let count=0;
+
+for(let i=1;i<=50;i++){
+
+if(document.querySelector(
+`input[name="q${i}"]:checked`
+)){
+count++;
+}
+
+}
+
+document.getElementById("progressText")
+.textContent=count+" / 50";
+
+document.getElementById("progressBar")
+.style.width=(count/50*100)+"%";
+
+}
+
+
+document.addEventListener("change",function(e){
+
+if(
+e.target &&
+e.target.type==="radio"
+){
+
+updateProgress();
+
+}
+
+});
+
+
+/* =========================================================
+   التصحيح
+========================================================= */
+
+function submitExam(){
+
+if(submitted)return;
+
+if(!started)return;
+
+let unanswered=[];
+
+for(let i=1;i<=50;i++){
+
+if(!document.querySelector(
+`input[name="q${i}"]:checked`
+)){
+
+unanswered.push(i);
+
+}
+
+}
+
+if(unanswered.length){
+
+const ok=confirm(
+"لم تجب عن "+unanswered.length+
+" سؤال.\n\nهل تريد تسليم الامتحان الآن؟"
+);
+
+if(!ok)return;
+
+}
+
+submitted=true;
+
+clearInterval(timer);
+
+let score=0;
+let reviews=[];
+
+for(let i=1;i<=50;i++){
+
+let selected=document.querySelector(
+`input[name="q${i}"]:checked`
+);
+
+let user=selected
+?selected.value
+:"لم يجب";
+
+let correct=answers["q"+i];
+
+let right=user===correct;
+
+if(right)score++;
+
+reviews.push({
+number:i,
+user:user,
+correct:correct,
+right:right
+});
+
+}
+
+showResult(score,reviews);
+
+}
+
+
+/* =========================================================
+   عرض النتيجة
+========================================================= */
+
+function showResult(score,reviews){
+
+document.getElementById("examScreen")
+.classList.add("hidden");
+
+document.getElementById("resultScreen")
+.classList.remove("hidden");
+
+let percent=(score/50)*100;
+
+document.getElementById("scoreCircle")
+.style.setProperty("--percent",percent+"%");
+
+document.getElementById("score")
+.textContent=score+"/50";
+
+let title="";
+
+if(score>=45){
+title="ممتاز جدًا 🔥";
+}else if(score>=40){
+title="مستوى ممتاز";
+}else if(score>=35){
+title="مستوى جيد جدًا";
+}else if(score>=25){
+title="مستوى جيد";
+}else{
+title="تحتاج مراجعة أجزاء من الدرس";
+}
+
+document.getElementById("resultTitle")
+.textContent=title;
+
+document.getElementById("resultInfo")
+.textContent=
+"النسبة المئوية: "+percent+"%";
+
+
+let box=document.getElementById("reviews");
+
+box.innerHTML="";
+
+
+reviews.forEach(item=>{
+
+let div=document.createElement("div");
+
+div.className=
+"review "+
+(item.right?"correct":"wrong");
+
+div.innerHTML=`
+
+<b>السؤال ${item.number}</b>
+
+<br>
+
+حالة الإجابة:
+<strong style="color:${
+item.right
+?"var(--green)"
+:"var(--red)"
+}">
+${item.right?"✓ صحيحة":"✕ خاطئة"}
+</strong>
+
+<br>
+
+إجابة الطالب:
+<b>${item.user}</b>
+
+<br>
+
+الإجابة الصحيحة:
+<b>${item.correct}</b>
+
+`;
+
+box.appendChild(div);
+
+});
+
+
+createWhatsApp(score,percent);
+
+window.scrollTo(0,0);
+
+}
+
+
+/* =========================================================
+   WhatsApp
+========================================================= */
+
+function createWhatsApp(score,percent){
+
+let name=document
+.getElementById("studentName")
+.value.trim();
+
+let className=document
+.getElementById("studentClass")
+.value.trim();
+
+let message=
+`🧪 نتيجة امتحان الكيمياء العضوية
+
+👤 الاسم: ${name}
+🏫 الفصل: ${className||"غير محدد"}
+
+📚 الاختبار:
+من المقدمة حتى التسمية
+
+📊 الدرجة:
+${score} من 50
+
+📈 النسبة:
+${percent}%
+
+⏱ زمن الامتحان:
+60 دقيقة
+
+تم التصحيح إلكترونيًا.`;
+
+let url=
+"https://wa.me/"+
+whatsappNumber+
+"?text="+
+encodeURIComponent(message);
+
+document.getElementById("wa")
+.href=url;
+
+}
+
+
+/* =========================================================
+   منع الخروج العرضي
+========================================================= */
+
+window.addEventListener(
+"beforeunload",
+function(e){
+
+if(started&&!submitted){
+
+e.preventDefault();
+e.returnValue="";
+
+}
+
+});
+
+
+/* =========================================================
+   حفظ البيانات
+========================================================= */
+
+window.addEventListener(
+"DOMContentLoaded",
+function(){
+
+let name=localStorage.getItem("organic_name");
+
+let cls=localStorage.getItem("organic_class");
+
+if(name)
+document.getElementById("studentName").value=name;
+
+if(cls)
+document.getElementById("studentClass").value=cls;
+
+});
+
+</script>
+
+</body>
+                      </html>
