@@ -2,1962 +2,3762 @@
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-<meta name="theme-color" content="#07101b">
-<title>امتحان الكيمياء العضوية | من المقدمة حتى التسمية</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#05070a">
+<meta name="description" content="يوسف أشرف الجرف — مبرمج، شاعر، وصانع أفكار ومنصات رقمية.">
+<title>يوسف أشرف الجرف | مبرمج وصانع منصات</title>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
 
 <style>
+
+/* =========================================================
+   VARIABLES
+========================================================= */
+
 :root{
---bg:#060b12;
---paper:#0d1723;
---paper2:#111e2d;
---line:#26384c;
---text:#f4f7fb;
---muted:#9aaabd;
---blue:#38a8ff;
---cyan:#51d9ff;
---green:#32d58b;
---red:#ff526d;
---gold:#e9bd58;
+  --bg:#07080c;
+  --bg2:#0c0e14;
+  --card:#11141b;
+  --card2:#171a22;
+  --text:#f7f8fb;
+  --muted:#9ca3b0;
+  --line:rgba(255,255,255,.08);
+
+  --green:#20d98b;
+  --green2:#0ca86b;
+  --blue:#4d8dff;
+  --purple:#9b6cff;
+  --rose:#ed7199;
+
+  --shadow:0 25px 80px rgba(0,0,0,.4);
 }
 
-*{box-sizing:border-box}
+body.light{
+  --bg:#f5f7fa;
+  --bg2:#ffffff;
+  --card:#ffffff;
+  --card2:#f1f4f8;
+  --text:#10131a;
+  --muted:#667085;
+  --line:rgba(0,0,0,.08);
+}
+
+/* =========================================================
+   RESET
+========================================================= */
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+
+html{
+  scroll-behavior:smooth;
+}
 
 body{
-margin:0;
-background:
-radial-gradient(circle at 15% 5%,rgba(56,168,255,.10),transparent 25%),
-radial-gradient(circle at 85% 20%,rgba(81,217,255,.07),transparent 25%),
-linear-gradient(145deg,#03070c,#08121e 55%,#050a11);
-color:var(--text);
-font-family:Cairo,Arial,sans-serif;
+  font-family:"Cairo",sans-serif;
+  background:
+    radial-gradient(circle at 10% 10%,rgba(32,217,139,.09),transparent 25%),
+    radial-gradient(circle at 90% 20%,rgba(77,141,255,.08),transparent 28%),
+    radial-gradient(circle at 50% 90%,rgba(155,108,255,.07),transparent 30%),
+    var(--bg);
+  color:var(--text);
+  overflow-x:hidden;
 }
 
-button,input{font-family:inherit}
-
-button{cursor:pointer}
-
-.container{
-width:min(1100px,calc(100% - 24px));
-margin:auto;
+a{
+  color:inherit;
+  text-decoration:none;
 }
 
-header{
-position:sticky;
-top:0;
-z-index:100;
-height:64px;
-display:flex;
-align-items:center;
-justify-content:space-between;
-padding:0 22px;
-background:rgba(5,10,17,.93);
-backdrop-filter:blur(15px);
-border-bottom:1px solid var(--line);
+button{
+  font-family:inherit;
+}
+
+::selection{
+  background:var(--green);
+  color:#00150d;
+}
+
+/* =========================================================
+   BACKGROUND
+========================================================= */
+
+.bg-grid{
+  position:fixed;
+  inset:0;
+  z-index:-5;
+  pointer-events:none;
+
+  background-image:
+    linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px);
+
+  background-size:50px 50px;
+
+  mask-image:linear-gradient(
+    to bottom,
+    black,
+    transparent 90%
+  );
+}
+
+.orb{
+  position:fixed;
+  border-radius:50%;
+  filter:blur(80px);
+  opacity:.14;
+  pointer-events:none;
+  z-index:-3;
+}
+
+.orb.one{
+  width:350px;
+  height:350px;
+  background:var(--green);
+  top:5%;
+  right:-150px;
+}
+
+.orb.two{
+  width:300px;
+  height:300px;
+  background:var(--blue);
+  top:45%;
+  left:-150px;
+}
+
+.orb.three{
+  width:400px;
+  height:400px;
+  background:var(--purple);
+  bottom:-200px;
+  right:25%;
+}
+
+/* =========================================================
+   LOADER
+========================================================= */
+
+.loader{
+  position:fixed;
+  inset:0;
+  z-index:999999;
+
+  background:
+    radial-gradient(
+      circle at center,
+      rgba(32,217,139,.08),
+      transparent 35%
+    ),
+    #05070a;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  opacity:1;
+  visibility:visible;
+
+  transition:
+    opacity .8s ease,
+    visibility .8s ease;
+}
+
+.loader.hide{
+  opacity:0;
+  visibility:hidden;
+  pointer-events:none;
+}
+
+.loader-content{
+  width:min(420px,85%);
+  text-align:center;
+}
+
+.loader-logo{
+  width:105px;
+  height:105px;
+  margin:auto;
+
+  position:relative;
+
+  border-radius:30px;
+
+  display:grid;
+  place-items:center;
+
+  background:
+    linear-gradient(
+      135deg,
+      var(--green),
+      var(--blue)
+    );
+
+  box-shadow:
+    0 0 35px rgba(32,217,139,.25),
+    0 0 90px rgba(77,141,255,.12);
+
+  animation:loaderFloat 2s ease-in-out infinite;
+}
+
+.loader-logo span{
+  font-size:45px;
+  font-weight:900;
+  color:#04110b;
+}
+
+.loader-logo i{
+  position:absolute;
+  inset:-8px;
+
+  border-radius:36px;
+
+  border:1px solid rgba(32,217,139,.35);
+
+  animation:loaderRing 2s linear infinite;
+}
+
+@keyframes loaderFloat{
+
+  0%,100%{
+    transform:translateY(0) scale(1);
+  }
+
+  50%{
+    transform:translateY(-8px) scale(1.03);
+  }
+
+}
+
+@keyframes loaderRing{
+
+  to{
+    transform:rotate(360deg);
+  }
+
+}
+
+.loader-content h1{
+  margin-top:28px;
+
+  font-size:24px;
+  font-weight:900;
+
+  background:
+    linear-gradient(
+      90deg,
+      var(--green),
+      #fff,
+      var(--blue)
+    );
+
+  -webkit-background-clip:text;
+  color:transparent;
+}
+
+.loader-content p{
+  margin-top:10px;
+  color:#8f98a7;
+  font-size:13px;
+}
+
+.loading-bar{
+  height:5px;
+
+  margin-top:25px;
+
+  background:#151920;
+
+  border-radius:50px;
+
+  overflow:hidden;
+}
+
+.loading-bar span{
+  display:block;
+
+  width:0%;
+  height:100%;
+
+  border-radius:50px;
+
+  background:
+    linear-gradient(
+      90deg,
+      var(--green),
+      var(--blue)
+    );
+
+  transition:width .15s linear;
+}
+
+.loading-percent{
+  margin-top:12px;
+
+  color:var(--green);
+
+  font-family:monospace;
+  font-size:12px;
+}
+
+/* =========================================================
+   NAVIGATION
+========================================================= */
+
+.nav{
+  position:fixed;
+  top:18px;
+  left:4%;
+  right:4%;
+  z-index:1000;
+
+  height:72px;
+
+  background:rgba(10,12,17,.72);
+
+  border:1px solid var(--line);
+
+  backdrop-filter:blur(22px);
+
+  border-radius:22px;
+
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+
+  padding:0 20px;
+
+  box-shadow:var(--shadow);
+}
+
+body.light .nav{
+  background:rgba(255,255,255,.8);
 }
 
 .logo{
-display:flex;
-align-items:center;
-gap:11px;
-font-weight:900;
+  display:flex;
+  align-items:center;
+  gap:12px;
+  font-weight:900;
 }
 
 .logo-icon{
-width:40px;
-height:40px;
-display:grid;
-place-items:center;
-border-radius:12px;
-background:linear-gradient(135deg,var(--blue),var(--cyan));
-color:#03111b;
-font-size:21px;
+  width:42px;
+  height:42px;
+
+  border-radius:13px;
+
+  display:grid;
+  place-items:center;
+
+  background:
+    linear-gradient(
+      135deg,
+      var(--green),
+      var(--blue)
+    );
+
+  color:#03120d;
+
+  font-weight:900;
 }
 
-.timer{
-border:1px solid rgba(81,217,255,.25);
-background:rgba(81,217,255,.06);
-padding:8px 14px;
-border-radius:12px;
-font-weight:900;
-direction:ltr;
+.logo small{
+  display:block;
+  color:var(--muted);
+  font-size:9px;
+  font-weight:500;
 }
 
-main{
-padding:28px 0 60px;
+.nav-links{
+  display:flex;
+  gap:5px;
 }
+
+.nav-links a{
+  padding:10px 14px;
+  border-radius:12px;
+
+  color:var(--muted);
+
+  font-size:13px;
+
+  transition:.3s;
+}
+
+.nav-links a:hover{
+  color:var(--text);
+  background:rgba(255,255,255,.06);
+}
+
+.nav-actions{
+  display:flex;
+  gap:8px;
+}
+
+.icon-btn{
+  width:42px;
+  height:42px;
+
+  border:1px solid var(--line);
+
+  background:rgba(255,255,255,.03);
+
+  color:var(--text);
+
+  border-radius:13px;
+
+  cursor:pointer;
+
+  transition:.3s;
+}
+
+.icon-btn:hover{
+  transform:translateY(-3px);
+  border-color:var(--green);
+  color:var(--green);
+}
+
+.mobile-menu{
+  display:none;
+}
+
+/* =========================================================
+   GENERAL
+========================================================= */
+
+.container{
+  width:min(1180px,92%);
+  margin:auto;
+}
+
+section{
+  padding:100px 0;
+}
+
+.section-head{
+  margin-bottom:45px;
+}
+
+.eyebrow{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+
+  padding:7px 13px;
+
+  border:1px solid rgba(32,217,139,.2);
+
+  border-radius:100px;
+
+  color:var(--green);
+
+  background:rgba(32,217,139,.06);
+
+  font-size:12px;
+
+  margin-bottom:14px;
+}
+
+.section-head h2{
+  font-size:clamp(30px,5vw,50px);
+  line-height:1.15;
+  margin-bottom:12px;
+}
+
+.section-head p{
+  color:var(--muted);
+  max-width:650px;
+  line-height:2;
+}
+
+/* =========================================================
+   HERO
+========================================================= */
 
 .hero{
-position:relative;
-overflow:hidden;
-border:1px solid var(--line);
-border-radius:28px;
-background:
-linear-gradient(135deg,rgba(17,30,45,.97),rgba(7,14,23,.98));
-box-shadow:0 25px 80px rgba(0,0,0,.42);
-padding:35px;
+  min-height:100vh;
+
+  padding-top:150px;
+
+  display:flex;
+  align-items:center;
+
+  position:relative;
 }
 
-.hero:after{
-content:"";
-position:absolute;
-width:400px;
-height:400px;
-border-radius:50%;
-border:1px solid rgba(81,217,255,.08);
-left:-220px;
-bottom:-270px;
+.hero-wrap{
+  display:grid;
+
+  grid-template-columns:
+    1.1fr
+    .9fr;
+
+  gap:70px;
+
+  align-items:center;
 }
 
-.badge{
-display:inline-block;
-padding:6px 12px;
-border-radius:30px;
-font-size:11px;
-font-weight:800;
-color:var(--cyan);
-border:1px solid rgba(81,217,255,.2);
-background:rgba(81,217,255,.06);
+.hero-title{
+  font-size:clamp(42px,7vw,82px);
+
+  line-height:1.02;
+
+  font-weight:900;
+
+  letter-spacing:-3px;
 }
 
-.hero h1{
-font-size:clamp(30px,5vw,55px);
-line-height:1.15;
-margin:15px 0 10px;
-font-weight:900;
+.hero-title span{
+  display:block;
+
+  background:
+    linear-gradient(
+      100deg,
+      var(--green),
+      #72e6ff,
+      var(--purple)
+    );
+
+  -webkit-background-clip:text;
+
+  color:transparent;
 }
 
-.hero h1 span{
-color:var(--cyan);
+.hero-sub{
+  margin-top:25px;
+
+  color:var(--muted);
+
+  font-size:17px;
+
+  line-height:2.1;
+
+  max-width:700px;
 }
 
-.hero p{
-max-width:750px;
-color:#aab8c8;
-line-height:2;
-font-size:13px;
+.hero-tags{
+  display:flex;
+  flex-wrap:wrap;
+  gap:9px;
+  margin-top:25px;
 }
 
-.info{
-display:flex;
-flex-wrap:wrap;
-gap:8px;
-margin-top:20px;
+.tag{
+  padding:8px 13px;
+
+  border-radius:100px;
+
+  background:rgba(255,255,255,.04);
+
+  border:1px solid var(--line);
+
+  color:#cdd2dc;
+
+  font-size:12px;
 }
 
-.info span{
-padding:8px 12px;
-border-radius:10px;
-border:1px solid var(--line);
-background:rgba(255,255,255,.025);
-font-size:11px;
-color:#cbd5df;
+.hero-buttons{
+  display:flex;
+  flex-wrap:wrap;
+  gap:12px;
+  margin-top:32px;
 }
+
+.btn{
+  border:0;
+
+  padding:14px 20px;
+
+  border-radius:15px;
+
+  cursor:pointer;
+
+  font-weight:800;
+
+  transition:.3s;
+
+  display:inline-flex;
+
+  align-items:center;
+  justify-content:center;
+
+  gap:8px;
+}
+
+.btn-main{
+  color:#03120d;
+
+  background:
+    linear-gradient(
+      135deg,
+      var(--green),
+      #58e6af
+    );
+
+  box-shadow:
+    0 12px 35px
+    rgba(32,217,139,.18);
+}
+
+.btn-main:hover{
+  transform:translateY(-4px);
+}
+
+.btn-outline{
+  background:transparent;
+
+  color:var(--text);
+
+  border:1px solid var(--line);
+}
+
+.btn-outline:hover{
+  border-color:var(--green);
+  color:var(--green);
+}
+
+.hero-social{
+  margin-top:32px;
+
+  display:flex;
+
+  gap:12px;
+}
+
+.social{
+  width:44px;
+  height:44px;
+
+  border-radius:13px;
+
+  border:1px solid var(--line);
+
+  display:grid;
+
+  place-items:center;
+
+  color:var(--muted);
+
+  transition:.3s;
+}
+
+.social:hover{
+  color:var(--green);
+
+  border-color:var(--green);
+
+  transform:translateY(-4px);
+}
+
+/* =========================================================
+   PROFILE
+========================================================= */
+
+.profile-zone{
+  position:relative;
+
+  display:flex;
+
+  justify-content:center;
+}
+
+.profile-ring{
+  width:min(410px,80vw);
+  height:min(410px,80vw);
+
+  border-radius:50%;
+
+  padding:10px;
+
+  background:
+    conic-gradient(
+      var(--green),
+      var(--blue),
+      var(--purple),
+      var(--rose),
+      var(--green)
+    );
+
+  animation:
+    rotateRing 15s linear infinite;
+
+  box-shadow:
+    0 0 80px rgba(32,217,139,.12),
+    0 0 140px rgba(77,141,255,.08);
+}
+
+@keyframes rotateRing{
+  to{
+    transform:rotate(360deg);
+  }
+}
+
+.profile-inner{
+  width:100%;
+  height:100%;
+
+  border-radius:50%;
+
+  padding:8px;
+
+  background:#080a0f;
+}
+
+.profile-inner img{
+  width:100%;
+  height:100%;
+
+  object-fit:cover;
+
+  border-radius:50%;
+
+  display:block;
+
+  animation:
+    counterRotate 15s linear infinite;
+}
+
+@keyframes counterRotate{
+  to{
+    transform:rotate(-360deg);
+  }
+}
+
+.profile-badge{
+  position:absolute;
+
+  bottom:30px;
+  right:0;
+
+  background:
+    rgba(14,17,23,.9);
+
+  backdrop-filter:blur(18px);
+
+  border:1px solid var(--line);
+
+  border-radius:18px;
+
+  padding:14px 18px;
+
+  box-shadow:var(--shadow);
+}
+
+.profile-badge strong{
+  display:block;
+
+  color:var(--green);
+
+  font-size:14px;
+}
+
+.profile-badge span{
+  font-size:11px;
+
+  color:var(--muted);
+}
+
+/* =========================================================
+   STATS
+========================================================= */
+
+.stats{
+  display:grid;
+
+  grid-template-columns:
+    repeat(4,1fr);
+
+  gap:15px;
+}
+
+.stat{
+  padding:25px;
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255,255,255,.04),
+      rgba(255,255,255,.015)
+    );
+
+  border:1px solid var(--line);
+
+  border-radius:20px;
+
+  position:relative;
+
+  overflow:hidden;
+}
+
+.stat::before{
+  content:"";
+
+  position:absolute;
+
+  width:100px;
+  height:100px;
+
+  background:var(--green);
+
+  filter:blur(70px);
+
+  opacity:.12;
+
+  top:-50px;
+  right:-50px;
+}
+
+.stat-icon{
+  font-size:24px;
+
+  margin-bottom:15px;
+}
+
+.stat-number{
+  font-size:32px;
+
+  font-weight:900;
+}
+
+.stat-label{
+  color:var(--muted);
+
+  font-size:12px;
+
+  margin-top:3px;
+}
+
+/* =========================================================
+   CARDS / ABOUT
+========================================================= */
 
 .card{
-margin-top:18px;
-padding:24px;
-border:1px solid var(--line);
-border-radius:22px;
-background:linear-gradient(145deg,var(--paper),#09121d);
-box-shadow:0 15px 45px rgba(0,0,0,.25);
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255,255,255,.045),
+      rgba(255,255,255,.015)
+    );
+
+  border:1px solid var(--line);
+
+  border-radius:25px;
+
+  padding:30px;
+
+  box-shadow:
+    0 20px 60px rgba(0,0,0,.12);
 }
 
-.section-title{
-font-size:18px;
-font-weight:900;
-margin-bottom:17px;
+.card h3{
+  margin-bottom:15px;
+  font-size:21px;
 }
 
-.grid{
-display:grid;
-grid-template-columns:1fr 1fr;
-gap:15px;
+.card p{
+  color:var(--muted);
+  line-height:2;
 }
 
-label{
-display:block;
-font-size:12px;
-font-weight:800;
-color:#b9c7d5;
-margin-bottom:7px;
+.about-grid{
+  display:grid;
+
+  grid-template-columns:
+    1fr
+    1fr;
+
+  gap:25px;
 }
 
-input{
-width:100%;
-padding:13px;
-border:1px solid var(--line);
-border-radius:12px;
-background:#07101a;
-color:white;
-outline:none;
+.quote{
+  position:relative;
+
+  overflow:hidden;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(32,217,139,.08),
+      rgba(77,141,255,.05)
+    ),
+    var(--card);
 }
 
-input:focus{
-border-color:var(--cyan);
-box-shadow:0 0 0 3px rgba(81,217,255,.07);
+.quote::after{
+  content:"“";
+
+  position:absolute;
+
+  font-family:serif;
+
+  font-size:160px;
+
+  color:rgba(32,217,139,.05);
+
+  left:15px;
+  top:-45px;
 }
 
-.notice{
-margin-top:16px;
-padding:13px;
-border-radius:12px;
-background:rgba(233,189,88,.05);
-border:1px solid rgba(233,189,88,.16);
-font-size:11px;
-line-height:1.9;
-color:#cdbd91;
+.quote p{
+  position:relative;
+  z-index:1;
+
+  font-family:"Amiri",serif;
+
+  font-size:25px;
+
+  color:var(--text);
 }
 
-.start{
-display:block;
-margin:20px auto 0;
-border:0;
-border-radius:13px;
-padding:14px 30px;
-font-weight:900;
-font-size:14px;
-color:#021018;
-background:linear-gradient(135deg,var(--cyan),var(--blue));
+/* =========================================================
+   SKILLS
+========================================================= */
+
+.skills{
+  display:grid;
+
+  grid-template-columns:
+    repeat(3,1fr);
+
+  gap:16px;
 }
 
-.exam-head{
-display:flex;
-align-items:center;
-justify-content:space-between;
-gap:15px;
-padding:17px;
-margin-bottom:18px;
-border:1px solid var(--line);
-border-radius:18px;
-background:rgba(13,23,35,.95);
+.skill{
+  padding:22px;
+
+  border-radius:20px;
+
+  background:var(--card);
+
+  border:1px solid var(--line);
+
+  transition:.3s;
 }
 
-.student{
-font-weight:900;
+.skill:hover{
+  transform:translateY(-7px);
+
+  border-color:
+    rgba(32,217,139,.3);
 }
 
-.student small{
-display:block;
-color:var(--muted);
-font-weight:400;
-font-size:10px;
-margin-top:3px;
+.skill-top{
+  display:flex;
+
+  justify-content:space-between;
+
+  align-items:center;
+
+  margin-bottom:15px;
 }
 
-.progress-box{
-width:230px;
+.skill-name{
+  font-weight:800;
 }
 
-.progress-text{
-display:flex;
-justify-content:space-between;
-font-size:10px;
-color:var(--muted);
-margin-bottom:6px;
+.skill-percent{
+  color:var(--green);
+
+  font-size:12px;
 }
 
 .progress{
-height:7px;
-background:#07101a;
-border-radius:10px;
-overflow:hidden;
+  height:7px;
+
+  background:
+    rgba(255,255,255,.06);
+
+  border-radius:20px;
+
+  overflow:hidden;
 }
 
-.progress i{
-display:block;
-height:100%;
-width:0;
-background:linear-gradient(90deg,var(--blue),var(--cyan));
+.progress span{
+  display:block;
+
+  height:100%;
+
+  border-radius:20px;
+
+  background:
+    linear-gradient(
+      90deg,
+      var(--green),
+      var(--blue)
+    );
 }
 
-.part{
-margin:25px 0 13px;
-padding:12px 15px;
-border-right:4px solid var(--cyan);
-background:linear-gradient(90deg,rgba(81,217,255,.07),transparent);
-border-radius:9px;
+/* =========================================================
+   PROJECTS
+========================================================= */
+
+.project-grid{
+  display:grid;
+
+  grid-template-columns:
+    repeat(3,1fr);
+
+  gap:20px;
 }
 
-.part strong{
-font-size:15px;
+.project{
+  border:1px solid var(--line);
+
+  border-radius:25px;
+
+  overflow:hidden;
+
+  background:var(--card);
+
+  transition:.35s;
 }
 
-.part small{
-display:block;
-font-size:10px;
-color:var(--muted);
-margin-top:2px;
+.project:hover{
+  transform:translateY(-9px);
+
+  border-color:
+    rgba(32,217,139,.3);
+
+  box-shadow:var(--shadow);
 }
 
-.question{
-position:relative;
-padding:20px;
-margin:12px 0;
-border:1px solid var(--line);
-border-radius:18px;
-background:linear-gradient(145deg,#0e1926,#0a131e);
+.project-cover{
+  height:210px;
+
+  position:relative;
+
+  overflow:hidden;
+
+  display:flex;
+
+  align-items:flex-end;
+
+  padding:20px;
 }
 
-.question-number{
-display:flex;
-align-items:center;
-gap:9px;
-margin-bottom:13px;
+.project-cover::before{
+  content:"";
+
+  position:absolute;
+
+  inset:0;
+
+  background:
+    radial-gradient(
+      circle at 30% 30%,
+      rgba(32,217,139,.3),
+      transparent 25%
+    ),
+
+    radial-gradient(
+      circle at 80% 70%,
+      rgba(77,141,255,.35),
+      transparent 30%
+    ),
+
+    linear-gradient(
+      135deg,
+      #0b1111,
+      #111626
+    );
 }
 
-.number{
-width:34px;
-height:34px;
-display:grid;
-place-items:center;
-border-radius:10px;
-background:#112d45;
-color:var(--cyan);
-font-weight:900;
+.project-cover::after{
+  content:"</>";
+
+  position:absolute;
+
+  font-family:monospace;
+
+  font-size:120px;
+
+  font-weight:900;
+
+  color:rgba(255,255,255,.035);
+
+  left:25px;
+  top:35px;
 }
 
-.question-title{
-font-size:14px;
-font-weight:800;
-line-height:2;
+.project-number{
+  position:relative;
+
+  z-index:2;
+
+  padding:7px 11px;
+
+  border-radius:10px;
+
+  background:
+    rgba(0,0,0,.35);
+
+  border:
+    1px solid
+    rgba(255,255,255,.08);
+
+  font-size:11px;
 }
 
-.options{
-display:grid;
-gap:8px;
-margin-top:14px;
+.project-body{
+  padding:24px;
 }
 
-.option{
-position:relative;
+.project-body h3{
+  margin-bottom:9px;
 }
 
-.option input{
-position:absolute;
-opacity:0;
-pointer-events:none;
+.project-body p{
+  color:var(--muted);
+
+  font-size:13px;
+
+  line-height:1.9;
+
+  min-height:75px;
 }
 
-.option label{
-display:flex;
-align-items:flex-start;
-gap:9px;
-padding:11px 13px;
-border-radius:11px;
-border:1px solid #203145;
-background:rgba(255,255,255,.018);
-font-weight:500;
-line-height:1.8;
-cursor:pointer;
-transition:.18s;
+.project-tags{
+  display:flex;
+
+  flex-wrap:wrap;
+
+  gap:6px;
+
+  margin-top:16px;
 }
 
-.option label span{
-width:25px;
-height:25px;
-flex:0 0 25px;
-display:grid;
-place-items:center;
-border-radius:7px;
-border:1px solid #516277;
-color:#c7d3df;
-font-weight:900;
-font-size:11px;
+.project-tags span{
+  font-size:10px;
+
+  padding:6px 9px;
+
+  border-radius:8px;
+
+  background:
+    rgba(255,255,255,.04);
+
+  color:#aeb6c4;
 }
 
-.option input:checked+label{
-background:rgba(81,217,255,.08);
-border-color:rgba(81,217,255,.55);
+.project-action{
+  margin-top:18px;
+
+  display:flex;
+
+  justify-content:space-between;
+
+  align-items:center;
 }
 
-.option input:checked+label span{
-background:var(--cyan);
-color:#03101a;
-border-color:var(--cyan);
+.project-link{
+  color:var(--green);
+
+  font-size:12px;
+
+  font-weight:800;
 }
 
-.figure{
-margin:15px 0;
-padding:15px;
-border-radius:14px;
-background:#060d15;
-border:1px solid #1e3043;
-overflow:auto;
-text-align:center;
+/* =========================================================
+   SERVICES
+========================================================= */
+
+.services{
+  display:grid;
+
+  grid-template-columns:
+    repeat(2,1fr);
+
+  gap:18px;
 }
 
-.chem{
-font-family:"Times New Roman",serif;
-font-size:25px;
-color:#f5f7fa;
-direction:ltr;
-display:inline-block;
-padding:10px;
+.service{
+  display:flex;
+
+  gap:20px;
+
+  padding:25px;
+
+  background:var(--card);
+
+  border:1px solid var(--line);
+
+  border-radius:22px;
+
+  transition:.3s;
 }
 
-.submit{
-text-align:center;
-margin-top:28px;
-padding:24px;
-border:1px solid rgba(50,213,139,.18);
-background:rgba(50,213,139,.04);
-border-radius:20px;
+.service:hover{
+  transform:translateX(-6px);
+
+  border-color:
+    rgba(32,217,139,.3);
 }
 
-.submit p{
-font-size:11px;
-color:var(--muted);
-margin-bottom:13px;
+.service-icon{
+  min-width:55px;
+
+  height:55px;
+
+  border-radius:16px;
+
+  display:grid;
+
+  place-items:center;
+
+  background:
+    rgba(32,217,139,.08);
+
+  color:var(--green);
+
+  font-size:24px;
 }
 
-.result{
-text-align:center;
+.service p{
+  color:var(--muted);
+
+  font-size:13px;
+
+  line-height:1.8;
+
+  margin-top:5px;
 }
 
-.score{
-width:170px;
-height:170px;
-margin:10px auto 20px;
-border-radius:50%;
-display:grid;
-place-items:center;
-background:conic-gradient(var(--cyan) var(--percent),#1a2939 0);
+/* =========================================================
+   TIMELINE
+========================================================= */
+
+.timeline{
+  position:relative;
+
+  max-width:850px;
+
+  margin:auto;
 }
 
-.score-inner{
-width:137px;
-height:137px;
-border-radius:50%;
-display:grid;
-place-items:center;
-background:#09121d;
+.timeline::before{
+  content:"";
+
+  position:absolute;
+
+  top:0;
+  bottom:0;
+
+  right:20px;
+
+  width:2px;
+
+  background:
+    linear-gradient(
+      var(--green),
+      var(--blue),
+      transparent
+    );
 }
 
-.score-inner strong{
-font-size:34px;
-display:block;
+.timeline-item{
+  position:relative;
+
+  padding:
+    0
+    65px
+    45px
+    0;
 }
 
-.score-inner small{
-color:var(--muted);
+.timeline-dot{
+  position:absolute;
+
+  right:10px;
+  top:5px;
+
+  width:22px;
+  height:22px;
+
+  border-radius:50%;
+
+  background:var(--green);
+
+  box-shadow:
+    0 0 0 7px
+    rgba(32,217,139,.08);
 }
 
-.result h2{
-font-size:25px;
-margin:8px 0;
+.timeline-content{
+  background:var(--card);
+
+  border:1px solid var(--line);
+
+  border-radius:20px;
+
+  padding:23px;
 }
 
-.review{
-text-align:right;
-padding:15px;
-margin:9px 0;
-border-radius:13px;
-background:#09131f;
-border:1px solid var(--line);
-font-size:11px;
-line-height:2;
+.timeline-content small{
+  color:var(--green);
 }
 
-.review.correct{
-border-right:4px solid var(--green);
+.timeline-content h3{
+  margin:7px 0;
 }
 
-.review.wrong{
-border-right:4px solid var(--red);
+.timeline-content p{
+  color:var(--muted);
+
+  line-height:1.9;
+
+  font-size:13px;
 }
 
-.review b{
-color:white;
+/* =========================================================
+   PHILOSOPHY
+========================================================= */
+
+.philosophy{
+  display:grid;
+
+  grid-template-columns:
+    1fr
+    1fr;
+
+  gap:20px;
 }
 
-.whatsapp{
-margin-top:20px;
-padding:20px;
-border-radius:17px;
-background:rgba(37,211,102,.055);
-border:1px solid rgba(37,211,102,.2);
+.philosophy-card{
+  padding:35px;
+
+  min-height:220px;
+
+  border-radius:27px;
+
+  border:1px solid var(--line);
+
+  background:
+    radial-gradient(
+      circle at 90% 10%,
+      rgba(32,217,139,.12),
+      transparent 35%
+    ),
+    var(--card);
 }
 
-.whatsapp a{
-display:inline-block;
-margin-top:10px;
-padding:13px 23px;
-border-radius:12px;
-background:#25d366;
-color:#031008;
-text-decoration:none;
-font-weight:900;
+.philosophy-card h3{
+  font-size:24px;
+
+  margin-bottom:15px;
 }
 
-.hidden{
-display:none!important;
+.philosophy-card p{
+  color:var(--muted);
+
+  line-height:2;
 }
+
+/* =========================================================
+   CONTACT
+========================================================= */
+
+.contact-box{
+  position:relative;
+
+  overflow:hidden;
+
+  padding:55px;
+
+  border-radius:30px;
+
+  border:1px solid var(--line);
+
+  background:
+    radial-gradient(
+      circle at 100% 0%,
+      rgba(32,217,139,.13),
+      transparent 35%
+    ),
+
+    radial-gradient(
+      circle at 0% 100%,
+      rgba(77,141,255,.1),
+      transparent 35%
+    ),
+
+    var(--card);
+}
+
+.contact-box h2{
+  font-size:clamp(30px,5vw,55px);
+
+  margin-bottom:15px;
+}
+
+.contact-box p{
+  color:var(--muted);
+
+  max-width:650px;
+
+  line-height:2;
+}
+
+.contact-actions{
+  margin-top:28px;
+
+  display:flex;
+
+  flex-wrap:wrap;
+
+  gap:12px;
+}
+
+/* =========================================================
+   FOOTER
+========================================================= */
 
 footer{
-text-align:center;
-color:#526174;
-font-size:10px;
-padding:25px;
+  padding:50px 0 30px;
+
+  border-top:1px solid var(--line);
+}
+
+.footer-grid{
+  display:flex;
+
+  justify-content:space-between;
+
+  gap:30px;
+
+  align-items:center;
+}
+
+.footer-name{
+  font-weight:900;
+
+  font-size:20px;
+}
+
+.footer-text{
+  color:var(--muted);
+
+  font-size:12px;
+
+  margin-top:5px;
+}
+
+.copyright{
+  color:#69717f;
+
+  font-size:11px;
+}
+
+/* =========================================================
+   TOAST
+========================================================= */
+
+.toast{
+  position:fixed;
+
+  bottom:25px;
+  right:25px;
+
+  z-index:9999;
+
+  padding:14px 18px;
+
+  background:#11161d;
+
+  border:1px solid var(--line);
+
+  border-radius:15px;
+
+  box-shadow:var(--shadow);
+
+  transform:translateY(120px);
+
+  opacity:0;
+
+  transition:.4s;
+
+  font-size:12px;
+}
+
+.toast.show{
+  transform:translateY(0);
+
+  opacity:1;
+}
+
+/* =========================================================
+   MODAL
+========================================================= */
+
+.modal{
+  position:fixed;
+
+  inset:0;
+
+  background:
+    rgba(0,0,0,.75);
+
+  backdrop-filter:blur(10px);
+
+  z-index:5000;
+
+  display:none;
+
+  place-items:center;
+
+  padding:20px;
+}
+
+.modal.show{
+  display:grid;
+}
+
+.modal-box{
+  width:min(650px,100%);
+
+  background:var(--card);
+
+  border:1px solid var(--line);
+
+  border-radius:25px;
+
+  padding:30px;
+
+  animation:modalIn .3s ease;
+}
+
+@keyframes modalIn{
+
+  from{
+    transform:scale(.9);
+    opacity:0;
+  }
+
+  to{
+    transform:scale(1);
+    opacity:1;
+  }
+
+}
+
+.modal-head{
+  display:flex;
+
+  justify-content:space-between;
+
+  align-items:center;
+
+  margin-bottom:20px;
+}
+
+.modal-close{
+  background:none;
+
+  border:0;
+
+  color:var(--muted);
+
+  font-size:24px;
+
+  cursor:pointer;
+}
+
+.modal-box p{
+  color:var(--muted);
+
+  line-height:2;
+}
+
+/* =========================================================
+   SCROLL TOP
+========================================================= */
+
+.scroll-top{
+  position:fixed;
+
+  left:20px;
+  bottom:20px;
+
+  width:48px;
+  height:48px;
+
+  border-radius:15px;
+
+  border:1px solid var(--line);
+
+  background:
+    rgba(15,18,24,.8);
+
+  color:var(--text);
+
+  cursor:pointer;
+
+  z-index:900;
+
+  opacity:0;
+
+  pointer-events:none;
+
+  transition:.3s;
+}
+
+.scroll-top.show{
+  opacity:1;
+
+  pointer-events:auto;
+}
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media(max-width:950px){
+
+  .nav-links{
+    display:none;
+  }
+
+  .mobile-menu{
+    display:block;
+  }
+
+  .nav.mobile-open .nav-links{
+    display:flex;
+
+    position:absolute;
+
+    top:80px;
+
+    left:0;
+    right:0;
+
+    flex-direction:column;
+
+    background:var(--card);
+
+    border:1px solid var(--line);
+
+    border-radius:20px;
+
+    padding:12px;
+  }
+
+  .hero-wrap{
+    grid-template-columns:1fr;
+
+    text-align:center;
+  }
+
+  .hero-content{
+    order:2;
+  }
+
+  .profile-zone{
+    order:1;
+  }
+
+  .hero-tags,
+  .hero-buttons,
+  .hero-social{
+    justify-content:center;
+  }
+
+  .stats{
+    grid-template-columns:
+      repeat(2,1fr);
+  }
+
+  .project-grid{
+    grid-template-columns:
+      repeat(2,1fr);
+  }
+
+  .skills{
+    grid-template-columns:
+      repeat(2,1fr);
+  }
+
+  .about-grid,
+  .philosophy{
+    grid-template-columns:1fr;
+  }
 }
 
 @media(max-width:650px){
-.grid{grid-template-columns:1fr}
-.hero{padding:22px}
-.card{padding:16px}
-.exam-head{align-items:flex-start;flex-direction:column}
-.progress-box{width:100%}
-.question{padding:16px}
+
+  section{
+    padding:75px 0;
+  }
+
+  .nav{
+    top:10px;
+
+    left:3%;
+    right:3%;
+  }
+
+  .hero{
+    padding-top:120px;
+  }
+
+  .hero-title{
+    font-size:43px;
+
+    letter-spacing:-2px;
+  }
+
+  .hero-sub{
+    font-size:14px;
+  }
+
+  .profile-ring{
+    width:285px;
+    height:285px;
+  }
+
+  .stats,
+  .project-grid,
+  .skills,
+  .services{
+    grid-template-columns:1fr;
+  }
+
+  .card{
+    padding:22px;
+  }
+
+  .contact-box{
+    padding:30px 22px;
+  }
+
+  .footer-grid{
+    flex-direction:column;
+
+    text-align:center;
+  }
+
+  .profile-badge{
+    bottom:0;
+    right:10px;
+  }
+
 }
+
 </style>
 </head>
 
 <body>
 
-<header>
-  <div class="logo">
-    <div class="logo-icon">⚗</div>
-    <div>
-      امتحان الكيمياء العضوية
-      <small style="display:block;color:#718194;font-size:9px">
-        من المقدمة حتى التسمية
-      </small>
+<!-- =========================================================
+     LOADER
+========================================================= -->
+
+<div class="loader" id="loader">
+
+  <div class="loader-content">
+
+    <div class="loader-logo">
+      <span>Y</span>
+      <i></i>
     </div>
-  </div>
 
-  <div class="timer" id="timer">60:00</div>
-</header>
+    <h1>يوسف أشرف الجرف</h1>
 
-<main class="container">
-
-<!-- ================= البداية ================= -->
-
-<section id="startScreen">
-
-  <div class="hero">
-
-    <span class="badge">اختبار شامل • 50 سؤال</span>
-
-    <h1>
-      الكيمياء <span>العضوية</span>
-    </h1>
-
-    <p>
-      اختبار تدريبي شامل يغطي أساسيات الكيمياء العضوية حتى قواعد تسمية
-      المركبات الهيدروكربونية، مع أسئلة تعتمد على الفهم والتحليل وقراءة
-      الصيغ والتراكيب، وليس الحفظ المباشر فقط.
+    <p id="loaderText">
+      جارِ تجهيز عالم يوسف...
     </p>
 
-    <div class="info">
-      <span>50 سؤال</span>
-      <span>اختيار من متعدد</span>
-      <span>أ / ب / ج / د</span>
-      <span>60 دقيقة</span>
-      <span>تصحيح إلكتروني</span>
-      <span>رسومات تركيبية</span>
+    <div class="loading-bar">
+      <span id="loadingProgress"></span>
+    </div>
+
+    <div class="loading-percent">
+      <span id="loadingNumber">0</span>%
     </div>
 
   </div>
 
-  <div class="card">
+</div>
 
-    <div class="section-title">
-      بيانات الطالب
+<!-- BACKGROUND -->
+
+<div class="bg-grid"></div>
+
+<div class="orb one"></div>
+<div class="orb two"></div>
+<div class="orb three"></div>
+
+<!-- =========================================================
+     NAVIGATION
+========================================================= -->
+
+<nav class="nav" id="nav">
+
+  <a href="#home" class="logo">
+
+    <div class="logo-icon">
+      Y
     </div>
 
-    <div class="grid">
+    <div>
 
-      <div>
-        <label>الاسم بالكامل</label>
-        <input id="studentName" placeholder="اكتب اسم الطالب">
-      </div>
+      يوسف أشرف الجرف
 
-      <div>
-        <label>الفصل / المجموعة</label>
-        <input id="studentClass" placeholder="مثال: 3 ثانوي علمي علوم">
-      </div>
+      <small>
+        PROGRAMMER • CREATOR • POET
+      </small>
 
     </div>
 
-    <div class="notice">
-      تنبيه: بمجرد بدء الامتحان يبدأ عداد الـ60 دقيقة.
-      راجع إجاباتك قبل الضغط على زر التسليم.
-    </div>
+  </a>
 
-    <button class="start" onclick="startExam()">
-      بدء الامتحان
+  <div class="nav-links">
+
+    <a href="#about">عني</a>
+    <a href="#skills">مهاراتي</a>
+    <a href="#projects">مشاريعي</a>
+    <a href="#services">ما أصنع</a>
+    <a href="#journey">رحلتي</a>
+    <a href="#contact">تواصل</a>
+
+  </div>
+
+  <div class="nav-actions">
+
+    <button
+      class="icon-btn"
+      id="themeBtn"
+      title="تغيير المظهر">
+      ☀
+    </button>
+
+    <button
+      class="icon-btn mobile-menu"
+      id="menuBtn">
+      ☰
     </button>
 
   </div>
 
-</section>
+</nav>
 
+<!-- =========================================================
+     HERO
+========================================================= -->
 
-<!-- ================= الامتحان ================= -->
+<header class="hero" id="home">
 
-<section id="examScreen" class="hidden">
+  <div class="container">
 
-  <div class="exam-head">
+    <div class="hero-wrap">
 
-    <div class="student">
-      <span id="examName"></span>
-      <small>اختبار الكيمياء العضوية</small>
-    </div>
+      <div class="hero-content">
 
-    <div class="progress-box">
-      <div class="progress-text">
-        <span>نسبة الإجابة</span>
-        <span id="progressText">0 / 50</span>
+        <div class="eyebrow">
+
+          <span>●</span>
+
+          أهلاً بك في عالمي الرقمي
+
+        </div>
+
+        <h1 class="hero-title">
+
+          أنا يوسف
+
+          <span>
+            أشرف الجرف.
+          </span>
+
+        </h1>
+
+        <p class="hero-sub">
+
+          مبرمج، صانع أفكار، شاعر، وبحاول أحوّل
+          أي فكرة في دماغي إلى مشروع حقيقي يشتغل
+          قدام الناس.
+
+          مش بكتب كود وخلاص؛
+          أنا بحاول أبني منصات وتجارب لها شخصية.
+
+        </p>
+
+        <div class="hero-tags">
+
+          <span class="tag">
+            💻 Programmer
+          </span>
+
+          <span class="tag">
+            🚀 Project Builder
+          </span>
+
+          <span class="tag">
+            🌐 Platform Creator
+          </span>
+
+          <span class="tag">
+            ✍️ شاعر
+          </span>
+
+          <span class="tag">
+            🎨 UI Creator
+          </span>
+
+        </div>
+
+        <div class="hero-buttons">
+
+          <a
+            href="#projects"
+            class="btn btn-main">
+
+            استكشف مشاريعي →
+
+          </a>
+
+          <a
+            href="#about"
+            class="btn btn-outline">
+
+            اعرف قصتي
+
+          </a>
+
+        </div>
+
+        <div class="hero-social">
+
+          <a
+            href="#"
+            class="social"
+            onclick="
+              showToast('أضف رابط GitHub الخاص بك');
+              return false;
+            ">
+            GH
+          </a>
+
+          <a
+            href="#"
+            class="social"
+            onclick="
+              showToast('أضف رابط Instagram الخاص بك');
+              return false;
+            ">
+            IG
+          </a>
+
+          <a
+            href="#"
+            class="social"
+            onclick="
+              showToast('أضف رابط Facebook الخاص بك');
+              return false;
+            ">
+            FB
+          </a>
+
+          <a
+            href="#"
+            class="social"
+            onclick="
+              showToast('أضف وسيلة التواصل الخاصة بك');
+              return false;
+            ">
+            ✉
+          </a>
+
+        </div>
+
       </div>
-      <div class="progress">
-        <i id="progressBar"></i>
+
+      <div class="profile-zone">
+
+        <div class="profile-ring">
+
+          <div class="profile-inner">
+
+            <img
+              src="me.jpg"
+              alt="صورة يوسف أشرف الجرف"
+              onerror="
+                this.src='https://via.placeholder.com/700x700/11141b/20d98b?text=YOUSEF';
+              ">
+
+          </div>
+
+        </div>
+
+        <div class="profile-badge">
+
+          <strong>
+            ● متاح لصناعة الأفكار
+          </strong>
+
+          <span>
+            Programming • Design • Platforms
+          </span>
+
+        </div>
+
       </div>
+
     </div>
 
   </div>
 
-  <form id="examForm">
+</header>
 
-<!-- ================= الجزء الأول ================= -->
+<!-- =========================================================
+     STATS
+========================================================= -->
 
-<div class="part">
-  <strong>أولًا: مقدمة الكيمياء العضوية وخواص الكربون</strong>
-  <small>الأسئلة من 1 إلى 10</small>
-</div>
+<section>
 
+  <div class="container">
 
-<!-- 1 -->
-<div class="question">
-<div class="question-number"><div class="number">1</div><strong>السؤال الأول</strong></div>
-<div class="question-title">
-أي مما يأتي يمثل السبب الأكثر ارتباطًا باتساع عدد المركبات العضوية المعروفة؟
-</div>
-<div class="options">
+    <div class="stats">
 
-<div class="option"><input name="q1" value="A" id="q1a" type="radio">
-<label for="q1a"><span>أ</span>ارتفاع الكتلة الذرية للكربون بدرجة كبيرة.</label></div>
+      <div class="stat">
 
-<div class="option"><input name="q1" value="B" id="q1b" type="radio">
-<label for="q1b"><span>ب</span>قدرة ذرات الكربون على التكاتف وتكوين سلاسل وتفرعات وروابط متعددة.</label></div>
+        <div class="stat-icon">
+          💻
+        </div>
 
-<div class="option"><input name="q1" value="C" id="q1c" type="radio">
-<label for="q1c"><span>ج</span>ميل الكربون لتكوين أيونات حرة في جميع المركبات.</label></div>
+        <div
+          class="stat-number"
+          data-count="20">
+          0+
+        </div>
 
-<div class="option"><input name="q1" value="D" id="q1d" type="radio">
-<label for="q1d"><span>د</span>عدم قدرة الكربون على تكوين روابط تساهمية.</label></div>
+        <div class="stat-label">
+          فكرة ومشروع برمجي
+        </div>
 
-</div>
-</div>
+      </div>
 
+      <div class="stat">
 
-<!-- 2 -->
-<div class="question">
-<div class="question-number"><div class="number">2</div><strong>السؤال الثاني</strong></div>
-<div class="question-title">
-إذا كان لذرة الكربون العدد الذري 6، فإن التوزيع الإلكتروني الذي يفسر تكافؤها الرباعي هو:
-</div>
-<div class="options">
+        <div class="stat-icon">
+          🌐
+        </div>
 
-<div class="option"><input name="q2" value="A" id="q2a" type="radio"><label for="q2a"><span>أ</span>2 ، 4</label></div>
-<div class="option"><input name="q2" value="B" id="q2b" type="radio"><label for="q2b"><span>ب</span>2 ، 6</label></div>
-<div class="option"><input name="q2" value="C" id="q2c" type="radio"><label for="q2c"><span>ج</span>4 ، 2</label></div>
-<div class="option"><input name="q2" value="D" id="q2d" type="radio"><label for="q2d"><span>د</span>1 ، 5</label></div>
+        <div
+          class="stat-number"
+          data-count="10">
+          0+
+        </div>
 
-</div>
-</div>
+        <div class="stat-label">
+          منصة وتجربة رقمية
+        </div>
 
+      </div>
 
-<!-- 3 -->
-<div class="question">
-<div class="question-number"><div class="number">3</div><strong>السؤال الثالث</strong></div>
-<div class="question-title">
-أي مما يأتي يوضح الفرق الأساسي بين الرابطة الأحادية والثنائية بين ذرتي كربون؟
-</div>
-<div class="options">
+      <div class="stat">
 
-<div class="option"><input name="q3" value="A" id="q3a" type="radio"><label for="q3a"><span>أ</span>عدد الذرات في الجزيء فقط.</label></div>
-<div class="option"><input name="q3" value="B" id="q3b" type="radio"><label for="q3b"><span>ب</span>عدد أزواج الإلكترونات المشتركة بين الذرتين.</label></div>
-<div class="option"><input name="q3" value="C" id="q3c" type="radio"><label for="q3c"><span>ج</span>عدد البروتونات في ذرة الكربون.</label></div>
-<div class="option"><input name="q3" value="D" id="q3d" type="radio"><label for="q3d"><span>د</span>عدد مستويات الطاقة في الذرة.</label></div>
+        <div class="stat-icon">
+          ✍️
+        </div>
 
-</div>
-</div>
+        <div
+          class="stat-number"
+          data-count="50">
+          0+
+        </div>
 
+        <div class="stat-label">
+          نص وقصيدة وأفكار مكتوبة
+        </div>
 
-<!-- 4 -->
-<div class="question">
-<div class="question-number"><div class="number">4</div><strong>السؤال الرابع</strong></div>
-<div class="question-title">
-أي الصيغ الآتية تحتوي أكبر عدد من ذرات الهيدروجين مع ثبات عدد ذرات الكربون؟
-</div>
-<div class="options">
+      </div>
 
-<div class="option"><input name="q4" value="A" id="q4a" type="radio"><label for="q4a"><span>أ</span>C₄H₆</label></div>
-<div class="option"><input name="q4" value="B" id="q4b" type="radio"><label for="q4b"><span>ب</span>C₄H₈</label></div>
-<div class="option"><input name="q4" value="C" id="q4c" type="radio"><label for="q4c"><span>ج</span>C₄H₁₀</label></div>
-<div class="option"><input name="q4" value="D" id="q4d" type="radio"><label for="q4d"><span>د</span>C₄H₄</label></div>
+      <div class="stat">
 
-</div>
-</div>
+        <div class="stat-icon">
+          🔥
+        </div>
 
+        <div class="stat-number">
+          ∞
+        </div>
 
-<!-- 5 -->
-<div class="question">
-<div class="question-number"><div class="number">5</div><strong>السؤال الخامس</strong></div>
-<div class="question-title">
-أي مما يأتي لا يعد من صور قدرة الكربون على بناء الهياكل العضوية؟
-</div>
-<div class="options">
+        <div class="stat-label">
+          فكرة لسه مستنياني أنفذها
+        </div>
 
-<div class="option"><input name="q5" value="A" id="q5a" type="radio"><label for="q5a"><span>أ</span>تكوين سلاسل مستقيمة.</label></div>
-<div class="option"><input name="q5" value="B" id="q5b" type="radio"><label for="q5b"><span>ب</span>تكوين سلاسل متفرعة.</label></div>
-<div class="option"><input name="q5" value="C" id="q5c" type="radio"><label for="q5c"><span>ج</span>تكوين حلقات وتراكيب مختلفة.</label></div>
-<div class="option"><input name="q5" value="D" id="q5d" type="radio"><label for="q5d"><span>د</span>تكوين مركبات لا تحتوي على روابط تساهمية.</label></div>
+      </div>
 
-</div>
-</div>
+    </div>
 
-
-<!-- 6 -->
-<div class="question">
-<div class="question-number"><div class="number">6</div><strong>السؤال السادس</strong></div>
-<div class="question-title">
-أي نوع من الروابط يغلب على الروابط بين ذرات الكربون والهيدروجين في أغلب المركبات العضوية؟
-</div>
-<div class="options">
-<div class="option"><input name="q6" value="A" id="q6a" type="radio"><label for="q6a"><span>أ</span>تساهمية.</label></div>
-<div class="option"><input name="q6" value="B" id="q6b" type="radio"><label for="q6b"><span>ب</span>أيونية.</label></div>
-<div class="option"><input name="q6" value="C" id="q6c" type="radio"><label for="q6c"><span>ج</span>فلزية.</label></div>
-<div class="option"><input name="q6" value="D" id="q6d" type="radio"><label for="q6d"><span>د</span>هيدروجينية فقط.</label></div>
-</div>
-</div>
-
-
-<!-- 7 -->
-<div class="question">
-<div class="question-number"><div class="number">7</div><strong>السؤال السابع</strong></div>
-<div class="question-title">
-أي مما يأتي يفسر استقرار كثير من المركبات العضوية المحتوية على الكربون؟
-</div>
-<div class="options">
-<div class="option"><input name="q7" value="A" id="q7a" type="radio"><label for="q7a"><span>أ</span>قدرة الكربون على تكوين روابط تساهمية قوية.</label></div>
-<div class="option"><input name="q7" value="B" id="q7b" type="radio"><label for="q7b"><span>ب</span>تحول الكربون دائمًا إلى فلز.</label></div>
-<div class="option"><input name="q7" value="C" id="q7c" type="radio"><label for="q7c"><span>ج</span>اختفاء إلكترونات التكافؤ.</label></div>
-<div class="option"><input name="q7" value="D" id="q7d" type="radio"><label for="q7d"><span>د</span>عدم وجود روابط بين الذرات.</label></div>
-</div>
-</div>
-
-
-<!-- 8 -->
-<div class="question">
-<div class="question-number"><div class="number">8</div><strong>السؤال الثامن</strong></div>
-<div class="question-title">
-أي مجموعة تحتوي فقط على عناصر شائعة الوجود في المركبات العضوية؟
-</div>
-<div class="options">
-<div class="option"><input name="q8" value="A" id="q8a" type="radio"><label for="q8a"><span>أ</span>الكربون والهيدروجين والأكسجين والنيتروجين.</label></div>
-<div class="option"><input name="q8" value="B" id="q8b" type="radio"><label for="q8b"><span>ب</span>الصوديوم والبوتاسيوم فقط.</label></div>
-<div class="option"><input name="q8" value="C" id="q8c" type="radio"><label for="q8c"><span>ج</span>الحديد والنحاس والزنك فقط.</label></div>
-<div class="option"><input name="q8" value="D" id="q8d" type="radio"><label for="q8d"><span>د</span>الهيليوم والنيون والأرجون.</label></div>
-</div>
-</div>
-
-
-<!-- 9 -->
-<div class="question">
-<div class="question-number"><div class="number">9</div><strong>السؤال التاسع</strong></div>
-<div class="question-title">
-إذا ارتبطت ذرة كربون بأربع ذرات أخرى بروابط أحادية، فإن عدد روابطها التساهمية الأحادية يكون:
-</div>
-<div class="options">
-<div class="option"><input name="q9" value="A" id="q9a" type="radio"><label for="q9a"><span>أ</span>1</label></div>
-<div class="option"><input name="q9" value="B" id="q9b" type="radio"><label for="q9b"><span>ب</span>2</label></div>
-<div class="option"><input name="q9" value="C" id="q9c" type="radio"><label for="q9c"><span>ج</span>3</label></div>
-<div class="option"><input name="q9" value="D" id="q9d" type="radio"><label for="q9d"><span>د</span>4</label></div>
-</div>
-</div>
-
-
-<!-- 10 -->
-<div class="question">
-<div class="question-number"><div class="number">10</div><strong>السؤال العاشر</strong></div>
-<div class="question-title">
-أي مما يلي يمثل رابطة ثنائية بين ذرتي كربون؟
-</div>
-<div class="figure"><div class="chem">CH₃ — CH₃ &nbsp;&nbsp;&nbsp;&nbsp; CH₂ = CH₂</div></div>
-<div class="options">
-<div class="option"><input name="q10" value="A" id="q10a" type="radio"><label for="q10a"><span>أ</span>CH₃—CH₃</label></div>
-<div class="option"><input name="q10" value="B" id="q10b" type="radio"><label for="q10b"><span>ب</span>CH₂=CH₂</label></div>
-<div class="option"><input name="q10" value="C" id="q10c" type="radio"><label for="q10c"><span>ج</span>CH₄</label></div>
-<div class="option"><input name="q10" value="D" id="q10d" type="radio"><label for="q10d"><span>د</span>CH₃—H</label></div>
-</div>
-</div>
-
-
-<!-- ================= الجزء الثاني ================= -->
-
-<div class="part">
-<strong>ثانيًا: السلاسل والصيغ والتصنيف</strong>
-<small>الأسئلة من 11 إلى 25</small>
-</div>
-
-
-<!-- 11 -->
-<div class="question">
-<div class="question-number"><div class="number">11</div><strong>السؤال الحادي عشر</strong></div>
-<div class="question-title">
-ما الصيغة العامة للألكانات المفتوحة السلسلة؟
-</div>
-<div class="options">
-<div class="option"><input name="q11" value="A" id="q11a" type="radio"><label for="q11a"><span>أ</span>CₙH₂ₙ₊₂</label></div>
-<div class="option"><input name="q11" value="B" id="q11b" type="radio"><label for="q11b"><span>ب</span>CₙH₂ₙ</label></div>
-<div class="option"><input name="q11" value="C" id="q11c" type="radio"><label for="q11c"><span>ج</span>CₙH₂ₙ₋₂</label></div>
-<div class="option"><input name="q11" value="D" id="q11d" type="radio"><label for="q11d"><span>د</span>CₙHₙ</label></div>
-</div>
-</div>
-
-
-<!-- 12 -->
-<div class="question">
-<div class="question-number"><div class="number">12</div><strong>السؤال الثاني عشر</strong></div>
-<div class="question-title">
-الصيغة الجزيئية لألكان مفتوح السلسلة يحتوي على 7 ذرات كربون هي:
-</div>
-<div class="options">
-<div class="option"><input name="q12" value="A" id="q12a" type="radio"><label for="q12a"><span>أ</span>C₇H₁₂</label></div>
-<div class="option"><input name="q12" value="B" id="q12b" type="radio"><label for="q12b"><span>ب</span>C₇H₁₄</label></div>
-<div class="option"><input name="q12" value="C" id="q12c" type="radio"><label for="q12c"><span>ج</span>C₇H₁₆</label></div>
-<div class="option"><input name="q12" value="D" id="q12d" type="radio"><label for="q12d"><span>د</span>C₇H₁₈</label></div>
-</div>
-</div>
-
-
-<!-- 13 -->
-<div class="question">
-<div class="question-number"><div class="number">13</div><strong>السؤال الثالث عشر</strong></div>
-<div class="question-title">
-أي المركبات الآتية ينتمي إلى الألكينات؟
-</div>
-<div class="options">
-<div class="option"><input name="q13" value="A" id="q13a" type="radio"><label for="q13a"><span>أ</span>C₃H₈</label></div>
-<div class="option"><input name="q13" value="B" id="q13b" type="radio"><label for="q13b"><span>ب</span>C₃H₆</label></div>
-<div class="option"><input name="q13" value="C" id="q13c" type="radio"><label for="q13c"><span>ج</span>C₃H₄</label></div>
-<div class="option"><input name="q13" value="D" id="q13d" type="radio"><label for="q13d"><span>د</span>CH₄</label></div>
-</div>
-</div>
-
-
-<!-- 14 -->
-<div class="question">
-<div class="question-number"><div class="number">14</div><strong>السؤال الرابع عشر</strong></div>
-<div class="question-title">
-أي الصيغ الآتية يمكن أن تمثل ألكينًا مفتوح السلسلة يحتوي على 6 ذرات كربون؟
-</div>
-<div class="options">
-<div class="option"><input name="q14" value="A" id="q14a" type="radio"><label for="q14a"><span>أ</span>C₆H₁₄</label></div>
-<div class="option"><input name="q14" value="B" id="q14b" type="radio"><label for="q14b"><span>ب</span>C₆H₁₂</label></div>
-<div class="option"><input name="q14" value="C" id="q14c" type="radio"><label for="q14c"><span>ج</span>C₆H₁₀</label></div>
-<div class="option"><input name="q14" value="D" id="q14d" type="radio"><label for="q14d"><span>د</span>C₆H₈</label></div>
-</div>
-</div>
-
-
-<!-- 15 -->
-<div class="question">
-<div class="question-number"><div class="number">15</div><strong>السؤال الخامس عشر</strong></div>
-<div class="question-title">
-أي مما يأتي يؤدي إلى زيادة درجة عدم التشبع في المركب الهيدروكربوني؟
-</div>
-<div class="options">
-<div class="option"><input name="q15" value="A" id="q15a" type="radio"><label for="q15a"><span>أ</span>تحويل رابطة أحادية إلى رابطة مزدوجة.</label></div>
-<div class="option"><input name="q15" value="B" id="q15b" type="radio"><label for="q15b"><span>ب</span>إضافة ذرتي هيدروجين فقط.</label></div>
-<div class="option"><input name="q15" value="C" id="q15c" type="radio"><label for="q15c"><span>ج</span>تحويل الرابطة المزدوجة إلى أحادية.</label></div>
-<div class="option"><input name="q15" value="D" id="q15d" type="radio"><label for="q15d"><span>د</span>زيادة عدد ذرات الهيدروجين دون تغيير الكربون.</label></div>
-</div>
-</div>
-
-
-<!-- 16 -->
-<div class="question">
-<div class="question-number"><div class="number">16</div><strong>السؤال السادس عشر</strong></div>
-<div class="question-title">
-المركب الذي يحتوي على رابطة ثلاثية بين ذرتي كربون ينتمي إلى:
-</div>
-<div class="options">
-<div class="option"><input name="q16" value="A" id="q16a" type="radio"><label for="q16a"><span>أ</span>الألكانات.</label></div>
-<div class="option"><input name="q16" value="B" id="q16b" type="radio"><label for="q16b"><span>ب</span>الألكينات.</label></div>
-<div class="option"><input name="q16" value="C" id="q16c" type="radio"><label for="q16c"><span>ج</span>الألكاينات.</label></div>
-<div class="option"><input name="q16" value="D" id="q16d" type="radio"><label for="q16d"><span>د</span>الكحولات.</label></div>
-</div>
-</div>
-
-
-<!-- 17 -->
-<div class="question">
-<div class="question-number"><div class="number">17</div><strong>السؤال السابع عشر</strong></div>
-<div class="question-title">
-الصيغة العامة للألكاينات المفتوحة السلسلة هي:
-</div>
-<div class="options">
-<div class="option"><input name="q17" value="A" id="q17a" type="radio"><label for="q17a"><span>أ</span>CₙH₂ₙ₊₂</label></div>
-<div class="option"><input name="q17" value="B" id="q17b" type="radio"><label for="q17b"><span>ب</span>CₙH₂ₙ</label></div>
-<div class="option"><input name="q17" value="C" id="q17c" type="radio"><label for="q17c"><span>ج</span>CₙH₂ₙ₋₂</label></div>
-<div class="option"><input name="q17" value="D" id="q17d" type="radio"><label for="q17d"><span>د</span>CₙHₙ₊₂</label></div>
-</div>
-</div>
-
-
-<!-- 18 -->
-<div class="question">
-<div class="question-number"><div class="number">18</div><strong>السؤال الثامن عشر</strong></div>
-<div class="question-title">
-أي الصيغ الآتية يمكن أن تمثل ألكاينًا يحتوي على 5 ذرات كربون؟
-</div>
-<div class="options">
-<div class="option"><input name="q18" value="A" id="q18a" type="radio"><label for="q18a"><span>أ</span>C₅H₁₂</label></div>
-<div class="option"><input name="q18" value="B" id="q18b" type="radio"><label for="q18b"><span>ب</span>C₅H₁₀</label></div>
-<div class="option"><input name="q18" value="C" id="q18c" type="radio"><label for="q18c"><span>ج</span>C₅H₈</label></div>
-<div class="option"><input name="q18" value="D" id="q18d" type="radio"><label for="q18d"><span>د</span>C₅H₆</label></div>
-</div>
-</div>
-
-
-<!-- 19 -->
-<div class="question">
-<div class="question-number"><div class="number">19</div><strong>السؤال التاسع عشر</strong></div>
-<div class="question-title">
-أي ترتيب يوضح تصاعد درجة عدم التشبع؟
-</div>
-<div class="options">
-<div class="option"><input name="q19" value="A" id="q19a" type="radio"><label for="q19a"><span>أ</span>ألكان ← ألكين ← ألكاين.</label></div>
-<div class="option"><input name="q19" value="B" id="q19b" type="radio"><label for="q19b"><span>ب</span>ألكاين ← ألكين ← ألكان.</label></div>
-<div class="option"><input name="q19" value="C" id="q19c" type="radio"><label for="q19c"><span>ج</span>ألكين ← ألكان ← ألكاين.</label></div>
-<div class="option"><input name="q19" value="D" id="q19d" type="radio"><label for="q19d"><span>د</span>ألكان ← ألكاين ← ألكين.</label></div>
-</div>
-</div>
-
-
-<!-- 20 -->
-<div class="question">
-<div class="question-number"><div class="number">20</div><strong>السؤال العشرون</strong></div>
-<div class="question-title">
-أي مما يلي يمثل مركبًا مشبعًا؟
-</div>
-<div class="figure"><div class="chem">CH₃ — CH₂ — CH₂ — CH₃</div></div>
-<div class="options">
-<div class="option"><input name="q20" value="A" id="q20a" type="radio"><label for="q20a"><span>أ</span>بيوتان.</label></div>
-<div class="option"><input name="q20" value="B" id="q20b" type="radio"><label for="q20b"><span>ب</span>بيوتين.</label></div>
-<div class="option"><input name="q20" value="C" id="q20c" type="radio"><label for="q20c"><span>ج</span>بيوتاين.</label></div>
-<div class="option"><input name="q20" value="D" id="q20d" type="radio"><label for="q20d"><span>د</span>مركب عطري.</label></div>
-</div>
-</div>
-
-
-<!-- 21 -->
-<div class="question">
-<div class="question-number"><div class="number">21</div><strong>السؤال الحادي والعشرون</strong></div>
-<div class="question-title">
-عدد ذرات الهيدروجين في الألكان C₉Hₓ يساوي:
-</div>
-<div class="options">
-<div class="option"><input name="q21" value="A" id="q21a" type="radio"><label for="q21a"><span>أ</span>18</label></div>
-<div class="option"><input name="q21" value="B" id="q21b" type="radio"><label for="q21b"><span>ب</span>20</label></div>
-<div class="option"><input name="q21" value="C" id="q21c" type="radio"><label for="q21c"><span>ج</span>16</label></div>
-<div class="option"><input name="q21" value="D" id="q21d" type="radio"><label for="q21d"><span>د</span>22</label></div>
-</div>
-</div>
-
-
-<!-- 22 -->
-<div class="question">
-<div class="question-number"><div class="number">22</div><strong>السؤال الثاني والعشرون</strong></div>
-<div class="question-title">
-إذا كان مركب هيدروكربوني مفتوح السلسلة صيغته C₆H₁₂، فأي مما يأتي يمكن أن يكون صحيحًا؟
-</div>
-<div class="options">
-<div class="option"><input name="q22" value="A" id="q22a" type="radio"><label for="q22a"><span>أ</span>ينتمي بالضرورة إلى الألكانات.</label></div>
-<div class="option"><input name="q22" value="B" id="q22b" type="radio"><label for="q22b"><span>ب</span>يمكن أن يكون ألكينًا مفتوح السلسلة.</label></div>
-<div class="option"><input name="q22" value="C" id="q22c" type="radio"><label for="q22c"><span>ج</span>يجب أن يكون ألكاينًا.</label></div>
-<div class="option"><input name="q22" value="D" id="q22d" type="radio"><label for="q22d"><span>د</span>لا يمكن أن يكون هيدروكربونًا.</label></div>
-</div>
-</div>
-
-
-<!-- 23 -->
-<div class="question">
-<div class="question-number"><div class="number">23</div><strong>السؤال الثالث والعشرون</strong></div>
-<div class="question-title">
-أي تركيب من الآتي يمثل سلسلة كربونية متفرعة؟
-</div>
-<div class="figure"><div class="chem">CH₃—CH(CH₃)—CH₂—CH₃</div></div>
-<div class="options">
-<div class="option"><input name="q23" value="A" id="q23a" type="radio"><label for="q23a"><span>أ</span>التركيب الموضح في الشكل.</label></div>
-<div class="option"><input name="q23" value="B" id="q23b" type="radio"><label for="q23b"><span>ب</span>CH₃—CH₂—CH₂—CH₃ فقط.</label></div>
-<div class="option"><input name="q23" value="C" id="q23c" type="radio"><label for="q23c"><span>ج</span>CH₄ فقط.</label></div>
-<div class="option"><input name="q23" value="D" id="q23d" type="radio"><label for="q23d"><span>د</span>H₂ فقط.</label></div>
-</div>
-</div>
-
-
-<!-- 24 -->
-<div class="question">
-<div class="question-number"><div class="number">24</div><strong>السؤال الرابع والعشرون</strong></div>
-<div class="question-title">
-في المركب الموضح، ذرة الكربون التي ترتبط بثلاث ذرات كربون تسمى:
-</div>
-<div class="figure"><div class="chem">CH₃—CH₂—CH(CH₃)—CH₂—CH₃</div></div>
-<div class="options">
-<div class="option"><input name="q24" value="A" id="q24a" type="radio"><label for="q24a"><span>أ</span>أولية.</label></div>
-<div class="option"><input name="q24" value="B" id="q24b" type="radio"><label for="q24b"><span>ب</span>ثانوية.</label></div>
-<div class="option"><input name="q24" value="C" id="q24c" type="radio"><label for="q24c"><span>ج</span>ثالثية.</label></div>
-<div class="option"><input name="q24" value="D" id="q24d" type="radio"><label for="q24d"><span>د</span>رباعية الهيدروجين.</label></div>
-</div>
-</div>
-
-
-<!-- 25 -->
-<div class="question">
-<div class="question-number"><div class="number">25</div><strong>السؤال الخامس والعشرون</strong></div>
-<div class="question-title">
-عدد ذرات الكربون الثانوية في المركب:
-</div>
-<div class="figure"><div class="chem">CH₃—CH₂—CH(CH₃)—CH₂—CH₃</div></div>
-<div class="options">
-<div class="option"><input name="q25" value="A" id="q25a" type="radio"><label for="q25a"><span>أ</span>1</label></div>
-<div class="option"><input name="q25" value="B" id="q25b" type="radio"><label for="q25b"><span>ب</span>2</label></div>
-<div class="option"><input name="q25" value="C" id="q25c" type="radio"><label for="q25c"><span>ج</span>3</label></div>
-<div class="option"><input name="q25" value="D" id="q25d" type="radio"><label for="q25d"><span>د</span>4</label></div>
-</div>
-</div>
-
-
-<!-- ================= الجزء الثالث ================= -->
-
-<div class="part">
-<strong>ثالثًا: التماكب وقراءة التراكيب</strong>
-<small>الأسئلة من 26 إلى 35</small>
-</div>
-
-
-<!-- 26 -->
-<div class="question">
-<div class="question-number"><div class="number">26</div><strong>السؤال السادس والعشرون</strong></div>
-<div class="question-title">
-أي زوج يمثل متشابهات بنائية؟
-</div>
-<div class="options">
-<div class="option"><input name="q26" value="A" id="q26a" type="radio"><label for="q26a"><span>أ</span>CH₃CH₂CH₂CH₃ و CH₃CH(CH₃)CH₃.</label></div>
-<div class="option"><input name="q26" value="B" id="q26b" type="radio"><label for="q26b"><span>ب</span>CH₄ و C₂H₆.</label></div>
-<div class="option"><input name="q26" value="C" id="q26c" type="radio"><label for="q26c"><span>ج</span>C₂H₄ و C₂H₆.</label></div>
-<div class="option"><input name="q26" value="D" id="q26d" type="radio"><label for="q26d"><span>د</span>C₃H₈ و C₄H₁₀.</label></div>
-</div>
-</div>
-
-
-<!-- 27 -->
-<div class="question">
-<div class="question-number"><div class="number">27</div><strong>السؤال السابع والعشرون</strong></div>
-<div class="question-title">
-السبب في اعتبار مركبين متشابهين بنائيًا هو:
-</div>
-<div class="options">
-<div class="option"><input name="q27" value="A" id="q27a" type="radio"><label for="q27a"><span>أ</span>اختلاف الصيغة الجزيئية مع ثبات عدد الذرات.</label></div>
-<div class="option"><input name="q27" value="B" id="q27b" type="radio"><label for="q27b"><span>ب</span>اتفاق الصيغة الجزيئية واختلاف طريقة اتصال الذرات.</label></div>
-<div class="option"><input name="q27" value="C" id="q27c" type="radio"><label for="q27c"><span>ج</span>اختلاف عدد عناصر المركب.</label></div>
-<div class="option"><input name="q27" value="D" id="q27d" type="radio"><label for="q27d"><span>د</span>اتفاق الاسم فقط.</label></div>
-</div>
-</div>
-
-
-<!-- 28 -->
-<div class="question">
-<div class="question-number"><div class="number">28</div><strong>السؤال الثامن والعشرون</strong></div>
-<div class="question-title">
-عدد المتشابهات البنائية للألكان C₄H₁₀ هو:
-</div>
-<div class="options">
-<div class="option"><input name="q28" value="A" id="q28a" type="radio"><label for="q28a"><span>أ</span>1</label></div>
-<div class="option"><input name="q28" value="B" id="q28b" type="radio"><label for="q28b"><span>ب</span>2</label></div>
-<div class="option"><input name="q28" value="C" id="q28c" type="radio"><label for="q28c"><span>ج</span>3</label></div>
-<div class="option"><input name="q28" value="D" id="q28d" type="radio"><label for="q28d"><span>د</span>4</label></div>
-</div>
-</div>
-
-
-<!-- 29 -->
-<div class="question">
-<div class="question-number"><div class="number">29</div><strong>السؤال التاسع والعشرون</strong></div>
-<div class="question-title">
-أي تركيب يمثل السلسلة المستقيمة لـ C₅H₁₂؟
-</div>
-<div class="options">
-<div class="option"><input name="q29" value="A" id="q29a" type="radio"><label for="q29a"><span>أ</span>CH₃—CH₂—CH₂—CH₂—CH₃</label></div>
-<div class="option"><input name="q29" value="B" id="q29b" type="radio"><label for="q29b"><span>ب</span>CH₃—CH(CH₃)—CH₂—CH₃</label></div>
-<div class="option"><input name="q29" value="C" id="q29c" type="radio"><label for="q29c"><span>ج</span>C₃H₆</label></div>
-<div class="option"><input name="q29" value="D" id="q29d" type="radio"><label for="q29d"><span>د</span>C₂H₂</label></div>
-</div>
-</div>
-
-
-<!-- 30 -->
-<div class="question">
-<div class="question-number"><div class="number">30</div><strong>السؤال الثلاثون</strong></div>
-<div class="question-title">
-أي تركيب يحتوي على أربع ذرات كربون ولكنه ليس سلسلة مستقيمة؟
-</div>
-<div class="options">
-<div class="option"><input name="q30" value="A" id="q30a" type="radio"><label for="q30a"><span>أ</span>CH₃—CH₂—CH₂—CH₃</label></div>
-<div class="option"><input name="q30" value="B" id="q30b" type="radio"><label for="q30b"><span>ب</span>CH₃—CH(CH₃)—CH₃</label></div>
-<div class="option"><input name="q30" value="C" id="q30c" type="radio"><label for="q30c"><span>ج</span>CH₄</label></div>
-<div class="option"><input name="q30" value="D" id="q30d" type="radio"><label for="q30d"><span>د</span>C₂H₄</label></div>
-</div>
-</div>
-
-
-<!-- 31 -->
-<div class="question">
-<div class="question-number"><div class="number">31</div><strong>السؤال الحادي والثلاثون</strong></div>
-<div class="question-title">
-في التركيب الآتي، عدد ذرات الكربون الأولية يساوي:
-</div>
-<div class="figure"><div class="chem">CH₃—CH(CH₃)—CH₂—CH₃</div></div>
-<div class="options">
-<div class="option"><input name="q31" value="A" id="q31a" type="radio"><label for="q31a"><span>أ</span>1</label></div>
-<div class="option"><input name="q31" value="B" id="q31b" type="radio"><label for="q31b"><span>ب</span>2</label></div>
-<div class="option"><input name="q31" value="C" id="q31c" type="radio"><label for="q31c"><span>ج</span>3</label></div>
-<div class="option"><input name="q31" value="D" id="q31d" type="radio"><label for="q31d"><span>د</span>4</label></div>
-</div>
-</div>
-
-
-<!-- 32 -->
-<div class="question">
-<div class="question-number"><div class="number">32</div><strong>السؤال الثاني والثلاثون</strong></div>
-<div class="question-title">
-أي عبارة صحيحة عن الصيغة الجزيئية والصيغة البنائية؟
-</div>
-<div class="options">
-<div class="option"><input name="q32" value="A" id="q32a" type="radio"><label for="q32a"><span>أ</span>الصيغة الجزيئية توضح طريقة اتصال الذرات بالتفصيل.</label></div>
-<div class="option"><input name="q32" value="B" id="q32b" type="radio"><label for="q32b"><span>ب</span>الصيغة البنائية توضح ترتيب اتصال الذرات بصورة أكبر.</label></div>
-<div class="option"><input name="q32" value="C" id="q32c" type="radio"><label for="q32c"><span>ج</span>لا فرق بينهما.</label></div>
-<div class="option"><input name="q32" value="D" id="q32d" type="radio"><label for="q32d"><span>د</span>الصيغة البنائية لا تحتوي كربونًا.</label></div>
-</div>
-</div>
-
-
-<!-- 33 -->
-<div class="question">
-<div class="question-number"><div class="number">33</div><strong>السؤال الثالث والثلاثون</strong></div>
-<div class="question-title">
-المركبان اللذان لهما الصيغة نفسها ولكن تختلف خواصهما نتيجة اختلاف البناء هما:
-</div>
-<div class="options">
-<div class="option"><input name="q33" value="A" id="q33a" type="radio"><label for="q33a"><span>أ</span>نظائر.</label></div>
-<div class="option"><input name="q33" value="B" id="q33b" type="radio"><label for="q33b"><span>ب</span>متشابهات بنائية.</label></div>
-<div class="option"><input name="q33" value="C" id="q33c" type="radio"><label for="q33c"><span>ج</span>أيونات.</label></div>
-<div class="option"><input name="q33" value="D" id="q33d" type="radio"><label for="q33d"><span>د</span>فلزات.</label></div>
-</div>
-</div>
-
-
-<!-- 34 -->
-<div class="question">
-<div class="question-number"><div class="number">34</div><strong>السؤال الرابع والثلاثون</strong></div>
-<div class="question-title">
-إذا كان مركبان لهما الصيغة C₅H₁₂، فإن اختلاف ترتيب ذرات الكربون قد يؤدي إلى:
-</div>
-<div class="options">
-<div class="option"><input name="q34" value="A" id="q34a" type="radio"><label for="q34a"><span>أ</span>تكوين متشابهات بنائية.</label></div>
-<div class="option"><input name="q34" value="B" id="q34b" type="radio"><label for="q34b"><span>ب</span>اختفاء ذرات الكربون.</label></div>
-<div class="option"><input name="q34" value="C" id="q34c" type="radio"><label for="q34c"><span>ج</span>تحول المركب إلى عنصر.</label></div>
-<div class="option"><input name="q34" value="D" id="q34d" type="radio"><label for="q34d"><span>د</span>زيادة العدد الذري للكربون.</label></div>
-</div>
-</div>
-
-
-<!-- 35 -->
-<div class="question">
-<div class="question-number"><div class="number">35</div><strong>السؤال الخامس والثلاثون</strong></div>
-<div class="question-title">
-أي مما يلي ليس اختلافًا بنائيًا بين متشابهين بنائيين؟
-</div>
-<div class="options">
-<div class="option"><input name="q35" value="A" id="q35a" type="radio"><label for="q35a"><span>أ</span>ترتيب اتصال الذرات.</label></div>
-<div class="option"><input name="q35" value="B" id="q35b" type="radio"><label for="q35b"><span>ب</span>شكل السلسلة والتفرع.</label></div>
-<div class="option"><input name="q35" value="C" id="q35c" type="radio"><label for="q35c"><span>ج</span>الصيغة الجزيئية نفسها.</label></div>
-<div class="option"><input name="q35" value="D" id="q35d" type="radio"><label for="q35d"><span>د</span>موضع اتصال بعض الذرات.</label></div>
-</div>
-</div>
-
-
-<!-- ================= الجزء الرابع ================= -->
-
-<div class="part">
-<strong>رابعًا: أساسيات تسمية المركبات العضوية</strong>
-<small>الأسئلة من 36 إلى 50</small>
-</div>
-
-
-<!-- 36 -->
-<div class="question">
-<div class="question-number"><div class="number">36</div><strong>السؤال السادس والثلاثون</strong></div>
-<div class="question-title">
-عند تسمية ألكان متفرع، ما الخطوة التي تسبق تحديد مواقع التفرعات؟
-</div>
-<div class="options">
-<div class="option"><input name="q36" value="A" id="q36a" type="radio"><label for="q36a"><span>أ</span>اختيار أطول سلسلة كربونية متصلة مناسبة.</label></div>
-<div class="option"><input name="q36" value="B" id="q36b" type="radio"><label for="q36b"><span>ب</span>إضافة الأكسجين.</label></div>
-<div class="option"><input name="q36" value="C" id="q36c" type="radio"><label for="q36c"><span>ج</span>حذف الكربون.</label></div>
-<div class="option"><input name="q36" value="D" id="q36d" type="radio"><label for="q36d"><span>د</span>اختيار أقصر سلسلة.</label></div>
-</div>
-</div>
-
-
-<!-- 37 -->
-<div class="question">
-<div class="question-number"><div class="number">37</div><strong>السؤال السابع والثلاثون</strong></div>
-<div class="question-title">
-الاسم الأساسي لسلسلة تحتوي على ذرة كربون واحدة هو:
-</div>
-<div class="options">
-<div class="option"><input name="q37" value="A" id="q37a" type="radio"><label for="q37a"><span>أ</span>ميثان.</label></div>
-<div class="option"><input name="q37" value="B" id="q37b" type="radio"><label for="q37b"><span>ب</span>إيثان.</label></div>
-<div class="option"><input name="q37" value="C" id="q37c" type="radio"><label for="q37c"><span>ج</span>بروبان.</label></div>
-<div class="option"><input name="q37" value="D" id="q37d" type="radio"><label for="q37d"><span>د</span>بيوتان.</label></div>
-</div>
-</div>
-
-
-<!-- 38 -->
-<div class="question">
-<div class="question-number"><div class="number">38</div><strong>السؤال الثامن والثلاثون</strong></div>
-<div class="question-title">
-السلسلة التي تحتوي على ثلاث ذرات كربون يكون اسمها الأساسي:
-</div>
-<div class="options">
-<div class="option"><input name="q38" value="A" id="q38a" type="radio"><label for="q38a"><span>أ</span>ميثان.</label></div>
-<div class="option"><input name="q38" value="B" id="q38b" type="radio"><label for="q38b"><span>ب</span>إيثان.</label></div>
-<div class="option"><input name="q38" value="C" id="q38c" type="radio"><label for="q38c"><span>ج</span>بروبان.</label></div>
-<div class="option"><input name="q38" value="D" id="q38d" type="radio"><label for="q38d"><span>د</span>بيوتان.</label></div>
-</div>
-</div>
-
-
-<!-- 39 -->
-<div class="question">
-<div class="question-number"><div class="number">39</div><strong>السؤال التاسع والثلاثون</strong></div>
-<div class="question-title">
-المقطع المستخدم لسلسلة تحتوي على ست ذرات كربون هو:
-</div>
-<div class="options">
-<div class="option"><input name="q39" value="A" id="q39a" type="radio"><label for="q39a"><span>أ</span>بنت-</label></div>
-<div class="option"><input name="q39" value="B" id="q39b" type="radio"><label for="q39b"><span>ب</span>هكس-</label></div>
-<div class="option"><input name="q39" value="C" id="q39c" type="radio"><label for="q39c"><span>ج</span>هبت-</label></div>
-<div class="option"><input name="q39" value="D" id="q39d" type="radio"><label for="q39d"><span>د</span>أوكت-</label></div>
-</div>
-</div>
-
-
-<!-- 40 -->
-<div class="question">
-<div class="question-number"><div class="number">40</div><strong>السؤال الأربعون</strong></div>
-<div class="question-title">
-ما الاسم الصحيح للمركب التالي؟
-</div>
-<div class="figure"><div class="chem">CH₃—CH₂—CH₂—CH₃</div></div>
-<div class="options">
-<div class="option"><input name="q40" value="A" id="q40a" type="radio"><label for="q40a"><span>أ</span>بروبان.</label></div>
-<div class="option"><input name="q40" value="B" id="q40b" type="radio"><label for="q40b"><span>ب</span>بيوتان.</label></div>
-<div class="option"><input name="q40" value="C" id="q40c" type="radio"><label for="q40c"><span>ج</span>بنتان.</label></div>
-<div class="option"><input name="q40" value="D" id="q40d" type="radio"><label for="q40d"><span>د</span>هكسان.</label></div>
-</div>
-</div>
-
-
-<!-- 41 -->
-<div class="question">
-<div class="question-number"><div class="number">41</div><strong>السؤال الحادي والأربعون</strong></div>
-<div class="question-title">
-ما الاسم الصحيح للمركب التالي؟
-</div>
-<div class="figure"><div class="chem">CH₃—CH(CH₃)—CH₃</div></div>
-<div class="options">
-<div class="option"><input name="q41" value="A" id="q41a" type="radio"><label for="q41a"><span>أ</span>2-ميثيل بروبان.</label></div>
-<div class="option"><input name="q41" value="B" id="q41b" type="radio"><label for="q41b"><span>ب</span>1-ميثيل بروبان.</label></div>
-<div class="option"><input name="q41" value="C" id="q41c" type="radio"><label for="q41c"><span>ج</span>2-إيثيل إيثان.</label></div>
-<div class="option"><input name="q41" value="D" id="q41d" type="radio"><label for="q41d"><span>د</span>ميثان متفرع.</label></div>
-</div>
-</div>
-
-
-<!-- 42 -->
-<div class="question">
-<div class="question-number"><div class="number">42</div><strong>السؤال الثاني والأربعون</strong></div>
-<div class="question-title">
-عند ترقيم السلسلة الرئيسية لمركب متفرع، الهدف من الترقيم من الطرف المناسب هو:
-</div>
-<div class="options">
-<div class="option"><input name="q42" value="A" id="q42a" type="radio"><label for="q42a"><span>أ</span>الحصول على أكبر رقم للتفرع.</label></div>
-<div class="option"><input name="q42" value="B" id="q42b" type="radio"><label for="q42b"><span>ب</span>الحصول على أصغر رقم ممكن لموضع التفرع.</label></div>
-<div class="option"><input name="q42" value="C" id="q42c" type="radio"><label for="q42c"><span>ج</span>تغيير عدد ذرات الكربون.</label></div>
-<div class="option"><input name="q42" value="D" id="q42d" type="radio"><label for="q42d"><span>د</span>زيادة عدد الهيدروجينات.</label></div>
-</div>
-</div>
-
-
-<!-- 43 -->
-<div class="question">
-<div class="question-number"><div class="number">43</div><strong>السؤال الثالث والأربعون</strong></div>
-<div class="question-title">
-ما الاسم الصحيح للمركب؟
-</div>
-<div class="figure"><div class="chem">CH₃—CH₂—CH(CH₃)—CH₂—CH₃</div></div>
-<div class="options">
-<div class="option"><input name="q43" value="A" id="q43a" type="radio"><label for="q43a"><span>أ</span>2-ميثيل بنتان.</label></div>
-<div class="option"><input name="q43" value="B" id="q43b" type="radio"><label for="q43b"><span>ب</span>3-ميثيل بنتان.</label></div>
-<div class="option"><input name="q43" value="C" id="q43c" type="radio"><label for="q43c"><span>ج</span>3-إيثيل بيوتان.</label></div>
-<div class="option"><input name="q43" value="D" id="q43d" type="radio"><label for="q43d"><span>د</span>2-إيثيل بروبان.</label></div>
-</div>
-</div>
-
-
-<!-- 44 -->
-<div class="question">
-<div class="question-number"><div class="number">44</div><strong>السؤال الرابع والأربعون</strong></div>
-<div class="question-title">
-إذا كان التفرع يقع على الكربون الثالث في سلسلة مكونة من خمس ذرات كربون، فإن الاسم الصحيح لتفرع ميثيل يكون:
-</div>
-<div class="options">
-<div class="option"><input name="q44" value="A" id="q44a" type="radio"><label for="q44a"><span>أ</span>2-ميثيل بنتان.</label></div>
-<div class="option"><input name="q44" value="B" id="q44b" type="radio"><label for="q44b"><span>ب</span>3-ميثيل بنتان.</label></div>
-<div class="option"><input name="q44" value="C" id="q44c" type="radio"><label for="q44c"><span>ج</span>4-ميثيل بنتان.</label></div>
-<div class="option"><input name="q44" value="D" id="q44d" type="radio"><label for="q44d"><span>د</span>1-ميثيل بنتان.</label></div>
-</div>
-</div>
-
-
-<!-- 45 -->
-<div class="question">
-<div class="question-number"><div class="number">45</div><strong>السؤال الخامس والأربعون</strong></div>
-<div class="question-title">
-أي مما يأتي يمثل أطول سلسلة كربونية متصلة في التركيب الموضح؟
-</div>
-<div class="figure"><div class="chem">CH₃—CH(CH₃)—CH₂—CH₂—CH₃</div></div>
-<div class="options">
-<div class="option"><input name="q45" value="A" id="q45a" type="radio"><label for="q45a"><span>أ</span>3 ذرات كربون.</label></div>
-<div class="option"><input name="q45" value="B" id="q45b" type="radio"><label for="q45b"><span>ب</span>4 ذرات كربون.</label></div>
-<div class="option"><input name="q45" value="C" id="q45c" type="radio"><label for="q45c"><span>ج</span>5 ذرات كربون.</label></div>
-<div class="option"><input name="q45" value="D" id="q45d" type="radio"><label for="q45d"><span>د</span>6 ذرات كربون.</label></div>
-</div>
-</div>
-
-
-<!-- 46 -->
-<div class="question">
-<div class="question-number"><div class="number">46</div><strong>السؤال السادس والأربعون</strong></div>
-<div class="question-title">
-ما الاسم النظامي للمركب؟
-</div>
-<div class="figure"><div class="chem">CH₃—CH(CH₃)—CH₂—CH₂—CH₃</div></div>
-<div class="options">
-<div class="option"><input name="q46" value="A" id="q46a" type="radio"><label for="q46a"><span>أ</span>2-ميثيل بنتان.</label></div>
-<div class="option"><input name="q46" value="B" id="q46b" type="radio"><label for="q46b"><span>ب</span>3-ميثيل بنتان.</label></div>
-<div class="option"><input name="q46" value="C" id="q46c" type="radio"><label for="q46c"><span>ج</span>4-ميثيل بنتان.</label></div>
-<div class="option"><input name="q46" value="D" id="q46d" type="radio"><label for="q46d"><span>د</span>2-إيثيل بيوتان.</label></div>
-</div>
-</div>
-
-
-<!-- 47 -->
-<div class="question">
-<div class="question-number"><div class="number">47</div><strong>السؤال السابع والأربعون</strong></div>
-<div class="question-title">
-أي عبارة أدق عند المفاضلة بين اسمين محتملين لمركب متفرع؟
-</div>
-<div class="options">
-<div class="option"><input name="q47" value="A" id="q47a" type="radio"><label for="q47a"><span>أ</span>يُختار الاسم الذي يحتوي أطول سلسلة رئيسية صحيحة.</label></div>
-<div class="option"><input name="q47" value="B" id="q47b" type="radio"><label for="q47b"><span>ب</span>يُختار الاسم عشوائيًا.</label></div>
-<div class="option"><input name="q47" value="C" id="q47c" type="radio"><label for="q47c"><span>ج</span>يُختار الاسم الذي يحتوي أكبر عدد من الأرقام.</label></div>
-<div class="option"><input name="q47" value="D" id="q47d" type="radio"><label for="q47d"><span>د</span>يُهمل ترتيب الذرات.</label></div>
-</div>
-</div>
-
-
-<!-- 48 -->
-<div class="question">
-<div class="question-number"><div class="number">48</div><strong>السؤال الثامن والأربعون</strong></div>
-<div class="question-title">
-أي مما يلي يمثل الترتيب الصحيح لأسماء السلاسل حسب عدد ذرات الكربون؟
-</div>
-<div class="options">
-<div class="option"><input name="q48" value="A" id="q48a" type="radio"><label for="q48a"><span>أ</span>ميثان ← إيثان ← بروبان ← بيوتان.</label></div>
-<div class="option"><input name="q48" value="B" id="q48b" type="radio"><label for="q48b"><span>ب</span>إيثان ← ميثان ← بيوتان ← بروبان.</label></div>
-<div class="option"><input name="q48" value="C" id="q48c" type="radio"><label for="q48c"><span>ج</span>بروبان ← ميثان ← إيثان ← بيوتان.</label></div>
-<div class="option"><input name="q48" value="D" id="q48d" type="radio"><label for="q48d"><span>د</span>بيوتان ← بروبان ← إيثان ← ميثان.</label></div>
-</div>
-</div>
-
-
-<!-- 49 -->
-<div class="question">
-<div class="question-number"><div class="number">49</div><strong>السؤال التاسع والأربعون</strong></div>
-<div class="question-title">
-ما الاسم الصحيح للمركب الآتي؟
-</div>
-<div class="figure"><div class="chem">CH₃—CH₂—CH(CH₃)—CH₂—CH₂—CH₃</div></div>
-<div class="options">
-<div class="option"><input name="q49" value="A" id="q49a" type="radio"><label for="q49a"><span>أ</span>2-ميثيل هكسان.</label></div>
-<div class="option"><input name="q49" value="B" id="q49b" type="radio"><label for="q49b"><span>ب</span>3-ميثيل هكسان.</label></div>
-<div class="option"><input name="q49" value="C" id="q49c" type="radio"><label for="q49c"><span>ج</span>4-ميثيل هكسان.</label></div>
-<div class="option"><input name="q49" value="D" id="q49d" type="radio"><label for="q49d"><span>د</span>3-إيثيل بنتان.</label></div>
-</div>
-</div>
-
-
-<!-- 50 -->
-<div class="question">
-<div class="question-number"><div class="number">50</div><strong>السؤال الخمسون</strong></div>
-<div class="question-title">
-بالاعتماد على قواعد اختيار السلسلة الرئيسية والترقيم والتفرع، ما الاسم الصحيح للمركب الآتي؟
-</div>
-
-<div class="figure">
-<div class="chem">
-CH₃—CH₂—CH(CH₃)—CH₂—CH(CH₃)—CH₃
-</div>
-</div>
-
-<div class="options">
-<div class="option"><input name="q50" value="A" id="q50a" type="radio"><label for="q50a"><span>أ</span>2،4-ثنائي ميثيل هكسان.</label></div>
-<div class="option"><input name="q50" value="B" id="q50b" type="radio"><label for="q50b"><span>ب</span>2،4-ثنائي ميثيل بنتان.</label></div>
-<div class="option"><input name="q50" value="C" id="q50c" type="radio"><label for="q50c"><span>ج</span>3،5-ثنائي ميثيل هكسان.</label></div>
-<div class="option"><input name="q50" value="D" id="q50d" type="radio"><label for="q50d"><span>د</span>3-إيثيل هكسان.</label></div>
-</div>
-</div>
-
-
-<div class="submit">
-<p>
-تأكد من إجاباتك. بعد التسليم سيتم التصحيح تلقائيًا ولن تحتاج إلى تصحيح يدوي.
-</p>
-
-<button type="button" class="start" onclick="submitExam()">
-تسليم الامتحان
-</button>
-</div>
-
-</form>
+  </div>
 
 </section>
 
+<!-- =========================================================
+     ABOUT
+========================================================= -->
 
-<!-- ================= النتيجة ================= -->
+<section id="about">
 
-<section id="resultScreen" class="hidden">
+  <div class="container">
 
-<div class="card result">
+    <div class="section-head">
 
-<div class="score" id="scoreCircle">
-<div class="score-inner">
-<div>
-<strong id="score">0/50</strong>
-<small>الدرجة</small>
-</div>
-</div>
-</div>
+      <div class="eyebrow">
+        01 • عني
+      </div>
 
-<h2 id="resultTitle">تم تصحيح الامتحان</h2>
-<p id="resultInfo" style="color:#91a1b2"></p>
+      <h2>
+        مش مجرد مبرمج.
+      </h2>
 
-<div id="reviews"></div>
+      <p>
+        البرمجة عندي وسيلة عشان أطلع الأفكار
+        من دماغي للعالم الحقيقي.
+      </p>
 
-<div class="whatsapp">
-<h3>إرسال النتيجة</h3>
-<p style="font-size:11px;color:#9caebe">
-تم تجهيز رسالة تحتوي اسم الطالب والدرجة وتفاصيل الإجابات.
-اضغط الزر لفتح WhatsApp.
-</p>
-<a id="wa" target="_blank">
-إرسال النتيجة على WhatsApp
-</a>
-</div>
+    </div>
 
-</div>
+    <div class="about-grid">
+
+      <div class="card">
+
+        <h3>
+          👋 مين يوسف؟
+        </h3>
+
+        <p>
+
+          أنا
+          <strong>
+            يوسف أشرف الجرف
+          </strong>،
+
+          طالب في تالتة ثانوي،
+          وشخص بحب أجرب وأتعلم وأبني.
+
+          بكتب شعر،
+          وبشتغل على أفكار ومشاريع برمجية،
+          وبحب إن المشروع مايبقاش مجرد صفحة
+          شكلها حلو،
+
+          لكن يبقى فيه تفاصيل وحركة
+          وتجربة حقيقية للمستخدم.
+
+        </p>
+
+        <br>
+
+        <p>
+
+          من المواقع والمنصات التعليمية والاجتماعية،
+          للمشاريع الشخصية وصفحات الشعر
+          والواجهات التفاعلية،
+
+          بحاول كل مرة أتعلم حاجة جديدة
+          وأحوّلها لحاجة أقدر أشوفها قدامي.
+
+        </p>
+
+      </div>
+
+      <div class="card quote">
+
+        <h3>
+          🧠 طريقتي في التفكير
+        </h3>
+
+        <p>
+
+          "أنا مش مستني أبقى محترف عشان أبدأ،
+          أنا ببدأ عشان كل مشروع يخليني أقرب للاحتراف."
+
+        </p>
+
+        <br>
+
+        <p
+          style="
+            font-family:Cairo;
+            font-size:14px;
+            color:var(--muted);
+          ">
+
+          وبالنسبة لي،
+          أجمل حاجة في البرمجة إن فكرة
+          كانت موجودة في دماغك من شوية
+          ممكن تتحول بعد شوية إلى شيء حقيقي
+          الناس تقدر تستخدمه.
+
+        </p>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+<!-- =========================================================
+     SKILLS
+========================================================= -->
+
+<section id="skills">
+
+  <div class="container">
+
+    <div class="section-head">
+
+      <div class="eyebrow">
+        02 • مهاراتي
+      </div>
+
+      <h2>
+        الأدوات اللي ببني بيها.
+      </h2>
+
+      <p>
+        النسب هنا تعبير تقريبي عن مستوى التعامل
+        مع كل مجال وليست شهادة رسمية.
+      </p>
+
+    </div>
+
+    <div class="skills">
+
+      <div class="skill">
+
+        <div class="skill-top">
+
+          <span class="skill-name">
+            HTML
+          </span>
+
+          <span class="skill-percent">
+            95%
+          </span>
+
+        </div>
+
+        <div class="progress">
+          <span style="width:95%"></span>
+        </div>
+
+      </div>
+
+      <div class="skill">
+
+        <div class="skill-top">
+
+          <span class="skill-name">
+            CSS
+          </span>
+
+          <span class="skill-percent">
+            92%
+          </span>
+
+        </div>
+
+        <div class="progress">
+          <span style="width:92%"></span>
+        </div>
+
+      </div>
+
+      <div class="skill">
+
+        <div class="skill-top">
+
+          <span class="skill-name">
+            JavaScript
+          </span>
+
+          <span class="skill-percent">
+            85%
+          </span>
+
+        </div>
+
+        <div class="progress">
+          <span style="width:85%"></span>
+        </div>
+
+      </div>
+
+      <div class="skill">
+
+        <div class="skill-top">
+
+          <span class="skill-name">
+            Responsive Design
+          </span>
+
+          <span class="skill-percent">
+            90%
+          </span>
+
+        </div>
+
+        <div class="progress">
+          <span style="width:90%"></span>
+        </div>
+
+      </div>
+
+      <div class="skill">
+
+        <div class="skill-top">
+
+          <span class="skill-name">
+            UI / UX
+          </span>
+
+          <span class="skill-percent">
+            82%
+          </span>
+
+        </div>
+
+        <div class="progress">
+          <span style="width:82%"></span>
+        </div>
+
+      </div>
+
+      <div class="skill">
+
+        <div class="skill-top">
+
+          <span class="skill-name">
+            GitHub
+          </span>
+
+          <span class="skill-percent">
+            88%
+          </span>
+
+        </div>
+
+        <div class="progress">
+          <span style="width:88%"></span>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+<!-- =========================================================
+     PROJECTS
+========================================================= -->
+
+<section id="projects">
+
+  <div class="container">
+
+    <div class="section-head">
+
+      <div class="eyebrow">
+        03 • مشاريعي
+      </div>
+
+      <h2>
+        أفكار تحولت إلى مشاريع.
+      </h2>
+
+      <p>
+        مجموعة من أنواع المشاريع والمنصات
+        التي أعمل عليها وأطوّرها.
+      </p>
+
+    </div>
+
+    <div class="project-grid">
+
+      <article class="project">
+
+        <div class="project-cover">
+
+          <span class="project-number">
+            01 / SOCIAL
+          </span>
+
+        </div>
+
+        <div class="project-body">
+
+          <h3>
+            ملك — منصة اجتماعية
+          </h3>
+
+          <p>
+            فكرة منصة اجتماعية تجمع التواصل
+            والمشاركة والملفات الشخصية
+            والمنشورات والرسائل والإشعارات
+            في تجربة واحدة.
+          </p>
+
+          <div class="project-tags">
+
+            <span>Social</span>
+            <span>Web App</span>
+            <span>UI</span>
+            <span>JavaScript</span>
+
+          </div>
+
+          <div class="project-action">
+
+            <span class="project-link">
+              مشروع شخصي
+            </span>
+
+            <button
+              class="btn btn-outline"
+              style="
+                padding:8px 12px;
+                font-size:11px
+              "
+              onclick="
+                openProject(
+                  'ملك — منصة اجتماعية',
+                  'منصة اجتماعية شخصية يتم تطويرها لتشمل الحسابات والمنشورات والتواصل والرسائل والإشعارات وتجربة استخدام متكاملة.'
+                )
+              ">
+
+              التفاصيل
+
+            </button>
+
+          </div>
+
+        </div>
+
+      </article>
+
+      <article class="project">
+
+        <div class="project-cover">
+
+          <span class="project-number">
+            02 / EDUCATION
+          </span>
+
+        </div>
+
+        <div class="project-body">
+
+          <h3>
+            الدكتورة ملك
+          </h3>
+
+          <p>
+            منصة دراسية مصممة لتنظيم الدراسة
+            والمتابعة والاختبارات والملاحظات
+            والجداول والإحصائيات في مكان واحد.
+          </p>
+
+          <div class="project-tags">
+
+            <span>Education</span>
+            <span>Dashboard</span>
+            <span>Exams</span>
+            <span>Planner</span>
+
+          </div>
+
+          <div class="project-action">
+
+            <span class="project-link">
+              منصة تعليمية
+            </span>
+
+            <button
+              class="btn btn-outline"
+              style="
+                padding:8px 12px;
+                font-size:11px
+              "
+              onclick="
+                openProject(
+                  'الدكتورة ملك',
+                  'لوحة دراسة تفاعلية تشمل المواد والدروس والاختبارات والملاحظات والمهام والإحصائيات.'
+                )
+              ">
+
+              التفاصيل
+
+            </button>
+
+          </div>
+
+        </div>
+
+      </article>
+
+      <article class="project">
+
+        <div class="project-cover">
+
+          <span class="project-number">
+            03 / POETRY
+          </span>
+
+        </div>
+
+        <div class="project-body">
+
+          <h3>
+            أحببتُ الملك
+          </h3>
+
+          <p>
+            مشروع أدبي وشعري بواجهة فاخرة
+            لعرض الدواوين والقصائد مع القراءة
+            والتصفح والبحث والمفضلة والتفاعل.
+          </p>
+
+          <div class="project-tags">
+
+            <span>Poetry</span>
+            <span>Arabic</span>
+            <span>Reading</span>
+            <span>Creative</span>
+
+          </div>
+
+          <div class="project-action">
+
+            <span class="project-link">
+              مشروع أدبي
+            </span>
+
+            <button
+              class="btn btn-outline"
+              style="
+                padding:8px 12px;
+                font-size:11px
+              "
+              onclick="
+                openProject(
+                  'أحببتُ الملك',
+                  'منصة شعرية عربية تهدف إلى تقديم الدواوين والقصائد في تجربة قراءة حديثة وفاخرة.'
+                )
+              ">
+
+              التفاصيل
+
+            </button>
+
+          </div>
+
+        </div>
+
+      </article>
+
+      <article class="project">
+
+        <div class="project-cover">
+
+          <span class="project-number">
+            04 / CREATIVE
+          </span>
+
+        </div>
+
+        <div class="project-body">
+
+          <h3>
+            منصات وتجارب شخصية
+          </h3>
+
+          <p>
+            صفحات وتجارب رقمية مختلفة،
+            من مواقع المناسبات والهدايا
+            إلى المشاريع التجريبية والواجهات التفاعلية.
+          </p>
+
+          <div class="project-tags">
+
+            <span>Creative</span>
+            <span>Animation</span>
+            <span>Frontend</span>
+
+          </div>
+
+          <div class="project-action">
+
+            <span class="project-link">
+              تجارب رقمية
+            </span>
+
+            <button
+              class="btn btn-outline"
+              style="
+                padding:8px 12px;
+                font-size:11px
+              "
+              onclick="
+                openProject(
+                  'التجارب الرقمية',
+                  'مجموعة من المشاريع الصغيرة والكبيرة التي أستخدمها للتعلم والتجربة وتحويل الأفكار إلى واجهات حقيقية.'
+                )
+              ">
+
+              التفاصيل
+
+            </button>
+
+          </div>
+
+        </div>
+
+      </article>
+
+      <article class="project">
+
+        <div class="project-cover">
+
+          <span class="project-number">
+            05 / FINANCE
+          </span>
+
+        </div>
+
+        <div class="project-body">
+
+          <h3>
+            أفكار الصرافة والحسابات
+          </h3>
+
+          <p>
+            أفكار وتجارب برمجية مرتبطة بالحسابات
+            والتحويلات والعملات والواجهات
+            التي تتعامل مع البيانات المالية.
+          </p>
+
+          <div class="project-tags">
+
+            <span>Currency</span>
+            <span>Calculator</span>
+            <span>Data</span>
+
+          </div>
+
+          <div class="project-action">
+
+            <span class="project-link">
+              تجربة برمجية
+            </span>
+
+            <button
+              class="btn btn-outline"
+              style="
+                padding:8px 12px;
+                font-size:11px
+              "
+              onclick="
+                openProject(
+                  'مشاريع الصرافة',
+                  'واجهات وأفكار برمجية للتعامل مع العملات والحسابات والتحويلات. أي عمليات مالية حقيقية تحتاج إلى مصدر بيانات آمن وموثوق قبل استخدامها.'
+                )
+              ">
+
+              التفاصيل
+
+            </button>
+
+          </div>
+
+        </div>
+
+      </article>
+
+      <article class="project">
+
+        <div class="project-cover">
+
+          <span class="project-number">
+            06 / FUTURE
+          </span>
+
+        </div>
+
+        <div class="project-body">
+
+          <h3>
+            المشروع القادم
+          </h3>
+
+          <p>
+            دايمًا فيه مشروع جديد في الطريق.
+            الفكرة القادمة مش لازم تكون معروفة النهارده،
+            المهم إنها تتبني لما تكون جاهزة.
+          </p>
+
+          <div class="project-tags">
+
+            <span>Future</span>
+            <span>Ideas</span>
+            <span>Build</span>
+
+          </div>
+
+          <div class="project-action">
+
+            <span class="project-link">
+              Coming Soon
+            </span>
+
+          </div>
+
+        </div>
+
+      </article>
+
+    </div>
+
+  </div>
+
+</section>
+
+<!-- =========================================================
+     SERVICES
+========================================================= -->
+
+<section id="services">
+
+  <div class="container">
+
+    <div class="section-head">
+
+      <div class="eyebrow">
+        04 • ماذا أصنع؟
+      </div>
+
+      <h2>
+        من الفكرة إلى الواجهة.
+      </h2>
+
+      <p>
+        المجالات التي أحب أن أشتغل عليها وأتعلم فيها.
+      </p>
+
+    </div>
+
+    <div class="services">
+
+      <div class="service">
+
+        <div class="service-icon">
+          💻
+        </div>
+
+        <div>
+
+          <h3>
+            تطوير مواقع
+          </h3>
+
+          <p>
+            بناء صفحات ومواقع Responsive
+            تعمل على الموبايل والكمبيوتر
+            مع واجهات حديثة وحركات وتفاعلات.
+          </p>
+
+        </div>
+
+      </div>
+
+      <div class="service">
+
+        <div class="service-icon">
+          🌐
+        </div>
+
+        <div>
+
+          <h3>
+            صناعة المنصات
+          </h3>
+
+          <p>
+            تحويل فكرة كبيرة إلى هيكل منصة
+            يحتوي على صفحات وأقسام ومستخدمين
+            وتفاعلات وتجربة متكاملة.
+          </p>
+
+        </div>
+
+      </div>
+
+      <div class="service">
+
+        <div class="service-icon">
+          🎨
+        </div>
+
+        <div>
+
+          <h3>
+            تصميم الواجهات
+          </h3>
+
+          <p>
+            تصميم واجهات Dark وModern
+            مع الاهتمام بالتفاصيل والألوان
+            والحركة والوضوح.
+          </p>
+
+        </div>
+
+      </div>
+
+      <div class="service">
+
+        <div class="service-icon">
+          ⚙️
+        </div>
+
+        <div>
+
+          <h3>
+            JavaScript & Logic
+          </h3>
+
+          <p>
+            إضافة التفاعلات والحسابات
+            والنوافذ والأزرار والتخزين المحلي
+            والمنطق البرمجي للواجهة.
+          </p>
+
+        </div>
+
+      </div>
+
+      <div class="service">
+
+        <div class="service-icon">
+          📱
+        </div>
+
+        <div>
+
+          <h3>
+            Mobile First
+          </h3>
+
+          <p>
+            تصميم التجربة بحيث تكون مريحة
+            على شاشة الهاتف لأن أغلب المستخدمين
+            يبدأون من الموبايل.
+          </p>
+
+        </div>
+
+      </div>
+
+      <div class="service">
+
+        <div class="service-icon">
+          ✍️
+        </div>
+
+        <div>
+
+          <h3>
+            كتابة وإبداع
+          </h3>
+
+          <p>
+            جانب مختلف مني:
+            الشعر والكتابة والأفكار الإبداعية
+            التي أستخدمها أحيانًا لصناعة تجربة لها روح.
+          </p>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+<!-- =========================================================
+     JOURNEY
+========================================================= -->
+
+<section id="journey">
+
+  <div class="container">
+
+    <div class="section-head">
+
+      <div class="eyebrow">
+        05 • رحلتي
+      </div>
+
+      <h2>
+        لسه البداية.
+      </h2>
+
+      <p>
+        الرحلة بالنسبة لي مش خط نهاية؛
+        كل مشروع بيفتح باب لمشروع جديد.
+      </p>
+
+    </div>
+
+    <div class="timeline">
+
+      <div class="timeline-item">
+
+        <div class="timeline-dot"></div>
+
+        <div class="timeline-content">
+
+          <small>
+            البداية
+          </small>
+
+          <h3>
+            فضول تجاه التكنولوجيا
+          </h3>
+
+          <p>
+            بدأت الفكرة من سؤال بسيط:
+            "هو أنا أقدر أعمل الحاجة دي بنفسي؟"
+            ومن السؤال بدأت التجربة.
+          </p>
+
+        </div>
+
+      </div>
+
+      <div class="timeline-item">
+
+        <div class="timeline-dot"></div>
+
+        <div class="timeline-content">
+
+          <small>
+            التجربة
+          </small>
+
+          <h3>
+            من مشاهدة إلى صناعة
+          </h3>
+
+          <p>
+            بدل ما أكتفي باستخدام المواقع والتطبيقات،
+            بدأت أحاول أفهم إزاي بتتعمل
+            وأبني نسخ وتجارب خاصة بيا.
+          </p>
+
+        </div>
+
+      </div>
+
+      <div class="timeline-item">
+
+        <div class="timeline-dot"></div>
+
+        <div class="timeline-content">
+
+          <small>
+            المشاريع
+          </small>
+
+          <h3>
+            أفكار أكبر
+          </h3>
+
+          <p>
+            بدأت أعمل منصات ومواقع أكبر،
+            وكل مشروع بقى فرصة أجرب فيها
+            تصميم أو فكرة أو تقنية جديدة.
+          </p>
+
+        </div>
+
+      </div>
+
+      <div class="timeline-item">
+
+        <div class="timeline-dot"></div>
+
+        <div class="timeline-content">
+
+          <small>
+            المستقبل
+          </small>
+
+          <h3>
+            يا رب أجيب مجموعة هندسة 🚀
+          </h3>
+
+          <p>
+            بجانب البرمجة والكتابة،
+            عندي هدف دراسي مهم:
+            الاجتهاد في تالتة ثانوي والسعي لتحقيق
+            المجموعة اللي نفسي فيها وفتح الطريق
+            لمرحلة هندسة وما بعدها.
+          </p>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+<!-- =========================================================
+     PHILOSOPHY
+========================================================= -->
+
+<section>
+
+  <div class="container">
+
+    <div class="section-head">
+
+      <div class="eyebrow">
+        06 • أنا ليه بعمل ده؟
+      </div>
+
+      <h2>
+        الفكرة قبل الكود.
+      </h2>
+
+    </div>
+
+    <div class="philosophy">
+
+      <div class="philosophy-card">
+
+        <h3>
+          🚀 أبني بدل ما أتكلم
+        </h3>
+
+        <p>
+          أي فكرة ممكن تتحول لمشروع
+          لو بدأت فيها خطوة خطوة.
+          مش لازم أول نسخة تكون كاملة؛
+          المهم إنها تبدأ.
+        </p>
+
+      </div>
+
+      <div class="philosophy-card">
+
+        <h3>
+          🧠 أتعلم بالممارسة
+        </h3>
+
+        <p>
+          بالنسبة لي أفضل طريقة للتعلم
+          هي إن الحاجة اللي بتعلمها
+          تدخل مباشرة في مشروع حقيقي.
+        </p>
+
+      </div>
+
+      <div class="philosophy-card">
+
+        <h3>
+          🎨 الشكل له قيمة
+        </h3>
+
+        <p>
+          الوظيفة مهمة،
+          لكن تجربة المستخدم وشكل الواجهة
+          والتفاصيل الصغيرة بتفرق جدًا.
+        </p>
+
+      </div>
+
+      <div class="philosophy-card">
+
+        <h3>
+          ❤️ البرمجة مش كل حاجة
+        </h3>
+
+        <p>
+          في جانب تاني مني بيحب الشعر والكتابة
+          والمشاعر، وده بيخليني أشوف المشاريع
+          مش كود بس، لكن كتجربة.
+        </p>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+<!-- =========================================================
+     CONTACT
+========================================================= -->
+
+<section id="contact">
+
+  <div class="container">
+
+    <div class="contact-box">
+
+      <div class="eyebrow">
+        07 • تواصل
+      </div>
+
+      <h2>
+        عندك فكرة؟ خلينا نبنيها.
+      </h2>
+
+      <p>
+        لو وصلت لحد هنا، فأنت شفت جزء من عالمي.
+        والجزء الأهم لسه بيتبني.
+        أضف روابط التواصل الخاصة بك في الكود،
+        وخلي الصفحة هي بوابتك الشخصية على الإنترنت.
+      </p>
+
+      <div class="contact-actions">
+
+        <button
+          class="btn btn-main"
+          onclick="copyEmail()">
+
+          📋 نسخ البريد
+
+        </button>
+
+        <button
+          class="btn btn-outline"
+          onclick="openModal()">
+
+          ✉ رسالة
+
+        </button>
+
+        <a
+          href="#home"
+          class="btn btn-outline">
+
+          ↑ العودة للأعلى
+
+        </a>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+<!-- =========================================================
+     FOOTER
+========================================================= -->
 
 <footer>
-اختبار الكيمياء العضوية • نظام امتحان إلكتروني
+
+  <div class="container">
+
+    <div class="footer-grid">
+
+      <div>
+
+        <div class="footer-name">
+          يوسف أشرف الجرف
+        </div>
+
+        <div class="footer-text">
+          مبرمج • شاعر • صانع أفكار ومنصات
+        </div>
+
+      </div>
+
+      <div class="copyright">
+
+        ©
+        <span id="year"></span>
+        يوسف أشرف الجرف
+        — جميع الحقوق محفوظة
+
+      </div>
+
+    </div>
+
+  </div>
+
 </footer>
 
-</section>
+<!-- =========================================================
+     TOAST
+========================================================= -->
 
-</main>
+<div
+  class="toast"
+  id="toast">
+</div>
 
+<!-- =========================================================
+     SCROLL TOP
+========================================================= -->
+
+<button
+  class="scroll-top"
+  id="scrollTop">
+
+  ↑
+
+</button>
+
+<!-- =========================================================
+     PROJECT MODAL
+========================================================= -->
+
+<div
+  class="modal"
+  id="projectModal">
+
+  <div class="modal-box">
+
+    <div class="modal-head">
+
+      <h3 id="modalTitle">
+        المشروع
+      </h3>
+
+      <button
+        class="modal-close"
+        onclick="closeProject()">
+
+        ×
+
+      </button>
+
+    </div>
+
+    <p id="modalText"></p>
+
+    <div style="margin-top:25px">
+
+      <button
+        class="btn btn-main"
+        onclick="closeProject()">
+
+        تمام
+
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
+
+<!-- =========================================================
+     CONTACT MODAL
+========================================================= -->
+
+<div
+  class="modal"
+  id="contactModal">
+
+  <div class="modal-box">
+
+    <div class="modal-head">
+
+      <h3>
+        تواصل معي
+      </h3>
+
+      <button
+        class="modal-close"
+        onclick="closeModal()">
+
+        ×
+
+      </button>
+
+    </div>
+
+    <p>
+
+      ضع بريدك الإلكتروني وروابط التواصل الحقيقية
+      في قسم JavaScript بالأسفل، ويمكنك تحويل هذه
+      النافذة لاحقًا إلى نموذج إرسال حقيقي باستخدام
+      Backend أو خدمة Forms.
+
+    </p>
+
+    <div style="margin-top:25px">
+
+      <button
+        class="btn btn-main"
+        onclick="closeModal()">
+
+        إغلاق
+
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
 
 <script>
 
 /* =========================================================
-   مفتاح الإجابات
+   بيانات الموقع
 ========================================================= */
 
-const answers={
-q1:"B",
-q2:"A",
-q3:"B",
-q4:"C",
-q5:"D",
-q6:"A",
-q7:"A",
-q8:"A",
-q9:"D",
-q10:"B",
-
-q11:"A",
-q12:"C",
-q13:"B",
-q14:"B",
-q15:"A",
-q16:"C",
-q17:"C",
-q18:"C",
-q19:"A",
-q20:"A",
-q21:"B",
-q22:"B",
-q23:"A",
-q24:"C",
-q25:"C",
-
-q26:"A",
-q27:"B",
-q28:"B",
-q29:"A",
-q30:"B",
-q31:"C",
-q32:"B",
-q33:"B",
-q34:"A",
-q35:"C",
-
-q36:"A",
-q37:"A",
-q38:"C",
-q39:"B",
-q40:"B",
-q41:"A",
-q42:"B",
-q43:"B",
-q44:"B",
-q45:"C",
-q46:"A",
-q47:"A",
-q48:"A",
-q49:"B",
-q50:"A"
-};
-
+const EMAIL = "your@email.com";
 
 /* =========================================================
-   متغيرات الامتحان
+   شاشة البداية
 ========================================================= */
 
-let time=60*60;
-let timer=null;
-let started=false;
-let submitted=false;
+window.addEventListener("load",()=>{
 
-const whatsappNumber="201102273068";
+  const loader =
+    document.getElementById("loader");
 
+  const progress =
+    document.getElementById("loadingProgress");
+
+  const number =
+    document.getElementById("loadingNumber");
+
+  const text =
+    document.getElementById("loaderText");
+
+  let percent = 0;
+
+  const messages = [
+
+    "جارِ تجهيز عالم يوسف...",
+
+    "جارِ تحميل المشاريع...",
+
+    "جارِ تجهيز الواجهة...",
+
+    "جارِ ترتيب الأفكار...",
+
+    "جارِ تشغيل التجربة...",
+
+    "أهلاً بك في عالم يوسف ❤️"
+
+  ];
+
+  const timer = setInterval(()=>{
+
+    percent +=
+      Math.floor(Math.random() * 8) + 2;
+
+    if(percent >= 100){
+
+      percent = 100;
+
+      clearInterval(timer);
+
+      progress.style.width =
+        "100%";
+
+      number.textContent =
+        "100";
+
+      text.textContent =
+        "أهلاً بك في عالم يوسف ❤️";
+
+      setTimeout(()=>{
+
+        loader.classList.add("hide");
+
+      },700);
+
+      return;
+
+    }
+
+    progress.style.width =
+      percent + "%";
+
+    number.textContent =
+      percent;
+
+    const index =
+      Math.min(
+        messages.length - 1,
+        Math.floor(percent / 18)
+      );
+
+    text.textContent =
+      messages[index];
+
+  },120);
+
+});
 
 /* =========================================================
-   بدء الامتحان
+   السنة الحالية
 ========================================================= */
 
-function startExam(){
-
-const name=document
-.getElementById("studentName")
-.value.trim();
-
-if(!name){
-alert("اكتب اسم الطالب أولًا.");
-return;
-}
-
-localStorage.setItem("organic_name",name);
-
-localStorage.setItem(
-"organic_class",
-document.getElementById("studentClass").value
-);
-
-document.getElementById("examName")
-.textContent=name;
-
-document.getElementById("startScreen")
-.classList.add("hidden");
-
-document.getElementById("examScreen")
-.classList.remove("hidden");
-
-started=true;
-
-window.scrollTo(0,0);
-
-startTimer();
-
-updateProgress();
-
-}
-
+document.getElementById("year")
+  .textContent =
+  new Date().getFullYear();
 
 /* =========================================================
-   المؤقت
+   الوضع الليلي / النهاري
 ========================================================= */
 
-function startTimer(){
+const themeBtn =
+  document.getElementById("themeBtn");
 
-updateTimer();
+themeBtn.addEventListener("click",()=>{
 
-timer=setInterval(()=>{
+  document.body.classList.toggle("light");
 
-time--;
+  const light =
+    document.body.classList.contains("light");
 
-updateTimer();
+  localStorage.setItem(
+    "portfolio-theme",
+    light ? "light" : "dark"
+  );
 
-if(time<=0){
+  themeBtn.textContent =
+    light ? "☾" : "☀";
 
-clearInterval(timer);
-
-alert("انتهى وقت الامتحان وسيتم التسليم تلقائيًا.");
-
-submitExam();
-
-}
-
-},1000);
-
-}
-
-
-function updateTimer(){
-
-let m=Math.floor(time/60)
-.toString()
-.padStart(2,"0");
-
-let s=(time%60)
-.toString()
-.padStart(2,"0");
-
-document.getElementById("timer")
-.textContent=m+":"+s;
-
-if(time<=300){
-
-document.getElementById("timer")
-.style.color="var(--red)";
-
-}
-
-}
-
-
-/* =========================================================
-   التقدم
-========================================================= */
-
-function updateProgress(){
-
-let count=0;
-
-for(let i=1;i<=50;i++){
-
-if(document.querySelector(
-`input[name="q${i}"]:checked`
-)){
-count++;
-}
-
-}
-
-document.getElementById("progressText")
-.textContent=count+" / 50";
-
-document.getElementById("progressBar")
-.style.width=(count/50*100)+"%";
-
-}
-
-
-document.addEventListener("change",function(e){
+});
 
 if(
-e.target &&
-e.target.type==="radio"
+  localStorage.getItem(
+    "portfolio-theme"
+  ) === "light"
 ){
 
-updateProgress();
+  document.body.classList.add("light");
+
+  themeBtn.textContent =
+    "☾";
 
 }
+
+/* =========================================================
+   القائمة على الهاتف
+========================================================= */
+
+const nav =
+  document.getElementById("nav");
+
+const menuBtn =
+  document.getElementById("menuBtn");
+
+menuBtn.addEventListener("click",()=>{
+
+  nav.classList.toggle(
+    "mobile-open"
+  );
 
 });
 
+document
+  .querySelectorAll(".nav-links a")
+  .forEach(link=>{
+
+    link.addEventListener("click",()=>{
+
+      nav.classList.remove(
+        "mobile-open"
+      );
+
+    });
+
+  });
 
 /* =========================================================
-   التصحيح
+   TOAST
 ========================================================= */
 
-function submitExam(){
+function showToast(message){
 
-if(submitted)return;
+  const toast =
+    document.getElementById("toast");
 
-if(!started)return;
+  toast.textContent =
+    message;
 
-let unanswered=[];
+  toast.classList.add("show");
 
-for(let i=1;i<=50;i++){
+  clearTimeout(
+    window.toastTimer
+  );
 
-if(!document.querySelector(
-`input[name="q${i}"]:checked`
-)){
+  window.toastTimer =
+    setTimeout(()=>{
 
-unanswered.push(i);
+      toast.classList.remove(
+        "show"
+      );
 
-}
-
-}
-
-if(unanswered.length){
-
-const ok=confirm(
-"لم تجب عن "+unanswered.length+
-" سؤال.\n\nهل تريد تسليم الامتحان الآن؟"
-);
-
-if(!ok)return;
+    },2500);
 
 }
 
-submitted=true;
+/* =========================================================
+   نسخ البريد
+========================================================= */
 
-clearInterval(timer);
+function copyEmail(){
 
-let score=0;
-let reviews=[];
+  if(
+    EMAIL ===
+    "your@email.com"
+  ){
 
-for(let i=1;i<=50;i++){
+    showToast(
+      "غيّر البريد الإلكتروني داخل الكود أولاً"
+    );
 
-let selected=document.querySelector(
-`input[name="q${i}"]:checked`
-);
+    return;
 
-let user=selected
-?selected.value
-:"لم يجب";
+  }
 
-let correct=answers["q"+i];
+  navigator.clipboard
+    .writeText(EMAIL)
+    .then(()=>{
 
-let right=user===correct;
+      showToast(
+        "تم نسخ البريد الإلكتروني"
+      );
 
-if(right)score++;
+    })
+    .catch(()=>{
 
-reviews.push({
-number:i,
-user:user,
-correct:correct,
-right:right
+      showToast(
+        "تعذر نسخ البريد"
+      );
+
+    });
+
+}
+
+/* =========================================================
+   نافذة المشاريع
+========================================================= */
+
+function openProject(title,text){
+
+  document
+    .getElementById("modalTitle")
+    .textContent =
+    title;
+
+  document
+    .getElementById("modalText")
+    .textContent =
+    text;
+
+  document
+    .getElementById("projectModal")
+    .classList.add("show");
+
+}
+
+function closeProject(){
+
+  document
+    .getElementById("projectModal")
+    .classList.remove("show");
+
+}
+
+/* =========================================================
+   نافذة التواصل
+========================================================= */
+
+function openModal(){
+
+  document
+    .getElementById("contactModal")
+    .classList.add("show");
+
+}
+
+function closeModal(){
+
+  document
+    .getElementById("contactModal")
+    .classList.remove("show");
+
+}
+
+/* =========================================================
+   إغلاق النوافذ
+========================================================= */
+
+window.addEventListener("click",(e)=>{
+
+  if(
+    e.target.id ===
+    "projectModal"
+  ){
+
+    closeProject();
+
+  }
+
+  if(
+    e.target.id ===
+    "contactModal"
+  ){
+
+    closeModal();
+
+  }
+
 });
 
-}
-
-showResult(score,reviews);
-
-}
-
-
 /* =========================================================
-   عرض النتيجة
+   COUNTERS
 ========================================================= */
 
-function showResult(score,reviews){
+function animateNumbers(){
 
-document.getElementById("examScreen")
-.classList.add("hidden");
+  const counters =
+    document.querySelectorAll(
+      "[data-count]"
+    );
 
-document.getElementById("resultScreen")
-.classList.remove("hidden");
+  counters.forEach(counter=>{
 
-let percent=(score/50)*100;
+    const target =
+      Number(
+        counter.dataset.count
+      );
 
-document.getElementById("scoreCircle")
-.style.setProperty("--percent",percent+"%");
+    let current = 0;
 
-document.getElementById("score")
-.textContent=score+"/50";
+    const step =
+      Math.max(
+        1,
+        Math.ceil(target / 40)
+      );
 
-let title="";
+    const timer =
+      setInterval(()=>{
 
-if(score>=45){
-title="ممتاز جدًا 🔥";
-}else if(score>=40){
-title="مستوى ممتاز";
-}else if(score>=35){
-title="مستوى جيد جدًا";
-}else if(score>=25){
-title="مستوى جيد";
-}else{
-title="تحتاج مراجعة أجزاء من الدرس";
-}
+        current += step;
 
-document.getElementById("resultTitle")
-.textContent=title;
+        if(
+          current >= target
+        ){
 
-document.getElementById("resultInfo")
-.textContent=
-"النسبة المئوية: "+percent+"%";
+          current =
+            target;
 
+          clearInterval(
+            timer
+          );
 
-let box=document.getElementById("reviews");
+        }
 
-box.innerHTML="";
+        counter.textContent =
+          current + "+";
 
+      },35);
 
-reviews.forEach(item=>{
-
-let div=document.createElement("div");
-
-div.className=
-"review "+
-(item.right?"correct":"wrong");
-
-div.innerHTML=`
-
-<b>السؤال ${item.number}</b>
-
-<br>
-
-حالة الإجابة:
-<strong style="color:${
-item.right
-?"var(--green)"
-:"var(--red)"
-}">
-${item.right?"✓ صحيحة":"✕ خاطئة"}
-</strong>
-
-<br>
-
-إجابة الطالب:
-<b>${item.user}</b>
-
-<br>
-
-الإجابة الصحيحة:
-<b>${item.correct}</b>
-
-`;
-
-box.appendChild(div);
-
-});
-
-
-createWhatsApp(score,percent);
-
-window.scrollTo(0,0);
+  });
 
 }
 
+animateNumbers();
 
 /* =========================================================
-   WhatsApp
+   زر العودة للأعلى
 ========================================================= */
 
-function createWhatsApp(score,percent){
-
-let name=document
-.getElementById("studentName")
-.value.trim();
-
-let className=document
-.getElementById("studentClass")
-.value.trim();
-
-let message=
-`🧪 نتيجة امتحان الكيمياء العضوية
-
-👤 الاسم: ${name}
-🏫 الفصل: ${className||"غير محدد"}
-
-📚 الاختبار:
-من المقدمة حتى التسمية
-
-📊 الدرجة:
-${score} من 50
-
-📈 النسبة:
-${percent}%
-
-⏱ زمن الامتحان:
-60 دقيقة
-
-تم التصحيح إلكترونيًا.`;
-
-let url=
-"https://wa.me/"+
-whatsappNumber+
-"?text="+
-encodeURIComponent(message);
-
-document.getElementById("wa")
-.href=url;
-
-}
-
-
-/* =========================================================
-   منع الخروج العرضي
-========================================================= */
+const scrollTop =
+  document.getElementById(
+    "scrollTop"
+  );
 
 window.addEventListener(
-"beforeunload",
-function(e){
+  "scroll",
+  ()=>{
 
-if(started&&!submitted){
+    if(
+      window.scrollY > 500
+    ){
 
-e.preventDefault();
-e.returnValue="";
+      scrollTop.classList.add(
+        "show"
+      );
 
-}
+    }else{
 
-});
+      scrollTop.classList.remove(
+        "show"
+      );
 
+    }
+
+  }
+);
+
+scrollTop.addEventListener(
+  "click",
+  ()=>{
+
+    window.scrollTo({
+      top:0,
+      behavior:"smooth"
+    });
+
+  }
+);
 
 /* =========================================================
-   حفظ البيانات
+   ESC
 ========================================================= */
 
-window.addEventListener(
-"DOMContentLoaded",
-function(){
+document.addEventListener(
+  "keydown",
+  (e)=>{
 
-let name=localStorage.getItem("organic_name");
+    if(e.key === "Escape"){
 
-let cls=localStorage.getItem("organic_class");
+      closeProject();
 
-if(name)
-document.getElementById("studentName").value=name;
+      closeModal();
 
-if(cls)
-document.getElementById("studentClass").value=cls;
+    }
 
-});
+  }
+);
 
 </script>
 
 </body>
-                      </html>
+  </html>
