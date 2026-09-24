@@ -1,229 +1,1819 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>JOKER GAMES - الألعاب</title>
-    <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            user-select: none;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>JOKER // MOBILE</title>
 
-        html, body {
-            width: 100vw;
-            height: 100vh;
-            overflow: hidden;
-            background: #dfceb7;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&family=Share+Tech+Mono&display=swap');
 
-        /* حاوية الشاشة المطابقة لأبعاد الموبايل والصورة */
-        .app-viewport {
-            width: 100vw;
-            height: 100vh;
-            max-width: 430px;
-            /* خلفية النقاط الكرتونية (Halftone) من الصورة بالظبط */
-            background-color: #dfceb7;
-            background-image: radial-gradient(#c2aa8e 24%, transparent 24%);
-            background-size: 15px 15px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: flex-start;
-            padding: 40px 18px 20px 18px;
-            position: relative;
-            overflow: hidden;
-        }
+:root{
+  --bg:#010302;
+  --panel:#050a06;
+  --panel2:#081108;
+  --line:#123b1b;
+  --green:#00ff4c;
+  --green2:#63ff8a;
+  --dim:#438050;
+  --white:#e1ffe8;
+  --red:#ff3155;
+  --yellow:#ffd42a;
+  --cyan:#35efff;
+}
 
-        /* البرق الأصفر العريض المائل في منتصف الخلفية */
-        .svg-lightning-bg {
-            position: absolute;
-            top: -2%;
-            left: -5%;
-            width: 110%;
-            height: 105%;
-            z-index: 1;
-            pointer-events: none;
-        }
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
 
-        /* --- العنوان الرئيسي --- */
-        .page-header {
-            text-align: center;
-            z-index: 10;
-            margin-bottom: 20px;
-            margin-top: 10px;
-        }
+body{
+  min-height:100vh;
+  background:
+    radial-gradient(circle at 50% 0%,rgba(0,255,76,.1),transparent 32%),
+    #000;
+  color:var(--green);
+  font-family:"Share Tech Mono","Cairo",monospace;
+  overflow-x:hidden;
+}
 
-        .page-title {
-            font-size: 48px;
-            font-weight: 900;
-            color: #ffffff;
-            /* حد أسود بارز 3D طابق الأصل */
-            text-shadow: 
-                3px 3px 0 #000,
-                -3px -3px 0 #000,
-                3px -3px 0 #000,
-                -3px 3px 0 #000,
-                0 6px 0 #000,
-                0 10px 15px rgba(0,0,0,0.3);
-            letter-spacing: 1px;
-            line-height: 1;
-            margin-bottom: 6px;
-        }
+body:before{
+  content:"";
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  z-index:999;
+  background:
+    linear-gradient(rgba(0,255,76,.025) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(0,255,76,.018) 1px,transparent 1px);
+  background-size:28px 28px;
+}
 
-        .page-subtitle {
-            font-size: 15px;
-            font-weight: 800;
-            color: #000000;
-        }
+body:after{
+  content:"";
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  z-index:1000;
+  background:repeating-linear-gradient(
+    to bottom,
+    transparent 0,
+    transparent 3px,
+    rgba(0,0,0,.17) 4px
+  );
+}
 
-        /* --- شبكة المربعات 2x2 --- */
-        .games-grid {
-            width: 100%;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 14px;
-            z-index: 10;
-        }
+.app{
+  width:min(1700px,97%);
+  margin:auto;
+  padding:13px 0 30px;
+}
 
-        /* إطار الكارت الأسود العريض */
-        .game-card {
-            width: 100%;
-            aspect-ratio: 1 / 1.15;
-            background: #000000;
-            border-radius: 24px;
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
-            cursor: pointer;
-            transition: transform 0.12s ease;
-            border: 4px solid #000000;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-        }
+/* TOP */
 
-        .game-card:active {
-            transform: scale(0.95);
-        }
+.top{
+  height:58px;
+  border:1px solid #1a5125;
+  background:rgba(2,7,3,.97);
+  display:grid;
+  grid-template-columns:1fr auto 1fr;
+  align-items:center;
+  padding:0 15px;
+}
 
-        /* صندوق الصورة/الجرافيك الداخلي */
-        .card-image-box {
-            flex: 1;
-            width: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            position: relative;
-            overflow: hidden;
-        }
+.brand{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
 
-        .card-icon {
-            font-size: 52px;
-            filter: drop-shadow(0 4px 8px rgba(0,0,0,0.4));
-        }
+.j{
+  width:32px;
+  height:32px;
+  display:grid;
+  place-items:center;
+  background:var(--green);
+  color:#000;
+  font-family:Arial;
+  font-weight:900;
+  clip-path:polygon(
+    50% 0,90% 12%,100% 50%,90% 88%,
+    50% 100%,10% 88%,0 50%,10% 12%
+  );
+}
 
-        /* ألوان الجرافيك الداخلي للكروت */
-        .bg-sea { background: linear-gradient(180deg, #10b981 0%, #047857 100%); }
-        .bg-auction { background: linear-gradient(180deg, #f59e0b 0%, #b45309 100%); }
-        .bg-fight { background: linear-gradient(180deg, #ef4444 0%, #b91c1c 100%); }
-        .bg-ghost { background: linear-gradient(180deg, #6366f1 0%, #4338ca 100%); }
+.brand strong{
+  font-family:Arial;
+  letter-spacing:5px;
+  font-size:20px;
+}
 
-        /* الشريط الأبيض السفلي لعنوان اللعبة */
-        .card-title-bar {
-            background: #ffffff;
-            color: #000000;
-            text-align: center;
-            padding: 8px 2px;
-            font-size: 12.5px;
-            font-weight: 900;
-            border-top: 3.5px solid #000000;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
+.status{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  direction:ltr;
+  font-size:9px;
+}
 
-        /* زر العودة */
-        .back-btn {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            width: 42px;
-            height: 42px;
-            background: #ffffff;
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 20px;
-            font-weight: bold;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-            cursor: pointer;
-            z-index: 20;
-            border: 2px solid #000000;
-        }
-    </style>
+.status i{
+  width:7px;
+  height:7px;
+  border-radius:50%;
+  background:var(--green);
+  box-shadow:0 0 14px var(--green);
+  animation:blink 1s infinite;
+}
+
+@keyframes blink{
+  50%{opacity:.2}
+}
+
+.top-right{
+  display:flex;
+  justify-content:flex-end;
+  gap:15px;
+  color:var(--dim);
+  font-size:8px;
+  direction:ltr;
+}
+
+/* HERO */
+
+.hero{
+  height:190px;
+  margin-top:12px;
+  border:1px solid #1a5125;
+  position:relative;
+  overflow:hidden;
+  display:grid;
+  place-items:center;
+  background:
+    radial-gradient(circle,rgba(0,255,76,.13),transparent 38%),
+    #000;
+}
+
+.hero h1{
+  font-family:Arial;
+  font-size:clamp(70px,12vw,145px);
+  letter-spacing:-8px;
+  color:#000;
+  -webkit-text-stroke:2px var(--green);
+  text-shadow:
+    0 0 8px var(--green),
+    0 0 35px rgba(0,255,76,.55);
+  animation:glitch 3s infinite;
+}
+
+@keyframes glitch{
+  0%,88%,100%{transform:translate(0)}
+  90%{transform:translate(-5px,2px)}
+  91%{transform:translate(5px,-2px)}
+  92%{transform:translate(-2px,0)}
+}
+
+.hero .scanline{
+  position:absolute;
+  left:0;
+  right:0;
+  height:1px;
+  background:var(--green);
+  opacity:.2;
+  animation:scan 3s linear infinite;
+}
+
+@keyframes scan{
+  from{top:-5px}
+  to{top:100%}
+}
+
+.hero-info{
+  position:absolute;
+  left:12px;
+  right:12px;
+  bottom:9px;
+  display:flex;
+  justify-content:space-between;
+  direction:ltr;
+  font-size:8px;
+  color:var(--dim);
+}
+
+/* GRID */
+
+.grid{
+  margin-top:12px;
+  display:grid;
+  grid-template-columns:270px minmax(430px,1fr) 290px;
+  gap:12px;
+}
+
+.panel{
+  border:1px solid #16461f;
+  background:rgba(3,9,5,.96);
+  min-width:0;
+}
+
+.head{
+  height:39px;
+  padding:0 10px;
+  border-bottom:1px solid #103319;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  font-family:Cairo;
+  font-size:9px;
+}
+
+.head span:last-child{
+  color:var(--dim);
+  font-family:"Share Tech Mono";
+  font-size:8px;
+  direction:ltr;
+}
+
+/* CONTROL */
+
+.control{
+  padding:11px;
+}
+
+label{
+  display:block;
+  color:#78bc84;
+  font-family:Cairo;
+  font-size:8px;
+  margin-bottom:4px;
+}
+
+.field{
+  margin-bottom:9px;
+}
+
+input,select{
+  width:100%;
+  height:36px;
+  border:1px solid #123a1a;
+  outline:none;
+  background:#010502;
+  color:var(--green);
+  padding:0 8px;
+  font-family:"Share Tech Mono";
+  font-size:9px;
+  direction:ltr;
+}
+
+input:focus,select:focus{
+  border-color:var(--green);
+  box-shadow:0 0 12px rgba(0,255,76,.08);
+}
+
+.btns{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:6px;
+  margin-top:10px;
+}
+
+button{
+  height:37px;
+  background:#001508;
+  color:var(--green);
+  border:1px solid var(--green);
+  cursor:pointer;
+  font-family:Cairo;
+  font-size:9px;
+  font-weight:800;
+}
+
+button:hover{
+  color:#000;
+  background:var(--green);
+}
+
+.abort{
+  color:#ff5a74;
+  border-color:#6d1d30;
+  background:#100306;
+}
+
+.device-info{
+  margin-top:11px;
+  border:1px dashed #17441f;
+  padding:8px;
+}
+
+.device-info h3{
+  font-family:Cairo;
+  font-size:9px;
+  margin-bottom:5px;
+}
+
+.row{
+  display:flex;
+  justify-content:space-between;
+  padding:5px 0;
+  border-bottom:1px solid #0a2110;
+  direction:ltr;
+  font-size:8px;
+}
+
+.row:last-child{
+  border:0;
+}
+
+.row span:last-child{
+  color:#fff;
+  max-width:58%;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+
+/* CENTER */
+
+.center{
+  display:grid;
+  gap:12px;
+}
+
+.progress{
+  padding:11px;
+}
+
+.progressTop{
+  display:flex;
+  justify-content:space-between;
+  direction:ltr;
+  margin-bottom:6px;
+}
+
+.stage{
+  color:#fff;
+  font-size:10px;
+}
+
+.percent{
+  font-size:17px;
+}
+
+.track{
+  height:9px;
+  border:1px solid #16431e;
+  background:#010502;
+}
+
+.fill{
+  height:100%;
+  width:0;
+  background:var(--green);
+  box-shadow:0 0 15px rgba(0,255,76,.55);
+  transition:.3s;
+}
+
+/* PHONE */
+
+.phone-panel{
+  min-height:500px;
+  position:relative;
+  overflow:hidden;
+}
+
+.phone-area{
+  min-height:455px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:45px;
+  padding:20px;
+}
+
+.phone{
+  width:190px;
+  height:370px;
+  border:3px solid #2a6734;
+  border-radius:29px;
+  background:#020503;
+  box-shadow:
+    0 0 0 4px #050a06,
+    0 0 30px rgba(0,255,76,.13);
+  position:relative;
+  overflow:hidden;
+  transform:rotate(-2deg);
+}
+
+.phone:before{
+  content:"";
+  position:absolute;
+  top:8px;
+  left:50%;
+  transform:translateX(-50%);
+  width:65px;
+  height:17px;
+  border-radius:15px;
+  background:#000;
+  border:1px solid #123319;
+  z-index:5;
+}
+
+.phone-screen{
+  position:absolute;
+  inset:8px;
+  border-radius:22px;
+  background:
+    radial-gradient(circle at 50% 30%,rgba(0,255,76,.16),transparent 30%),
+    #000;
+  border:1px solid #0d2912;
+  overflow:hidden;
+}
+
+.phone-screen:before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:
+    linear-gradient(rgba(0,255,76,.03) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(0,255,76,.03) 1px,transparent 1px);
+  background-size:15px 15px;
+}
+
+.phone-content{
+  position:absolute;
+  inset:30px 13px 15px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  z-index:2;
+}
+
+.phone-j{
+  margin-top:45px;
+  width:70px;
+  height:70px;
+  display:grid;
+  place-items:center;
+  border:1px solid var(--green);
+  color:var(--green);
+  font-family:Arial;
+  font-size:38px;
+  font-weight:900;
+  transform:rotate(45deg);
+  box-shadow:0 0 20px rgba(0,255,76,.25);
+}
+
+.phone-j span{
+  transform:rotate(-45deg);
+}
+
+.phone-title{
+  margin-top:35px;
+  font-family:Arial;
+  letter-spacing:3px;
+  font-size:16px;
+}
+
+.phone-state{
+  margin-top:10px;
+  font-size:7px;
+  color:var(--dim);
+}
+
+.phone-bars{
+  width:100%;
+  margin-top:auto;
+}
+
+.pbar{
+  margin-top:7px;
+}
+
+.pbar-top{
+  display:flex;
+  justify-content:space-between;
+  direction:ltr;
+  font-size:6px;
+}
+
+.pbar-track{
+  height:4px;
+  border:1px solid #143c1c;
+  margin-top:3px;
+}
+
+.pbar-fill{
+  height:100%;
+  width:60%;
+  background:var(--green);
+}
+
+/* PHONE SIDE DATA */
+
+.device-readout{
+  width:210px;
+  border:1px solid #123b1b;
+  background:#020603;
+  padding:11px;
+  direction:ltr;
+}
+
+.read-title{
+  color:#fff;
+  font-size:9px;
+  border-bottom:1px solid #123319;
+  padding-bottom:8px;
+  margin-bottom:8px;
+}
+
+.read-row{
+  display:flex;
+  justify-content:space-between;
+  font-size:8px;
+  padding:6px 0;
+  border-bottom:1px solid #091c0d;
+}
+
+.read-row span:last-child{
+  color:var(--green);
+}
+
+/* TERMINAL */
+
+.terminalPanel{
+  min-height:310px;
+}
+
+.terminal{
+  height:270px;
+  overflow:auto;
+  background:#000;
+  padding:10px;
+  direction:ltr;
+  text-align:left;
+}
+
+.log{
+  font-size:8px;
+  line-height:1.95;
+}
+
+.ts{
+  color:#315d38;
+}
+
+.ok{color:var(--green)}
+.info{color:#72ff91}
+.warn{color:var(--yellow)}
+.red{color:var(--red)}
+.white{color:#fff}
+
+/* RIGHT MONITOR */
+
+.monitor{
+  padding:11px;
+}
+
+.metric{
+  margin-bottom:13px;
+}
+
+.metricTop{
+  display:flex;
+  justify-content:space-between;
+  direction:ltr;
+  font-size:8px;
+  margin-bottom:4px;
+}
+
+.mtrack{
+  height:7px;
+  border:1px solid #153b1b;
+  background:#010502;
+}
+
+.mfill{
+  width:0;
+  height:100%;
+  transition:.4s;
+}
+
+.green{background:var(--green)}
+.redbar{background:var(--red)}
+.yellowbar{background:var(--yellow)}
+.cyanbar{background:var(--cyan)}
+
+/* FILES */
+
+.files{
+  padding:6px;
+}
+
+.file{
+  height:34px;
+  border-bottom:1px solid #0b2110;
+  display:flex;
+  align-items:center;
+  gap:7px;
+  direction:ltr;
+  font-size:8px;
+}
+
+.file-icon{
+  width:19px;
+  height:21px;
+  border:1px solid #205a2a;
+  display:grid;
+  place-items:center;
+  font-size:7px;
+}
+
+.file-name{
+  overflow:hidden;
+  white-space:nowrap;
+  text-overflow:ellipsis;
+}
+
+.file-size{
+  margin-left:auto;
+  color:#397146;
+}
+
+/* BOTTOM */
+
+.bottom{
+  margin-top:12px;
+  display:grid;
+  grid-template-columns:1.1fr 1fr 1fr;
+  gap:12px;
+}
+
+.small{
+  min-height:200px;
+}
+
+.stream{
+  padding:9px;
+  direction:ltr;
+  text-align:left;
+}
+
+.stream div{
+  font-size:8px;
+  line-height:1.9;
+  color:#48bf5b;
+}
+
+.nodes{
+  padding:10px;
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:8px;
+}
+
+.node{
+  height:48px;
+  border:1px solid #17431e;
+  display:grid;
+  place-items:center;
+  position:relative;
+}
+
+.node i{
+  width:8px;
+  height:8px;
+  border-radius:50%;
+  background:var(--green);
+  box-shadow:0 0 12px var(--green);
+  animation:blink 1s infinite;
+}
+
+.node small{
+  position:absolute;
+  bottom:3px;
+  font-size:6px;
+  color:#438050;
+}
+
+.timeline{
+  padding:9px;
+}
+
+.event{
+  display:grid;
+  grid-template-columns:62px 1fr;
+  gap:7px;
+  padding:7px 0;
+  border-bottom:1px solid #0b2110;
+  direction:ltr;
+  font-size:8px;
+}
+
+.event time{
+  color:#315d38;
+}
+
+.event b{
+  color:var(--green);
+  font-weight:400;
+}
+
+/* FOOTER */
+
+.footer{
+  margin-top:12px;
+  border:1px solid #16461f;
+  display:grid;
+  grid-template-columns:repeat(5,1fr);
+  min-height:50px;
+}
+
+.fstat{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  border-left:1px solid #0e2d15;
+  direction:ltr;
+}
+
+.fstat:last-child{
+  border:0;
+}
+
+.fstat small{
+  font-size:6px;
+  color:#397146;
+}
+
+.fstat strong{
+  font-size:12px;
+}
+
+.note{
+  margin-top:11px;
+  padding:9px;
+  border:1px solid #561628;
+  color:#ff526e;
+  font-family:Cairo;
+  text-align:center;
+  font-size:8px;
+}
+
+/* MOBILE */
+
+@media(max-width:1200px){
+
+  .grid{
+    grid-template-columns:250px 1fr;
+  }
+
+  .right{
+    grid-column:1/-1;
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:12px;
+  }
+
+  .bottom{
+    grid-template-columns:1fr 1fr;
+  }
+
+  .bottom .small:last-child{
+    grid-column:1/-1;
+  }
+}
+
+@media(max-width:800px){
+
+  .grid{
+    grid-template-columns:1fr;
+  }
+
+  .right{
+    grid-column:auto;
+    grid-template-columns:1fr;
+  }
+
+  .phone-area{
+    flex-direction:column;
+    gap:20px;
+  }
+
+  .bottom{
+    grid-template-columns:1fr;
+  }
+
+  .bottom .small:last-child{
+    grid-column:auto;
+  }
+
+  .footer{
+    grid-template-columns:repeat(2,1fr);
+  }
+
+  .hero{
+    height:170px;
+  }
+}
+</style>
 </head>
+
 <body>
 
-    <div class="app-viewport">
-        
-        <svg class="svg-lightning-bg" viewBox="0 0 200 300" preserveAspectRatio="none">
-            <path d="M 125,0 L 165,0 L 95,135 L 145,135 L 55,300 L 90,165 L 45,165 Z" 
-                  fill="#eab308" 
-                  stroke="#000000" 
-                  stroke-width="5" 
-                  stroke-linejoin="round" />
-        </svg>
+<div class="app">
 
-        <div class="back-btn" onclick="window.location.href='main.html'">➔</div>
+<header class="top">
 
-        <div class="page-header">
-            <div class="page-title">الألعاب</div>
-            <div class="page-subtitle">اختر لعبة لإنشاء غرفة</div>
-        </div>
+  <div class="brand">
+    <div class="j">J</div>
+    <strong>JOKER</strong>
+  </div>
 
-        <div class="games-grid">
+  <div class="status">
+    <i></i>
+    DEVICE CORE ONLINE
+  </div>
 
-            <div class="game-card" onclick="openGamePage('game1.html')">
-                <div class="card-image-box bg-sea">
-                    <div class="card-icon">🌊🕵️‍♂️</div>
-                </div>
-                <div class="card-title-bar">بحور ولا مبحورش</div>
-            </div>
+  <div class="top-right">
+    <span id="clock">00:00:00</span>
+    <span id="session">SESSION ----</span>
+  </div>
 
-            <div class="game-card" onclick="openGamePage('game2.html')">
-                <div class="card-image-box bg-auction">
-                    <div class="card-icon">⚖️🍔</div>
-                </div>
-                <div class="card-title-bar">المزاد</div>
-            </div>
+</header>
 
-            <div class="game-card" onclick="openGamePage('game3.html')">
-                <div class="card-image-box bg-fight">
-                    <div class="card-icon">🥊🛡️</div>
-                </div>
-                <div class="card-title-bar">اقف ف صفى عشان بصفى</div>
-            </div>
 
-            <div class="game-card" onclick="openGamePage('game4.html')">
-                <div class="card-image-box bg-ghost">
-                    <div class="card-icon">🥷❓</div>
-                </div>
-                <div class="card-title-bar">اللاعب الخفى</div>
-            </div>
+<section class="hero">
 
-        </div>
+  <div class="scanline"></div>
+
+  <h1>JOKER</h1>
+
+  <div class="hero-info">
+    <span>MOBILE TARGET SYSTEM</span>
+    <span id="heroDevice">DEVICE: UNKNOWN</span>
+    <span>LOCAL CORE</span>
+  </div>
+
+</section>
+
+
+<div class="grid">
+
+
+<!-- CONTROL -->
+
+<aside class="panel">
+
+  <div class="head">
+    <span>إعداد الجهاز</span>
+    <span>DEVICE_INPUT</span>
+  </div>
+
+  <div class="control">
+
+    <div class="field">
+      <label>DEVICE ID</label>
+      <input id="deviceId" placeholder="JOKER-MBL-2047">
     </div>
 
-    <script>
-        function openGamePage(pageUrl) {
-            window.location.href = pageUrl;
-        }
-    </script>
+    <div class="field">
+      <label>DEVICE NAME</label>
+      <input id="deviceName" placeholder="TARGET-PHONE">
+    </div>
+
+    <div class="field">
+      <label>MODEL</label>
+      <input id="model" placeholder="ANDROID DEVICE">
+    </div>
+
+    <div class="field">
+      <label>OS TYPE</label>
+      <select id="os">
+        <option>ANDROID</option>
+        <option>IPHONE</option>
+        <option>TABLET</option>
+      </select>
+    </div>
+
+    <div class="field">
+      <label>OS VERSION</label>
+      <input id="version" placeholder="15.0">
+    </div>
+
+    <div class="field">
+      <label>TEST IP</label>
+      <input id="ip" placeholder="192.0.2.10">
+    </div>
+
+    <div class="field">
+      <label>LOCATION</label>
+      <input id="location" placeholder="CAIRO / EGYPT">
+    </div>
+
+    <div class="btns">
+      <button id="start">START DEVICE</button>
+      <button id="abort" class="abort">ABORT</button>
+    </div>
+
+    <div class="device-info">
+
+      <h3>DEVICE PROFILE</h3>
+
+      <div class="row">
+        <span>ID</span>
+        <span id="pId">---</span>
+      </div>
+
+      <div class="row">
+        <span>NAME</span>
+        <span id="pName">---</span>
+      </div>
+
+      <div class="row">
+        <span>MODEL</span>
+        <span id="pModel">---</span>
+      </div>
+
+      <div class="row">
+        <span>OS</span>
+        <span id="pOs">---</span>
+      </div>
+
+      <div class="row">
+        <span>VERSION</span>
+        <span id="pVersion">---</span>
+      </div>
+
+      <div class="row">
+        <span>IP</span>
+        <span id="pIp">---</span>
+      </div>
+
+    </div>
+
+  </div>
+
+</aside>
+
+
+<!-- CENTER -->
+
+<section class="center">
+
+  <div class="panel progress">
+
+    <div class="progressTop">
+
+      <span class="stage" id="stage">
+        DEVICE SYSTEM READY
+      </span>
+
+      <span class="percent" id="percent">0%</span>
+
+    </div>
+
+    <div class="track">
+      <div class="fill" id="fill"></div>
+    </div>
+
+  </div>
+
+
+  <div class="panel phone-panel">
+
+    <div class="head">
+      <span>DEVICE TARGET</span>
+      <span id="phoneState">STANDBY</span>
+    </div>
+
+    <div class="phone-area">
+
+      <div class="phone">
+
+        <div class="phone-screen">
+
+          <div class="phone-content">
+
+            <div class="phone-j">
+              <span>J</span>
+            </div>
+
+            <div class="phone-title">
+              JOKER
+            </div>
+
+            <div class="phone-state" id="screenState">
+              DEVICE STANDBY
+            </div>
+
+            <div class="phone-bars">
+
+              <div class="pbar">
+                <div class="pbar-top">
+                  <span>BATTERY</span>
+                  <span id="batteryText">78%</span>
+                </div>
+                <div class="pbar-track">
+                  <div class="pbar-fill" id="battery"></div>
+                </div>
+              </div>
+
+              <div class="pbar">
+                <div class="pbar-top">
+                  <span>SIGNAL</span>
+                  <span id="signalText">91%</span>
+                </div>
+                <div class="pbar-track">
+                  <div class="pbar-fill" id="signal"></div>
+                </div>
+              </div>
+
+              <div class="pbar">
+                <div class="pbar-top">
+                  <span>STORAGE</span>
+                  <span id="storageText">64%</span>
+                </div>
+                <div class="pbar-track">
+                  <div class="pbar-fill" id="storage"></div>
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <div class="device-readout">
+
+        <div class="read-title">
+          LIVE DEVICE TELEMETRY
+        </div>
+
+        <div class="read-row">
+          <span>DEVICE</span>
+          <span id="rDevice">---</span>
+        </div>
+
+        <div class="read-row">
+          <span>MODEL</span>
+          <span id="rModel">---</span>
+        </div>
+
+        <div class="read-row">
+          <span>OS</span>
+          <span id="rOs">---</span>
+        </div>
+
+        <div class="read-row">
+          <span>VERSION</span>
+          <span id="rVersion">---</span>
+        </div>
+
+        <div class="read-row">
+          <span>NETWORK</span>
+          <span>STABLE</span>
+        </div>
+
+        <div class="read-row">
+          <span>SESSION</span>
+          <span id="rSession">---</span>
+        </div>
+
+        <div class="read-row">
+          <span>STATUS</span>
+          <span id="rStatus">READY</span>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <div class="panel terminalPanel">
+
+    <div class="head">
+      <span>DEVICE TERMINAL</span>
+      <span>LIVE_OUTPUT</span>
+    </div>
+
+    <div class="terminal" id="terminal"></div>
+
+  </div>
+
+</section>
+
+
+<!-- RIGHT -->
+
+<aside class="right">
+
+  <div class="panel">
+
+    <div class="head">
+      <span>SYSTEM TELEMETRY</span>
+      <span>LIVE</span>
+    </div>
+
+    <div class="monitor">
+
+      <div class="metric">
+        <div class="metricTop">
+          <span>CPU</span>
+          <span id="cpuN">18%</span>
+        </div>
+        <div class="mtrack">
+          <div class="mfill green" id="cpu"></div>
+        </div>
+      </div>
+
+      <div class="metric">
+        <div class="metricTop">
+          <span>RAM</span>
+          <span id="ramN">42%</span>
+        </div>
+        <div class="mtrack">
+          <div class="mfill cyanbar" id="ram"></div>
+        </div>
+      </div>
+
+      <div class="metric">
+        <div class="metricTop">
+          <span>STORAGE</span>
+          <span id="storageN">64%</span>
+        </div>
+        <div class="mtrack">
+          <div class="mfill yellowbar" id="storageM"></div>
+        </div>
+      </div>
+
+      <div class="metric">
+        <div class="metricTop">
+          <span>SIGNAL</span>
+          <span id="signalN">91%</span>
+        </div>
+        <div class="mtrack">
+          <div class="mfill green" id="signalM"></div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <div class="panel">
+
+    <div class="head">
+      <span>DEVICE FILES</span>
+      <span>INDEXED</span>
+    </div>
+
+    <div class="files" id="files"></div>
+
+  </div>
+
+</aside>
+
+</div>
+
+
+<!-- BOTTOM -->
+
+<section class="bottom">
+
+  <div class="panel small">
+
+    <div class="head">
+      <span>DATA STREAM</span>
+      <span>LIVE</span>
+    </div>
+
+    <div class="stream" id="stream"></div>
+
+  </div>
+
+
+  <div class="panel small">
+
+    <div class="head">
+      <span>DEVICE NODES</span>
+      <span>ACTIVE</span>
+    </div>
+
+    <div class="nodes" id="nodes"></div>
+
+  </div>
+
+
+  <div class="panel small">
+
+    <div class="head">
+      <span>OPERATION TIMELINE</span>
+      <span>SESSION</span>
+    </div>
+
+    <div class="timeline" id="timeline"></div>
+
+  </div>
+
+</section>
+
+
+<div class="footer">
+
+  <div class="fstat">
+    <small>SESSION</small>
+    <strong id="sessionBottom">----</strong>
+  </div>
+
+  <div class="fstat">
+    <small>NODES</small>
+    <strong>12</strong>
+  </div>
+
+  <div class="fstat">
+    <small>DATA</small>
+    <strong id="dataCount">000000</strong>
+  </div>
+
+  <div class="fstat">
+    <small>FILES</small>
+    <strong>014</strong>
+  </div>
+
+  <div class="fstat">
+    <small>CORE</small>
+    <strong>JOKER</strong>
+  </div>
+
+</div>
+
+
+<div class="note">
+  ⚠ واجهة استعراضية محلية: بيانات الجهاز والشبكة المعروضة داخل الصفحة فقط.
+</div>
+
+</div>
+
+
+<script>
+
+/* ================================
+   JOKER MOBILE — LOCAL ENGINE
+   ================================ */
+
+const $ = id => document.getElementById(id);
+
+let running=false;
+let timer=null;
+let progress=0;
+let dataCount=0;
+
+
+/* SESSION */
+
+const session =
+  Math.random().toString(16)
+  .slice(2,8)
+  .toUpperCase();
+
+$("session").textContent=
+  "SESSION "+session;
+
+$("sessionBottom").textContent=
+  session;
+
+$("rSession").textContent=
+  session;
+
+
+/* CLOCK */
+
+setInterval(()=>{
+
+  $("clock").textContent=
+    new Date().toLocaleTimeString("en-GB");
+
+},1000);
+
+
+/* PROFILE */
+
+function profile(){
+
+  const id =
+    $("deviceId").value || "JOKER-MBL-2047";
+
+  const name =
+    $("deviceName").value || "TARGET-PHONE";
+
+  const model =
+    $("model").value || "ANDROID DEVICE";
+
+  const os =
+    $("os").value;
+
+  const version =
+    $("version").value || "15.0";
+
+  const ip =
+    $("ip").value || "192.0.2.10";
+
+  $("pId").textContent=id;
+  $("pName").textContent=name;
+  $("pModel").textContent=model;
+  $("pOs").textContent=os;
+  $("pVersion").textContent=version;
+  $("pIp").textContent=ip;
+
+  $("rDevice").textContent=name;
+  $("rModel").textContent=model;
+  $("rOs").textContent=os;
+  $("rVersion").textContent=version;
+
+  $("heroDevice").textContent=
+    "DEVICE: "+model;
+
+}
+
+[
+  "deviceId",
+  "deviceName",
+  "model",
+  "os",
+  "version",
+  "ip"
+].forEach(id=>{
+
+  $(id).addEventListener(
+    "input",
+    profile
+  );
+
+  $(id).addEventListener(
+    "change",
+    profile
+  );
+
+});
+
+profile();
+
+
+/* LOG */
+
+function log(text,type="info"){
+
+  const div=
+    document.createElement("div");
+
+  div.className="log";
+
+  div.innerHTML=
+    `<span class="ts">[${new Date()
+      .toLocaleTimeString("en-GB")}]</span>
+     <span class="${type}">${text}</span>`;
+
+  $("terminal").appendChild(div);
+
+  $("terminal").scrollTop=
+    $("terminal").scrollHeight;
+}
+
+
+/* FILES */
+
+const files=[
+  ["system.log","LOG"],
+  ["device.cfg","CFG"],
+  ["events.dat","DAT"],
+  ["profile.json","JS"],
+  ["cache.tmp","TMP"],
+  ["media.idx","IDX"],
+  ["session.db","DB"],
+  ["telemetry.bin","BIN"],
+  ["kernel.map","MAP"],
+  ["network.cfg","CFG"],
+  ["apps.dat","DAT"],
+  ["storage.idx","IDX"],
+  ["trace.log","LOG"],
+  ["joker.core","J"]
+];
+
+function renderFiles(){
+
+  $("files").innerHTML="";
+
+  files.forEach(f=>{
+
+    const row=
+      document.createElement("div");
+
+    row.className="file";
+
+    row.innerHTML=`
+      <div class="file-icon">${f[1]}</div>
+      <div class="file-name">${f[0]}</div>
+      <div class="file-size">
+        ${Math.floor(5+Math.random()*800)}KB
+      </div>
+    `;
+
+    $("files").appendChild(row);
+
+  });
+
+}
+
+renderFiles();
+
+
+/* STREAM */
+
+function stream(){
+
+  let html="";
+
+  for(let i=0;i<9;i++){
+
+    html+=
+      `<div>
+       ${hex(10)} ::
+       ${hex(6)} ::
+       ${Math.floor(Math.random()*999999)}
+       ::
+       ${Math.random()>0.2?"SYNC":"WAIT"}
+      </div>`;
+
+  }
+
+  $("stream").innerHTML=html;
+
+}
+
+function hex(n){
+
+  const c="0123456789ABCDEF";
+  let s="";
+
+  for(let i=0;i<n;i++)
+    s+=c[Math.floor(Math.random()*c.length)];
+
+  return s;
+
+}
+
+stream();
+
+setInterval(stream,900);
+
+
+/* NODES */
+
+function renderNodes(){
+
+  $("nodes").innerHTML="";
+
+  for(let i=1;i<=12;i++){
+
+    const n=
+      document.createElement("div");
+
+    n.className="node";
+
+    n.innerHTML=`
+      <i></i>
+      <small>N-${String(i).padStart(2,"0")}</small>
+    `;
+
+    $("nodes").appendChild(n);
+
+  }
+
+}
+
+renderNodes();
+
+
+/* TIMELINE */
+
+function event(text){
+
+  const e=
+    document.createElement("div");
+
+  e.className="event";
+
+  e.innerHTML=`
+    <time>${new Date()
+      .toLocaleTimeString("en-GB")}</time>
+    <b>${text}</b>
+  `;
+
+  $("timeline").prepend(e);
+
+  while(
+    $("timeline").children.length>6
+  ){
+    $("timeline").lastElementChild.remove();
+  }
+
+}
+
+
+/* METRIC */
+
+function metric(bar,label,value){
+
+  $(bar).style.width=value+"%";
+  $(label).textContent=
+    Math.round(value)+"%";
+
+}
+
+
+/* START */
+
+$("start").onclick=()=>{
+
+  if(running)return;
+
+  running=true;
+  progress=0;
+
+  profile();
+
+  $("terminal").innerHTML="";
+  $("timeline").innerHTML="";
+
+  $("phoneState").textContent="INITIALIZING";
+  $("screenState").textContent=
+    "DEVICE INITIALIZING";
+
+  $("rStatus").textContent="ACTIVE";
+
+  log(
+    "JOKER MOBILE CORE INITIALIZED",
+    "ok"
+  );
+
+  event("Mobile core initialized");
+
+  setTimeout(()=>{
+    log(
+      "DEVICE PROFILE ACCEPTED",
+      "info"
+    );
+    event("Device profile accepted");
+  },300);
+
+  setTimeout(()=>{
+    log(
+      "TELEMETRY CHANNEL READY",
+      "ok"
+    );
+    event("Telemetry channel ready");
+  },600);
+
+  clearInterval(timer);
+
+  timer=setInterval(()=>{
+
+    progress +=
+      Math.floor(Math.random()*4)+2;
+
+    if(progress>100)
+      progress=100;
+
+    $("fill").style.width=
+      progress+"%";
+
+    $("percent").textContent=
+      progress+"%";
+
+
+    /* STAGES */
+
+    let stage="DEVICE INITIALIZATION";
+
+    if(progress>=15)
+      stage="DEVICE IDENTIFICATION";
+
+    if(progress>=32)
+      stage="SYSTEM ANALYSIS";
+
+    if(progress>=50)
+      stage="SECURITY LAYER";
+
+    if(progress>=68)
+      stage="DATA PROCESSING";
+
+    if(progress>=84)
+      stage="JOKER CORE";
+
+    if(progress>=96)
+      stage="FINALIZATION";
+
+    $("stage").textContent=stage;
+    $("phoneState").textContent=stage;
+    $("screenState").textContent=stage;
+
+
+    /* PHONE METRICS */
+
+    const battery=
+      Math.max(25,78-progress*.12);
+
+    const signal=
+      Math.min(99,72+progress*.25);
+
+    const storage=
+      Math.min(91,64+progress*.15);
+
+    $("battery").style.width=
+      battery+"%";
+
+    $("batteryText").textContent=
+      Math.round(battery)+"%";
+
+    $("signal").style.width=
+      signal+"%";
+
+    $("signalText").textContent=
+      Math.round(signal)+"%";
+
+    $("storage").style.width=
+      storage+"%";
+
+    $("storageText").textContent=
+      Math.round(storage)+"%";
+
+
+    /* MONITOR */
+
+    const cpu=
+      Math.min(96,18+progress*.65+
+      Math.random()*10);
+
+    const ram=
+      Math.min(92,42+progress*.4+
+      Math.random()*7);
+
+    metric("cpu","cpuN",cpu);
+    metric("ram","ramN",ram);
+    metric("storageM","storageN",storage);
+    metric("signalM","signalN",signal);
+
+
+    /* DATA */
+
+    dataCount +=
+      Math.floor(200+Math.random()*1200);
+
+    $("dataCount").textContent=
+      String(dataCount)
+      .padStart(6,"0");
+
+
+    /* RANDOM LOG */
+
+    if(Math.random()>.4){
+
+      const messages=[
+
+        "device telemetry synchronized",
+        "system profile updated",
+        "virtual node response received",
+        "data sequence indexed",
+        "file table refreshed",
+        "signal telemetry stable",
+        "session buffer updated",
+        "device state recalculated",
+        "JOKER core heartbeat received",
+        "local data channel synchronized"
+
+      ];
+
+      const msg=
+        messages[
+          Math.floor(
+            Math.random()*messages.length
+          )
+        ];
+
+      log(msg,"info");
+      event(msg);
+
+    }
+
+
+    if(progress>=100){
+
+      clearInterval(timer);
+
+      running=false;
+
+      $("phoneState").textContent=
+        "COMPLETE";
+
+      $("screenState").textContent=
+        "JOKER COMPLETE";
+
+      $("rStatus").textContent=
+        "COMPLETE";
+
+      $("stage").textContent=
+        "JOKER PROTOCOL COMPLETE";
+
+      log(
+        "━━━━━━━━━━━━━━━━━━━━━━━━━━━━",
+        "white"
+      );
+
+      log(
+        "JOKER PROTOCOL COMPLETE",
+        "ok"
+      );
+
+      log(
+        "LOCAL DEVICE SESSION FINISHED",
+        "warn"
+      );
+
+      event(
+        "Protocol completed"
+      );
+
+    }
+
+  },450);
+
+};
+
+
+/* ABORT */
+
+$("abort").onclick=()=>{
+
+  clearInterval(timer);
+
+  running=false;
+
+  $("stage").textContent=
+    "SESSION ABORTED";
+
+  $("phoneState").textContent=
+    "ABORTED";
+
+  $("screenState").textContent=
+    "SESSION ABORTED";
+
+  $("rStatus").textContent=
+    "ABORTED";
+
+  log(
+    "OPERATOR ABORT REQUEST",
+    "warn"
+  );
+
+  log(
+    "DEVICE SESSION STOPPED",
+    "red"
+  );
+
+  event(
+    "Session aborted"
+  );
+
+};
+
+
+/* INITIAL */
+
+log(
+  "JOKER MOBILE SYSTEM ONLINE",
+  "ok"
+);
+
+log(
+  "DEVICE TARGET INTERFACE READY",
+  "info"
+);
+
+log(
+  "WAITING FOR DEVICE PROFILE...",
+  "white"
+);
+
+event("System online");
+event("Waiting for device");
+
+</script>
+
 </body>
 </html>
