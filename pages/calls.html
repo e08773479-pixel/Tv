@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>ملك خفاجي 👑 | المكالمات</title>
+<link rel="stylesheet" href="../css/platform.css">
+
+<style>
+.calls-page{
+max-width:1200px;
+margin:auto;
+}
+
+.call-panel{
+min-height:650px;
+background:
+radial-gradient(circle at 50% 25%,rgba(25,212,124,.12),transparent 35%),
+var(--mk-panel);
+border:1px solid var(--mk-border);
+border-radius:28px;
+overflow:hidden;
+position:relative;
+display:flex;
+flex-direction:column;
+}
+
+.call-top{
+display:flex;
+align-items:center;
+gap:15px;
+padding:18px 22px;
+border-bottom:1px solid var(--mk-border);
+}
+
+.call-user{
+flex:1;
+}
+
+.call-status{
+font-size:12px;
+opacity:.6;
+}
+
+.video-stage{
+flex:1;
+display:flex;
+align-items:center;
+justify-content:center;
+position:relative;
+padding:25px;
+}
+
+.remote-video{
+width:100%;
+height:100%;
+min-height:420px;
+object-fit:cover;
+border-radius:22px;
+background:#030806;
+display:none;
+}
+
+.local-video{
+position:absolute;
+left:35px;
+bottom:30px;
+width:190px;
+height:135px;
+object-fit:cover;
+border-radius:18px;
+background:#020504;
+border:2px solid rgba(25,212,124,.6);
+display:none;
+}
+
+.call-placeholder{
+text-align:center;
+opacity:.7;
+}
+
+.call-avatar{
+width:120px;
+height:120px;
+border-radius:50%;
+object-fit:cover;
+border:3px solid rgba(25,212,124,.35);
+margin-bottom:20px;
+}
+
+.call-controls{
+display:flex;
+justify-content:center;
+gap:12px;
+padding:20px;
+border-top:1px solid var(--mk-border);
+}
+
+.call-control{
+width:58px;
+height:58px;
+border-radius:50%;
+border:1px solid var(--mk-border);
+background:#101a16;
+color:inherit;
+cursor:pointer;
+font-size:21px;
+}
+
+.call-control.danger{
+background:#6d1724;
+}
+
+.call-control.active{
+background:var(--mk-green);
+color:#03130c;
+}
+
+.call-info{
+padding:10px 20px;
+text-align:center;
+font-size:12px;
+opacity:.6;
+}
+
+@media(max-width:650px){
+.call-panel{min-height:calc(100vh - 110px)}
+.video-stage{padding:12px}
+.remote-video{min-height:400px}
+.local-video{
+width:125px;
+height:100px;
+left:20px;
+bottom:20px;
+}
+}
+</style>
+</head>
+
+<body>
+
+<div class="malak-app">
+
+<aside class="malak-sidebar">
+
+<div class="malak-brand">
+👑 <span>ملك خفاجي</span>
+</div>
+
+<nav class="malak-nav">
+<a href="../index.html">🏠 الرئيسية</a>
+<a href="chat.html">💬 المحادثات</a>
+<a href="rooms.html">🎙️ الغرف</a>
+<a href="games.html">🎮 الألعاب</a>
+<a class="active" href="calls.html">📹 المكالمات</a>
+<a href="profile.html">👤 الملف الشخصي</a>
+</nav>
+
+</aside>
+
+<main class="malak-content">
+
+<header class="malak-topbar">
+<button class="malak-btn" onclick="history.back()">←</button>
+<strong>📹 المكالمات</strong>
+</header>
+
+<section class="calls-page">
+
+<div class="call-panel">
+
+<div class="call-top">
+
+<div class="call-user">
+<strong id="callName">المكالمة</strong>
+<div class="call-status" id="callStatus">
+جاري تجهيز الاتصال...
+</div>
+</div>
+
+<span id="callType">📹 فيديو</span>
+
+</div>
+
+<div class="video-stage">
+
+<video
+id="remoteVideo"
+class="remote-video"
+autoplay
+playsinline>
+</video>
+
+<video
+id="localVideo"
+class="local-video"
+autoplay
+muted
+playsinline>
+</video>
+
+<div class="call-placeholder" id="placeholder">
+
+<img
+id="callAvatar"
+class="call-avatar"
+src="../assets/images/avatars/default.png"
+alt="">
+
+<h2>الاتصال</h2>
+
+<p>
+لم يتم إنشاء اتصال WebRTC مع الطرف الآخر بعد.
+</p>
+
+</div>
+
+</div>
+
+<div class="call-info" id="connectionInfo">
+الاتصال المحلي جاهز. ربط الطرف الآخر يحتاج خدمة signaling في الخادم.
+</div>
+
+<div class="call-controls">
+
+<button class="call-control" id="micBtn">🎤</button>
+
+<button class="call-control" id="cameraBtn">📹</button>
+
+<button class="call-control" id="screenBtn">🖥️</button>
+
+<button class="call-control danger" id="endBtn">📞</button>
+
+</div>
+
+</div>
+
+</section>
+
+</main>
+</div>
+
+<div class="malak-toast" id="toast"></div>
+
+<script src="../js/platform.js"></script>
+
+<script>
+const params=new URLSearchParams(location.search);
+
+const targetUser=params.get("user");
+const requestedType=params.get("type")||"video";
+
+let stream=null;
+let audioTrack=null;
+let videoTrack=null;
+
+const localVideo=document.getElementById("localVideo");
+const remoteVideo=document.getElementById("remoteVideo");
+const placeholder=document.getElementById("placeholder");
+
+document.getElementById("callType").textContent=
+requestedType==="audio"?"🎤 صوت":"📹 فيديو";
+
+async function loadTarget(){
+
+if(!targetUser)return;
+
+try{
+
+const result=await Malak.request(
+`/users/${encodeURIComponent(targetUser)}`
+);
+
+const user=result.user||result.data||result;
+
+document.getElementById("callName").textContent=
+user.name||"مستخدم";
+
+if(user.avatar){
+document.getElementById("callAvatar").src=user.avatar;
+}
+
+}catch(error){
+console.error(error);
+}
+}
+
+async function startCall(){
+
+if(!navigator.mediaDevices?.getUserMedia){
+
+document.getElementById("callStatus").textContent=
+"المتصفح لا يدعم المكالمات";
+
+return;
+}
+
+try{
+
+stream=await navigator.mediaDevices.getUserMedia({
+audio:true,
+video:requestedType!=="audio"
+});
+
+audioTrack=stream.getAudioTracks()[0]||null;
+videoTrack=stream.getVideoTracks()[0]||null;
+
+localVideo.srcObject=stream;
+localVideo.style.display="block";
+
+if(requestedType==="audio"){
+videoTrack?.stop();
+}
+
+placeholder.innerHTML=`
+<div style="font-size:55px">📡</div>
+<h2>الوسائط المحلية جاهزة</h2>
+<p>في انتظار اتصال الطرف الآخر.</p>
+`;
+
+document.getElementById("callStatus").textContent=
+"الوسائط المحلية تعمل";
+
+}catch(error){
+
+document.getElementById("callStatus").textContent=
+"تعذر تشغيل الكاميرا/الميكروفون";
+
+Malak.toast("تحقق من صلاحيات الكاميرا والميكروفون");
+
+console.error(error);
+}
+}
+
+document.getElementById("micBtn").onclick=()=>{
+
+if(!audioTrack)return;
+
+audioTrack.enabled=!audioTrack.enabled;
+
+document.getElementById("micBtn").textContent=
+audioTrack.enabled?"🎤":"🔇";
+
+document.getElementById("micBtn")
+.classList.toggle("active",audioTrack.enabled);
+};
+
+document.getElementById("cameraBtn").onclick=()=>{
+
+if(!videoTrack)return;
+
+videoTrack.enabled=!videoTrack.enabled;
+
+document.getElementById("cameraBtn").textContent=
+videoTrack.enabled?"📹":"🚫";
+
+document.getElementById("cameraBtn")
+.classList.toggle("active",videoTrack.enabled);
+};
+
+document.getElementById("screenBtn").onclick=async()=>{
+
+if(!navigator.mediaDevices?.getDisplayMedia){
+Malak.toast("مشاركة الشاشة غير مدعومة");
+return;
+}
+
+try{
+
+const screenStream=await navigator.mediaDevices.getDisplayMedia({
+video:true,
+audio:false
+});
+
+const screenTrack=screenStream.getVideoTracks()[0];
+
+if(stream&&videoTrack){
+
+stream.removeTrack(videoTrack);
+stream.addTrack(screenTrack);
+
+localVideo.srcObject=stream;
+
+}
+
+screenTrack.addEventListener("ended",()=>{
+
+if(stream&&videoTrack){
+
+stream.removeTrack(screenTrack);
+stream.addTrack(videoTrack);
+localVideo.srcObject=stream;
+
+}
+
+});
+
+Malak.toast("بدأت مشاركة الشاشة محليًا");
+
+}catch(error){
+console.error(error);
+}
+};
+
+document.getElementById("endBtn").onclick=async()=>{
+
+try{
+
+if(targetUser){
+
+await Malak.request(
+"/calls/end",
+{
+method:"POST",
+headers:{"Content-Type":"application/json"},
+body:JSON.stringify({
+user_id:targetUser
+})
+}
+);
+
+}
+
+}catch(error){
+console.error(error);
+}
+
+if(stream){
+stream.getTracks().forEach(track=>track.stop());
+}
+
+location.href="chat.html";
+};
+
+loadTarget();
+startCall();
+</script>
+
+</body>
+</html>
