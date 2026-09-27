@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+  name="viewport"
+  content="width=device-width,initial-scale=1"
+/>
+
+<title>الغرف | ملك خفاجي</title>
+
+<link
+  rel="stylesheet"
+  href="../css/platform.css"
+/>
+
+</head>
+
+<body>
+
+<div class="malak-app">
+
+<aside class="malak-sidebar">
+
+  <div class="malak-brand">
+    <div class="malak-brand-icon">👑</div>
+    <span>ملك خفاجي</span>
+  </div>
+
+  <nav class="malak-nav">
+
+    <a href="../index.html">
+      <span class="malak-nav-icon">🏠</span>
+      الرئيسية
+    </a>
+
+    <a
+      href="./chat.html"
+    >
+      <span class="malak-nav-icon">💬</span>
+      الشات
+    </a>
+
+    <a
+      href="./rooms.html"
+      class="active"
+    >
+      <span class="malak-nav-icon">🎙️</span>
+      الغرف
+    </a>
+
+    <a href="./games.html">
+      <span class="malak-nav-icon">🎮</span>
+      الألعاب
+    </a>
+
+    <a href="./calls.html">
+      <span class="malak-nav-icon">📹</span>
+      المكالمات
+    </a>
+
+    <a href="./profile.html">
+      <span class="malak-nav-icon">👤</span>
+      الحساب
+    </a>
+
+  </nav>
+
+</aside>
+
+
+<main class="malak-content">
+
+<header class="malak-topbar">
+
+  <div class="malak-search">
+
+    🔎
+
+    <input
+      id="roomSearch"
+      type="search"
+      placeholder="ابحث عن غرفة..."
+    >
+
+  </div>
+
+  <div>
+    👤
+    <span data-user-name>
+      الحساب
+    </span>
+  </div>
+
+</header>
+
+
+<section class="malak-page-head">
+
+  <h1>
+    الغرف 🎙️
+  </h1>
+
+  <p>
+    ادخل غرفة، اتكلم، شغّل الكاميرا، والعب مع الموجودين.
+  </p>
+
+</section>
+
+
+<section
+  id="roomsGrid"
+  class="malak-grid malak-grid-3"
+>
+
+</section>
+
+</main>
+
+</div>
+
+<div id="malak-toast-root"></div>
+
+<script src="../js/platform.js"></script>
+
+<script>
+
+const roomsGrid =
+  document.querySelector("#roomsGrid");
+
+const search =
+  document.querySelector("#roomSearch");
+
+let rooms = [];
+
+
+/* =========================
+   LOAD REAL ROOMS
+========================= */
+
+async function loadRooms() {
+
+  roomsGrid.innerHTML = `
+    <div class="malak-card malak-empty">
+      <div>
+        <div class="malak-empty-icon">⏳</div>
+        جاري تحميل الغرف...
+      </div>
+    </div>
+  `;
+
+  try {
+
+    const result =
+      await Malak.request("/rooms");
+
+    rooms =
+      Array.isArray(result.rooms)
+        ? result.rooms
+        : [];
+
+    renderRooms();
+
+  } catch (error) {
+
+    roomsGrid.innerHTML = `
+      <div class="malak-card malak-empty">
+        <div>
+          <div class="malak-empty-icon">📭</div>
+
+          <strong>
+            لا توجد غرف متاحة حاليًا
+          </strong>
+
+          <p>
+            سيتم عرض الغرف هنا عند توفرها.
+          </p>
+        </div>
+      </div>
+    `;
+  }
+}
+
+
+/* =========================
+   RENDER
+========================= */
+
+function renderRooms() {
+
+  const query =
+    search.value
+      .trim()
+      .toLowerCase();
+
+  const filtered =
+    rooms.filter(room => {
+
+      return (
+        !query ||
+        room.name
+          ?.toLowerCase()
+          .includes(query)
+      );
+    });
+
+  if (!filtered.length) {
+
+    roomsGrid.innerHTML = `
+      <div
+        class="malak-card malak-empty"
+        style="grid-column:1/-1"
+      >
+        <div>
+
+          <div class="malak-empty-icon">
+            🎙️
+          </div>
+
+          <strong>
+            مفيش غرف متاحة
+          </strong>
+
+          <p>
+            الغرف الحقيقية التي ينشئها المستخدمون
+            ستظهر هنا.
+          </p>
+
+        </div>
+      </div>
+    `;
+
+    return;
+  }
+
+  roomsGrid.innerHTML =
+    filtered.map(room => `
+
+      <article
+        class="malak-card"
+        style="padding:20px"
+      >
+
+        <div
+          style="
+            height:150px;
+            border-radius:18px;
+            margin-bottom:16px;
+            display:grid;
+            place-items:center;
+            background:
+              radial-gradient(
+                circle at 30% 20%,
+                rgba(25,212,124,.3),
+                transparent 45%
+              ),
+              #0b151b;
+          "
+        >
+
+          <span style="font-size:48px">
+            🎙️
+          </span>
+
+        </div>
+
+        <h3>
+          ${escapeHTML(room.name || "غرفة")}
+        </h3>
+
+        <p
+          style="
+            color:var(--mk-muted);
+            margin:5px 0 15px
+          "
+        >
+          ${Number(room.membersCount || 0)}
+          متصل الآن
+        </p>
+
+        <button
+          class="malak-btn primary"
+          style="width:100%"
+          onclick="joinRoom('${room.id}')"
+        >
+          دخول الغرفة
+        </button>
+
+      </article>
+
+    `).join("");
+}
+
+
+/* =========================
+   JOIN
+========================= */
+
+async function joinRoom(roomId) {
+
+  try {
+
+    const result =
+      await Malak.request(
+        `/rooms/${encodeURIComponent(roomId)}/join`,
+        {
+          method: "POST"
+        }
+      );
+
+    if (!result?.room) {
+      throw new Error();
+    }
+
+    window.location.href =
+      `./room.html?id=${encodeURIComponent(roomId)}`;
+
+  } catch {
+
+    Malak.toast(
+      "تعذر دخول الغرفة",
+      "error"
+    );
+  }
+}
+
+
+/* =========================
+   SAFE TEXT
+========================= */
+
+function escapeHTML(value) {
+
+  return String(value)
+    .replaceAll("&","&amp;")
+    .replaceAll("<","&lt;")
+    .replaceAll(">","&gt;")
+    .replaceAll('"',"&quot;")
+    .replaceAll("'","&#039;");
+}
+
+
+search.addEventListener(
+  "input",
+  renderRooms
+);
+
+loadRooms();
+
+</script>
+
+</body>
+  </html>
