@@ -1,0 +1,426 @@
+:root {
+  --bg: #05070b;
+  --bg-soft: #080c12;
+  --surface: #0b1017;
+  --surface-2: #101721;
+  --surface-3: #151e2a;
+
+  --line: rgba(255,255,255,.07);
+  --line-strong: rgba(255,255,255,.12);
+
+  --text: #f4f7fb;
+  --text-soft: #a8b2c0;
+  --text-muted: #6e7887;
+
+  --green: #18df8a;
+  --green-soft: rgba(24,223,138,.12);
+
+  --cyan: #28d9ff;
+  --cyan-soft: rgba(40,217,255,.12);
+
+  --purple: #8b6cff;
+  --purple-soft: rgba(139,108,255,.13);
+
+  --danger: #ff5c73;
+  --warning: #ffbd59;
+
+  --radius-xs: 8px;
+  --radius-sm: 12px;
+  --radius-md: 18px;
+  --radius-lg: 26px;
+  --radius-xl: 34px;
+
+  --shadow-sm: 0 8px 30px rgba(0,0,0,.18);
+  --shadow-md: 0 18px 60px rgba(0,0,0,.25);
+  --shadow-lg: 0 30px 100px rgba(0,0,0,.38);
+
+  --sidebar-width: 258px;
+  --topbar-height: 76px;
+
+  --font-main: "Cairo", sans-serif;
+  --font-alt: "IBM Plex Sans Arabic", sans-serif;
+
+  --transition-fast: 150ms ease;
+  --transition: 240ms ease;
+  --transition-slow: 420ms ease;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  min-height: 100%;
+  background: var(--bg);
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background:
+    radial-gradient(
+      circle at 80% -10%,
+      rgba(24,223,138,.08),
+      transparent 30%
+    ),
+    radial-gradient(
+      circle at 10% 20%,
+      rgba(40,217,255,.045),
+      transparent 25%
+    ),
+    var(--bg);
+  color: var(--text);
+  font-family: var(--font-main);
+  direction: rtl;
+  overflow-x: hidden;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  opacity: .22;
+  background-image:
+    linear-gradient(
+      rgba(255,255,255,.025) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      90deg,
+      rgba(255,255,255,.025) 1px,
+      transparent 1px
+    );
+  background-size: 60px 60px;
+  mask-image: linear-gradient(
+    to bottom,
+    black,
+    transparent 85%
+  );
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+button,
+a {
+  -webkit-tap-highlight-color: transparent;
+}
+
+button {
+  border: 0;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+img,
+video {
+  display: block;
+  max-width: 100%;
+}
+
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+textarea:focus-visible {
+  outline: 2px solid var(--green);
+  outline-offset: 3px;
+}
+
+::selection {
+  background: rgba(24,223,138,.25);
+  color: white;
+}
+
+::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255,255,255,.1);
+  border-radius: 99px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255,255,255,.18);
+}
+
+
+/* =========================
+   UTILITIES
+========================= */
+
+[hidden] {
+  display: none !important;
+}
+
+.no-scroll {
+  overflow: hidden !important;
+}
+
+.text-muted {
+  color: var(--text-muted);
+}
+
+.text-soft {
+  color: var(--text-soft);
+}
+
+.text-green {
+  color: var(--green);
+}
+
+.text-cyan {
+  color: var(--cyan);
+}
+
+.text-danger {
+  color: var(--danger);
+}
+
+
+/* =========================
+   LOADING
+========================= */
+
+.app-loader {
+  position: fixed;
+  z-index: 99999;
+  inset: 0;
+
+  display: grid;
+  place-items: center;
+
+  background:
+    radial-gradient(
+      circle at center,
+      rgba(24,223,138,.08),
+      transparent 35%
+    ),
+    #05070b;
+
+  transition:
+    opacity .5s ease,
+    visibility .5s ease;
+}
+
+.app-loader.is-hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.loader-center {
+  position: relative;
+  z-index: 2;
+
+  width: min(360px, 82vw);
+
+  text-align: center;
+}
+
+.loader-crown {
+  width: 82px;
+  height: 82px;
+
+  display: grid;
+  place-items: center;
+
+  margin: 0 auto 20px;
+
+  border: 1px solid rgba(24,223,138,.28);
+  border-radius: 50%;
+
+  color: var(--green);
+  font-size: 38px;
+
+  background:
+    radial-gradient(
+      circle,
+      rgba(24,223,138,.14),
+      transparent 65%
+    );
+
+  box-shadow:
+    0 0 80px rgba(24,223,138,.12);
+
+  animation: loaderFloat 2.8s ease-in-out infinite;
+}
+
+.loader-brand {
+  font-size: 22px;
+  font-weight: 800;
+}
+
+.loader-status {
+  margin-top: 5px;
+
+  color: var(--text-muted);
+  font-size: 13px;
+}
+
+.loader-progress {
+  width: 100%;
+  height: 4px;
+
+  margin-top: 24px;
+
+  overflow: hidden;
+
+  border-radius: 999px;
+  background: rgba(255,255,255,.06);
+}
+
+.loader-progress span {
+  display: block;
+  width: 0;
+  height: 100%;
+
+  border-radius: inherit;
+
+  background:
+    linear-gradient(
+      90deg,
+      var(--green),
+      var(--cyan)
+    );
+
+  transition: width .25s ease;
+}
+
+.loader-orbit {
+  position: absolute;
+
+  border: 1px solid rgba(24,223,138,.09);
+  border-radius: 50%;
+
+  pointer-events: none;
+}
+
+.orbit-one {
+  width: 420px;
+  height: 420px;
+  animation: orbitRotate 18s linear infinite;
+}
+
+.orbit-two {
+  width: 680px;
+  height: 680px;
+
+  border-color: rgba(40,217,255,.05);
+
+  animation: orbitRotate 28s linear infinite reverse;
+}
+
+@keyframes loaderFloat {
+  0%,100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-7px);
+  }
+}
+
+@keyframes orbitRotate {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+
+/* =========================
+   SPINNER
+========================= */
+
+.spinner {
+  width: 24px;
+  height: 24px;
+
+  border: 2px solid rgba(255,255,255,.1);
+  border-top-color: var(--green);
+
+  border-radius: 50%;
+
+  animation: spin .8s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+
+/* =========================
+   SKELETON
+========================= */
+
+.skeleton-card,
+.skeleton-line {
+  position: relative;
+  overflow: hidden;
+
+  background: var(--surface);
+}
+
+.skeleton-card::after,
+.skeleton-line::after {
+  content: "";
+
+  position: absolute;
+  inset: 0;
+
+  transform: translateX(-100%);
+
+  background:
+    linear-gradient(
+      90deg,
+      transparent,
+      rgba(255,255,255,.045),
+      transparent
+    );
+
+  animation: skeleton 1.5s infinite;
+}
+
+@keyframes skeleton {
+  to {
+    transform: translateX(100%);
+  }
+}
+
+
+/* =========================
+   REDUCED MOTION
+========================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+  }
+
+}
