@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>ملك خفاجي 👑 | غرفة اللعب</title>
+<link rel="stylesheet" href="../css/platform.css">
+
+<style>
+.game-room{
+display:grid;
+grid-template-columns:minmax(0,1fr) 330px;
+gap:18px;
+}
+
+.game-stage,.players-panel,.room-chat{
+background:var(--mk-panel);
+border:1px solid var(--mk-border);
+border-radius:24px;
+overflow:hidden;
+}
+
+.game-stage{
+min-height:620px;
+display:flex;
+flex-direction:column;
+}
+
+.stage-head,.players-head,.room-chat-head{
+padding:18px;
+border-bottom:1px solid var(--mk-border);
+}
+
+.stage-head{
+display:flex;
+align-items:center;
+gap:12px;
+}
+
+.stage-head .title{
+flex:1;
+}
+
+.game-area{
+flex:1;
+display:flex;
+align-items:center;
+justify-content:center;
+padding:30px;
+background:
+radial-gradient(circle at center,rgba(25,212,124,.08),transparent 45%),
+#07110e;
+}
+
+.game-placeholder{
+text-align:center;
+padding:40px;
+border:1px dashed rgba(25,212,124,.3);
+border-radius:24px;
+max-width:560px;
+}
+
+.game-placeholder .icon{
+font-size:70px;
+margin-bottom:15px;
+}
+
+.game-controls{
+display:flex;
+gap:10px;
+flex-wrap:wrap;
+padding:16px;
+border-top:1px solid var(--mk-border);
+}
+
+.game-controls button{
+flex:1;
+min-width:120px;
+}
+
+.side-column{
+display:flex;
+flex-direction:column;
+gap:18px;
+}
+
+.players-panel{
+max-height:300px;
+}
+
+.players{
+padding:10px;
+overflow:auto;
+}
+
+.player{
+display:flex;
+align-items:center;
+gap:10px;
+padding:10px;
+border-radius:13px;
+}
+
+.player:hover{
+background:rgba(255,255,255,.03);
+}
+
+.player img{
+width:40px;
+height:40px;
+border-radius:50%;
+object-fit:cover;
+}
+
+.player-info{
+flex:1;
+}
+
+.player-role{
+font-size:11px;
+opacity:.55;
+}
+
+.room-chat{
+height:302px;
+display:flex;
+flex-direction:column;
+}
+
+.room-messages{
+flex:1;
+padding:12px;
+overflow:auto;
+}
+
+.room-message{
+padding:7px 9px;
+margin-bottom:7px;
+background:rgba(255,255,255,.035);
+border-radius:10px;
+font-size:13px;
+}
+
+.room-composer{
+display:flex;
+gap:6px;
+padding:10px;
+border-top:1px solid var(--mk-border);
+}
+
+.room-composer input{
+min-width:0;
+flex:1;
+padding:10px;
+border-radius:10px;
+border:1px solid var(--mk-border);
+background:var(--mk-bg);
+color:inherit;
+}
+
+@media(max-width:1000px){
+.game-room{
+grid-template-columns:1fr;
+}
+.side-column{
+display:grid;
+grid-template-columns:1fr 1fr;
+}
+}
+
+@media(max-width:650px){
+.side-column{
+grid-template-columns:1fr;
+}
+.game-stage{
+min-height:500px;
+}
+}
+</style>
+</head>
+
+<body>
+
+<div class="malak-app">
+
+<aside class="malak-sidebar">
+<div class="malak-brand">👑 <span>ملك خفاجي</span></div>
+
+<nav class="malak-nav">
+<a href="../index.html">🏠 الرئيسية</a>
+<a href="chat.html">💬 المحادثات</a>
+<a href="rooms.html">🎙️ الغرف</a>
+<a class="active" href="games.html">🎮 الألعاب</a>
+<a href="calls.html">📹 المكالمات</a>
+</nav>
+</aside>
+
+<main class="malak-content">
+
+<header class="malak-topbar">
+<button class="malak-btn" onclick="history.back()">←</button>
+<strong id="matchTitle">🎮 غرفة اللعب</strong>
+<span style="margin-right:auto" id="matchStatus">جاري الاتصال...</span>
+</header>
+
+<section class="game-room">
+
+<div class="game-stage">
+
+<div class="stage-head">
+<div class="title">
+<strong id="gameName">اللعبة</strong>
+<div style="opacity:.6;font-size:12px" id="matchId"></div>
+</div>
+
+<button class="malak-btn" id="inviteBtn">👥 دعوة</button>
+</div>
+
+<div class="game-area">
+
+<div class="game-placeholder">
+<div class="icon">🎮</div>
+<h2 id="gameMessage">جاري تجهيز المباراة...</h2>
+<p id="gameDescription">
+سيتم تحميل واجهة اللعبة الفعلية من خدمة الألعاب.
+</p>
+</div>
+
+</div>
+
+<div class="game-controls">
+<button class="malak-btn" id="micBtn">🎤 الميكروفون</button>
+<button class="malak-btn" id="cameraBtn">📹 الكاميرا</button>
+<button class="malak-btn" id="screenBtn">🖥️ مشاركة الشاشة</button>
+<button class="malak-btn" id="leaveBtn">🚪 مغادرة</button>
+</div>
+
+</div>
+
+<div class="side-column">
+
+<div class="players-panel">
+
+<div class="players-head">
+<strong>👥 اللاعبون</strong>
+</div>
+
+<div class="players" id="players">
+<div style="padding:20px;text-align:center;opacity:.6">
+جاري التحميل...
+</div>
+</div>
+
+</div>
+
+<div class="room-chat">
+
+<div class="room-chat-head">
+<strong>💬 شات المباراة</strong>
+</div>
+
+<div class="room-messages" id="roomMessages">
+<div style="opacity:.5;text-align:center">لا توجد رسائل</div>
+</div>
+
+<form class="room-composer" id="roomChatForm">
+<input id="roomChatInput" placeholder="رسالة...">
+<button class="malak-btn">➤</button>
+</form>
+
+</div>
+
+</div>
+
+</section>
+
+</main>
+</div>
+
+<div class="malak-toast" id="toast"></div>
+
+<script src="../js/platform.js"></script>
+
+<script>
+const matchId=new URLSearchParams(location.search).get("id");
+
+let match=null;
+let localStream=null;
+let cameraTrack=null;
+let micTrack=null;
+
+function esc(value){
+return String(value??"")
+.replace(/&/g,"&amp;")
+.replace(/</g,"&lt;")
+.replace(/>/g,"&gt;")
+.replace(/"/g,"&quot;");
+}
+
+async function loadMatch(){
+
+if(!matchId){
+document.getElementById("gameMessage").textContent=
+"معرّف المباراة غير موجود.";
+return;
+}
+
+try{
+
+const result=await Malak.request(
+`/games/matches/${encodeURIComponent(matchId)}`
+);
+
+match=result.match||result.data||result;
+
+document.getElementById("matchId").textContent=
+`Match #${match.id||matchId}`;
+
+document.getElementById("gameName").textContent=
+match.game?.name||match.game_name||"اللعبة";
+
+document.getElementById("matchStatus").textContent=
+match.status||"متصل";
+
+document.getElementById("gameMessage").textContent=
+match.status==="finished"
+?"انتهت المباراة"
+:"غرفة المباراة جاهزة";
+
+renderPlayers(match.players||[]);
+
+await loadRoomChat();
+
+}catch(error){
+
+document.getElementById("gameMessage").textContent=
+"تعذر تحميل المباراة.";
+
+document.getElementById("matchStatus").textContent=
+"غير متصل";
+
+console.error(error);
+}
+}
+
+function renderPlayers(players){
+
+const box=document.getElementById("players");
+
+if(!players.length){
+box.innerHTML=
+'<div style="padding:20px;text-align:center;opacity:.6">لا يوجد لاعبون.</div>';
+return;
+}
+
+box.innerHTML=players.map(player=>`
+<div class="player">
+<img src="${esc(player.avatar||"../assets/images/avatars/default.png")}">
+<div class="player-info">
+<strong>${esc(player.name||"مستخدم")}</strong>
+<div class="player-role">${esc(player.role||"لاعب")}</div>
+</div>
+${player.host?"👑":""}
+</div>
+`).join("");
+}
+
+async function loadRoomChat(){
+
+try{
+
+const result=await Malak.request(
+`/games/matches/${encodeURIComponent(matchId)}/messages`
+);
+
+renderChat(result.messages||result.data||[]);
+
+}catch(error){
+console.error(error);
+}
+}
+
+function renderChat(items){
+
+const box=document.getElementById("roomMessages");
+
+if(!items.length){
+box.innerHTML=
+'<div style="opacity:.5;text-align:center">لا توجد رسائل</div>';
+return;
+}
+
+box.innerHTML=items.map(m=>`
+<div class="room-message">
+<strong>${esc(m.sender?.name||m.sender_name||"مستخدم")}:</strong>
+${esc(m.body||m.text||"")}
+</div>
+`).join("");
+
+box.scrollTop=box.scrollHeight;
+}
+
+document.getElementById("roomChatForm").addEventListener("submit",async e=>{
+
+e.preventDefault();
+
+const input=document.getElementById("roomChatInput");
+const body=input.value.trim();
+
+if(!body)return;
+
+try{
+
+await Malak.request(
+`/games/matches/${encodeURIComponent(matchId)}/messages`,
+{
+method:"POST",
+headers:{"Content-Type":"application/json"},
+body:JSON.stringify({body})
+}
+);
+
+input.value="";
+await loadRoomChat();
+
+}catch(error){
+Malak.toast(error.message||"تعذر إرسال الرسالة");
+}
+});
+
+async function startMedia(){
+
+if(!navigator.mediaDevices?.getUserMedia){
+Malak.toast("المتصفح لا يدعم الكاميرا والميكروفون");
+return;
+}
+
+try{
+
+localStream=await navigator.mediaDevices.getUserMedia({
+audio:true,
+video:true
+});
+
+micTrack=localStream.getAudioTracks()[0]||null;
+cameraTrack=localStream.getVideoTracks()[0]||null;
+
+Malak.toast("تم تشغيل الوسائط المحلية");
+
+}catch(error){
+
+Malak.toast("لم يتم السماح بالكاميرا أو الميكروفون");
+console.error(error);
+}
+}
+
+document.getElementById("micBtn").onclick=()=>{
+
+if(!micTrack){
+startMedia();
+return;
+}
+
+micTrack.enabled=!micTrack.enabled;
+
+document.getElementById("micBtn").textContent=
+micTrack.enabled?"🎤 الميكروفون":"🔇 الميكروفون مكتوم";
+};
+
+document.getElementById("cameraBtn").onclick=()=>{
+
+if(!cameraTrack){
+startMedia();
+return;
+}
+
+cameraTrack.enabled=!cameraTrack.enabled;
+
+document.getElementById("cameraBtn").textContent=
+cameraTrack.enabled?"📹 الكاميرا":"🚫 الكاميرا مغلقة";
+};
+
+document.getElementById("screenBtn").onclick=async()=>{
+
+if(!navigator.mediaDevices?.getDisplayMedia){
+Malak.toast("مشاركة الشاشة غير مدعومة");
+return;
+}
+
+try{
+
+const stream=await navigator.mediaDevices.getDisplayMedia({
+video:true,
+audio:false
+});
+
+const track=stream.getVideoTracks()[0];
+
+track.addEventListener("ended",()=>{
+Malak.toast("انتهت مشاركة الشاشة");
+});
+
+Malak.toast("تم بدء مشاركة الشاشة محليًا");
+
+}catch(error){
+console.error(error);
+}
+};
+
+document.getElementById("inviteBtn").onclick=()=>{
+Malak.toast("دعوة اللاعبين تحتاج endpoint الدعوات في الـ API");
+};
+
+document.getElementById("leaveBtn").onclick=async()=>{
+
+try{
+
+await Malak.request(
+`/games/matches/${encodeURIComponent(matchId)}/leave`,
+{method:"POST"}
+);
+
+location.href="games.html";
+
+}catch(error){
+Malak.toast(error.message||"تعذر مغادرة المباراة");
+}
+};
+
+loadMatch();
+</script>
+
+</body>
+</html>
