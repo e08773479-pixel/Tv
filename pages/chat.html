@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>ملك خفاجي 👑 | المحادثات</title>
+<link rel="stylesheet" href="../css/platform.css">
+<style>
+.chat-layout{
+display:grid;
+grid-template-columns:300px minmax(0,1fr);
+height:calc(100vh - 76px);
+gap:18px;
+}
+.chat-list,.chat-window{
+background:var(--mk-panel);
+border:1px solid var(--mk-border);
+border-radius:24px;
+overflow:hidden;
+}
+.chat-list-head{
+padding:20px;
+border-bottom:1px solid var(--mk-border);
+}
+.chat-list-head h2{margin:0 0 12px}
+.chat-search{
+width:100%;
+padding:13px 15px;
+border-radius:14px;
+border:1px solid var(--mk-border);
+background:var(--mk-bg);
+color:inherit;
+outline:none;
+}
+.conversations{overflow:auto;height:calc(100% - 110px)}
+.conversation{
+display:flex;
+align-items:center;
+gap:12px;
+padding:15px;
+cursor:pointer;
+border-bottom:1px solid rgba(255,255,255,.04);
+transition:.2s;
+}
+.conversation:hover,.conversation.active{
+background:rgba(25,212,124,.08);
+}
+.avatar{
+width:48px;height:48px;border-radius:50%;
+object-fit:cover;
+background:#17231f;
+}
+.conversation-info{min-width:0;flex:1}
+.conversation-name{
+font-weight:800;
+white-space:nowrap;
+overflow:hidden;
+text-overflow:ellipsis;
+}
+.conversation-last{
+font-size:12px;
+opacity:.6;
+white-space:nowrap;
+overflow:hidden;
+text-overflow:ellipsis;
+}
+.chat-window{
+display:flex;
+flex-direction:column;
+min-width:0;
+}
+.chat-head{
+height:78px;
+display:flex;
+align-items:center;
+gap:12px;
+padding:14px 18px;
+border-bottom:1px solid var(--mk-border);
+}
+.chat-head-info{flex:1}
+.chat-head-info strong{display:block}
+.chat-status{font-size:12px;opacity:.6}
+.chat-actions{display:flex;gap:8px}
+.icon-btn{
+width:42px;height:42px;
+border:1px solid var(--mk-border);
+border-radius:13px;
+background:rgba(255,255,255,.03);
+color:inherit;
+cursor:pointer;
+}
+.messages{
+flex:1;
+overflow:auto;
+padding:22px;
+display:flex;
+flex-direction:column;
+gap:10px;
+}
+.message{
+max-width:min(72%,520px);
+padding:11px 14px;
+border-radius:17px;
+line-height:1.7;
+}
+.message.mine{
+align-self:flex-start;
+background:linear-gradient(135deg,var(--mk-green),#087d52);
+color:#04130d;
+border-bottom-left-radius:5px;
+}
+.message.theirs{
+align-self:flex-end;
+background:#17211e;
+border:1px solid var(--mk-border);
+border-bottom-right-radius:5px;
+}
+.message-time{
+display:block;
+font-size:10px;
+opacity:.55;
+margin-top:3px;
+}
+.empty-chat{
+margin:auto;
+text-align:center;
+opacity:.65;
+}
+.composer{
+display:flex;
+gap:10px;
+padding:14px;
+border-top:1px solid var(--mk-border);
+}
+.composer input{
+flex:1;
+border:1px solid var(--mk-border);
+background:var(--mk-bg);
+color:inherit;
+border-radius:15px;
+padding:14px;
+outline:none;
+}
+.send-btn{
+border:0;
+border-radius:15px;
+padding:0 22px;
+background:var(--mk-green);
+color:#03130c;
+font-weight:900;
+cursor:pointer;
+}
+@media(max-width:900px){
+.chat-layout{
+grid-template-columns:1fr;
+height:auto;
+}
+.chat-list{height:330px}
+.chat-window{height:calc(100vh - 100px)}
+}
+</style>
+</head>
+
+<body>
+<div class="malak-app">
+
+<aside class="malak-sidebar">
+<div class="malak-brand">👑 <span>ملك خفاجي</span></div>
+
+<nav class="malak-nav">
+<a href="../index.html">🏠 الرئيسية</a>
+<a class="active" href="chat.html">💬 المحادثات</a>
+<a href="rooms.html">🎙️ الغرف</a>
+<a href="games.html">🎮 الألعاب</a>
+<a href="calls.html">📹 المكالمات</a>
+<a href="profile.html">👤 الملف الشخصي</a>
+</nav>
+</aside>
+
+<main class="malak-content">
+
+<header class="malak-topbar">
+<button class="malak-btn" id="menuBtn">☰</button>
+<div class="malak-search">
+<input id="globalSearch" placeholder="ابحث في المحادثات...">
+</div>
+<div data-user-coins>— 🪙</div>
+</header>
+
+<section class="chat-layout">
+
+<div class="chat-list">
+
+<div class="chat-list-head">
+<h2>💬 المحادثات</h2>
+<input class="chat-search" id="chatSearch" placeholder="بحث عن محادثة">
+</div>
+
+<div class="conversations" id="conversationList">
+<div class="empty-chat">جاري تحميل المحادثات...</div>
+</div>
+
+</div>
+
+<div class="chat-window">
+
+<div class="chat-head">
+<img id="chatAvatar" class="avatar" src="" alt="">
+<div class="chat-head-info">
+<strong id="chatName">اختر محادثة</strong>
+<span class="chat-status" id="chatStatus">—</span>
+</div>
+
+<div class="chat-actions">
+<button class="icon-btn" id="voiceCallBtn" title="مكالمة صوتية">🎤</button>
+<button class="icon-btn" id="videoCallBtn" title="مكالمة فيديو">📹</button>
+</div>
+</div>
+
+<div class="messages" id="messages">
+<div class="empty-chat">
+اختر محادثة لعرض الرسائل
+</div>
+</div>
+
+<form class="composer" id="messageForm">
+<input id="messageInput" autocomplete="off" placeholder="اكتب رسالة..." disabled>
+<button class="send-btn" type="submit" disabled>إرسال</button>
+</form>
+
+</div>
+
+</section>
+
+</main>
+</div>
+
+<div class="malak-toast" id="toast"></div>
+
+<script src="../js/platform.js"></script>
+
+<script>
+const API="/api";
+let conversations=[];
+let activeConversation=null;
+
+const list=document.getElementById("conversationList");
+const messages=document.getElementById("messages");
+const input=document.getElementById("messageInput");
+const form=document.getElementById("messageForm");
+const send=form.querySelector("button");
+
+function esc(value){
+return String(value??"")
+.replace(/&/g,"&amp;")
+.replace(/</g,"&lt;")
+.replace(/>/g,"&gt;")
+.replace(/"/g,"&quot;");
+}
+
+async function api(path,options={}){
+return Malak.request(path,options);
+}
+
+async function loadConversations(){
+list.innerHTML='<div class="empty-chat">جاري تحميل المحادثات...</div>';
+
+try{
+const result=await api("/conversations");
+conversations=result.conversations||result.data||[];
+renderConversations(conversations);
+}catch(error){
+list.innerHTML='<div class="empty-chat">تعذر تحميل المحادثات.<br>تأكد من اتصال الخادم.</div>';
+console.error(error);
+}
+}
+
+function renderConversations(items){
+if(!items.length){
+list.innerHTML='<div class="empty-chat">لا توجد محادثات حاليًا.</div>';
+return;
+}
+
+list.innerHTML=items.map(c=>`
+<div class="conversation ${activeConversation?.id===c.id?"active":""}"
+data-id="${esc(c.id)}">
+<img class="avatar"
+src="${esc(c.avatar||"../assets/images/avatars/default.png")}"
+alt="">
+<div class="conversation-info">
+<div class="conversation-name">${esc(c.name||"مستخدم")}</div>
+<div class="conversation-last">${esc(c.last_message||"لا توجد رسائل")}</div>
+</div>
+${c.unread_count?`<strong>${esc(c.unread_count)}</strong>`:""}
+</div>
+`).join("");
+
+list.querySelectorAll(".conversation").forEach(el=>{
+el.addEventListener("click",()=>{
+const conversation=conversations.find(c=>String(c.id)===String(el.dataset.id));
+if(conversation) openConversation(conversation);
+});
+});
+}
+
+async function openConversation(conversation){
+activeConversation=conversation;
+
+document.getElementById("chatName").textContent=conversation.name||"مستخدم";
+document.getElementById("chatStatus").textContent=
+conversation.online?"متصل الآن":"غير متصل";
+document.getElementById("chatAvatar").src=
+conversation.avatar||"../assets/images/avatars/default.png";
+
+input.disabled=false;
+send.disabled=false;
+
+renderConversations(conversations);
+
+messages.innerHTML='<div class="empty-chat">جاري تحميل الرسائل...</div>';
+
+try{
+const result=await api(`/conversations/${encodeURIComponent(conversation.id)}/messages`);
+const items=result.messages||result.data||[];
+renderMessages(items);
+}catch(error){
+messages.innerHTML='<div class="empty-chat">تعذر تحميل الرسائل.</div>';
+console.error(error);
+}
+}
+
+function renderMessages(items){
+if(!items.length){
+messages.innerHTML='<div class="empty-chat">لا توجد رسائل في هذه المحادثة.</div>';
+return;
+}
+
+messages.innerHTML=items.map(m=>{
+const mine=Boolean(m.mine||m.is_mine);
+return `
+<div class="message ${mine?"mine":"theirs"}">
+${esc(m.body||m.text||"")}
+<span class="message-time">${esc(m.created_at||"")}</span>
+</div>`;
+}).join("");
+
+messages.scrollTop=messages.scrollHeight;
+}
+
+form.addEventListener("submit",async e=>{
+e.preventDefault();
+
+if(!activeConversation||!input.value.trim())return;
+
+const body=input.value.trim();
+
+send.disabled=true;
+
+try{
+const result=await api(
+`/conversations/${encodeURIComponent(activeConversation.id)}/messages`,
+{
+method:"POST",
+headers:{"Content-Type":"application/json"},
+body:JSON.stringify({body})
+}
+);
+
+input.value="";
+
+if(result.message){
+renderMessages([...(await getCurrentMessages()),result.message]);
+}else{
+await openConversation(activeConversation);
+}
+
+}catch(error){
+Malak.toast(error.message||"تعذر إرسال الرسالة");
+}finally{
+send.disabled=false;
+input.focus();
+}
+});
+
+async function getCurrentMessages(){
+try{
+const result=await api(
+`/conversations/${encodeURIComponent(activeConversation.id)}/messages`
+);
+return result.messages||result.data||[];
+}catch{
+return [];
+}
+}
+
+document.getElementById("chatSearch").addEventListener("input",e=>{
+const q=e.target.value.trim().toLowerCase();
+
+renderConversations(
+conversations.filter(c=>
+String(c.name||"").toLowerCase().includes(q)
+)
+);
+});
+
+document.getElementById("voiceCallBtn").onclick=()=>{
+if(!activeConversation)return;
+location.href=`calls.html?type=audio&user=${encodeURIComponent(activeConversation.id)}`;
+};
+
+document.getElementById("videoCallBtn").onclick=()=>{
+if(!activeConversation)return;
+location.href=`calls.html?type=video&user=${encodeURIComponent(activeConversation.id)}`;
+};
+
+loadConversations();
+</script>
+</body>
+  </html>
