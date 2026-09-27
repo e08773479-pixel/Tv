@@ -5,1239 +5,102 @@
 
   <meta
     name="viewport"
-    content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover"
+    content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover"
   >
 
-  <meta name="theme-color" content="#050809">
-
+  <meta name="theme-color" content="#05070b">
   <meta
     name="description"
-    content="ملك خفاجي — منصة اجتماعية وترفيهية متكاملة للتواصل والألعاب والمجتمعات."
+    content="ملك خفاجي — منصة اجتماعية وترفيهية متكاملة"
   >
-
-  <meta name="application-name" content="ملك خفاجي">
-  <meta name="mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 
   <title>ملك خفاجي 👑</title>
 
-
-  <!-- ==========================================================
-       FONTS
-       ========================================================== -->
-
+  <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
   <link
-    href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap"
     rel="stylesheet"
   >
 
-
-  <!-- ==========================================================
-       MAIN CSS
-       ========================================================== -->
-
-  <link rel="stylesheet" href="css/design-system.css">
+  <!-- Core -->
+  <link rel="stylesheet" href="css/core.css">
+  <link rel="stylesheet" href="css/layout.css">
   <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/navigation.css">
+  <link rel="stylesheet" href="css/home.css">
   <link rel="stylesheet" href="css/responsive.css">
-
-
-  <!-- ==========================================================
-       LOADER FALLBACK STYLE
-       مهم:
-       التصميم هنا مستقل حتى لو ملف CSS الخارجي اتأخر.
-       ========================================================== -->
-
-  <style>
-
-    /* ==========================================================
-       LOADER
-       ========================================================== */
-
-    #app-loader {
-      position: fixed;
-      inset: 0;
-      z-index: 999999;
-
-      display: flex;
-      align-items: center;
-      justify-content: center;
-
-      overflow: hidden;
-
-      background:
-        radial-gradient(
-          circle at 50% 48%,
-          rgba(0, 255, 170, .10),
-          transparent 24%
-        ),
-        radial-gradient(
-          circle at 20% 20%,
-          rgba(0, 190, 255, .07),
-          transparent 30%
-        ),
-        #020506;
-
-      color: #fff;
-
-      opacity: 1;
-      visibility: visible;
-
-      transition:
-        opacity .75s ease,
-        visibility .75s ease,
-        transform .75s ease;
-
-      font-family:
-        "Cairo",
-        "IBM Plex Sans Arabic",
-        sans-serif;
-    }
-
-
-    #app-loader.is-hidden {
-      opacity: 0;
-      visibility: hidden;
-      pointer-events: none;
-      transform: scale(1.025);
-    }
-
-
-    /* ==========================================================
-       LOADER SKY
-       ========================================================== */
-
-    .loader-sky {
-      position: absolute;
-      inset: 0;
-      overflow: hidden;
-      pointer-events: none;
-    }
-
-
-    /* توهج مركزي */
-
-    .loader-sky-glow {
-      position: absolute;
-
-      width: 650px;
-      height: 650px;
-
-      left: 50%;
-      top: 50%;
-
-      transform: translate(-50%, -50%);
-
-      border-radius: 50%;
-
-      background:
-        radial-gradient(
-          circle,
-          rgba(0, 255, 180, .11) 0%,
-          rgba(0, 180, 255, .05) 30%,
-          transparent 70%
-        );
-
-      filter: blur(10px);
-
-      animation: loaderGlow 5s ease-in-out infinite;
-    }
-
-
-    @keyframes loaderGlow {
-
-      0%,
-      100% {
-        transform:
-          translate(-50%, -50%)
-          scale(.92);
-        opacity: .65;
-      }
-
-      50% {
-        transform:
-          translate(-50%, -50%)
-          scale(1.08);
-        opacity: 1;
-      }
-
-    }
-
-
-    /* ==========================================================
-       STARS
-       ========================================================== */
-
-    .loader-stars,
-    .loader-stars::before,
-    .loader-stars::after {
-      position: absolute;
-      inset: 0;
-
-      content: "";
-
-      background-image:
-        radial-gradient(circle, rgba(255,255,255,.9) 1px, transparent 1.5px),
-        radial-gradient(circle, rgba(255,255,255,.5) 1px, transparent 1.5px),
-        radial-gradient(circle, rgba(0,230,255,.65) 1px, transparent 1.5px);
-
-      background-size:
-        83px 91px,
-        137px 151px,
-        211px 187px;
-
-      background-position:
-        0 0,
-        40px 60px,
-        90px 30px;
-
-      opacity: .34;
-
-      animation: starsMove 18s linear infinite;
-    }
-
-
-    .loader-stars::before {
-      opacity: .20;
-      animation-duration: 28s;
-      transform: scale(1.15);
-    }
-
-
-    .loader-stars::after {
-      opacity: .14;
-      animation-duration: 36s;
-      transform: scale(1.3);
-    }
-
-
-    @keyframes starsMove {
-
-      from {
-        transform:
-          translate3d(0, 0, 0)
-          scale(1);
-      }
-
-      to {
-        transform:
-          translate3d(-35px, 25px, 0)
-          scale(1.03);
-      }
-
-    }
-
-
-    /* ==========================================================
-       MOON
-       ========================================================== */
-
-    .loader-moon {
-      position: absolute;
-
-      top: 9%;
-      left: 10%;
-
-      width: 72px;
-      height: 72px;
-
-      border-radius: 50%;
-
-      background:
-        radial-gradient(
-          circle at 35% 32%,
-          #ffffff,
-          #dcefff 45%,
-          #9ab3c2 100%
-        );
-
-      box-shadow:
-        0 0 25px rgba(220,240,255,.25),
-        0 0 80px rgba(80,180,220,.10);
-
-      opacity: .78;
-
-      animation: moonFloat 6s ease-in-out infinite;
-    }
-
-
-    .loader-moon::after {
-      content: "";
-
-      position: absolute;
-
-      width: 72px;
-      height: 72px;
-
-      border-radius: 50%;
-
-      background: #020506;
-
-      left: 22px;
-      top: -7px;
-    }
-
-
-    @keyframes moonFloat {
-
-      0%,
-      100% {
-        transform: translateY(0);
-      }
-
-      50% {
-        transform: translateY(9px);
-      }
-
-    }
-
-
-    /* ==========================================================
-       SHOOTING STAR
-       ========================================================== */
-
-    .loader-shooting-star {
-      position: absolute;
-
-      top: 20%;
-      right: -100px;
-
-      width: 150px;
-      height: 2px;
-
-      border-radius: 99px;
-
-      background:
-        linear-gradient(
-          90deg,
-          transparent,
-          rgba(255,255,255,.9)
-        );
-
-      transform: rotate(-25deg);
-
-      opacity: 0;
-
-      animation: shootingStar 6s ease-in-out infinite;
-    }
-
-
-    @keyframes shootingStar {
-
-      0% {
-        right: -160px;
-        top: 18%;
-        opacity: 0;
-      }
-
-      8% {
-        opacity: 1;
-      }
-
-      20% {
-        right: 110%;
-        top: 40%;
-        opacity: 0;
-      }
-
-      100% {
-        right: 110%;
-        opacity: 0;
-      }
-
-    }
-
-
-    /* ==========================================================
-       MOUNTAINS
-       ========================================================== */
-
-    .loader-mountains {
-      position: absolute;
-
-      left: 0;
-      right: 0;
-      bottom: -5px;
-
-      height: 31vh;
-
-      overflow: hidden;
-    }
-
-
-    .loader-mountain {
-      position: absolute;
-
-      bottom: 0;
-
-      width: 0;
-      height: 0;
-
-      border-left: 180px solid transparent;
-      border-right: 180px solid transparent;
-      border-bottom: 260px solid rgba(5, 17, 18, .95);
-
-      filter: drop-shadow(
-        0 -12px 30px rgba(0,255,180,.035)
-      );
-    }
-
-
-    .loader-mountain.one {
-      left: -80px;
-      transform: scale(1.1);
-    }
-
-
-    .loader-mountain.two {
-      left: 25%;
-      bottom: -30px;
-      transform: scale(1.35);
-      opacity: .8;
-    }
-
-
-    .loader-mountain.three {
-      right: -80px;
-      bottom: -40px;
-      transform: scale(1.2);
-      opacity: .9;
-    }
-
-
-    .loader-mountain::after {
-      content: "";
-
-      position: absolute;
-
-      left: -180px;
-      top: 0;
-
-      width: 360px;
-      height: 260px;
-
-      background:
-        linear-gradient(
-          135deg,
-          transparent 48%,
-          rgba(0,255,180,.06) 49%,
-          transparent 51%
-        );
-
-      clip-path: polygon(
-        50% 0,
-        100% 100%,
-        0 100%
-      );
-    }
-
-
-    /* ==========================================================
-       HORIZON
-       ========================================================== */
-
-    .loader-horizon {
-      position: absolute;
-
-      left: 0;
-      right: 0;
-      bottom: 0;
-
-      height: 23vh;
-
-      background:
-        linear-gradient(
-          to top,
-          #010303 0%,
-          rgba(1,7,7,.92) 55%,
-          transparent 100%
-        );
-    }
-
-
-    /* ==========================================================
-       MAIN LOADER CONTENT
-       ========================================================== */
-
-    .loader-center {
-      position: relative;
-      z-index: 10;
-
-      width: min(90vw, 460px);
-
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-
-      text-align: center;
-
-      transform: translateY(0);
-
-      animation: loaderContentIn 1s ease both;
-    }
-
-
-    @keyframes loaderContentIn {
-
-      from {
-        opacity: 0;
-        transform:
-          translateY(22px)
-          scale(.96);
-      }
-
-      to {
-        opacity: 1;
-        transform:
-          translateY(0)
-          scale(1);
-      }
-
-    }
-
-
-    /* ==========================================================
-       ORBIT
-       ========================================================== */
-
-    .loader-orbit {
-      position: relative;
-
-      width: 116px;
-      height: 116px;
-
-      display: grid;
-      place-items: center;
-
-      margin-bottom: 24px;
-    }
-
-
-    .loader-orbit-ring {
-      position: absolute;
-      inset: 0;
-
-      border-radius: 50%;
-
-      border: 1px solid rgba(0,255,180,.13);
-
-      box-shadow:
-        0 0 25px rgba(0,255,180,.08);
-
-      animation:
-        orbitPulse 2.5s ease-in-out infinite;
-    }
-
-
-    .loader-orbit-ring::before {
-      content: "";
-
-      position: absolute;
-      inset: -4px;
-
-      border-radius: 50%;
-
-      border:
-        2px solid transparent;
-
-      border-top-color: #00e6ff;
-      border-right-color: #18e68c;
-
-      transform: rotate(0deg);
-
-      animation:
-        orbitSpin 1.8s linear infinite;
-    }
-
-
-    .loader-orbit-ring::after {
-      content: "";
-
-      position: absolute;
-
-      width: 8px;
-      height: 8px;
-
-      border-radius: 50%;
-
-      top: -6px;
-      left: 50%;
-
-      transform: translateX(-50%);
-
-      background: #00e6ff;
-
-      box-shadow:
-        0 0 12px #00e6ff,
-        0 0 25px rgba(0,230,255,.7);
-    }
-
-
-    @keyframes orbitSpin {
-      to {
-        transform: rotate(360deg);
-      }
-    }
-
-
-    @keyframes orbitPulse {
-
-      0%,
-      100% {
-        transform: scale(1);
-        opacity: .8;
-      }
-
-      50% {
-        transform: scale(1.07);
-        opacity: 1;
-      }
-
-    }
-
-
-    .loader-crown {
-      position: relative;
-
-      width: 76px;
-      height: 76px;
-
-      display: grid;
-      place-items: center;
-
-      border-radius: 26px;
-
-      font-size: 42px;
-
-      background:
-        radial-gradient(
-          circle at 50% 25%,
-          rgba(255,255,255,.07),
-          rgba(0,255,180,.035) 50%,
-          rgba(0,0,0,.2)
-        );
-
-      border:
-        1px solid rgba(255,255,255,.08);
-
-      box-shadow:
-        inset 0 0 25px rgba(0,255,180,.035),
-        0 15px 50px rgba(0,0,0,.45);
-
-      animation:
-        crownFloat 3s ease-in-out infinite;
-    }
-
-
-    @keyframes crownFloat {
-
-      0%,
-      100% {
-        transform: translateY(0) rotate(0deg);
-      }
-
-      50% {
-        transform: translateY(-7px) rotate(1deg);
-      }
-
-    }
-
-
-    /* ==========================================================
-       BRAND
-       ========================================================== */
-
-    .loader-brand {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-
-      margin-bottom: 21px;
-    }
-
-
-    .loader-brand strong {
-      font-size: clamp(24px, 6vw, 32px);
-      font-weight: 900;
-
-      letter-spacing: -.8px;
-
-      background:
-        linear-gradient(
-          135deg,
-          #ffffff,
-          #d7fff2 45%,
-          #65e6c0
-        );
-
-      -webkit-background-clip: text;
-      background-clip: text;
-
-      color: transparent;
-    }
-
-
-    .loader-brand span {
-      margin-top: 5px;
-
-      color: rgba(220,235,232,.55);
-
-      font-size: 13px;
-
-      transition: all .35s ease;
-    }
-
-
-    /* ==========================================================
-       WELCOME MESSAGE
-       ========================================================== */
-
-    .loader-welcome {
-      position: absolute;
-
-      top: calc(50% + 135px);
-
-      width: 100%;
-
-      opacity: 0;
-      transform:
-        translateY(12px)
-        scale(.97);
-
-      pointer-events: none;
-
-      transition:
-        opacity .5s ease,
-        transform .5s ease;
-    }
-
-
-    .loader-welcome.show {
-      opacity: 1;
-
-      transform:
-        translateY(0)
-        scale(1);
-    }
-
-
-    .loader-welcome-title {
-      font-size: 18px;
-      font-weight: 800;
-
-      color: #fff;
-
-      text-shadow:
-        0 0 25px rgba(0,255,190,.2);
-    }
-
-
-    .loader-welcome-sub {
-      margin-top: 5px;
-
-      color: rgba(220,240,236,.55);
-
-      font-size: 12px;
-    }
-
-
-    /* ==========================================================
-       PROGRESS
-       ========================================================== */
-
-    .loader-progress {
-      width: min(72vw, 300px);
-      height: 5px;
-
-      overflow: hidden;
-
-      border-radius: 99px;
-
-      background:
-        rgba(255,255,255,.065);
-
-      box-shadow:
-        inset 0 0 8px rgba(0,0,0,.45);
-    }
-
-
-    #loader-progress-bar {
-      display: block;
-
-      width: 0%;
-      height: 100%;
-
-      border-radius: inherit;
-
-      background:
-        linear-gradient(
-          90deg,
-          #00d9ff,
-          #16e89a,
-          #00d9ff
-        );
-
-      background-size: 200% 100%;
-
-      box-shadow:
-        0 0 13px rgba(0,220,255,.45),
-        0 0 24px rgba(0,230,160,.20);
-
-      transition: width .18s ease;
-
-      animation:
-        progressShine 1.4s linear infinite;
-    }
-
-
-    @keyframes progressShine {
-
-      from {
-        background-position: 0% 50%;
-      }
-
-      to {
-        background-position: 200% 50%;
-      }
-
-    }
-
-
-    .loader-percent {
-      margin-top: 9px;
-
-      min-height: 18px;
-
-      font-size: 11px;
-
-      color: rgba(220,240,236,.42);
-    }
-
-
-    /* ==========================================================
-       ERROR FALLBACK
-       ========================================================== */
-
-    .loader-error {
-      position: fixed;
-
-      left: 50%;
-      bottom: 28px;
-
-      width: min(90vw, 420px);
-
-      transform:
-        translateX(-50%)
-        translateY(20px);
-
-      padding: 12px 15px;
-
-      border-radius: 15px;
-
-      background:
-        rgba(12,18,19,.92);
-
-      border:
-        1px solid rgba(255,255,255,.08);
-
-      color:
-        rgba(255,255,255,.72);
-
-      font-size: 11px;
-
-      text-align: center;
-
-      opacity: 0;
-
-      pointer-events: none;
-
-      transition: .4s ease;
-
-      backdrop-filter: blur(18px);
-      -webkit-backdrop-filter: blur(18px);
-    }
-
-
-    .loader-error.show {
-      opacity: 1;
-
-      transform:
-        translateX(-50%)
-        translateY(0);
-    }
-
-
-    /* ==========================================================
-       BODY DURING LOADING
-       ========================================================== */
-
-    body.malak-loading {
-      overflow: hidden;
-      background: #020506;
-    }
-
-
-    body.app-ready {
-      overflow-x: hidden;
-    }
-
-
-    /* ==========================================================
-       EXTRA MOBILE
-       ========================================================== */
-
-    @media (max-width: 600px) {
-
-      .loader-moon {
-        width: 58px;
-        height: 58px;
-
-        top: 8%;
-        left: 8%;
-      }
-
-      .loader-moon::after {
-        width: 58px;
-        height: 58px;
-        left: 17px;
-      }
-
-      .loader-orbit {
-        width: 105px;
-        height: 105px;
-      }
-
-      .loader-crown {
-        width: 70px;
-        height: 70px;
-        font-size: 38px;
-      }
-
-      .loader-mountains {
-        height: 24vh;
-      }
-
-      .loader-welcome {
-        top: calc(50% + 125px);
-      }
-
-    }
-
-  </style>
-
-
-  <!-- ==========================================================
-       GLOBAL APP CONFIG
-       ========================================================== -->
-
-  <script>
-
-    window.MALAK_CONFIG = Object.freeze({
-
-      appName: "ملك خفاجي",
-
-      brand: {
-        name: "ملك خفاجي",
-        logo: "👑",
-        version: "1.0.0"
-      },
-
-      environment: "development",
-
-      api: {
-        baseURL: "/api"
-      },
-
-      routes: {
-
-        home: "index.html",
-
-        login: "auth/login.html",
-        register: "auth/register.html",
-        forgotPassword: "auth/forgot-password.html",
-
-        chat: "pages/chat.html",
-        calls: "pages/calls.html",
-        voiceRooms: "pages/voice-rooms.html",
-
-        games: "pages/games.html",
-        gameDetails: "pages/game-details.html",
-        gameRoom: "pages/game-room.html",
-
-        friends: "pages/friends.html",
-        groups: "pages/groups.html",
-        group: "pages/group.html",
-
-        map: "pages/map.html",
-
-        notifications: "pages/notifications.html",
-
-        profile: "pages/profile.html",
-
-        wallet: "pages/wallet.html",
-        store: "pages/store.html",
-        club: "pages/club.html",
-
-        settings: "pages/settings.html",
-        security: "pages/security.html"
-
-      },
-
-      features: {
-
-        social: true,
-        chat: true,
-        calls: true,
-        voiceRooms: true,
-        games: true,
-        map: true,
-        wallet: true,
-        store: true,
-        club: true,
-        notifications: true
-
-      }
-
-    });
-
-  </script>
-
 </head>
 
+<body>
 
-<body class="malak-loading">
+  <!-- =========================================================
+       APP LOADER
+  ========================================================== -->
 
+  <div id="app-loader" class="app-loader">
 
-  <!-- ==========================================================
-       CINEMATIC APP LOADER
-       ========================================================== -->
-
-  <div
-    id="app-loader"
-    class="app-loader"
-    aria-label="جاري تحميل ملك خفاجي"
-  >
-
-    <!-- SKY -->
-
-    <div class="loader-sky" aria-hidden="true">
-
-      <div class="loader-sky-glow"></div>
-
-      <div class="loader-stars"></div>
-
-      <div class="loader-moon"></div>
-
-      <div class="loader-shooting-star"></div>
-
-      <div class="loader-mountains">
-
-        <div class="loader-mountain one"></div>
-        <div class="loader-mountain two"></div>
-        <div class="loader-mountain three"></div>
-
-      </div>
-
-      <div class="loader-horizon"></div>
-
-    </div>
-
-
-    <!-- CENTER -->
+    <div class="loader-orbit orbit-one"></div>
+    <div class="loader-orbit orbit-two"></div>
 
     <div class="loader-center">
-
-      <div class="loader-orbit">
-
-        <div class="loader-orbit-ring"></div>
-
-        <div class="loader-crown">
-          👑
-        </div>
-
+      <div class="loader-crown">♛</div>
+      <div class="loader-brand">ملك خفاجي</div>
+      <div class="loader-status" id="loader-status">
+        جاري تجهيز المنصة...
       </div>
 
-
-      <div class="loader-brand">
-
-        <strong>
-          ملك خفاجي
-        </strong>
-
-        <span id="loader-status-text">
-          جاري تجهيز عالمك...
-        </span>
-
-      </div>
-
-
-      <div
-        class="loader-progress"
-        role="progressbar"
-        aria-valuemin="0"
-        aria-valuemax="100"
-        aria-valuenow="0"
-        aria-label="نسبة تحميل المنصة"
-      >
-
+      <div class="loader-progress">
         <span id="loader-progress-bar"></span>
-
       </div>
-
-
-      <div
-        id="loader-percent"
-        class="loader-percent"
-        aria-live="polite"
-      >
-        0%
-      </div>
-
-
-      <div
-        id="loader-welcome"
-        class="loader-welcome"
-        aria-live="polite"
-      >
-
-        <div class="loader-welcome-title">
-          ✨ أهلاً بك في ملك خفاجي 👑
-        </div>
-
-        <div class="loader-welcome-sub">
-          عالمك الاجتماعي والترفيهي يبدأ من هنا 🌌
-        </div>
-
-      </div>
-
-    </div>
-
-
-    <!-- ERROR FALLBACK -->
-
-    <div
-      id="loader-error"
-      class="loader-error"
-    >
-      حدث تأخير بسيط أثناء تجهيز بعض خدمات المنصة...
-      سيتم فتح المنصة الآن.
     </div>
 
   </div>
 
 
-  <!-- ==========================================================
-       GLOBAL BACKGROUND
-       ========================================================== -->
-
-  <div
-    class="app-background"
-    aria-hidden="true"
-  >
-
-    <div class="background-grid"></div>
-
-    <div class="background-glow background-glow-one"></div>
-    <div class="background-glow background-glow-two"></div>
-    <div class="background-glow background-glow-three"></div>
-
-    <div class="background-stars"></div>
-
-  </div>
-
-
-  <!-- ==========================================================
+  <!-- =========================================================
        APPLICATION
-       ========================================================== -->
+  ========================================================== -->
 
-  <div
-    id="app"
-    class="app"
-    data-app="malak-khafagy"
-    data-page="home"
-  >
+  <div id="app" class="app-shell is-loading">
 
+    <!-- =======================================================
+         SIDEBAR
+    ======================================================== -->
 
-    <!-- ========================================================
-         SIDEBAR DESKTOP
-         ======================================================== -->
-
-    <aside
-      id="app-sidebar"
-      class="app-sidebar"
-      aria-label="القائمة الرئيسية"
-    >
+    <aside class="sidebar" id="sidebar">
 
       <div class="sidebar-inner">
 
-
-        <!-- BRAND -->
-
-        <a
-          href="index.html"
-          class="brand"
-          aria-label="ملك خفاجي - الرئيسية"
-        >
-
-          <span class="brand-mark">
-            👑
-          </span>
+        <a href="#home" class="brand" data-route="home">
+          <span class="brand-mark">♛</span>
 
           <span class="brand-copy">
-
-            <strong>
-              ملك خفاجي
-            </strong>
-
-            <small>
-              منصتك في مكان واحد
-            </small>
-
+            <strong>ملك خفاجي</strong>
+            <small>Social • Play • Connect</small>
           </span>
-
         </a>
 
 
-        <!-- ACCOUNT MINI -->
+        <!-- Account area -->
+        <div class="account-mini" id="account-mini">
 
-        <div
-          id="sidebar-user"
-          class="sidebar-user"
-          data-component="user-mini-card"
-        >
-
-          <div class="avatar avatar-md">
-
-            <span>
-              👤
-            </span>
-
-            <span class="presence-dot online"></span>
-
+          <div class="account-avatar">
+            <span>؟</span>
           </div>
 
-
-          <div class="sidebar-user-info">
-
-            <strong id="sidebar-user-name">
-              حسابك
-            </strong>
-
-            <span id="sidebar-user-status">
-              متصل الآن
-            </span>
-
+          <div class="account-info">
+            <strong id="account-name">غير مسجل</strong>
+            <span id="account-status">اتصل بحسابك</span>
           </div>
-
 
           <button
+            class="icon-button account-menu-button"
             type="button"
-            class="icon-button icon-button-sm"
-            data-action="open-profile-menu"
             aria-label="قائمة الحساب"
+            data-action="account-menu"
           >
             ⋮
           </button>
@@ -1245,299 +108,176 @@
         </div>
 
 
-        <!-- MAIN NAVIGATION -->
+        <!-- Main navigation -->
+        <nav class="main-navigation" aria-label="التنقل الرئيسي">
 
-        <nav class="main-navigation">
-
-
-          <div class="navigation-label">
+          <div class="nav-section-title">
             الرئيسية
           </div>
 
-
           <a
-            href="index.html"
+            href="#home"
             class="nav-item active"
             data-route="home"
-            data-navigation="true"
           >
-
-            <span class="nav-icon">
-              ⌂
-            </span>
-
-            <span class="nav-text">
-              الرئيسية
-            </span>
-
+            <span class="nav-icon">⌂</span>
+            <span>الرئيسية</span>
           </a>
 
+          <a
+            href="#discover"
+            class="nav-item"
+            data-route="discover"
+          >
+            <span class="nav-icon">◉</span>
+            <span>استكشف</span>
+          </a>
 
           <a
-            href="pages/notifications.html"
+            href="#notifications"
             class="nav-item"
             data-route="notifications"
-            data-navigation="true"
           >
-
-            <span class="nav-icon">
-              🔔
-            </span>
-
-            <span class="nav-text">
-              الإشعارات
-            </span>
-
+            <span class="nav-icon">♢</span>
+            <span>الإشعارات</span>
             <span
-              id="notification-count"
-              class="nav-badge hidden"
-            >
-              0
-            </span>
-
+              class="nav-counter"
+              id="notification-counter"
+              hidden
+            ></span>
           </a>
 
 
-          <a
-            href="pages/friends.html"
-            class="nav-item"
-            data-route="friends"
-            data-navigation="true"
-          >
-
-            <span class="nav-icon">
-              👥
-            </span>
-
-            <span class="nav-text">
-              الأصدقاء
-            </span>
-
-          </a>
-
-
-          <div class="navigation-label">
+          <div class="nav-section-title">
             التواصل
           </div>
 
-
           <a
-            href="pages/chat.html"
+            href="#chat"
             class="nav-item"
             data-route="chat"
-            data-navigation="true"
           >
-
-            <span class="nav-icon">
-              💬
-            </span>
-
-            <span class="nav-text">
-              المحادثات
-            </span>
-
-            <span
-              id="message-count"
-              class="nav-badge hidden"
-            >
-              0
-            </span>
-
+            <span class="nav-icon">◌</span>
+            <span>المحادثات</span>
           </a>
 
+          <a
+            href="#friends"
+            class="nav-item"
+            data-route="friends"
+          >
+            <span class="nav-icon">♙</span>
+            <span>الأصدقاء</span>
+          </a>
 
           <a
-            href="pages/groups.html"
+            href="#groups"
             class="nav-item"
             data-route="groups"
-            data-navigation="true"
           >
-
-            <span class="nav-icon">
-              👨‍👩‍👧
-            </span>
-
-            <span class="nav-text">
-              المجموعات
-            </span>
-
+            <span class="nav-icon">◎</span>
+            <span>المجموعات</span>
           </a>
 
 
-          <a
-            href="pages/calls.html"
-            class="nav-item"
-            data-route="calls"
-            data-navigation="true"
-          >
-
-            <span class="nav-icon">
-              📞
-            </span>
-
-            <span class="nav-text">
-              المكالمات
-            </span>
-
-          </a>
-
-
-          <a
-            href="pages/voice-rooms.html"
-            class="nav-item"
-            data-route="voice-rooms"
-            data-navigation="true"
-          >
-
-            <span class="nav-icon">
-              🎙️
-            </span>
-
-            <span class="nav-text">
-              الغرف الصوتية
-            </span>
-
-          </a>
-
-
-          <div class="navigation-label">
+          <div class="nav-section-title">
             الترفيه
           </div>
 
+          <a
+            href="#rooms"
+            class="nav-item"
+            data-route="rooms"
+          >
+            <span class="nav-icon">◉</span>
+            <span>الغرف الصوتية</span>
+          </a>
 
           <a
-            href="pages/games.html"
+            href="#games"
             class="nav-item"
             data-route="games"
-            data-navigation="true"
           >
-
-            <span class="nav-icon">
-              🎮
-            </span>
-
-            <span class="nav-text">
-              الألعاب
-            </span>
-
+            <span class="nav-icon">✦</span>
+            <span>الألعاب</span>
           </a>
-
 
           <a
-            href="pages/map.html"
+            href="#videos"
             class="nav-item"
-            data-route="map"
-            data-navigation="true"
+            data-route="videos"
           >
-
-            <span class="nav-icon">
-              🗺️
-            </span>
-
-            <span class="nav-text">
-              الاستكشاف
-            </span>
-
+            <span class="nav-icon">▶</span>
+            <span>الفيديو</span>
           </a>
 
 
-          <div class="navigation-label">
-            الملكية
+          <div class="nav-section-title">
+            حسابك
           </div>
 
+          <a
+            href="#profile"
+            class="nav-item"
+            data-route="profile"
+          >
+            <span class="nav-icon">♙</span>
+            <span>الملف الشخصي</span>
+          </a>
 
           <a
-            href="pages/wallet.html"
+            href="#wallet"
             class="nav-item"
             data-route="wallet"
-            data-navigation="true"
           >
-
-            <span class="nav-icon">
-              🪙
-            </span>
-
-            <span class="nav-text">
-              المحفظة
-            </span>
-
+            <span class="nav-icon">◈</span>
+            <span>المحفظة</span>
           </a>
 
-
           <a
-            href="pages/store.html"
+            href="#store"
             class="nav-item"
             data-route="store"
-            data-navigation="true"
           >
-
-            <span class="nav-icon">
-              🛒
-            </span>
-
-            <span class="nav-text">
-              المتجر
-            </span>
-
+            <span class="nav-icon">◇</span>
+            <span>المتجر</span>
           </a>
 
-
           <a
-            href="pages/club.html"
+            href="#club"
             class="nav-item"
             data-route="club"
-            data-navigation="true"
           >
-
-            <span class="nav-icon">
-              👑
-            </span>
-
-            <span class="nav-text">
-              النادي
-            </span>
-
+            <span class="nav-icon">♛</span>
+            <span>النادي</span>
           </a>
 
         </nav>
 
 
-        <!-- SIDEBAR FOOTER -->
-
-        <div class="sidebar-footer">
+        <div class="sidebar-bottom">
 
           <a
-            href="pages/profile.html"
-            class="sidebar-footer-item"
-            data-navigation="true"
+            href="#settings"
+            class="nav-item"
+            data-route="settings"
           >
-
-            <span>
-              👤
-            </span>
-
-            <span>
-              ملفي الشخصي
-            </span>
-
+            <span class="nav-icon">⚙</span>
+            <span>الإعدادات</span>
           </a>
 
-
-          <a
-            href="pages/settings.html"
-            class="sidebar-footer-item"
-            data-navigation="true"
+          <button
+            type="button"
+            class="sidebar-help"
+            data-action="service"
           >
+            <span class="help-icon">?</span>
 
             <span>
-              ⚙️
+              <strong>مركز المساعدة</strong>
+              <small>تواصل مع الدعم</small>
             </span>
-
-            <span>
-              الإعدادات
-            </span>
-
-          </a>
+          </button>
 
         </div>
 
@@ -1546,1037 +286,723 @@
     </aside>
 
 
-    <!-- ========================================================
+    <!-- =======================================================
          MAIN AREA
-         ======================================================== -->
+    ======================================================== -->
 
-    <main class="app-main">
+    <main class="main-area">
 
+      <!-- TOP BAR -->
 
-      <!-- TOPBAR -->
+      <header class="topbar">
 
-      <header class="app-topbar">
-
-
-        <div class="topbar-right">
+        <div class="topbar-start">
 
           <button
             type="button"
+            class="mobile-menu-button icon-button"
             id="mobile-menu-button"
-            class="icon-button mobile-menu-button"
             aria-label="فتح القائمة"
             aria-expanded="false"
           >
             ☰
           </button>
 
-
-          <a
-            href="index.html"
-            class="mobile-brand"
-          >
-
-            <span>
-              👑
-            </span>
-
-            <strong>
-              ملك خفاجي
-            </strong>
-
+          <a href="#home" class="mobile-brand">
+            <span class="mobile-brand-mark">♛</span>
+            <strong>ملك خفاجي</strong>
           </a>
 
         </div>
 
 
-        <!-- GLOBAL SEARCH -->
+        <!-- Global search -->
 
-        <div
+        <form
           class="global-search"
-          role="search"
+          id="global-search"
+          autocomplete="off"
         >
 
-          <span class="search-icon">
-            ⌕
-          </span>
+          <span class="search-icon">⌕</span>
 
           <input
             id="global-search-input"
             type="search"
-            placeholder="ابحث عن أشخاص، ألعاب، مجموعات..."
-            autocomplete="off"
-            aria-label="البحث في ملك خفاجي"
+            placeholder="ابحث عن أشخاص، ألعاب، غرف، محتوى..."
+            aria-label="البحث"
           >
 
-          <kbd>
-            Ctrl K
-          </kbd>
+          <kbd>⌘ K</kbd>
 
-        </div>
+        </form>
 
-
-        <!-- TOPBAR ACTIONS -->
 
         <div class="topbar-actions">
 
-
           <button
             type="button"
-            class="icon-button"
-            data-action="open-search"
-            aria-label="البحث"
-          >
-            🔎
-          </button>
-
-
-          <button
-            type="button"
-            class="icon-button notification-button"
-            data-action="open-notifications"
+            class="top-action"
+            data-action="notifications"
             aria-label="الإشعارات"
           >
-
-            🔔
-
+            ♢
             <span
-              id="top-notification-dot"
-              class="notification-dot hidden"
+              class="top-action-badge"
+              id="top-notification-badge"
+              hidden
             ></span>
-
           </button>
-
 
           <button
             type="button"
-            class="icon-button"
-            data-action="toggle-theme"
-            aria-label="تغيير المظهر"
+            class="top-action"
+            data-action="messages"
+            aria-label="المحادثات"
           >
-            ◐
+            ◌
           </button>
 
-
-          <a
-            href="pages/profile.html"
-            class="topbar-avatar"
-            aria-label="الملف الشخصي"
+          <button
+            type="button"
+            class="top-action profile-trigger"
+            data-action="account-menu"
+            aria-label="الحساب"
           >
-            👤
-          </a>
+            <span class="top-avatar">؟</span>
+          </button>
 
         </div>
 
       </header>
 
 
-      <!-- ======================================================
-           PAGE CONTENT
-           ====================================================== -->
+      <!-- PAGE CONTENT -->
 
-      <div
-        id="page-content"
-        class="page-content"
-      >
+      <div class="page-container" id="page-container">
 
-
-        <!-- ====================================================
-             HOME HERO
-             ==================================================== -->
-
-        <section class="home-hero">
-
-
-          <div
-            class="hero-background"
-            aria-hidden="true"
-          >
-
-            <div class="hero-grid"></div>
-            <div class="hero-glow"></div>
-
-          </div>
-
-
-          <div class="hero-content">
-
-
-            <div class="hero-badge">
-
-              <span class="status-pulse"></span>
-
-              المنصة متاحة الآن
-
-            </div>
-
-
-            <h1>
-
-              أهلاً بك في
-
-              <span>
-                ملك خفاجي 👑
-              </span>
-
-            </h1>
-
-
-            <p>
-
-              مساحة واحدة تجمع التواصل، الألعاب، الأصدقاء،
-              المجتمعات وكل تجاربك الرقمية في مكان واحد.
-
-            </p>
-
-
-            <div class="hero-actions">
-
-
-              <a
-                href="pages/games.html"
-                class="button button-primary"
-                data-navigation="true"
-              >
-
-                🎮 اكتشف الألعاب
-
-              </a>
-
-
-              <a
-                href="pages/friends.html"
-                class="button button-secondary"
-                data-navigation="true"
-              >
-
-                👥 الأصدقاء
-
-              </a>
-
-            </div>
-
-          </div>
-
-
-          <!-- HERO PLATFORM CARD -->
-
-          <div class="hero-platform-card">
-
-
-            <div class="platform-card-header">
-
-              <div>
-
-                <span class="eyebrow">
-                  منصة واحدة
-                </span>
-
-                <h2>
-                  كل عالمك هنا
-                </h2>
-
-              </div>
-
-
-              <span class="platform-crown">
-                👑
-              </span>
-
-            </div>
-
-
-            <div class="platform-services">
-
-
-              <a
-                href="pages/chat.html"
-                class="platform-service"
-              >
-
-                <span>
-                  💬
-                </span>
-
-                <strong>
-                  تواصل
-                </strong>
-
-                <small>
-                  رسائل ومجموعات
-                </small>
-
-              </a>
-
-
-              <a
-                href="pages/games.html"
-                class="platform-service"
-              >
-
-                <span>
-                  🎮
-                </span>
-
-                <strong>
-                  العب
-                </strong>
-
-                <small>
-                  غرف ومباريات
-                </small>
-
-              </a>
-
-
-              <a
-                href="pages/calls.html"
-                class="platform-service"
-              >
-
-                <span>
-                  📹
-                </span>
-
-                <strong>
-                  اتصل
-                </strong>
-
-                <small>
-                  صوت وفيديو
-                </small>
-
-              </a>
-
-
-              <a
-                href="pages/store.html"
-                class="platform-service"
-              >
-
-                <span>
-                  🛒
-                </span>
-
-                <strong>
-                  اكتشف
-                </strong>
-
-                <small>
-                  متجر ومزايا
-                </small>
-
-              </a>
-
-            </div>
-
-          </div>
-
-        </section>
-
-
-        <!-- ====================================================
-             QUICK STATS
-             ==================================================== -->
+        <!-- HOME -->
 
         <section
-          class="stats-grid"
-          aria-label="إحصائيات الحساب"
+          class="page active-page"
+          id="page-home"
+          data-page="home"
         >
 
+          <div class="home-layout">
 
-          <article class="stat-card">
+            <div class="home-main">
 
-            <div class="stat-icon">
-              👥
-            </div>
+              <!-- HERO -->
 
-            <div>
+              <section class="hero-card">
 
-              <span>
-                الأصدقاء
-              </span>
+                <div class="hero-background"></div>
 
-              <strong id="friends-stat">
-                0
-              </strong>
+                <div class="hero-grid"></div>
 
-            </div>
+                <div class="hero-content">
 
-            <span class="stat-arrow">
-              ←
-            </span>
+                  <span class="hero-kicker">
+                    منصة اجتماعية وترفيهية
+                  </span>
 
-          </article>
+                  <h1>
+                    عالمك يبدأ من هنا
+                    <span>👑</span>
+                  </h1>
 
+                  <p>
+                    تواصل، اكتشف، العب، ادخل الغرف وشارك لحظاتك
+                    من مكان واحد.
+                  </p>
 
-          <article class="stat-card">
+                  <div class="hero-actions">
 
-            <div class="stat-icon">
-              🪙
-            </div>
+                    <button
+                      class="button button-primary"
+                      type="button"
+                      data-action="discover"
+                    >
+                      ابدأ الاستكشاف
+                      <span>←</span>
+                    </button>
 
-            <div>
+                    <button
+                      class="button button-secondary"
+                      type="button"
+                      data-action="rooms"
+                    >
+                      ادخل الغرف
+                      <span>◉</span>
+                    </button>
 
-              <span>
-                العملات
-              </span>
+                  </div>
 
-              <strong id="coins-stat">
-                0
-              </strong>
-
-            </div>
-
-            <span class="stat-arrow">
-              ←
-            </span>
-
-          </article>
-
-
-          <article class="stat-card">
-
-            <div class="stat-icon">
-              ✨
-            </div>
-
-            <div>
-
-              <span>
-                XP
-              </span>
-
-              <strong id="xp-stat">
-                0
-              </strong>
-
-            </div>
-
-            <span class="stat-arrow">
-              ←
-            </span>
-
-          </article>
-
-
-          <article class="stat-card">
-
-            <div class="stat-icon">
-              🏆
-            </div>
-
-            <div>
-
-              <span>
-                الإنجازات
-              </span>
-
-              <strong id="achievements-stat">
-                0
-              </strong>
-
-            </div>
-
-            <span class="stat-arrow">
-              ←
-            </span>
-
-          </article>
-
-        </section>
-
-
-        <!-- ====================================================
-             MAIN HOME GRID
-             ==================================================== -->
-
-        <section class="home-layout">
-
-
-          <!-- FEED -->
-
-          <div class="home-feed">
-
-
-            <div class="section-header">
-
-              <div>
-
-                <span class="eyebrow">
-                  مجتمعك
-                </span>
-
-                <h2>
-                  آخر النشاطات
-                </h2>
-
-              </div>
-
-
-              <a
-                href="#"
-                class="text-link"
-                data-action="view-all-feed"
-              >
-                عرض الكل ←
-              </a>
-
-            </div>
-
-
-            <!-- CREATE POST -->
-
-            <article class="create-post card">
-
-
-              <div class="create-post-top">
-
-
-                <div class="avatar avatar-md">
-                  👤
                 </div>
 
 
-                <button
-                  type="button"
-                  class="create-post-input"
-                  data-action="create-post"
-                >
-                  بماذا تفكر؟
-                </button>
+                <div class="hero-visual">
 
-              </div>
+                  <div class="hero-glow glow-a"></div>
+                  <div class="hero-glow glow-b"></div>
 
+                  <div class="hero-symbol">
+                    ♛
+                  </div>
 
-              <div class="create-post-actions">
+                  <div class="hero-ring ring-a"></div>
+                  <div class="hero-ring ring-b"></div>
 
+                </div>
 
-                <button
-                  type="button"
-                  data-action="create-post-media"
-                >
-                  🖼️ صورة / فيديو
-                </button>
+              </section>
 
 
-                <button
-                  type="button"
-                  data-action="create-post-game"
-                >
-                  🎮 نتيجة لعبة
-                </button>
+              <!-- QUICK SERVICES -->
 
+              <section class="section-block">
 
-                <button
-                  type="button"
-                  data-action="create-post-feeling"
-                >
-                  ✨ نشاط
-                </button>
+                <div class="section-heading">
 
-              </div>
+                  <div>
+                    <span class="section-eyebrow">
+                      كل شيء في مكان واحد
+                    </span>
 
-            </article>
+                    <h2>ماذا تريد أن تفعل؟</h2>
+                  </div>
 
-
-            <!-- FEED CONTAINER -->
-
-            <div
-              id="home-feed-list"
-              class="feed-list"
-              aria-live="polite"
-            >
-
-
-              <article class="empty-state card">
-
-
-                <div class="empty-state-icon">
-                  ✨
                 </div>
 
 
-                <h3>
-                  عالمك يبدأ من هنا
-                </h3>
+                <div class="service-grid">
 
+                  <button
+                    class="service-card service-card-video"
+                    type="button"
+                    data-action="videos"
+                  >
+                    <span class="service-glow"></span>
+                    <span class="service-icon">▶</span>
+
+                    <span class="service-text">
+                      <strong>الفيديو</strong>
+                      <small>شاهد وشارك المحتوى</small>
+                    </span>
+
+                    <span class="service-arrow">←</span>
+                  </button>
+
+
+                  <button
+                    class="service-card service-card-room"
+                    type="button"
+                    data-action="rooms"
+                  >
+                    <span class="service-glow"></span>
+                    <span class="service-icon">◉</span>
+
+                    <span class="service-text">
+                      <strong>الغرف</strong>
+                      <small>تواصل صوتيًا مع الآخرين</small>
+                    </span>
+
+                    <span class="service-arrow">←</span>
+                  </button>
+
+
+                  <button
+                    class="service-card service-card-game"
+                    type="button"
+                    data-action="games"
+                  >
+                    <span class="service-glow"></span>
+                    <span class="service-icon">✦</span>
+
+                    <span class="service-text">
+                      <strong>الألعاب</strong>
+                      <small>العب وتنافس مع أصدقائك</small>
+                    </span>
+
+                    <span class="service-arrow">←</span>
+                  </button>
+
+
+                  <button
+                    class="service-card service-card-chat"
+                    type="button"
+                    data-action="messages"
+                  >
+                    <span class="service-glow"></span>
+                    <span class="service-icon">◌</span>
+
+                    <span class="service-text">
+                      <strong>المحادثات</strong>
+                      <small>تحدث مع أصدقائك</small>
+                    </span>
+
+                    <span class="service-arrow">←</span>
+                  </button>
+
+                </div>
+
+              </section>
+
+
+              <!-- LIVE / ROOMS -->
+
+              <section class="section-block">
+
+                <div class="section-heading">
+
+                  <div>
+                    <span class="section-eyebrow">
+                      LIVE
+                    </span>
+
+                    <h2>الغرف المباشرة</h2>
+                  </div>
+
+                  <button
+                    class="text-button"
+                    type="button"
+                    data-action="rooms"
+                  >
+                    عرض الكل ←
+                  </button>
+
+                </div>
+
+
+                <div
+                  class="dynamic-grid"
+                  id="home-rooms"
+                  data-state="loading"
+                >
+
+                  <div class="skeleton-card"></div>
+                  <div class="skeleton-card"></div>
+                  <div class="skeleton-card"></div>
+
+                </div>
+
+              </section>
+
+
+              <!-- FEED -->
+
+              <section class="section-block">
+
+                <div class="section-heading">
+
+                  <div>
+                    <span class="section-eyebrow">
+                      COMMUNITY
+                    </span>
+
+                    <h2>آخر ما يحدث</h2>
+                  </div>
+
+                  <button
+                    class="text-button"
+                    type="button"
+                    data-action="discover"
+                  >
+                    استكشف ←
+                  </button>
+
+                </div>
+
+
+                <div
+                  class="feed-container"
+                  id="home-feed"
+                  data-state="loading"
+                >
+
+                  <div class="feed-loading">
+                    <div class="spinner"></div>
+                    <span>جاري تحميل المحتوى...</span>
+                  </div>
+
+                </div>
+
+              </section>
+
+            </div>
+
+
+            <!-- HOME SIDE -->
+
+            <aside class="home-side">
+
+              <!-- ACCOUNT CARD -->
+
+              <section class="side-card account-card">
+
+                <div class="side-card-head">
+
+                  <span>حسابك</span>
+
+                  <button
+                    type="button"
+                    class="icon-button"
+                    data-action="profile"
+                    aria-label="الملف الشخصي"
+                  >
+                    ←
+                  </button>
+
+                </div>
+
+
+                <div class="side-account-empty" id="side-account">
+
+                  <div class="large-avatar">
+                    ؟
+                  </div>
+
+                  <strong id="side-account-name">
+                    لم يتم تسجيل الدخول
+                  </strong>
+
+                  <span id="side-account-description">
+                    سجل الدخول للوصول إلى حسابك
+                  </span>
+
+                  <button
+                    type="button"
+                    class="button button-primary button-full"
+                    data-action="login"
+                  >
+                    تسجيل الدخول
+                  </button>
+
+                </div>
+
+              </section>
+
+
+              <!-- WALLET -->
+
+              <section class="side-card wallet-preview">
+
+                <div class="side-card-head">
+
+                  <span>المحفظة</span>
+
+                  <button
+                    type="button"
+                    class="icon-button"
+                    data-action="wallet"
+                    aria-label="المحفظة"
+                  >
+                    ←
+                  </button>
+
+                </div>
+
+                <div class="wallet-empty">
+
+                  <span class="wallet-symbol">◈</span>
+
+                  <strong>الرصيد غير متاح</strong>
+
+                  <small>
+                    سيتم عرضه من حسابك الحقيقي
+                  </small>
+
+                </div>
+
+              </section>
+
+
+              <!-- ONLINE -->
+
+              <section class="side-card">
+
+                <div class="side-card-head">
+
+                  <span>المتصلون الآن</span>
+
+                  <span class="live-dot"></span>
+
+                </div>
+
+                <div
+                  class="online-empty"
+                  id="online-users"
+                >
+                  لا توجد بيانات متاحة حاليًا
+                </div>
+
+              </section>
+
+
+              <!-- CTA -->
+
+              <section class="premium-side-card">
+
+                <div class="premium-card-glow"></div>
+
+                <span class="premium-icon">♛</span>
+
+                <strong>
+                  عالم ملك خفاجي
+                </strong>
 
                 <p>
-
-                  أضف أصدقاءك وابدأ اللعب والتواصل
-                  لتظهر نشاطاتك هنا.
-
+                  تجربة اجتماعية تجمع التواصل والترفيه والألعاب.
                 </p>
 
-
-                <a
-                  href="pages/friends.html"
-                  class="button button-primary"
+                <button
+                  type="button"
+                  class="button button-light"
+                  data-action="club"
                 >
-                  👥 اكتشف الأصدقاء
-                </a>
+                  اكتشف النادي
+                </button>
 
-              </article>
+              </section>
 
-            </div>
+            </aside>
 
           </div>
 
-
-          <!-- SECONDARY COLUMN -->
-
-          <aside class="home-sidebar">
-
-
-            <!-- PROFILE CARD -->
-
-            <article class="profile-summary card">
-
-
-              <div class="profile-cover"></div>
-
-
-              <div class="profile-summary-body">
-
-
-                <div class="profile-summary-avatar avatar avatar-xl">
-                  👤
-                </div>
-
-
-                <div class="profile-summary-name">
-
-                  <h3 id="home-profile-name">
-                    حسابك
-                  </h3>
-
-                  <span id="home-profile-level">
-                    المستوى 1
-                  </span>
-
-                </div>
-
-
-                <div class="xp-progress">
-
-
-                  <div class="xp-progress-header">
-
-                    <span>
-                      التقدم
-                    </span>
-
-                    <strong id="home-xp-text">
-                      0 / 100 XP
-                    </strong>
-
-                  </div>
-
-
-                  <div class="progress">
-
-                    <span
-                      id="home-xp-progress"
-                      style="width:0%"
-                    ></span>
-
-                  </div>
-
-                </div>
-
-
-                <a
-                  href="pages/profile.html"
-                  class="button button-secondary button-full"
-                >
-                  عرض الملف الشخصي
-                </a>
-
-              </div>
-
-            </article>
-
-
-            <!-- QUICK ACTIONS -->
-
-            <article class="card quick-actions-card">
-
-
-              <div class="section-header compact">
-
-                <h3>
-                  وصول سريع
-                </h3>
-
-              </div>
-
-
-              <div class="quick-actions">
-
-
-                <a href="pages/chat.html">
-
-                  <span>
-                    💬
-                  </span>
-
-                  <small>
-                    المحادثات
-                  </small>
-
-                </a>
-
-
-                <a href="pages/games.html">
-
-                  <span>
-                    🎮
-                  </span>
-
-                  <small>
-                    الألعاب
-                  </small>
-
-                </a>
-
-
-                <a href="pages/wallet.html">
-
-                  <span>
-                    🪙
-                  </span>
-
-                  <small>
-                    المحفظة
-                  </small>
-
-                </a>
-
-
-                <a href="pages/store.html">
-
-                  <span>
-                    🛒
-                  </span>
-
-                  <small>
-                    المتجر
-                  </small>
-
-                </a>
-
-              </div>
-
-            </article>
-
-
-            <!-- ACTIVE ROOMS -->
-
-            <article class="card rooms-preview">
-
-
-              <div class="section-header compact">
-
-
-                <div>
-
-                  <span class="eyebrow">
-                    مباشر الآن
-                  </span>
-
-                  <h3>
-                    الغرف
-                  </h3>
-
-                </div>
-
-
-                <a
-                  href="pages/voice-rooms.html"
-                  class="text-link"
-                >
-                  الكل
-                </a>
-
-              </div>
-
-
-              <div
-                id="active-rooms-list"
-                class="mini-list"
-              >
-
-                <div class="mini-empty">
-
-                  <span>
-                    🎙️
-                  </span>
-
-                  <p>
-                    لا توجد غرف متاحة الآن
-                  </p>
-
-                </div>
-
-              </div>
-
-            </article>
-
-
-            <!-- GAME PREVIEW -->
-
-            <article class="card game-preview">
-
-
-              <div class="section-header compact">
-
-
-                <div>
-
-                  <span class="eyebrow">
-                    لعبك القادم
-                  </span>
-
-                  <h3>
-                    الألعاب
-                  </h3>
-
-                </div>
-
-
-                <a
-                  href="pages/games.html"
-                  class="text-link"
-                >
-                  عرض الكل
-                </a>
-
-              </div>
-
-
-              <div class="game-preview-content">
-
-
-                <div class="game-art">
-                  🎮
-                </div>
-
-
-                <div>
-
-                  <strong>
-                    ابدأ مغامرتك
-                  </strong>
-
-                  <p>
-                    اختر لعبة وأنشئ غرفة
-                    وادعُ أصدقاءك.
-                  </p>
-
-                  <a
-                    href="pages/games.html"
-                    class="button button-small button-primary"
-                  >
-                    استكشاف
-                  </a>
-
-                </div>
-
-              </div>
-
-            </article>
-
-          </aside>
-
         </section>
+
+
+        <!-- DYNAMIC PAGES -->
+
+        <section
+          class="page"
+          id="page-discover"
+          data-page="discover"
+          hidden
+        ></section>
+
+        <section
+          class="page"
+          id="page-chat"
+          data-page="chat"
+          hidden
+        ></section>
+
+        <section
+          class="page"
+          id="page-rooms"
+          data-page="rooms"
+          hidden
+        ></section>
+
+        <section
+          class="page"
+          id="page-games"
+          data-page="games"
+          hidden
+        ></section>
+
+        <section
+          class="page"
+          id="page-videos"
+          data-page="videos"
+          hidden
+        ></section>
+
+        <section
+          class="page"
+          id="page-profile"
+          data-page="profile"
+          hidden
+        ></section>
 
       </div>
 
     </main>
 
-
-    <!-- ========================================================
-         MOBILE BOTTOM NAV
-         ======================================================== -->
-
-    <nav
-      id="mobile-bottom-nav"
-      class="mobile-bottom-nav"
-      aria-label="التنقل السريع"
-    >
-
-
-      <a
-        href="index.html"
-        class="bottom-nav-item active"
-        data-route="home"
-      >
-
-        <span>
-          ⌂
-        </span>
-
-        <small>
-          الرئيسية
-        </small>
-
-      </a>
-
-
-      <a
-        href="pages/chat.html"
-        class="bottom-nav-item"
-        data-route="chat"
-      >
-
-        <span>
-          💬
-        </span>
-
-        <small>
-          الشات
-        </small>
-
-      </a>
-
-
-      <a
-        href="pages/games.html"
-        class="bottom-nav-item bottom-nav-main"
-        data-route="games"
-      >
-
-        <span>
-          🎮
-        </span>
-
-        <small>
-          ألعاب
-        </small>
-
-      </a>
-
-
-      <a
-        href="pages/notifications.html"
-        class="bottom-nav-item"
-        data-route="notifications"
-      >
-
-        <span>
-          🔔
-        </span>
-
-        <small>
-          تنبيهات
-        </small>
-
-      </a>
-
-
-      <a
-        href="pages/profile.html"
-        class="bottom-nav-item"
-        data-route="profile"
-      >
-
-        <span>
-          👤
-        </span>
-
-        <small>
-          حسابي
-        </small>
-
-      </a>
-
-    </nav>
-
   </div>
 
 
-  <!-- ==========================================================
-       GLOBAL OVERLAYS
-       ========================================================== -->
+  <!-- =========================================================
+       MOBILE NAVIGATION
+  ========================================================== -->
+
+  <nav class="mobile-bottom-nav" id="mobile-bottom-nav">
+
+    <a
+      href="#home"
+      class="mobile-nav-item active"
+      data-route="home"
+    >
+      <span>⌂</span>
+      <small>الرئيسية</small>
+    </a>
+
+    <a
+      href="#discover"
+      class="mobile-nav-item"
+      data-route="discover"
+    >
+      <span>◉</span>
+      <small>استكشف</small>
+    </a>
+
+    <button
+      type="button"
+      class="mobile-create-button"
+      data-action="create"
+      aria-label="إنشاء"
+    >
+      +
+    </button>
+
+    <a
+      href="#rooms"
+      class="mobile-nav-item"
+      data-route="rooms"
+    >
+      <span>◌</span>
+      <small>الغرف</small>
+    </a>
+
+    <a
+      href="#profile"
+      class="mobile-nav-item"
+      data-route="profile"
+    >
+      <span>♙</span>
+      <small>حسابي</small>
+    </a>
+
+  </nav>
 
 
-  <!-- TOAST -->
+  <!-- =========================================================
+       DRAWER BACKDROP
+  ========================================================== -->
 
   <div
-    id="toast-container"
-    class="toast-container"
-    aria-live="polite"
-    aria-atomic="true"
+    class="drawer-backdrop"
+    id="drawer-backdrop"
+    hidden
   ></div>
 
 
-  <!-- MODAL ROOT -->
+  <!-- =========================================================
+       MOBILE DRAWER
+  ========================================================== -->
 
-  <div
-    id="modal-root"
-    class="modal-root"
-    aria-hidden="true"
-  ></div>
-
-
-  <!-- DRAWER ROOT -->
-
-  <div
-    id="drawer-root"
-    class="drawer-root"
-    aria-hidden="true"
-  ></div>
-
-
-  <!-- COMMAND SEARCH -->
-
-  <div
-    id="command-search"
-    class="command-search"
+  <aside
+    class="mobile-drawer"
+    id="mobile-drawer"
     aria-hidden="true"
   >
 
-    <div class="command-search-backdrop"></div>
+    <div class="drawer-head">
 
+      <div class="brand">
+        <span class="brand-mark">♛</span>
 
-    <div class="command-search-panel">
-
-
-      <div class="command-search-input">
-
-        <span>
-          ⌕
+        <span class="brand-copy">
+          <strong>ملك خفاجي</strong>
+          <small>Social • Play • Connect</small>
         </span>
+      </div>
+
+      <button
+        type="button"
+        class="icon-button"
+        data-action="close-drawer"
+        aria-label="إغلاق"
+      >
+        ×
+      </button>
+
+    </div>
 
 
-        <input
-          id="command-search-input"
-          type="search"
-          placeholder="ابحث داخل ملك خفاجي..."
-          autocomplete="off"
-        >
+    <div class="drawer-content">
 
+      <a href="#home" data-route="home">⌂ الرئيسية</a>
+      <a href="#discover" data-route="discover">◉ استكشف</a>
+      <a href="#chat" data-route="chat">◌ المحادثات</a>
+      <a href="#rooms" data-route="rooms">🎤 الغرف</a>
+      <a href="#games" data-route="games">🎮 الألعاب</a>
+      <a href="#videos" data-route="videos">▶ الفيديو</a>
+      <a href="#friends" data-route="friends">♙ الأصدقاء</a>
+      <a href="#profile" data-route="profile">♙ الملف الشخصي</a>
+      <a href="#wallet" data-route="wallet">◈ المحفظة</a>
+      <a href="#store" data-route="store">◇ المتجر</a>
+      <a href="#club" data-route="club">♛ النادي</a>
+      <a href="#settings" data-route="settings">⚙ الإعدادات</a>
+
+    </div>
+
+  </aside>
+
+
+  <!-- =========================================================
+       TOAST
+  ========================================================== -->
+
+  <div
+    class="toast-container"
+    id="toast-container"
+    aria-live="polite"
+  ></div>
+
+
+  <!-- =========================================================
+       COMMAND SEARCH
+  ========================================================== -->
+
+  <div
+    class="modal-layer"
+    id="search-modal"
+    hidden
+  >
+
+    <div class="search-modal">
+
+      <div class="search-modal-head">
+
+        <strong>البحث</strong>
 
         <button
           type="button"
+          class="icon-button"
           data-action="close-search"
-          aria-label="إغلاق البحث"
         >
-          Esc
+          ×
         </button>
 
       </div>
 
+      <div class="modal-search">
+
+        <span>⌕</span>
+
+        <input
+          type="search"
+          id="command-search-input"
+          placeholder="ابحث..."
+          autocomplete="off"
+        >
+
+      </div>
 
       <div
+        class="search-results"
         id="command-search-results"
-        class="command-search-results"
       >
-
-        <div class="command-search-empty">
-          ابدأ الكتابة للبحث...
+        <div class="empty-state">
+          <span>⌕</span>
+          <strong>ابدأ البحث</strong>
+          <small>
+            ابحث عن أشخاص أو ألعاب أو غرف أو محتوى.
+          </small>
         </div>
-
       </div>
 
     </div>
@@ -2584,470 +1010,45 @@
   </div>
 
 
-  <!-- ==========================================================
-       GLOBAL STATE / SERVICES
-       ========================================================== -->
-
-  <script src="js/state.js"></script>
-  <script src="js/api.js"></script>
-  <script src="js/events.js"></script>
-  <script src="js/navigation.js"></script>
-  <script src="js/auth.js"></script>
-  <script src="js/notifications.js"></script>
-  <script src="js/app.js"></script>
-
-
-  <!-- ==========================================================
-       FIXED BOOT SYSTEM
-       الإصلاح الأساسي لمشكلة التعليق
-       ========================================================== -->
-
-  <script>
-
-    (() => {
-
-      "use strict";
-
-
-      /* ========================================================
-         ELEMENTS
-         ======================================================== */
-
-      const loader =
-        document.getElementById("app-loader");
-
-      const progress =
-        document.getElementById("loader-progress-bar");
-
-      const progressContainer =
-        loader?.querySelector(".loader-progress");
-
-      const percent =
-        document.getElementById("loader-percent");
-
-      const status =
-        document.getElementById("loader-status-text");
-
-      const welcome =
-        document.getElementById("loader-welcome");
-
-      const errorBox =
-        document.getElementById("loader-error");
-
-
-      if (!loader) {
-        document.body.classList.remove("malak-loading");
-        return;
-      }
-
-
-      /* ========================================================
-         STATE
-         ======================================================== */
-
-      let currentProgress = 0;
-
-      let finished = false;
-
-      let appReady = false;
-
-      let bootError = false;
-
-
-      /* ========================================================
-         UPDATE PROGRESS
-         ======================================================== */
-
-      function updateProgress(value) {
-
-        value = Math.max(
-          0,
-          Math.min(100, Math.round(value))
-        );
-
-
-        currentProgress = value;
-
-
-        if (progress) {
-          progress.style.width = `${value}%`;
-        }
-
-
-        if (progressContainer) {
-
-          progressContainer.setAttribute(
-            "aria-valuenow",
-            String(value)
-          );
-
-        }
-
-
-        if (percent) {
-          percent.textContent = `${value}%`;
-        }
-
-      }
-
-
-      /* ========================================================
-         STATUS TEXT
-         ======================================================== */
-
-      function setStatus(message) {
-
-        if (!status) return;
-
-        status.style.opacity = "0";
-
-
-        setTimeout(() => {
-
-          status.textContent = message;
-
-          status.style.opacity = "1";
-
-        }, 100);
-
-      }
-
-
-      /* ========================================================
-         WELCOME
-         ======================================================== */
-
-      function showWelcome() {
-
-        if (!welcome) return;
-
-        welcome.classList.add("show");
-
-      }
-
-
-      /* ========================================================
-         NORMAL LOADING ANIMATION
-         ======================================================== */
-
-      const progressTimer = setInterval(() => {
-
-        if (finished) return;
-
-
-        /*
-         * لا نقفز إلى 100 هنا.
-         * نصل إلى 88% وننتظر التهيئة الحقيقية.
-         */
-
-        if (currentProgress < 88) {
-
-          const step =
-            currentProgress < 35
-              ? 5
-              : currentProgress < 65
-                ? 3
-                : 1;
-
-          updateProgress(
-            currentProgress + step
-          );
-
-        }
-
-
-        if (currentProgress >= 20 &&
-            currentProgress < 40) {
-
-          setStatus("جاري تجهيز عالمك...");
-
-        }
-
-        else if (currentProgress >= 40 &&
-                 currentProgress < 65) {
-
-          setStatus("جاري تجهيز التواصل والأصدقاء...");
-
-        }
-
-        else if (currentProgress >= 65 &&
-                 currentProgress < 82) {
-
-          setStatus("جاري تجهيز الألعاب والغرف...");
-
-        }
-
-        else if (currentProgress >= 82) {
-
-          setStatus("جاري فتح المنصة...");
-
-        }
-
-
-      }, 120);
-
-
-      /* ========================================================
-         FINISH LOADER
-         ======================================================== */
-
-      function finishLoader(reason = "normal") {
-
-        if (finished) return;
-
-        finished = true;
-
-
-        clearInterval(progressTimer);
-
-
-        updateProgress(100);
-
-
-        setStatus(
-          reason === "error"
-            ? "تم فتح المنصة مع تخطي خدمة متأخرة..."
-            : "اكتمل التجهيز ✨"
-        );
-
-
-        showWelcome();
-
-
-        /*
-         * نترك رسالة الترحيب تظهر لحظة
-         * قبل اختفاء شاشة التحميل.
-         */
-
-        setTimeout(() => {
-
-          loader.classList.add("is-hidden");
-
-          document.body.classList.remove("malak-loading");
-          document.body.classList.add("app-ready");
-
-
-          setTimeout(() => {
-
-            loader.remove();
-
-          }, 800);
-
-
-        }, 900);
-
-      }
-
-
-      /* ========================================================
-         REAL APP READY EVENT
-         ======================================================== */
-
-      window.addEventListener(
-        "malak:app-ready",
-        () => {
-
-          appReady = true;
-
-          finishLoader("normal");
-
-        },
-        { once: true }
-      );
-
-
-      /* ========================================================
-         DOM READY
-         ======================================================== */
-
-      document.addEventListener(
-        "DOMContentLoaded",
-        () => {
-
-          /*
-           * لو كل شيء طبيعي، نسمح للتطبيق
-           * بإكمال التهيئة.
-           */
-
-          if (currentProgress < 25) {
-            updateProgress(25);
-          }
-
-        },
-        { once: true }
-      );
-
-
-      /* ========================================================
-         WINDOW LOAD
-         ======================================================== */
-
-      window.addEventListener(
-        "load",
-        () => {
-
-          /*
-           * load يعني أن ملفات الصفحة الأساسية
-           * والصور والخطوط انتظرناها قدر الإمكان.
-           */
-
-          if (finished) return;
-
-
-          updateProgress(
-            Math.max(currentProgress, 90)
-          );
-
-
-          setStatus(
-            "أهلاً بك... لحظات ونبدأ 👑"
-          );
-
-
-          setTimeout(() => {
-
-            if (!finished) {
-              finishLoader("normal");
-            }
-
-          }, 550);
-
-        },
-        { once: true }
-      );
-
-
-      /* ========================================================
-         SCRIPT ERROR FALLBACK
-         ======================================================== */
-
-      window.addEventListener(
-        "error",
-        (event) => {
-
-          /*
-           * نهتم فقط بأخطاء ملفات JavaScript.
-           * لا نعتبر أخطاء الصور أو CSS سببًا
-           * لفتح حالة الخطأ.
-           */
-
-          const target = event.target;
-
-
-          if (
-            target &&
-            target.tagName === "SCRIPT"
-          ) {
-
-            bootError = true;
-
-
-            if (errorBox) {
-              errorBox.classList.add("show");
-            }
-
-
-            setStatus(
-              "تم فتح المنصة مع وجود خدمة تحتاج مراجعة..."
-            );
-
-
-            /*
-             * لا نوقف التطبيق بسبب ملف واحد.
-             */
-
-            setTimeout(() => {
-
-              if (!finished) {
-                finishLoader("error");
-              }
-
-            }, 900);
-
-          }
-
-        },
-        true
-      );
-
-
-      /* ========================================================
-         UNHANDLED PROMISE ERROR
-         ======================================================== */
-
-      window.addEventListener(
-        "unhandledrejection",
-        () => {
-
-          /*
-           * خطأ Promise لا ينبغي أن يجعل
-           * شاشة البداية معلقة للأبد.
-           */
-
-          if (finished) return;
-
-
-          setTimeout(() => {
-
-            if (!finished) {
-
-              if (errorBox) {
-                errorBox.classList.add("show");
-              }
-
-              finishLoader("error");
-
-            }
-
-          }, 1200);
-
-        }
-      );
-
-
-      /* ========================================================
-         ABSOLUTE SAFETY TIMEOUT
-         ======================================================== */
-
-      /*
-       * حتى لو:
-       * - app.js غير موجود
-       * - event لم يتم إرساله
-       * - API فشل
-       * - service تعطلت
-       *
-       * لا يمكن للـLoader أن يظل موجودًا للأبد.
-       */
-
-      setTimeout(() => {
-
-        if (!finished) {
-
-          if (errorBox) {
-            errorBox.classList.add("show");
-          }
-
-          finishLoader("error");
-
-        }
-
-      }, 5000);
-
-
-      /* ========================================================
-         INITIAL PROGRESS
-         ======================================================== */
-
-      updateProgress(3);
-
-    })();
-
-  </script>
-
-
-  <!-- ==========================================================
-       END
-       ========================================================== -->
+  <!-- =========================================================
+       ACCOUNT MENU
+  ========================================================== -->
+
+  <div
+    class="context-menu"
+    id="account-menu"
+    hidden
+  >
+
+    <button type="button" data-action="profile">
+      ♙ الملف الشخصي
+    </button>
+
+    <button type="button" data-action="settings">
+      ⚙ الإعدادات
+    </button>
+
+    <div class="context-separator"></div>
+
+    <button
+      type="button"
+      class="danger-action"
+      data-action="logout"
+    >
+      تسجيل الخروج
+    </button>
+
+  </div>
+
+
+  <!-- =========================================================
+       SCRIPTS
+  ========================================================== -->
+
+  <script src="js/state.js" defer></script>
+  <script src="api/client.js" defer></script>
+  <script src="js/navigation.js" defer></script>
+  <script src="js/app.js" defer></script>
 
 </body>
-  </html>
+                </html>
