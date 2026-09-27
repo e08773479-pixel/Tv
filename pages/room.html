@@ -1,0 +1,775 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+ name="viewport"
+ content="width=device-width,initial-scale=1"
+/>
+
+<title>الغرفة | ملك خفاجي</title>
+
+<link
+ rel="stylesheet"
+ href="../css/platform.css"
+/>
+
+<style>
+
+.room-layout {
+  display:grid;
+  grid-template-columns:minmax(0,1fr) 340px;
+  gap:18px;
+}
+
+.room-stage {
+  min-height:620px;
+  padding:20px;
+  position:relative;
+  overflow:hidden;
+}
+
+.room-stage::before {
+  content:"";
+  position:absolute;
+  inset:-100px;
+
+  background:
+    radial-gradient(
+      circle at 50% 40%,
+      rgba(25,212,124,.12),
+      transparent 35%
+    );
+}
+
+.room-header {
+  position:relative;
+
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+
+  gap:15px;
+
+  margin-bottom:20px;
+}
+
+.room-video-grid {
+  position:relative;
+
+  display:grid;
+  grid-template-columns:
+    repeat(2,minmax(0,1fr));
+
+  gap:14px;
+}
+
+.video-box {
+  aspect-ratio:16/10;
+
+  border-radius:20px;
+
+  overflow:hidden;
+
+  background:#05090d;
+
+  border:
+    1px solid rgba(255,255,255,.08);
+
+  position:relative;
+}
+
+.video-box video {
+  width:100%;
+  height:100%;
+
+  object-fit:cover;
+}
+
+.video-name {
+  position:absolute;
+
+  right:12px;
+  bottom:12px;
+
+  padding:6px 10px;
+
+  border-radius:10px;
+
+  background:rgba(0,0,0,.65);
+}
+
+.room-controls {
+  position:relative;
+
+  display:flex;
+  justify-content:center;
+
+  gap:10px;
+
+  margin-top:20px;
+
+  flex-wrap:wrap;
+}
+
+.room-chat {
+  padding:18px;
+
+  height:620px;
+
+  display:flex;
+  flex-direction:column;
+}
+
+.room-chat-list {
+  flex:1;
+
+  overflow:auto;
+
+  margin-bottom:12px;
+}
+
+.room-chat-input {
+  display:flex;
+  gap:8px;
+}
+
+.room-chat-input input {
+  min-width:0;
+  flex:1;
+
+  padding:12px;
+
+  border-radius:12px;
+
+  border:1px solid var(--mk-border);
+
+  background:rgba(255,255,255,.04);
+
+  color:white;
+
+  outline:0;
+}
+
+@media(max-width:900px) {
+
+  .room-layout {
+    grid-template-columns:1fr;
+  }
+
+  .room-chat {
+    height:400px;
+  }
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="malak-app">
+
+<aside class="malak-sidebar">
+
+  <div class="malak-brand">
+    <div class="malak-brand-icon">👑</div>
+    <span>ملك خفاجي</span>
+  </div>
+
+  <nav class="malak-nav">
+
+    <a href="../index.html">
+      🏠 الرئيسية
+    </a>
+
+    <a href="./chat.html">
+      💬 الشات
+    </a>
+
+    <a
+      href="./rooms.html"
+      class="active"
+    >
+      🎙️ الغرف
+    </a>
+
+    <a href="./games.html">
+      🎮 الألعاب
+    </a>
+
+  </nav>
+
+</aside>
+
+
+<main class="malak-content">
+
+<header class="malak-topbar">
+
+  <button
+    class="malak-btn"
+    onclick="history.back()"
+  >
+    ← رجوع
+  </button>
+
+  <span data-user-name>
+    الحساب
+  </span>
+
+</header>
+
+
+<div class="room-layout">
+
+
+<section
+  class="malak-card room-stage"
+>
+
+<header class="room-header">
+
+  <div>
+
+    <h2
+      id="roomName"
+      style="margin:0"
+    >
+      جاري تحميل الغرفة...
+    </h2>
+
+    <small
+      id="roomStatus"
+      style="color:var(--mk-muted)"
+    >
+      اتصال الغرفة
+    </small>
+
+  </div>
+
+  <button
+    class="malak-btn danger"
+    id="leaveBtn"
+  >
+    مغادرة
+  </button>
+
+</header>
+
+
+<div
+  id="videoGrid"
+  class="room-video-grid"
+>
+
+  <div
+    class="video-box"
+    id="localVideoBox"
+  >
+
+    <video
+      id="localVideo"
+      autoplay
+      muted
+      playsinline
+    ></video>
+
+    <span class="video-name">
+      أنت
+    </span>
+
+  </div>
+
+</div>
+
+
+<div class="room-controls">
+
+  <button
+    class="malak-btn primary"
+    id="micBtn"
+  >
+    🎤 المايك
+  </button>
+
+  <button
+    class="malak-btn"
+    id="cameraBtn"
+  >
+    📹 الكاميرا
+  </button>
+
+  <button
+    class="malak-btn"
+    id="screenBtn"
+  >
+    🖥️ مشاركة الشاشة
+  </button>
+
+</div>
+
+</section>
+
+
+<aside
+  class="malak-card room-chat"
+>
+
+<h3>
+  💬 دردشة الغرفة
+</h3>
+
+<div
+  id="roomChatList"
+  class="room-chat-list"
+>
+
+  <div class="malak-empty">
+    لا توجد رسائل.
+  </div>
+
+</div>
+
+
+<form
+  id="chatForm"
+  class="room-chat-input"
+>
+
+  <input
+    id="chatInput"
+    autocomplete="off"
+    placeholder="اكتب رسالة..."
+  >
+
+  <button
+    class="malak-btn primary"
+  >
+    إرسال
+  </button>
+
+</form>
+
+</aside>
+
+</div>
+
+</main>
+
+</div>
+
+<div id="malak-toast-root"></div>
+
+
+<script src="../js/platform.js"></script>
+
+<script>
+
+const params =
+  new URLSearchParams(location.search);
+
+const roomId =
+  params.get("id");
+
+let localStream = null;
+
+let micEnabled = true;
+
+let cameraEnabled = true;
+
+
+/* =========================
+   LOAD ROOM
+========================= */
+
+async function loadRoom() {
+
+  if (!roomId) {
+
+    Malak.toast(
+      "معرف الغرفة غير موجود",
+      "error"
+    );
+
+    return;
+  }
+
+  try {
+
+    const result =
+      await Malak.request(
+        `/rooms/${encodeURIComponent(roomId)}`
+      );
+
+    const room =
+      result.room;
+
+    if (!room) {
+      throw new Error();
+    }
+
+    document.querySelector(
+      "#roomName"
+    ).textContent =
+      room.name || "الغرفة";
+
+    document.querySelector(
+      "#roomStatus"
+    ).textContent =
+      `${Number(room.membersCount || 0)} متصل`;
+
+    await startLocalMedia();
+
+    await loadMessages();
+
+  } catch {
+
+    document.querySelector(
+      "#roomName"
+    ).textContent =
+      "تعذر تحميل الغرفة";
+
+    Malak.toast(
+      "تعذر تحميل بيانات الغرفة",
+      "error"
+    );
+  }
+}
+
+
+/* =========================
+   CAMERA / MICROPHONE
+========================= */
+
+async function startLocalMedia() {
+
+  try {
+
+    localStream =
+      await navigator.mediaDevices
+        .getUserMedia({
+          audio:true,
+          video:true
+        });
+
+    const video =
+      document.querySelector(
+        "#localVideo"
+      );
+
+    video.srcObject =
+      localStream;
+
+  } catch {
+
+    Malak.toast(
+      "لم يتم السماح بالكاميرا أو المايك",
+      "error"
+    );
+  }
+}
+
+
+/* =========================
+   MIC
+========================= */
+
+document.querySelector(
+  "#micBtn"
+).onclick = () => {
+
+  if (!localStream) return;
+
+  const tracks =
+    localStream.getAudioTracks();
+
+  tracks.forEach(
+    track => {
+      track.enabled =
+        !track.enabled;
+
+      micEnabled =
+        track.enabled;
+    }
+  );
+
+  document.querySelector(
+    "#micBtn"
+  ).textContent =
+    micEnabled
+      ? "🎤 المايك"
+      : "🔇 المايك مكتوم";
+};
+
+
+/* =========================
+   CAMERA
+========================= */
+
+document.querySelector(
+  "#cameraBtn"
+).onclick = () => {
+
+  if (!localStream) return;
+
+  const tracks =
+    localStream.getVideoTracks();
+
+  tracks.forEach(
+    track => {
+
+      track.enabled =
+        !track.enabled;
+
+      cameraEnabled =
+        track.enabled;
+    }
+  );
+
+  document.querySelector(
+    "#cameraBtn"
+  ).textContent =
+    cameraEnabled
+      ? "📹 الكاميرا"
+      : "🚫 الكاميرا مغلقة";
+};
+
+
+/* =========================
+   SCREEN SHARE
+========================= */
+
+document.querySelector(
+  "#screenBtn"
+).onclick =
+async () => {
+
+  if (!navigator.mediaDevices
+      .getDisplayMedia) {
+
+    Malak.toast(
+      "مشاركة الشاشة غير مدعومة هنا",
+      "error"
+    );
+
+    return;
+  }
+
+  try {
+
+    const screen =
+      await navigator.mediaDevices
+        .getDisplayMedia({
+          video:true
+        });
+
+    const screenTrack =
+      screen.getVideoTracks()[0];
+
+    const video =
+      document.querySelector(
+        "#localVideo"
+      );
+
+    video.srcObject =
+      screen;
+
+    screenTrack.onended = () => {
+
+      if (localStream) {
+
+        video.srcObject =
+          localStream;
+      }
+    };
+
+  } catch {
+
+    Malak.toast(
+      "تم إلغاء مشاركة الشاشة",
+      "info"
+    );
+  }
+};
+
+
+/* =========================
+   CHAT
+========================= */
+
+async function loadMessages() {
+
+  try {
+
+    const result =
+      await Malak.request(
+        `/rooms/${encodeURIComponent(roomId)}/messages`
+      );
+
+    const messages =
+      Array.isArray(result.messages)
+        ? result.messages
+        : [];
+
+    renderMessages(messages);
+
+  } catch {
+
+    renderMessages([]);
+  }
+}
+
+
+function renderMessages(messages) {
+
+  const list =
+    document.querySelector(
+      "#roomChatList"
+    );
+
+  if (!messages.length) {
+
+    list.innerHTML = `
+      <div class="malak-empty">
+        لا توجد رسائل بعد.
+      </div>
+    `;
+
+    return;
+  }
+
+  list.innerHTML =
+    messages.map(message => `
+
+      <div
+        style="
+          padding:10px 0;
+          border-bottom:
+            1px solid var(--mk-border);
+        "
+      >
+
+        <strong>
+          ${escapeHTML(
+            message.sender?.name || "مستخدم"
+          )}
+        </strong>
+
+        <div
+          style="
+            color:var(--mk-muted);
+            margin-top:3px;
+          "
+        >
+          ${escapeHTML(
+            message.text || ""
+          )}
+        </div>
+
+      </div>
+
+    `).join("");
+}
+
+
+document.querySelector(
+  "#chatForm"
+).onsubmit =
+async event => {
+
+  event.preventDefault();
+
+  const input =
+    document.querySelector(
+      "#chatInput"
+    );
+
+  const text =
+    input.value.trim();
+
+  if (!text) return;
+
+  try {
+
+    await Malak.request(
+      `/rooms/${encodeURIComponent(roomId)}/messages`,
+      {
+        method:"POST",
+        body:{ text }
+      }
+    );
+
+    input.value = "";
+
+    await loadMessages();
+
+  } catch {
+
+    Malak.toast(
+      "تعذر إرسال الرسالة",
+      "error"
+    );
+  }
+};
+
+
+/* =========================
+   LEAVE
+========================= */
+
+document.querySelector(
+  "#leaveBtn"
+).onclick =
+async () => {
+
+  try {
+
+    if (localStream) {
+
+      localStream
+        .getTracks()
+        .forEach(track =>
+          track.stop()
+        );
+    }
+
+    await Malak.request(
+      `/rooms/${encodeURIComponent(roomId)}/leave`,
+      {
+        method:"POST"
+      }
+    );
+
+  } catch {}
+
+  location.href =
+    "./rooms.html";
+};
+
+
+/* =========================
+   SAFE TEXT
+========================= */
+
+function escapeHTML(value) {
+
+  return String(value)
+    .replaceAll("&","&amp;")
+    .replaceAll("<","&lt;")
+    .replaceAll(">","&gt;")
+    .replaceAll('"',"&quot;")
+    .replaceAll("'","&#039;");
+}
+
+
+loadRoom();
+
+</script>
+
+</body>
+</html>
