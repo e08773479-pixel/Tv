@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+
+<title>ملك خفاجي 👑 | الإشعارات</title>
+
+<link rel="stylesheet" href="../css/platform.css">
+
+<style>
+
+.notifications-page{
+max-width:850px;
+margin:auto;
+}
+
+.notifications-head{
+display:flex;
+align-items:center;
+gap:10px;
+margin-bottom:18px;
+}
+
+.notifications-head h1{
+margin:0;
+flex:1;
+}
+
+.notification-list{
+display:flex;
+flex-direction:column;
+gap:10px;
+}
+
+.notification{
+display:flex;
+gap:13px;
+align-items:flex-start;
+padding:17px;
+border-radius:18px;
+border:1px solid var(--mk-border);
+background:var(--mk-panel);
+transition:.2s;
+}
+
+.notification.unread{
+border-color:rgba(25,212,124,.35);
+background:rgba(25,212,124,.035);
+}
+
+.notification:hover{
+transform:translateY(-1px);
+}
+
+.notification-icon{
+width:45px;
+height:45px;
+display:grid;
+place-items:center;
+border-radius:14px;
+background:rgba(25,212,124,.08);
+font-size:20px;
+flex-shrink:0;
+}
+
+.notification-body{
+flex:1;
+}
+
+.notification-title{
+font-weight:850;
+}
+
+.notification-text{
+font-size:13px;
+opacity:.65;
+margin-top:4px;
+line-height:1.6;
+}
+
+.notification-time{
+font-size:10px;
+opacity:.4;
+margin-top:7px;
+}
+
+.notification-actions{
+display:flex;
+gap:6px;
+}
+
+.empty{
+text-align:center;
+padding:60px;
+opacity:.55;
+}
+
+@media(max-width:600px){
+
+.notifications-head{
+align-items:flex-start;
+flex-direction:column;
+}
+
+.notification{
+padding:13px;
+}
+
+.notification-actions{
+flex-direction:column;
+}
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="malak-app">
+
+<aside class="malak-sidebar">
+
+<div class="malak-brand">
+👑 <span>ملك خفاجي</span>
+</div>
+
+<nav class="malak-nav">
+
+<a href="../index.html">🏠 الرئيسية</a>
+<a href="chat.html">💬 المحادثات</a>
+<a href="friends.html">👥 الأصدقاء</a>
+<a href="groups.html">👥 المجموعات</a>
+<a href="rooms.html">🎙️ الغرف</a>
+<a href="games.html">🎮 الألعاب</a>
+<a class="active" href="notifications.html">🔔 الإشعارات</a>
+<a href="profile.html">👤 الملف الشخصي</a>
+
+</nav>
+
+</aside>
+
+<main class="malak-content">
+
+<header class="malak-topbar">
+
+<button class="malak-btn" onclick="history.back()">←</button>
+
+<strong>🔔 الإشعارات</strong>
+
+</header>
+
+<section class="notifications-page">
+
+<div class="notifications-head">
+
+<h1>الإشعارات</h1>
+
+<button
+class="malak-btn"
+id="readAll">
+تحديد الكل كمقروء
+</button>
+
+</div>
+
+<div
+class="notification-list"
+id="notificationList">
+
+<div class="empty">
+جاري تحميل الإشعارات...
+</div>
+
+</div>
+
+</section>
+
+</main>
+
+</div>
+
+<div class="malak-toast" id="toast"></div>
+
+<script src="../js/platform.js"></script>
+
+<script>
+
+let notifications=[];
+
+function esc(v){
+
+return String(v??"")
+.replace(/&/g,"&amp;")
+.replace(/</g,"&lt;")
+.replace(/>/g,"&gt;")
+.replace(/"/g,"&quot;");
+
+}
+
+function iconFor(type){
+
+const icons={
+message:"💬",
+friend_request:"👥",
+friend_accept:"🤝",
+game_invite:"🎮",
+room_invite:"🎙️",
+call:"📹",
+reward:"🪙",
+achievement:"🏆",
+system:"🔔"
+};
+
+return icons[type]||"🔔";
+
+}
+
+async function loadNotifications(){
+
+const box=
+document.getElementById("notificationList");
+
+box.innerHTML=
+'<div class="empty">جاري التحميل...</div>';
+
+try{
+
+const result=
+await Malak.request("/notifications");
+
+notifications=
+result.notifications||
+result.data||
+[];
+
+renderNotifications();
+
+}catch(error){
+
+box.innerHTML=
+'<div class="empty">تعذر تحميل الإشعارات من الخادم.</div>';
+
+console.error(error);
+
+}
+
+}
+
+function renderNotifications(){
+
+const box=
+document.getElementById("notificationList");
+
+if(!notifications.length){
+
+box.innerHTML=
+'<div class="empty">لا توجد إشعارات.</div>';
+
+return;
+
+}
+
+box.innerHTML=
+notifications.map(n=>`
+
+<article
+class="notification ${n.read?"":"unread"}"
+data-id="${esc(n.id)}">
+
+<div class="notification-icon">
+${iconFor(n.type)}
+</div>
+
+<div class="notification-body">
+
+<div class="notification-title">
+${esc(n.title||"إشعار")}
+</div>
+
+<div class="notification-text">
+${esc(n.body||n.message||"")}
+</div>
+
+<div class="notification-time">
+${esc(n.created_at||"")}
+</div>
+
+</div>
+
+<div class="notification-actions">
+
+${
+n.read
+?""
+:`
+<button
+class="malak-btn read-btn"
+data-id="${esc(n.id)}">
+✓
+</button>
+`
+}
+
+</div>
+
+</article>
+
+`).join("");
+
+box.querySelectorAll(".read-btn").forEach(btn=>{
+
+btn.onclick=()=>markRead(btn.dataset.id);
+
+});
+
+}
+
+async function markRead(id){
+
+try{
+
+await Malak.request(
+`/notifications/${encodeURIComponent(id)}/read`,
+{
+method:"POST"
+}
+);
+
+const item=
+notifications.find(n=>String(n.id)===String(id));
+
+if(item)item.read=true;
+
+renderNotifications();
+
+}catch(error){
+
+Malak.toast(
+error.message||"تعذر تحديث الإشعار"
+);
+
+}
+
+}
+
+document.getElementById("readAll").onclick=
+async()=>{
+
+try{
+
+await Malak.request(
+"/notifications/read-all",
+{
+method:"POST"
+}
+);
+
+notifications=
+notifications.map(n=>({
+...n,
+read:true
+}));
+
+renderNotifications();
+
+Malak.toast("تم تحديد الإشعارات كمقروءة");
+
+}catch(error){
+
+Malak.toast(
+error.message||
+"تعذر تحديث الإشعارات"
+);
+
+}
+
+};
+
+loadNotifications();
+
+</script>
+
+</body>
+
+</html>
