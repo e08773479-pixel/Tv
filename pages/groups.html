@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+
+<title>ملك خفاجي 👑 | المجموعات</title>
+
+<link rel="stylesheet" href="../css/platform.css">
+
+<style>
+.groups-page{
+max-width:1100px;
+margin:auto;
+}
+
+.groups-head{
+display:flex;
+gap:10px;
+align-items:center;
+margin-bottom:20px;
+}
+
+.groups-head h1{
+flex:1;
+margin:0;
+}
+
+.groups-grid{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:16px;
+}
+
+.group-card{
+background:var(--mk-panel);
+border:1px solid var(--mk-border);
+border-radius:22px;
+overflow:hidden;
+}
+
+.group-banner{
+height:120px;
+background:
+radial-gradient(circle at 70% 20%,rgba(25,212,124,.18),transparent 35%),
+linear-gradient(135deg,#07110e,#0d1d18);
+}
+
+.group-body{
+padding:17px;
+}
+
+.group-name{
+font-size:18px;
+font-weight:900;
+}
+
+.group-description{
+font-size:12px;
+opacity:.6;
+line-height:1.7;
+margin:8px 0 14px;
+}
+
+.group-meta{
+font-size:11px;
+opacity:.55;
+margin-bottom:13px;
+}
+
+.empty{
+grid-column:1/-1;
+text-align:center;
+padding:60px;
+opacity:.55;
+}
+
+.modal{
+position:fixed;
+inset:0;
+background:rgba(0,0,0,.7);
+backdrop-filter:blur(8px);
+display:none;
+align-items:center;
+justify-content:center;
+padding:20px;
+z-index:1000;
+}
+
+.modal.open{
+display:flex;
+}
+
+.modal-box{
+width:min(500px,100%);
+background:var(--mk-panel);
+border:1px solid var(--mk-border);
+border-radius:24px;
+padding:22px;
+}
+
+.modal-box h2{
+margin-top:0;
+}
+
+.form-field{
+margin-bottom:13px;
+}
+
+.form-field label{
+display:block;
+font-size:12px;
+opacity:.65;
+margin-bottom:7px;
+}
+
+.form-field input,
+.form-field textarea{
+width:100%;
+box-sizing:border-box;
+padding:13px;
+border-radius:13px;
+border:1px solid var(--mk-border);
+background:var(--mk-bg);
+color:inherit;
+outline:none;
+}
+
+.form-field textarea{
+min-height:100px;
+resize:vertical;
+}
+
+.modal-actions{
+display:flex;
+gap:9px;
+margin-top:15px;
+}
+
+.modal-actions button{
+flex:1;
+}
+
+@media(max-width:900px){
+.groups-grid{
+grid-template-columns:repeat(2,1fr);
+}
+}
+
+@media(max-width:600px){
+.groups-grid{
+grid-template-columns:1fr;
+}
+}
+</style>
+
+</head>
+
+<body>
+
+<div class="malak-app">
+
+<aside class="malak-sidebar">
+
+<div class="malak-brand">
+👑 <span>ملك خفاجي</span>
+</div>
+
+<nav class="malak-nav">
+<a href="../index.html">🏠 الرئيسية</a>
+<a href="chat.html">💬 المحادثات</a>
+<a href="friends.html">👥 الأصدقاء</a>
+<a class="active" href="groups.html">👥 المجموعات</a>
+<a href="rooms.html">🎙️ الغرف</a>
+<a href="games.html">🎮 الألعاب</a>
+</nav>
+
+</aside>
+
+<main class="malak-content">
+
+<header class="malak-topbar">
+<button class="malak-btn" onclick="history.back()">←</button>
+<strong>👥 المجموعات</strong>
+</header>
+
+<section class="groups-page">
+
+<div class="groups-head">
+
+<h1>مجموعاتي</h1>
+
+<button class="malak-btn" id="createBtn">
+＋ إنشاء مجموعة
+</button>
+
+</div>
+
+<div class="groups-grid" id="groupsGrid">
+
+<div class="empty">
+جاري تحميل المجموعات...
+</div>
+
+</div>
+
+</section>
+
+</main>
+
+</div>
+
+<div class="modal" id="modal">
+
+<div class="modal-box">
+
+<h2>إنشاء مجموعة</h2>
+
+<form id="createForm">
+
+<div class="form-field">
+<label>اسم المجموعة</label>
+<input id="groupName" required maxlength="80">
+</div>
+
+<div class="form-field">
+<label>الوصف</label>
+<textarea id="groupDescription" maxlength="500"></textarea>
+</div>
+
+<div class="modal-actions">
+<button type="button" class="malak-btn" id="cancelBtn">
+إلغاء
+</button>
+
+<button class="malak-btn" type="submit">
+إنشاء
+</button>
+</div>
+
+</form>
+
+</div>
+
+</div>
+
+<div class="malak-toast" id="toast"></div>
+
+<script src="../js/platform.js"></script>
+
+<script>
+
+let groups=[];
+
+function esc(v){
+return String(v??"")
+.replace(/&/g,"&amp;")
+.replace(/</g,"&lt;")
+.replace(/>/g,"&gt;")
+.replace(/"/g,"&quot;");
+}
+
+async function loadGroups(){
+
+const box=document.getElementById("groupsGrid");
+
+box.innerHTML=
+'<div class="empty">جاري تحميل المجموعات...</div>';
+
+try{
+
+const result=
+await Malak.request("/groups");
+
+groups=
+result.groups||
+result.data||
+[];
+
+renderGroups();
+
+}catch(error){
+
+box.innerHTML=
+'<div class="empty">تعذر تحميل المجموعات.</div>';
+
+console.error(error);
+}
+}
+
+function renderGroups(){
+
+const box=document.getElementById("groupsGrid");
+
+if(!groups.length){
+
+box.innerHTML=
+'<div class="empty">لا توجد مجموعات مرتبطة بحسابك.</div>';
+
+return;
+}
+
+box.innerHTML=groups.map(g=>`
+
+<article class="group-card">
+
+<div
+class="group-banner"
+style="${
+g.cover
+?`background-image:url('${esc(g.cover)}');background-size:cover;background-position:center`
+:""
+}">
+</div>
+
+<div class="group-body">
+
+<div class="group-name">
+${esc(g.name||"مجموعة")}
+</div>
+
+<div class="group-description">
+${esc(g.description||"لا يوجد وصف")}
+</div>
+
+<div class="group-meta">
+👥 ${esc(g.members_count??"—")} عضو
+</div>
+
+<button
+class="malak-btn open-group"
+data-id="${esc(g.id)}">
+فتح المجموعة
+</button>
+
+</div>
+
+</article>
+
+`).join("");
+
+box.querySelectorAll(".open-group").forEach(btn=>{
+
+btn.onclick=()=>{
+location.href=
+`group.html?id=${encodeURIComponent(btn.dataset.id)}`;
+};
+
+});
+}
+
+document.getElementById("createBtn").onclick=()=>{
+document.getElementById("modal").classList.add("open");
+};
+
+document.getElementById("cancelBtn").onclick=()=>{
+document.getElementById("modal").classList.remove("open");
+};
+
+document.getElementById("createForm").addEventListener(
+"submit",
+async e=>{
+
+e.preventDefault();
+
+const name=
+document.getElementById("groupName").value.trim();
+
+const description=
+document.getElementById("groupDescription").value.trim();
+
+if(!name)return;
+
+try{
+
+await Malak.request(
+"/groups",
+{
+method:"POST",
+headers:{
+"Content-Type":"application/json"
+},
+body:JSON.stringify({
+name,
+description
+})
+);
+
+document.getElementById("modal")
+.classList.remove("open");
+
+document.getElementById("createForm").reset();
+
+Malak.toast("تم إنشاء المجموعة");
+
+loadGroups();
+
+}catch(error){
+
+Malak.toast(
+error.message||"تعذر إنشاء المجموعة"
+);
+}
+
+});
+
+loadGroups();
+
+</script>
+
+</body>
+</html>
