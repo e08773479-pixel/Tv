@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>ملك خفاجي 👑 | الملف الشخصي</title>
+
+<link rel="stylesheet" href="../css/platform.css">
+
+<style>
+.profile-page{
+max-width:1180px;
+margin:auto;
+}
+
+.profile-cover{
+min-height:250px;
+border:1px solid var(--mk-border);
+border-radius:28px;
+overflow:hidden;
+position:relative;
+background:
+radial-gradient(circle at 80% 20%,rgba(25,212,124,.20),transparent 30%),
+radial-gradient(circle at 20% 80%,rgba(0,212,255,.12),transparent 35%),
+linear-gradient(135deg,#07110e,#0a1714 55%,#07110e);
+}
+
+.profile-cover::after{
+content:"";
+position:absolute;
+inset:0;
+background:
+linear-gradient(120deg,transparent 35%,rgba(255,255,255,.025),transparent 65%);
+}
+
+.profile-header{
+position:relative;
+z-index:2;
+margin-top:-72px;
+padding:0 28px 25px;
+display:flex;
+align-items:end;
+gap:20px;
+}
+
+.profile-avatar{
+width:145px;
+height:145px;
+border-radius:50%;
+object-fit:cover;
+border:5px solid var(--mk-panel);
+background:#111;
+box-shadow:0 15px 45px rgba(0,0,0,.4);
+}
+
+.profile-main{
+flex:1;
+padding-bottom:8px;
+}
+
+.profile-name{
+font-size:30px;
+font-weight:950;
+margin:0;
+}
+
+.profile-id{
+font-size:13px;
+opacity:.55;
+margin-top:4px;
+}
+
+.profile-actions{
+display:flex;
+gap:9px;
+flex-wrap:wrap;
+}
+
+.profile-grid{
+display:grid;
+grid-template-columns:1.5fr .8fr;
+gap:18px;
+}
+
+.profile-card{
+background:var(--mk-panel);
+border:1px solid var(--mk-border);
+border-radius:22px;
+padding:20px;
+}
+
+.profile-card h3{
+margin-top:0;
+}
+
+.bio{
+line-height:1.9;
+opacity:.78;
+}
+
+.stats{
+display:grid;
+grid-template-columns:repeat(4,1fr);
+gap:10px;
+margin-top:18px;
+}
+
+.stat{
+padding:15px;
+background:rgba(255,255,255,.025);
+border:1px solid var(--mk-border);
+border-radius:16px;
+text-align:center;
+}
+
+.stat strong{
+display:block;
+font-size:22px;
+}
+
+.stat span{
+font-size:11px;
+opacity:.55;
+}
+
+.progress{
+height:9px;
+background:#07100d;
+border-radius:99px;
+overflow:hidden;
+margin-top:12px;
+}
+
+.progress i{
+display:block;
+height:100%;
+width:0;
+background:linear-gradient(90deg,var(--mk-green),var(--mk-cyan));
+border-radius:inherit;
+}
+
+.activity-list{
+display:flex;
+flex-direction:column;
+gap:9px;
+}
+
+.activity{
+padding:13px;
+border:1px solid var(--mk-border);
+border-radius:14px;
+background:rgba(255,255,255,.02);
+}
+
+.badges{
+display:flex;
+gap:10px;
+flex-wrap:wrap;
+}
+
+.badge{
+padding:12px 15px;
+border-radius:14px;
+border:1px solid var(--mk-border);
+background:rgba(25,212,124,.05);
+}
+
+.loading{
+padding:50px;
+text-align:center;
+opacity:.6;
+}
+
+@media(max-width:850px){
+.profile-grid{
+grid-template-columns:1fr;
+}
+
+.profile-header{
+align-items:center;
+flex-direction:column;
+text-align:center;
+margin-top:-65px;
+}
+
+.profile-main{
+padding:0;
+}
+
+.stats{
+grid-template-columns:repeat(2,1fr);
+}
+}
+</style>
+</head>
+
+<body>
+
+<div class="malak-app">
+
+<aside class="malak-sidebar">
+<div class="malak-brand">👑 <span>ملك خفاجي</span></div>
+
+<nav class="malak-nav">
+<a href="../index.html">🏠 الرئيسية</a>
+<a href="chat.html">💬 المحادثات</a>
+<a href="rooms.html">🎙️ الغرف</a>
+<a href="games.html">🎮 الألعاب</a>
+<a href="calls.html">📹 المكالمات</a>
+<a class="active" href="profile.html">👤 الملف الشخصي</a>
+<a href="friends.html">👥 الأصدقاء</a>
+<a href="notifications.html">🔔 الإشعارات</a>
+</nav>
+</aside>
+
+<main class="malak-content">
+
+<header class="malak-topbar">
+<button class="malak-btn" onclick="history.back()">←</button>
+<strong>👤 الملف الشخصي</strong>
+</header>
+
+<section class="profile-page">
+
+<div class="profile-cover"></div>
+
+<div class="profile-header">
+
+<img id="avatar"
+class="profile-avatar"
+src="../assets/images/avatars/default.png"
+alt="">
+
+<div class="profile-main">
+<h1 class="profile-name" id="name">جاري التحميل...</h1>
+<div class="profile-id" id="userId">—</div>
+</div>
+
+<div class="profile-actions">
+<button class="malak-btn" id="messageBtn">💬 رسالة</button>
+<button class="malak-btn" id="editBtn">⚙️ تعديل</button>
+<button class="malak-btn" id="shareBtn">↗️ مشاركة</button>
+</div>
+
+</div>
+
+<div class="profile-grid">
+
+<div>
+
+<div class="profile-card">
+<h3>نبذة</h3>
+<div class="bio" id="bio">جاري تحميل البيانات...</div>
+
+<div class="stats">
+<div class="stat">
+<strong id="friends">—</strong>
+<span>الأصدقاء</span>
+</div>
+
+<div class="stat">
+<strong id="followers">—</strong>
+<span>المتابعون</span>
+</div>
+
+<div class="stat">
+<strong id="posts">—</strong>
+<span>المنشورات</span>
+</div>
+
+<div class="stat">
+<strong id="games">—</strong>
+<span>المباريات</span>
+</div>
+</div>
+</div>
+
+<div class="profile-card" style="margin-top:18px">
+<h3>🏆 المستوى</h3>
+
+<div>
+المستوى <strong id="level">—</strong>
+</div>
+
+<div class="progress">
+<i id="xpProgress"></i>
+</div>
+
+<div style="font-size:12px;opacity:.6;margin-top:7px" id="xpText">
+—
+</div>
+</div>
+
+<div class="profile-card" style="margin-top:18px">
+<h3>🏅 الإنجازات</h3>
+<div class="badges" id="achievements">
+<div class="loading">جاري التحميل...</div>
+</div>
+</div>
+
+</div>
+
+<div>
+
+<div class="profile-card">
+<h3>🪙 المحفظة</h3>
+
+<div style="font-size:30px;font-weight:900" id="coins">—</div>
+<div style="opacity:.55;font-size:12px">الرصيد</div>
+
+<br>
+
+<a href="wallet.html" class="malak-btn">
+فتح المحفظة
+</a>
+</div>
+
+<div class="profile-card" style="margin-top:18px">
+<h3>🕘 النشاط</h3>
+
+<div class="activity-list" id="activity">
+<div class="loading">جاري التحميل...</div>
+</div>
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+</main>
+</div>
+
+<div class="malak-toast" id="toast"></div>
+
+<script src="../js/platform.js"></script>
+
+<script>
+const profileId=
+new URLSearchParams(location.search).get("id");
+
+let profile=null;
+
+function esc(v){
+return String(v??"")
+.replace(/&/g,"&amp;")
+.replace(/</g,"&lt;")
+.replace(/>/g,"&gt;")
+.replace(/"/g,"&quot;");
+}
+
+async function loadProfile(){
+
+try{
+
+const endpoint=profileId
+?`/users/${encodeURIComponent(profileId)}`
+:"/auth/me";
+
+const result=await Malak.request(endpoint);
+
+profile=result.user||result.profile||result.data||result;
+
+renderProfile(profile);
+
+}catch(error){
+
+document.getElementById("name").textContent=
+"تعذر تحميل الملف";
+
+document.getElementById("bio").textContent=
+"لم يتم الحصول على بيانات الحساب من الخادم.";
+
+console.error(error);
+}
+}
+
+function renderProfile(u){
+
+document.getElementById("name").textContent=
+u.name||"مستخدم";
+
+document.getElementById("userId").textContent=
+u.username
+?`@${u.username}`
+:(u.id?`ID: ${u.id}`:"");
+
+document.getElementById("bio").textContent=
+u.bio||"لا توجد نبذة مضافة.";
+
+if(u.avatar)
+document.getElementById("avatar").src=u.avatar;
+
+document.getElementById("friends").textContent=
+u.stats?.friends??u.friends_count??"—";
+
+document.getElementById("followers").textContent=
+u.stats?.followers??u.followers_count??"—";
+
+document.getElementById("posts").textContent=
+u.stats?.posts??u.posts_count??"—";
+
+document.getElementById("games").textContent=
+u.stats?.games??u.games_count??"—";
+
+document.getElementById("coins").textContent=
+u.wallet?.coins??u.coins??"—";
+
+document.getElementById("level").textContent=
+u.xp?.level??u.level??"—";
+
+const current=u.xp?.current??0;
+const next=u.xp?.next??100;
+
+document.getElementById("xpText").textContent=
+`${current} / ${next} XP`;
+
+const percentage=
+next>0?Math.min(100,(current/next)*100):0;
+
+document.getElementById("xpProgress").style.width=
+percentage+"%";
+
+renderAchievements(u.achievements||[]);
+renderActivity(u.activity||[]);
+}
+
+function renderAchievements(items){
+
+const box=document.getElementById("achievements");
+
+if(!items.length){
+box.innerHTML='<div style="opacity:.55">لا توجد إنجازات.</div>';
+return;
+}
+
+box.innerHTML=items.map(a=>`
+<div class="badge">
+${esc(a.icon||"🏆")}
+ ${esc(a.name||"إنجاز")}
+</div>
+`).join("");
+}
+
+function renderActivity(items){
+
+const box=document.getElementById("activity");
+
+if(!items.length){
+box.innerHTML='<div style="opacity:.55">لا يوجد نشاط متاح.</div>';
+return;
+}
+
+box.innerHTML=items.map(a=>`
+<div class="activity">
+<strong>${esc(a.title||"نشاط")}</strong>
+<div style="font-size:12px;opacity:.55">
+${esc(a.created_at||"")}
+</div>
+</div>
+`).join("");
+}
+
+document.getElementById("messageBtn").onclick=()=>{
+if(!profile?.id)return;
+location.href=`chat.html?user=${encodeURIComponent(profile.id)}`;
+};
+
+document.getElementById("editBtn").onclick=()=>{
+location.href="settings.html";
+};
+
+document.getElementById("shareBtn").onclick=async()=>{
+
+try{
+
+await navigator.clipboard.writeText(location.href);
+Malak.toast("تم نسخ رابط الملف");
+
+}catch{
+Malak.toast("تعذر نسخ الرابط");
+}
+};
+
+loadProfile();
+</script>
+
+</body>
+  </html>
