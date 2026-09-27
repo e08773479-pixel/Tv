@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+ name="viewport"
+ content="width=device-width,initial-scale=1"
+/>
+
+<title>الألعاب | ملك خفاجي</title>
+
+<link
+ rel="stylesheet"
+ href="../css/platform.css"
+/>
+
+<style>
+
+.games-hero {
+  padding:28px;
+
+  margin-bottom:20px;
+
+  position:relative;
+  overflow:hidden;
+}
+
+.games-hero::after {
+  content:"";
+
+  position:absolute;
+
+  width:300px;
+  height:300px;
+
+  left:-80px;
+  top:-130px;
+
+  border-radius:50%;
+
+  background:
+    radial-gradient(
+      circle,
+      rgba(118,92,255,.25),
+      transparent 65%
+    );
+}
+
+.game-card {
+  overflow:hidden;
+}
+
+.game-cover {
+  aspect-ratio:16/10;
+
+  display:grid;
+  place-items:center;
+
+  font-size:55px;
+
+  background:
+    radial-gradient(
+      circle at 50% 30%,
+      rgba(35,215,232,.2),
+      transparent 40%
+    ),
+    #0a1218;
+}
+
+.game-body {
+  padding:18px;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="malak-app">
+
+<aside class="malak-sidebar">
+
+  <div class="malak-brand">
+
+    <div class="malak-brand-icon">
+      👑
+    </div>
+
+    <span>
+      ملك خفاجي
+    </span>
+
+  </div>
+
+  <nav class="malak-nav">
+
+    <a href="../index.html">
+      🏠 الرئيسية
+    </a>
+
+    <a href="./chat.html">
+      💬 الشات
+    </a>
+
+    <a href="./rooms.html">
+      🎙️ الغرف
+    </a>
+
+    <a
+      href="./games.html"
+      class="active"
+    >
+      🎮 الألعاب
+    </a>
+
+    <a href="./profile.html">
+      👤 الحساب
+    </a>
+
+  </nav>
+
+</aside>
+
+
+<main class="malak-content">
+
+<header class="malak-topbar">
+
+  <div class="malak-search">
+
+    🔎
+
+    <input
+      id="gameSearch"
+      placeholder="ابحث عن لعبة..."
+    >
+
+  </div>
+
+  <span data-user-name>
+    الحساب
+  </span>
+
+</header>
+
+
+<section class="malak-card games-hero">
+
+  <h1>
+    عالم الألعاب 🎮
+  </h1>
+
+  <p
+    style="
+      color:var(--mk-muted);
+      max-width:650px;
+    "
+  >
+    العب مع أصدقائك، أنشئ مباراة، ادخل الغرف
+    واستخدم الصوت والفيديو أثناء اللعب.
+  </p>
+
+</section>
+
+
+<section
+  id="gamesGrid"
+  class="malak-grid malak-grid-3"
+></section>
+
+
+</main>
+
+</div>
+
+<div id="malak-toast-root"></div>
+
+<script src="../js/platform.js"></script>
+
+<script>
+
+let games = [];
+
+const grid =
+  document.querySelector("#gamesGrid");
+
+const search =
+  document.querySelector("#gameSearch");
+
+
+async function loadGames() {
+
+  grid.innerHTML = `
+    <div
+      class="malak-card malak-empty"
+      style="grid-column:1/-1"
+    >
+      ⏳ جاري تحميل الألعاب...
+    </div>
+  `;
+
+  try {
+
+    const result =
+      await Malak.request("/games");
+
+    games =
+      Array.isArray(result.games)
+        ? result.games
+        : [];
+
+    renderGames();
+
+  } catch {
+
+    grid.innerHTML = `
+      <div
+        class="malak-card malak-empty"
+        style="grid-column:1/-1"
+      >
+
+        <div>
+
+          <div class="malak-empty-icon">
+            🎮
+          </div>
+
+          <strong>
+            لا توجد ألعاب متاحة حاليًا
+          </strong>
+
+          <p>
+            سيتم عرض الألعاب التي يوفرها النظام هنا.
+          </p>
+
+        </div>
+
+      </div>
+    `;
+  }
+}
+
+
+function renderGames() {
+
+  const q =
+    search.value
+      .trim()
+      .toLowerCase();
+
+  const filtered =
+    games.filter(game =>
+      !q ||
+      game.name
+        ?.toLowerCase()
+        .includes(q)
+    );
+
+  if (!filtered.length) {
+
+    grid.innerHTML = `
+      <div
+        class="malak-card malak-empty"
+        style="grid-column:1/-1"
+      >
+        لا توجد ألعاب مطابقة.
+      </div>
+    `;
+
+    return;
+  }
+
+  grid.innerHTML =
+    filtered.map(game => `
+
+      <article
+        class="malak-card game-card"
+      >
+
+        <div class="game-cover">
+
+          ${
+            game.cover
+              ? `
+                <img
+                  src="${escapeHTML(game.cover)}"
+                  alt=""
+                  style="
+                    width:100%;
+                    height:100%;
+                    object-fit:cover;
+                  "
+                >
+              `
+              : "🎮"
+          }
+
+        </div>
+
+        <div class="game-body">
+
+          <h3 style="margin:0">
+            ${escapeHTML(
+              game.name || "لعبة"
+            )}
+          </h3>
+
+          <p
+            style="
+              color:var(--mk-muted);
+            "
+          >
+            ${escapeHTML(
+              game.description || ""
+            )}
+          </p>
+
+          <button
+            class="malak-btn primary"
+            style="width:100%"
+            onclick="createMatch('${game.id}')"
+          >
+            🎮 ابدأ مباراة
+          </button>
+
+        </div>
+
+      </article>
+
+    `).join("");
+}
+
+
+/* =========================
+   CREATE MATCH
+========================= */
+
+async function createMatch(gameId) {
+
+  try {
+
+    const result =
+      await Malak.request(
+        "/games/matches",
+        {
+          method:"POST",
+
+          body:{
+            gameId
+          }
+        }
+      );
+
+    if (!result?.match?.id) {
+      throw new Error();
+    }
+
+    location.href =
+      `./game-room.html?id=${encodeURIComponent(
+        result.match.id
+      )}`;
+
+  } catch {
+
+    Malak.toast(
+      "تعذر إنشاء المباراة",
+      "error"
+    );
+  }
+}
+
+
+search.addEventListener(
+  "input",
+  renderGames
+);
+
+
+function escapeHTML(value) {
+
+  return String(value)
+    .replaceAll("&","&amp;")
+    .replaceAll("<","&lt;")
+    .replaceAll(">","&gt;")
+    .replaceAll('"',"&quot;")
+    .replaceAll("'","&#039;");
+}
+
+
+loadGames();
+
+</script>
+
+</body>
+</html>
