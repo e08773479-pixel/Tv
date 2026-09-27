@@ -1,0 +1,453 @@
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap');
+
+:root {
+  --mk-bg: #06090d;
+  --mk-bg-2: #091117;
+  --mk-panel: rgba(13,20,27,.88);
+  --mk-panel-2: #101922;
+
+  --mk-green: #19d47c;
+  --mk-cyan: #23d7e8;
+  --mk-purple: #765cff;
+
+  --mk-text: #f4f8fb;
+  --mk-muted: #87939f;
+
+  --mk-border: rgba(255,255,255,.08);
+
+  --mk-radius: 22px;
+  --mk-radius-sm: 14px;
+
+  --mk-shadow:
+    0 20px 60px rgba(0,0,0,.35);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  min-height: 100%;
+}
+
+body {
+  background:
+    radial-gradient(
+      circle at 80% -10%,
+      rgba(25,212,124,.12),
+      transparent 30%
+    ),
+    radial-gradient(
+      circle at 10% 30%,
+      rgba(35,215,232,.07),
+      transparent 28%
+    ),
+    var(--mk-bg);
+
+  color: var(--mk-text);
+
+  font-family:
+    Cairo,
+    system-ui,
+    sans-serif;
+
+  direction: rtl;
+}
+
+button,
+input,
+textarea {
+  font: inherit;
+}
+
+button {
+  border: 0;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* =========================
+   APP
+========================= */
+
+.malak-app {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 250px minmax(0,1fr);
+}
+
+/* =========================
+   SIDEBAR
+========================= */
+
+.malak-sidebar {
+  position: fixed;
+  inset: 0 auto 0 0;
+
+  width: 250px;
+
+  padding: 22px;
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(9,16,22,.97),
+      rgba(5,9,13,.98)
+    );
+
+  border-left:
+    1px solid var(--mk-border);
+
+  z-index: 50;
+}
+
+.malak-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  margin-bottom: 35px;
+
+  font-size: 20px;
+  font-weight: 900;
+}
+
+.malak-brand-icon {
+  width: 45px;
+  height: 45px;
+
+  display: grid;
+  place-items: center;
+
+  border-radius: 15px;
+
+  background:
+    linear-gradient(
+      135deg,
+      var(--mk-green),
+      var(--mk-cyan)
+    );
+
+  color: #03100a;
+
+  box-shadow:
+    0 10px 30px rgba(25,212,124,.2);
+}
+
+.malak-nav {
+  display: grid;
+  gap: 8px;
+}
+
+.malak-nav a {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  padding: 13px 15px;
+
+  color: var(--mk-muted);
+
+  border-radius: 14px;
+
+  transition: .2s;
+}
+
+.malak-nav a:hover,
+.malak-nav a.active {
+  color: white;
+
+  background:
+    linear-gradient(
+      90deg,
+      rgba(25,212,124,.13),
+      rgba(35,215,232,.04)
+    );
+}
+
+.malak-nav-icon {
+  width: 30px;
+  text-align: center;
+}
+
+/* =========================
+   CONTENT
+========================= */
+
+.malak-content {
+  grid-column: 2;
+
+  min-width: 0;
+
+  padding: 22px 28px 100px;
+}
+
+/* =========================
+   TOPBAR
+========================= */
+
+.malak-topbar {
+  height: 68px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 20px;
+
+  margin-bottom: 24px;
+}
+
+.malak-search {
+  width: min(520px,100%);
+
+  display: flex;
+  align-items: center;
+
+  padding: 0 17px;
+
+  height: 48px;
+
+  background:
+    rgba(255,255,255,.035);
+
+  border:
+    1px solid var(--mk-border);
+
+  border-radius: 16px;
+}
+
+.malak-search input {
+  flex: 1;
+
+  border: 0;
+  outline: 0;
+
+  background: transparent;
+
+  color: white;
+}
+
+.malak-search input::placeholder {
+  color: var(--mk-muted);
+}
+
+/* =========================
+   PAGE
+========================= */
+
+.malak-page-head {
+  margin-bottom: 24px;
+}
+
+.malak-page-head h1 {
+  margin: 0;
+
+  font-size: clamp(25px,4vw,38px);
+}
+
+.malak-page-head p {
+  margin: 7px 0 0;
+
+  color: var(--mk-muted);
+}
+
+/* =========================
+   CARD
+========================= */
+
+.malak-card {
+  background:
+    linear-gradient(
+      145deg,
+      rgba(17,26,34,.95),
+      rgba(8,14,19,.95)
+    );
+
+  border:
+    1px solid var(--mk-border);
+
+  border-radius:
+    var(--mk-radius);
+
+  box-shadow:
+    var(--mk-shadow);
+}
+
+/* =========================
+   BUTTON
+========================= */
+
+.malak-btn {
+  min-height: 44px;
+
+  padding: 0 18px;
+
+  border-radius: 13px;
+
+  cursor: pointer;
+
+  color: white;
+
+  background:
+    rgba(255,255,255,.06);
+
+  border:
+    1px solid var(--mk-border);
+
+  transition:
+    transform .18s,
+    background .18s,
+    opacity .18s;
+}
+
+.malak-btn:hover {
+  transform: translateY(-2px);
+}
+
+.malak-btn.primary {
+  background:
+    linear-gradient(
+      135deg,
+      var(--mk-green),
+      var(--mk-cyan)
+    );
+
+  color: #03100a;
+
+  font-weight: 900;
+}
+
+.malak-btn.danger {
+  background:
+    rgba(255,60,90,.1);
+
+  color: #ff7187;
+
+  border-color:
+    rgba(255,60,90,.18);
+}
+
+/* =========================
+   GRID
+========================= */
+
+.malak-grid {
+  display: grid;
+  gap: 18px;
+}
+
+.malak-grid-2 {
+  grid-template-columns:
+    repeat(2,minmax(0,1fr));
+}
+
+.malak-grid-3 {
+  grid-template-columns:
+    repeat(3,minmax(0,1fr));
+}
+
+/* =========================
+   EMPTY
+========================= */
+
+.malak-empty {
+  min-height: 260px;
+
+  display: grid;
+  place-items: center;
+
+  text-align: center;
+
+  padding: 30px;
+
+  color: var(--mk-muted);
+}
+
+.malak-empty-icon {
+  font-size: 45px;
+
+  margin-bottom: 10px;
+}
+
+/* =========================
+   TOAST
+========================= */
+
+#malak-toast-root {
+  position: fixed;
+
+  left: 22px;
+  bottom: 22px;
+
+  z-index: 9999;
+
+  display: grid;
+
+  gap: 10px;
+}
+
+.malak-toast {
+  max-width: 330px;
+
+  padding: 13px 17px;
+
+  border-radius: 14px;
+
+  background: #101820;
+
+  border: 1px solid var(--mk-border);
+
+  box-shadow: var(--mk-shadow);
+
+  transform:
+    translateY(15px);
+
+  opacity: 0;
+
+  transition: .25s;
+}
+
+.malak-toast.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.malak-toast-success {
+  border-color:
+    rgba(25,212,124,.3);
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+@media(max-width:900px) {
+
+  .malak-app {
+    display: block;
+  }
+
+  .malak-sidebar {
+    display: none;
+  }
+
+  .malak-content {
+    padding:
+      14px 14px 90px;
+  }
+
+  .malak-grid-2,
+  .malak-grid-3 {
+    grid-template-columns: 1fr;
+  }
+
+  .malak-topbar {
+    height: auto;
+  }
+}
