@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+
+<title>ملك خفاجي 👑 | الأصدقاء</title>
+
+<link rel="stylesheet" href="../css/platform.css">
+
+<style>
+.friends-page{
+max-width:1100px;
+margin:auto;
+}
+
+.friends-toolbar{
+display:flex;
+gap:10px;
+margin-bottom:18px;
+flex-wrap:wrap;
+}
+
+.friends-toolbar input{
+flex:1;
+min-width:220px;
+padding:14px;
+border-radius:15px;
+border:1px solid var(--mk-border);
+background:var(--mk-panel);
+color:inherit;
+outline:none;
+}
+
+.friend-tabs{
+display:flex;
+gap:8px;
+margin-bottom:18px;
+overflow:auto;
+}
+
+.friend-tab{
+border:1px solid var(--mk-border);
+background:var(--mk-panel);
+color:inherit;
+padding:11px 16px;
+border-radius:13px;
+cursor:pointer;
+white-space:nowrap;
+}
+
+.friend-tab.active{
+background:var(--mk-green);
+color:#03130c;
+border-color:transparent;
+}
+
+.friends-grid{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:15px;
+}
+
+.friend-card{
+background:var(--mk-panel);
+border:1px solid var(--mk-border);
+border-radius:21px;
+padding:17px;
+display:flex;
+flex-direction:column;
+align-items:center;
+text-align:center;
+}
+
+.friend-card img{
+width:78px;
+height:78px;
+border-radius:50%;
+object-fit:cover;
+margin-bottom:10px;
+}
+
+.friend-name{
+font-weight:900;
+}
+
+.friend-status{
+font-size:11px;
+opacity:.55;
+margin:4px 0 12px;
+}
+
+.friend-actions{
+display:flex;
+gap:7px;
+width:100%;
+}
+
+.friend-actions button{
+flex:1;
+}
+
+.empty{
+padding:50px;
+text-align:center;
+opacity:.55;
+grid-column:1/-1;
+}
+
+@media(max-width:900px){
+.friends-grid{
+grid-template-columns:repeat(2,1fr);
+}
+}
+
+@media(max-width:600px){
+.friends-grid{
+grid-template-columns:1fr;
+}
+}
+</style>
+</head>
+
+<body>
+
+<div class="malak-app">
+
+<aside class="malak-sidebar">
+
+<div class="malak-brand">👑 <span>ملك خفاجي</span></div>
+
+<nav class="malak-nav">
+<a href="../index.html">🏠 الرئيسية</a>
+<a href="chat.html">💬 المحادثات</a>
+<a class="active" href="friends.html">👥 الأصدقاء</a>
+<a href="groups.html">👥 المجموعات</a>
+<a href="rooms.html">🎙️ الغرف</a>
+<a href="games.html">🎮 الألعاب</a>
+<a href="notifications.html">🔔 الإشعارات</a>
+</nav>
+
+</aside>
+
+<main class="malak-content">
+
+<header class="malak-topbar">
+<button class="malak-btn" onclick="history.back()">←</button>
+<strong>👥 الأصدقاء</strong>
+</header>
+
+<section class="friends-page">
+
+<div class="friends-toolbar">
+<input id="search" placeholder="ابحث عن صديق...">
+<button class="malak-btn" id="refresh">↻ تحديث</button>
+</div>
+
+<div class="friend-tabs">
+<button class="friend-tab active" data-type="friends">الأصدقاء</button>
+<button class="friend-tab" data-type="requests">طلبات الصداقة</button>
+</div>
+
+<div class="friends-grid" id="friendsGrid">
+<div class="empty">جاري تحميل البيانات...</div>
+</div>
+
+</section>
+
+</main>
+</div>
+
+<div class="malak-toast" id="toast"></div>
+
+<script src="../js/platform.js"></script>
+
+<script>
+let allItems=[];
+let currentType="friends";
+
+function esc(v){
+return String(v??"")
+.replace(/&/g,"&amp;")
+.replace(/</g,"&lt;")
+.replace(/>/g,"&gt;")
+.replace(/"/g,"&quot;");
+}
+
+async function loadFriends(){
+
+const grid=document.getElementById("friendsGrid");
+
+grid.innerHTML='<div class="empty">جاري التحميل...</div>';
+
+try{
+
+const endpoint=
+currentType==="requests"
+?"/friends/requests"
+:"/friends";
+
+const result=await Malak.request(endpoint);
+
+allItems=
+result.friends||
+result.requests||
+result.data||
+[];
+
+render(allItems);
+
+}catch(error){
+
+grid.innerHTML=
+'<div class="empty">تعذر تحميل الأصدقاء من الخادم.</div>';
+
+console.error(error);
+}
+}
+
+function render(items){
+
+const grid=document.getElementById("friendsGrid");
+
+if(!items.length){
+
+grid.innerHTML=
+currentType==="requests"
+?'<div class="empty">لا توجد طلبات صداقة.</div>'
+:'<div class="empty">لا توجد بيانات أصدقاء.</div>';
+
+return;
+}
+
+grid.innerHTML=items.map(u=>`
+<article class="friend-card">
+
+<img
+src="${esc(u.avatar||"../assets/images/avatars/default.png")}"
+alt="">
+
+<div class="friend-name">
+${esc(u.name||"مستخدم")}
+</div>
+
+<div class="friend-status">
+${esc(u.online?"متصل الآن":"غير متصل")}
+</div>
+
+<div class="friend-actions">
+
+<button
+class="malak-btn profile"
+data-id="${esc(u.id)}">
+👤
+</button>
+
+<button
+class="malak-btn chat"
+data-id="${esc(u.id)}">
+💬
+</button>
+
+${
+currentType==="requests"
+?`
+<button
+class="malak-btn accept"
+data-id="${esc(u.id)}">
+✓
+</button>
+`
+:""
+}
+
+</div>
+
+</article>
+`).join("");
+
+grid.querySelectorAll(".profile").forEach(btn=>{
+btn.onclick=()=>{
+location.href=`profile.html?id=${encodeURIComponent(btn.dataset.id)}`;
+};
+});
+
+grid.querySelectorAll(".chat").forEach(btn=>{
+btn.onclick=()=>{
+location.href=`chat.html?user=${encodeURIComponent(btn.dataset.id)}`;
+};
+});
+
+grid.querySelectorAll(".accept").forEach(btn=>{
+btn.onclick=()=>acceptRequest(btn.dataset.id);
+});
+}
+
+async function acceptRequest(id){
+
+try{
+
+await Malak.request(
+`/friends/requests/${encodeURIComponent(id)}/accept`,
+{method:"POST"}
+);
+
+Malak.toast("تم قبول طلب الصداقة");
+
+loadFriends();
+
+}catch(error){
+Malak.toast(error.message||"تعذر قبول الطلب");
+}
+}
+
+document.getElementById("search").addEventListener("input",e=>{
+
+const q=e.target.value.trim().toLowerCase();
+
+render(
+allItems.filter(u=>
+String(u.name||"").toLowerCase().includes(q)||
+String(u.username||"").toLowerCase().includes(q)
+)
+);
+});
+
+document.querySelectorAll(".friend-tab").forEach(tab=>{
+
+tab.onclick=()=>{
+
+document.querySelectorAll(".friend-tab")
+.forEach(x=>x.classList.remove("active"));
+
+tab.classList.add("active");
+
+currentType=tab.dataset.type;
+
+loadFriends();
+};
+});
+
+document.getElementById("refresh").onclick=loadFriends;
+
+loadFriends();
+</script>
+
+</body>
+</html>
