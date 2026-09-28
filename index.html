@@ -2,27 +2,33 @@
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-
-<title>JOKER // DARK NODE</title>
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<meta name="theme-color" content="#020205">
+<title>JOKER // CYBER COMMAND</title>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
 
 <style>
 :root{
-  --red:#ff1238;
-  --red2:#a60021;
-  --pink:#ff3971;
-  --purple:#a52cff;
+  --bg:#020205;
+  --bg2:#060811;
+  --panel:rgba(5,7,14,.88);
+  --panel2:rgba(8,10,18,.96);
+  --line:rgba(255,255,255,.085);
+  --line2:rgba(255,255,255,.035);
+  --red:#ff1744;
+  --red2:#ff003c;
+  --purple:#9b4dff;
+  --purple2:#5421ff;
   --cyan:#00eaff;
   --green:#00ff9d;
-  --yellow:#ffc400;
-  --bg:#020204;
-  --panel:rgba(3,4,7,.78);
-  --line:rgba(255,255,255,.075);
-  --muted:#686873;
+  --yellow:#ffd43b;
+  --text:#f3f5fa;
+  --muted:#737b8d;
+  --mono:"Share Tech Mono",monospace;
+  --arabic:"Cairo",sans-serif;
 }
 
 *{
@@ -33,18 +39,19 @@
 
 html,body{
   width:100%;
-  height:100%;
+  min-height:100%;
+  background:#020205;
+  color:var(--text);
+  font-family:var(--arabic);
 }
 
 body{
-  overflow:hidden;
+  overflow-x:hidden;
   background:
-    linear-gradient(90deg,rgba(0,0,0,.96),rgba(0,0,0,.48),rgba(0,0,0,.96)),
-    linear-gradient(0deg,rgba(0,0,0,.9),transparent,rgba(0,0,0,.8)),
+    linear-gradient(90deg,rgba(0,0,0,.92),rgba(0,0,0,.28),rgba(0,0,0,.9)),
+    linear-gradient(0deg,rgba(0,0,0,.96),rgba(0,0,0,.4)),
     url("https://images.hdqwalls.com/download/joker-ghost-in-dark-rt-3840x2400.jpg")
-    center/cover fixed;
-  color:#eee;
-  font-family:"Cairo",sans-serif;
+    center/cover fixed no-repeat;
 }
 
 body:before{
@@ -52,15 +59,15 @@ body:before{
   position:fixed;
   inset:0;
   pointer-events:none;
-  z-index:50;
+  z-index:9000;
   background:
     repeating-linear-gradient(
       0deg,
-      rgba(255,255,255,.018) 0,
-      rgba(255,255,255,.018) 1px,
-      transparent 1px,
-      transparent 4px
+      transparent 0,
+      transparent 3px,
+      rgba(255,255,255,.025) 4px
     );
+  opacity:.42;
 }
 
 body:after{
@@ -68,697 +75,1537 @@ body:after{
   position:fixed;
   inset:0;
   pointer-events:none;
-  z-index:51;
+  z-index:8999;
   background:
-    radial-gradient(circle at center,transparent 25%,rgba(0,0,0,.78) 100%);
+    radial-gradient(circle at center,transparent 25%,rgba(0,0,0,.2) 60%,rgba(0,0,0,.92));
 }
 
-/* ===== MAIN ===== */
+/* =========================================================
+   BOOT
+========================================================= */
 
-.app{
-  width:100%;
-  height:100vh;
-  display:flex;
-  flex-direction:column;
-  position:relative;
-  z-index:2;
-}
-
-/* ===== HEADER ===== */
-
-.header{
-  height:100px;
-  min-height:100px;
+.boot{
+  position:fixed;
+  inset:0;
+  z-index:10000;
   display:flex;
   align-items:center;
-  justify-content:space-between;
-  padding:15px 28px;
-  border-bottom:1px solid rgba(255,18,56,.3);
-  background:rgba(0,0,0,.58);
-  backdrop-filter:blur(12px);
-}
-
-.logo{
-  display:flex;
-  align-items:center;
-  gap:16px;
-}
-
-.logo-mark{
-  width:62px;
-  height:62px;
-  border:1px solid rgba(255,18,56,.65);
-  display:grid;
-  place-items:center;
-  font-size:31px;
+  justify-content:center;
   background:
-    radial-gradient(circle,rgba(255,18,56,.22),transparent 65%);
-  box-shadow:
-    0 0 20px rgba(255,18,56,.3),
-    inset 0 0 20px rgba(255,18,56,.08);
-  position:relative;
+    radial-gradient(circle at center,rgba(255,23,68,.08),transparent 35%),
+    #010103;
+  transition:opacity .8s,visibility .8s;
 }
 
-.logo-mark:before,
-.logo-mark:after{
-  content:"";
-  position:absolute;
-  background:var(--red);
+.boot.hide{
+  opacity:0;
+  visibility:hidden;
 }
 
-.logo-mark:before{
-  width:2px;
-  height:100%;
-  left:-1px;
-  top:0;
+.bootCore{
+  width:min(700px,90%);
 }
 
-.logo-mark:after{
-  height:2px;
-  width:100%;
-  top:-1px;
-  left:0;
-}
-
-.logo h1{
-  font-family:"Share Tech Mono",monospace;
-  font-size:36px;
-  letter-spacing:9px;
-  color:white;
+.bootLogo{
+  font:70px var(--mono);
+  letter-spacing:12px;
+  text-align:center;
+  color:#fff;
   text-shadow:
-    2px 0 var(--red),
-    -2px 0 var(--cyan),
-    0 0 25px rgba(255,18,56,.6);
-  animation:glitch 4s infinite;
+    0 0 15px var(--red),
+    0 0 60px rgba(255,0,60,.45);
+  animation:flicker 1.5s infinite;
 }
 
-.logo p{
-  font-family:"Share Tech Mono",monospace;
-  font-size:9px;
+.bootSub{
+  margin-top:8px;
+  text-align:center;
+  color:var(--red);
+  font:11px var(--mono);
   letter-spacing:4px;
-  color:#777;
-  margin-top:5px;
+}
+
+.bootLines{
+  margin-top:35px;
+  min-height:150px;
   direction:ltr;
+  font:12px/2 var(--mono);
 }
 
-@keyframes glitch{
-  0%,88%,100%{transform:none}
-  89%{transform:translate(3px,-1px)}
-  90%{transform:translate(-4px,1px)}
-  91%{transform:none}
-  94%{transform:skewX(5deg)}
-  95%{transform:none}
+.bootLine{
+  opacity:0;
+  animation:bootLine .3s forwards;
 }
 
-.header-right{
-  display:flex;
-  align-items:center;
-  gap:20px;
-  direction:ltr;
-  font-family:"Share Tech Mono",monospace;
-}
+.bootLine.ok{color:var(--green)}
+.bootLine.info{color:var(--cyan)}
+.bootLine.warn{color:var(--yellow)}
+.bootLine.bad{color:var(--red)}
 
-.live{
-  display:flex;
-  align-items:center;
-  gap:8px;
-  font-size:10px;
-  color:#aaa;
-}
-
-.live i{
-  width:8px;
-  height:8px;
-  border-radius:50%;
-  background:var(--red);
-  box-shadow:0 0 12px var(--red);
-  animation:pulse 1s infinite;
-}
-
-@keyframes pulse{
-  50%{opacity:.25}
-}
-
-/* ===== WORKSPACE ===== */
-
-.workspace{
-  flex:1;
-  min-height:0;
-  padding:13px;
-  display:grid;
-  grid-template-columns:245px minmax(0,1fr) 285px;
-  gap:12px;
-}
-
-/* ===== COMMON ===== */
-
-.box{
-  border:1px solid var(--line);
-  background:var(--panel);
-  backdrop-filter:blur(13px);
-  position:relative;
+.bootProgress{
+  height:3px;
+  background:#141620;
+  margin-top:20px;
   overflow:hidden;
 }
 
-.box:before{
-  content:"";
-  position:absolute;
-  top:0;
-  left:0;
-  right:0;
-  height:1px;
-  background:linear-gradient(90deg,transparent,var(--red),transparent);
-  opacity:.7;
+.bootProgress span{
+  display:block;
+  height:100%;
+  width:0;
+  background:linear-gradient(90deg,var(--purple),var(--red));
+  box-shadow:0 0 20px var(--red);
+  transition:width .15s;
 }
 
-.title{
-  height:43px;
-  padding:0 13px;
+/* =========================================================
+   APP
+========================================================= */
+
+.app{
+  position:relative;
+  z-index:10;
+  min-height:100vh;
+  padding:12px;
+  opacity:0;
+  transition:opacity .8s;
+}
+
+.app.ready{
+  opacity:1;
+}
+
+/* =========================================================
+   TOPBAR
+========================================================= */
+
+.top{
+  height:70px;
+  border:1px solid var(--line);
+  background:rgba(2,3,8,.78);
+  backdrop-filter:blur(20px);
   display:flex;
   align-items:center;
   justify-content:space-between;
-  border-bottom:1px solid var(--line);
-  color:#777;
-  font:10px "Share Tech Mono";
-  direction:ltr;
+  padding:0 16px;
+  box-shadow:
+    0 15px 60px rgba(0,0,0,.5),
+    inset 0 1px rgba(255,255,255,.04);
 }
 
-.title b{
-  color:#ddd;
-  font:700 11px "Cairo";
-}
-
-/* ===== LEFT ===== */
-
-.left{
+.brand{
   display:flex;
-  flex-direction:column;
-  min-height:0;
+  align-items:center;
+  gap:12px;
 }
 
-.identity{
-  padding:17px;
-  border-bottom:1px solid var(--line);
-}
-
-.identity-symbol{
-  height:130px;
+.brandIcon{
+  width:44px;
+  height:44px;
   display:grid;
   place-items:center;
-  border:1px solid rgba(255,18,56,.18);
-  background:
-    radial-gradient(circle,rgba(255,18,56,.13),transparent 60%);
-  font-size:62px;
-  text-shadow:0 0 35px rgba(255,18,56,.55);
-  margin-bottom:13px;
+  border:1px solid rgba(255,23,68,.5);
+  background:radial-gradient(circle,var(--red),transparent 65%);
+  box-shadow:0 0 30px rgba(255,0,60,.28);
+  font-size:23px;
 }
 
-.identity-name{
-  font-family:"Share Tech Mono";
-  color:#fff;
-  font-size:17px;
-  letter-spacing:3px;
+.brand h1{
+  font:22px var(--mono);
+  letter-spacing:5px;
 }
 
-.identity-sub{
-  color:#666;
-  font:9px "Share Tech Mono";
-  margin-top:4px;
-  direction:ltr;
-}
-
-.rows{
-  padding:13px;
-  overflow:auto;
-}
-
-.row{
-  padding:9px 0;
-  border-bottom:1px solid rgba(255,255,255,.045);
-}
-
-.row label{
+.brand small{
   display:block;
-  color:#555;
-  font:8px "Share Tech Mono";
+  color:var(--muted);
+  font:9px var(--mono);
+  letter-spacing:1px;
+}
+
+.topRight{
+  display:flex;
+  align-items:center;
+  gap:18px;
+  font:10px var(--mono);
   direction:ltr;
 }
 
-.row span{
-  display:block;
-  color:#c9c9ce;
-  margin-top:3px;
-  font:11px "Share Tech Mono";
-  direction:ltr;
-}
-
-.row .red{
-  color:var(--red);
-}
-
-.row .cyan{
-  color:var(--cyan);
-}
-
-.row .green{
+.online{
   color:var(--green);
 }
 
-/* ===== CENTER ===== */
-
-.center{
-  min-width:0;
-  min-height:0;
-  display:flex;
-  flex-direction:column;
-  gap:12px;
-}
-
-.signal{
-  height:125px;
-  min-height:125px;
-  border:1px solid rgba(255,18,56,.3);
-  background:
-    linear-gradient(90deg,
-      rgba(255,18,56,.10),
-      rgba(0,0,0,.76),
-      rgba(165,44,255,.06));
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  padding:22px;
-  overflow:hidden;
-  position:relative;
-}
-
-.signal:after{
-  content:"";
-  position:absolute;
-  width:45%;
-  height:200%;
-  top:-50%;
-  left:-60%;
-  background:linear-gradient(
-    90deg,
-    transparent,
-    rgba(255,255,255,.08),
-    transparent
-  );
-  transform:skewX(-20deg);
-  animation:sweep 3s infinite;
-}
-
-@keyframes sweep{
-  0%{left:-60%}
-  60%,100%{left:130%}
-}
-
-.signal h2{
-  position:relative;
-  z-index:2;
-  font-size:25px;
-  font-weight:900;
-}
-
-.signal small{
-  position:relative;
-  z-index:2;
-  display:block;
-  color:var(--red);
-  font:10px "Share Tech Mono";
-  letter-spacing:2px;
-  margin-bottom:6px;
-  direction:ltr;
-}
-
-.signal p{
-  color:#666;
-  font-size:9px;
-  margin-top:4px;
-}
-
-.signal-number{
-  direction:ltr;
-  text-align:right;
-  position:relative;
-  z-index:2;
-}
-
-.signal-number strong{
-  display:block;
-  color:var(--red);
-  font:42px "Share Tech Mono";
-  text-shadow:0 0 20px rgba(255,18,56,.45);
-}
-
-.signal-number span{
-  color:#555;
-  font:8px "Share Tech Mono";
-}
-
-/* ===== TERMINAL ===== */
-
-.terminal{
-  flex:1;
-  min-height:0;
-  display:flex;
-  flex-direction:column;
-}
-
-.term-top{
-  height:39px;
-  min-height:39px;
-  padding:0 12px;
-  border-bottom:1px solid var(--line);
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  direction:ltr;
-}
-
-.dots{
-  display:flex;
-  gap:6px;
-}
-
-.dots i{
-  width:8px;
-  height:8px;
+.online i{
+  display:inline-block;
+  width:7px;
+  height:7px;
   border-radius:50%;
-  background:#444;
+  background:var(--green);
+  box-shadow:0 0 14px var(--green);
+  margin-right:5px;
+  animation:pulse 1s infinite;
 }
 
-.dots i:nth-child(1){background:#ff3050}
-.dots i:nth-child(2){background:#ffbf00}
-.dots i:nth-child(3){background:#00d98a}
-
-.path{
-  color:#666;
-  font:9px "Share Tech Mono";
+.topClock{
+  color:var(--cyan);
 }
 
-.console{
-  flex:1;
-  min-height:0;
-  overflow:hidden;
-  padding:13px;
+/* =========================================================
+   COMMAND STRIP
+========================================================= */
+
+.commandStrip{
+  margin-top:10px;
+  display:grid;
+  grid-template-columns:1fr auto;
+  gap:10px;
+}
+
+.operatorBox{
+  border:1px solid var(--line);
+  background:rgba(3,5,10,.82);
+  min-height:55px;
+  padding:8px 14px;
+  display:flex;
+  align-items:center;
+  gap:18px;
   direction:ltr;
-  text-align:left;
-  font:10px/1.85 "Share Tech Mono";
 }
 
-.line{
-  white-space:nowrap;
+.opItem label{
+  display:block;
+  color:var(--muted);
+  font:8px var(--mono);
+}
+
+.opItem b{
+  color:#fff;
+  font:11px var(--mono);
+}
+
+.targetSearch{
+  display:flex;
+  border:1px solid rgba(255,23,68,.35);
+  background:#020306;
+  min-width:330px;
+}
+
+.targetSearch input{
+  width:100%;
+  min-width:0;
+  border:0;
+  outline:0;
+  background:transparent;
+  color:var(--green);
+  padding:0 12px;
+  font:12px var(--mono);
+  direction:ltr;
+}
+
+.targetSearch button{
+  width:80px;
+  border:0;
+  border-left:1px solid rgba(255,255,255,.08);
+  background:rgba(255,23,68,.1);
+  color:var(--red);
+  font:10px var(--mono);
+}
+
+/* =========================================================
+   TARGET CORE
+========================================================= */
+
+.targetCore{
+  margin-top:10px;
+  min-height:175px;
+  border:1px solid rgba(255,23,68,.23);
+  background:
+    radial-gradient(circle at 50% 0,rgba(255,0,60,.1),transparent 38%),
+    linear-gradient(135deg,rgba(255,255,255,.025),transparent 50%),
+    rgba(3,4,9,.9);
+  position:relative;
+  overflow:hidden;
+}
+
+.targetCore:before{
+  content:"TARGET CORE";
+  position:absolute;
+  left:18px;
+  top:12px;
+  font:9px var(--mono);
+  letter-spacing:3px;
+  color:rgba(255,255,255,.22);
+}
+
+.targetCore:after{
+  content:"JOKER";
+  position:absolute;
+  left:50%;
+  top:50%;
+  transform:translate(-50%,-45%);
+  font:130px var(--mono);
+  letter-spacing:20px;
+  color:rgba(255,255,255,.012);
+  pointer-events:none;
+}
+
+.coreContent{
+  position:relative;
+  z-index:2;
+  padding:25px;
+  display:grid;
+  grid-template-columns:1fr 1.8fr 1fr;
+  gap:20px;
+  align-items:center;
+}
+
+.coreSide{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:8px;
+}
+
+.coreStat{
+  min-height:55px;
+  padding:8px;
+  border:1px solid var(--line2);
+  background:rgba(0,0,0,.22);
+}
+
+.coreStat label{
+  display:block;
+  color:var(--muted);
+  font:8px var(--mono);
+  direction:ltr;
+}
+
+.coreStat b{
+  display:block;
+  margin-top:4px;
+  color:var(--cyan);
+  font:11px var(--mono);
+  direction:ltr;
   overflow:hidden;
   text-overflow:ellipsis;
 }
 
-.t{color:#444}
-.r{color:var(--red)}
-.g{color:var(--green)}
-.c{color:var(--cyan)}
-.p{color:#b45cff}
-.y{color:var(--yellow)}
-.w{color:#aaa}
+.targetName{
+  text-align:center;
+}
 
-/* ===== RIGHT ===== */
+.targetName small{
+  display:block;
+  color:var(--red);
+  font:10px var(--mono);
+  letter-spacing:4px;
+}
 
-.right{
-  min-height:0;
+.targetName h2{
+  margin:4px 0;
+  font:clamp(40px,5vw,76px) var(--mono);
+  letter-spacing:8px;
+  color:#fff;
+  text-shadow:
+    0 0 15px rgba(255,255,255,.15),
+    0 0 45px rgba(255,23,68,.25);
+}
+
+.targetName p{
+  color:var(--muted);
+  font:11px var(--mono);
+  direction:ltr;
+}
+
+.coreRight{
+  display:flex;
+  justify-content:center;
+}
+
+.threatRing{
+  width:125px;
+  height:125px;
+  border-radius:50%;
+  position:relative;
+  display:grid;
+  place-items:center;
+  border:1px solid rgba(255,23,68,.35);
+  background:
+    radial-gradient(circle,rgba(255,23,68,.12),transparent 58%);
+  box-shadow:
+    inset 0 0 25px rgba(255,23,68,.08),
+    0 0 35px rgba(255,23,68,.08);
+}
+
+.threatRing:before,
+.threatRing:after{
+  content:"";
+  position:absolute;
+  border-radius:50%;
+  border:1px dashed rgba(255,23,68,.35);
+}
+
+.threatRing:before{inset:10px}
+.threatRing:after{inset:25px}
+
+.threatRing b{
+  font:20px var(--mono);
+  color:var(--red);
+}
+
+.threatRing span{
+  position:absolute;
+  bottom:20px;
+  font:7px var(--mono);
+  color:var(--muted);
+}
+
+/* =========================================================
+   WORKSPACE
+========================================================= */
+
+.workspace{
+  margin-top:10px;
+  display:grid;
+  grid-template-columns:270px minmax(0,1fr) 300px;
+  gap:10px;
+}
+
+/* =========================================================
+   PANELS
+========================================================= */
+
+.panel{
+  border:1px solid var(--line);
+  background:var(--panel);
+  backdrop-filter:blur(16px);
+  box-shadow:
+    0 20px 60px rgba(0,0,0,.38),
+    inset 0 1px rgba(255,255,255,.025);
+}
+
+.panelHead{
+  height:42px;
+  border-bottom:1px solid var(--line);
+  padding:0 12px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  font:10px var(--mono);
+  letter-spacing:1px;
+}
+
+.panelHead span:last-child{
+  color:var(--red);
+}
+
+/* =========================================================
+   LEFT HUD
+========================================================= */
+
+.leftHud{
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+}
+
+.radarPanel{
+  min-height:330px;
+}
+
+.radar{
+  height:285px;
+  position:relative;
+  overflow:hidden;
+  background:
+    radial-gradient(circle,rgba(0,255,157,.07),transparent 60%),
+    #020706;
+}
+
+.radarCircle{
+  position:absolute;
+  left:50%;
+  top:50%;
+  width:205px;
+  height:205px;
+  transform:translate(-50%,-50%);
+  border:1px solid rgba(0,255,157,.28);
+  border-radius:50%;
+}
+
+.radarCircle:before,
+.radarCircle:after{
+  content:"";
+  position:absolute;
+  border:1px solid rgba(0,255,157,.15);
+  border-radius:50%;
+}
+
+.radarCircle:before{inset:30px}
+.radarCircle:after{inset:70px}
+
+.radarLine{
+  position:absolute;
+  left:50%;
+  top:50%;
+  width:100px;
+  height:1px;
+  transform-origin:left center;
+  background:linear-gradient(90deg,var(--green),transparent);
+  box-shadow:0 0 10px var(--green);
+  animation:radarSweep 2.5s linear infinite;
+}
+
+.radarCross{
+  position:absolute;
+  background:rgba(0,255,157,.1);
+}
+
+.radarCross.h{
+  width:100%;
+  height:1px;
+  left:0;
+  top:50%;
+}
+
+.radarCross.v{
+  width:1px;
+  height:100%;
+  top:0;
+  left:50%;
+}
+
+.rDot{
+  position:absolute;
+  width:7px;
+  height:7px;
+  border-radius:50%;
+  background:var(--green);
+  box-shadow:0 0 12px var(--green);
+}
+
+.r1{left:25%;top:30%}
+.r2{left:70%;top:23%}
+.r3{left:76%;top:70%}
+.r4{left:30%;top:72%}
+.r5{
+  left:50%;
+  top:50%;
+  background:var(--red);
+  box-shadow:0 0 18px var(--red);
+}
+
+.telemetry{
+  padding:10px;
+}
+
+.telemetryRow{
+  margin-bottom:12px;
+}
+
+.telemetryTop{
+  display:flex;
+  justify-content:space-between;
+  font:9px var(--mono);
+  direction:ltr;
+}
+
+.telemetryTop span:first-child{
+  color:var(--muted);
+}
+
+.tBar{
+  margin-top:5px;
+  height:4px;
+  background:#131620;
+  overflow:hidden;
+}
+
+.tBar span{
+  display:block;
+  height:100%;
+  background:var(--cyan);
+  box-shadow:0 0 10px var(--cyan);
+}
+
+.tBar.green span{
+  background:var(--green);
+  box-shadow:0 0 10px var(--green);
+}
+
+.tBar.red span{
+  background:var(--red);
+  box-shadow:0 0 10px var(--red);
+}
+
+.tBar.purple span{
+  background:var(--purple);
+  box-shadow:0 0 10px var(--purple);
+}
+
+/* =========================================================
+   CENTER TERMINAL
+========================================================= */
+
+.center{
+  min-width:0;
+}
+
+.terminalPanel{
+  height:560px;
   display:flex;
   flex-direction:column;
 }
 
-.map{
-  height:190px;
-  position:relative;
-  overflow:hidden;
-  background:
-    linear-gradient(rgba(0,234,255,.035) 1px,transparent 1px),
-    linear-gradient(90deg,rgba(0,234,255,.035) 1px,transparent 1px);
-  background-size:22px 22px;
+.terminalHead{
+  height:44px;
+  flex:none;
+  border-bottom:1px solid var(--line);
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:0 13px;
+  font:10px var(--mono);
 }
 
-.map:before{
-  content:"";
-  position:absolute;
-  inset:0;
-  background:
-    radial-gradient(circle at 35% 40%,rgba(0,234,255,.16),transparent 3%),
-    radial-gradient(circle at 70% 65%,rgba(255,18,56,.2),transparent 3%),
-    linear-gradient(125deg,transparent 47%,rgba(0,234,255,.08) 48%,transparent 49%);
+.terminalLights{
+  display:flex;
+  gap:6px;
 }
 
-.cross{
-  position:absolute;
-  width:80px;
-  height:80px;
-  border:1px solid rgba(255,18,56,.45);
+.terminalLights i{
+  width:7px;
+  height:7px;
   border-radius:50%;
-  left:65%;
-  top:40%;
-  transform:translate(-50%,-50%);
-  box-shadow:
-    0 0 0 14px rgba(255,18,56,.025),
-    0 0 0 30px rgba(255,18,56,.018);
+  background:var(--red);
+  box-shadow:0 0 10px var(--red);
 }
 
-.cross:before,
-.cross:after{
-  content:"";
-  position:absolute;
+.terminalLights i:nth-child(2){
+  background:var(--yellow);
+  box-shadow:0 0 10px var(--yellow);
+}
+
+.terminalLights i:nth-child(3){
+  background:var(--green);
+  box-shadow:0 0 10px var(--green);
+}
+
+.terminalOutput{
+  flex:1;
+  overflow:auto;
+  padding:14px;
+  direction:ltr;
+  font:11px/1.8 var(--mono);
+  background:
+    radial-gradient(circle at 50% 50%,rgba(0,255,157,.025),transparent 50%),
+    repeating-linear-gradient(
+      0deg,
+      rgba(0,255,157,.012) 0,
+      rgba(0,255,157,.012) 1px,
+      transparent 1px,
+      transparent 4px
+    ),
+    #020504;
+}
+
+.terminalOutput::-webkit-scrollbar,
+.operationTerminal::-webkit-scrollbar{
+  width:4px;
+}
+
+.terminalOutput::-webkit-scrollbar-thumb,
+.operationTerminal::-webkit-scrollbar-thumb{
   background:var(--red);
 }
 
-.cross:before{
-  width:100%;
-  height:1px;
-  top:50%;
+.log{
+  min-height:20px;
 }
 
-.cross:after{
-  height:100%;
-  width:1px;
-  left:50%;
+.logTime{
+  color:#454c5b;
 }
 
-.map-tag{
-  position:absolute;
-  left:14px;
-  bottom:12px;
-  color:#777;
-  font:8px "Share Tech Mono";
+.log.info{color:var(--cyan)}
+.log.good{color:var(--green)}
+.log.warn{color:var(--yellow)}
+.log.danger{color:var(--red)}
+.log.purple{color:var(--purple)}
+.log.white{color:#d8dbe4}
+
+.command{
+  min-height:54px;
+  border-top:1px solid var(--line);
+  display:flex;
+  align-items:center;
+  padding:7px 10px;
   direction:ltr;
+  background:#020306;
+}
+
+.prompt{
+  color:var(--red);
+  font:13px var(--mono);
+  margin-right:7px;
+}
+
+.command input{
+  flex:1;
+  min-width:0;
+  height:38px;
+  border:1px solid rgba(0,234,255,.16);
+  outline:none;
+  background:#010204;
+  color:var(--green);
+  padding:0 10px;
+  font:12px var(--mono);
+}
+
+.command input:focus{
+  border-color:rgba(0,234,255,.55);
+  box-shadow:0 0 20px rgba(0,234,255,.08);
+}
+
+.command button{
+  height:38px;
+  width:80px;
+  margin-left:7px;
+  border:1px solid rgba(0,255,157,.3);
+  background:rgba(0,255,157,.04);
+  color:var(--green);
+  font:10px var(--mono);
+}
+
+.command button:hover{
+  background:var(--green);
+  color:#00150b;
+}
+
+/* =========================================================
+   NETWORK
+========================================================= */
+
+.networkPanel{
+  margin-top:10px;
+  min-height:260px;
+}
+
+.network{
+  height:215px;
+  position:relative;
+  overflow:hidden;
+  background:
+    linear-gradient(rgba(0,234,255,.025) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(0,234,255,.025) 1px,transparent 1px),
+    #020508;
+  background-size:25px 25px;
+}
+
+.network svg{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+}
+
+.netLine{
+  stroke:rgba(0,234,255,.28);
+  stroke-width:1;
+  stroke-dasharray:5 6;
+  animation:dash 2s linear infinite;
+}
+
+.netLine.hot{
+  stroke:rgba(255,23,68,.45);
+}
+
+.netNode{
+  position:absolute;
+  width:34px;
+  height:34px;
+  border-radius:50%;
+  border:1px solid rgba(0,234,255,.55);
+  background:radial-gradient(circle,rgba(0,234,255,.3),rgba(0,234,255,.02));
+  display:grid;
+  place-items:center;
+  font:8px var(--mono);
+  color:var(--cyan);
+  box-shadow:0 0 18px rgba(0,234,255,.12);
+}
+
+.netNode.core{
+  width:50px;
+  height:50px;
+  border-color:var(--red);
+  color:var(--red);
+  background:radial-gradient(circle,rgba(255,23,68,.28),transparent);
+  box-shadow:0 0 25px rgba(255,23,68,.18);
+}
+
+.nn1{left:9%;top:25%}
+.nn2{left:37%;top:13%}
+.nn3{left:73%;top:21%}
+.nn4{left:13%;top:70%}
+.nn5{left:76%;top:67%}
+.nn6{left:47%;top:44%}
+
+/* =========================================================
+   RIGHT
+========================================================= */
+
+.rightHud{
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+}
+
+.devicePanel{
+  min-height:350px;
+}
+
+.holoStage{
+  height:305px;
+  display:grid;
+  place-items:center;
+  position:relative;
+  overflow:hidden;
+  background:
+    radial-gradient(circle at center,rgba(155,77,255,.11),transparent 45%),
+    #03050a;
+}
+
+.holoGrid{
+  position:absolute;
+  inset:0;
+  opacity:.25;
+  background:
+    linear-gradient(rgba(155,77,255,.1) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(155,77,255,.1) 1px,transparent 1px);
+  background-size:22px 22px;
+  transform:perspective(250px) rotateX(55deg) scale(1.4);
+  transform-origin:center bottom;
 }
 
 .device{
-  margin:12px;
-  padding:13px;
-  border:1px solid rgba(255,255,255,.06);
+  position:relative;
+  z-index:2;
+  width:135px;
+  height:250px;
+  border:3px solid #282b36;
+  border-radius:22px;
+  padding:9px;
+  background:#04060a;
+  transform:perspective(800px) rotateY(-10deg) rotateX(2deg);
+  box-shadow:
+    0 0 0 1px #0d0f15,
+    25px 30px 60px rgba(0,0,0,.7),
+    0 0 40px rgba(155,77,255,.12);
+  animation:floatDevice 4s ease-in-out infinite;
+}
+
+.device:before{
+  content:"";
+  position:absolute;
+  top:7px;
+  left:50%;
+  transform:translateX(-50%);
+  width:45px;
+  height:5px;
+  border-radius:8px;
+  background:#181b22;
+}
+
+.deviceScreen{
+  height:100%;
+  padding-top:17px;
+  font:7px var(--mono);
+  direction:ltr;
+  overflow:hidden;
+}
+
+.dHeader{
+  color:var(--green);
+  border-bottom:1px solid rgba(255,255,255,.08);
+  padding-bottom:7px;
+}
+
+.dText{
+  margin-top:8px;
+  color:#60697a;
+}
+
+.dText b{
+  color:var(--cyan);
+}
+
+.miniWave{
+  height:60px;
+  margin-top:12px;
+  position:relative;
+  overflow:hidden;
+  border:1px solid rgba(0,234,255,.1);
+}
+
+.miniWave i{
+  position:absolute;
+  height:1px;
+  width:100%;
+  top:50%;
+  background:var(--cyan);
+  box-shadow:0 0 8px var(--cyan);
+  animation:wave 1s linear infinite;
+}
+
+.sessionPanel{
+  min-height:200px;
+}
+
+.sessionBody{
+  padding:10px;
+}
+
+.sessionCode{
+  padding:12px;
+  border:1px solid rgba(155,77,255,.25);
+  background:rgba(155,77,255,.03);
+  color:var(--purple);
+  font:14px var(--mono);
+  direction:ltr;
+  letter-spacing:2px;
+}
+
+.sessionRows{
+  margin-top:10px;
+}
+
+.sessionRow{
+  display:flex;
+  justify-content:space-between;
+  padding:8px 0;
+  border-bottom:1px dashed rgba(255,255,255,.06);
+  font:9px var(--mono);
+}
+
+.sessionRow span{
+  color:var(--muted);
+}
+
+.sessionRow b{
+  color:#fff;
+}
+
+/* =========================================================
+   MODULE MATRIX
+========================================================= */
+
+.modulesPanel{
+  margin-top:10px;
+}
+
+.moduleGrid{
+  padding:10px;
+  display:grid;
+  grid-template-columns:repeat(5,1fr);
+  gap:7px;
+}
+
+.module{
+  min-height:76px;
+  border:1px solid rgba(255,255,255,.075);
+  background:
+    linear-gradient(145deg,rgba(255,255,255,.035),rgba(0,0,0,.32));
+  color:#fff;
+  position:relative;
+  text-align:left;
+  padding:10px;
+  overflow:hidden;
+  transition:.22s;
+}
+
+.module:before{
+  content:"";
+  position:absolute;
+  top:0;
+  left:0;
+  width:3px;
+  height:100%;
+  background:var(--c);
+  box-shadow:0 0 15px var(--c);
+}
+
+.module:hover{
+  transform:translateY(-3px);
+  border-color:var(--c);
+  box-shadow:0 10px 30px rgba(0,0,0,.35),0 0 20px color-mix(in srgb,var(--c) 12%,transparent);
+}
+
+.moduleIcon{
+  font-size:18px;
+}
+
+.module b{
+  display:block;
+  margin-top:4px;
+  font:10px var(--mono);
+  direction:ltr;
+}
+
+.module small{
+  color:var(--muted);
+  font:7px var(--mono);
+}
+
+/* =========================================================
+   EVENT STREAM
+========================================================= */
+
+.events{
+  margin-top:10px;
+  border:1px solid var(--line);
+  background:rgba(2,4,8,.86);
+  display:flex;
+  align-items:center;
+  height:42px;
+  overflow:hidden;
+}
+
+.eventLabel{
+  height:100%;
+  display:flex;
+  align-items:center;
+  padding:0 13px;
+  color:var(--red);
+  font:9px var(--mono);
+  border-left:1px solid var(--line);
+  white-space:nowrap;
+}
+
+.eventTrack{
+  direction:ltr;
+  white-space:nowrap;
+  animation:marquee 25s linear infinite;
+  font:9px var(--mono);
+  color:var(--muted);
+}
+
+.eventTrack span{
+  margin:0 25px;
+}
+
+.eventTrack b{
+  color:var(--green);
+}
+
+/* =========================================================
+   OPERATION MODAL
+========================================================= */
+
+.overlay{
+  position:fixed;
+  inset:0;
+  z-index:7000;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  padding:15px;
+  background:rgba(0,0,0,.9);
+  backdrop-filter:blur(14px);
+}
+
+.overlay.show{
+  display:flex;
+}
+
+.operation{
+  width:min(1000px,100%);
+  max-height:92vh;
+  overflow:auto;
+  border:1px solid rgba(255,23,68,.45);
+  background:
+    radial-gradient(circle at 90% 0,rgba(255,0,60,.09),transparent 35%),
+    #030509;
+  box-shadow:
+    0 0 100px rgba(255,0,60,.14),
+    inset 0 0 80px rgba(255,0,60,.025);
+  animation:modalIn .25s ease;
+}
+
+.opHeader{
+  min-height:70px;
+  padding:10px 16px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  border-bottom:1px solid var(--line);
+}
+
+.opBrand{
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+
+.opIcon{
+  width:45px;
+  height:45px;
+  display:grid;
+  place-items:center;
+  border:1px solid var(--red);
+  color:var(--red);
+  font-size:22px;
+  box-shadow:0 0 20px rgba(255,23,68,.1);
+}
+
+.opTitle h2{
+  font:17px var(--mono);
+  direction:ltr;
+}
+
+.opTitle small{
+  color:var(--muted);
+  font:8px var(--mono);
+  direction:ltr;
+}
+
+.closeOp{
+  width:40px;
+  height:40px;
+  border:1px solid rgba(255,23,68,.3);
+  background:rgba(255,0,60,.04);
+  color:var(--red);
+  font-size:20px;
+}
+
+.closeOp:hover{
+  background:var(--red);
+  color:white;
+}
+
+.opBody{
+  padding:15px;
+}
+
+.opGrid{
+  display:grid;
+  grid-template-columns:1.2fr .8fr;
+  gap:10px;
+}
+
+.opTerminalBox,
+.opDataBox{
+  border:1px solid var(--line);
+  background:rgba(0,0,0,.28);
+}
+
+.boxTitle{
+  padding:10px;
+  border-bottom:1px solid var(--line);
+  color:var(--cyan);
+  font:9px var(--mono);
+  direction:ltr;
+}
+
+.operationTerminal{
+  height:260px;
+  overflow:auto;
+  padding:12px;
+  direction:ltr;
+  font:10px/1.9 var(--mono);
+}
+
+.opData{
+  padding:10px;
+}
+
+.dataItem{
+  padding:10px;
+  margin-bottom:7px;
+  border:1px solid rgba(255,255,255,.05);
   background:rgba(255,255,255,.018);
 }
 
-.device-head{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
+.dataItem label{
+  display:block;
+  color:var(--muted);
+  font:8px var(--mono);
   direction:ltr;
 }
 
-.phone{
-  width:36px;
-  height:58px;
-  border:2px solid #666;
-  border-radius:7px;
-  position:relative;
-  box-shadow:0 0 15px rgba(0,234,255,.08);
-}
-
-.phone:before{
-  content:"";
-  position:absolute;
-  width:13px;
-  height:2px;
-  background:#555;
-  top:4px;
-  left:50%;
-  transform:translateX(-50%);
-}
-
-.phone:after{
-  content:"";
-  position:absolute;
-  width:5px;
-  height:5px;
-  border:1px solid #555;
-  border-radius:50%;
-  bottom:3px;
-  left:50%;
-  transform:translateX(-50%);
-}
-
-.device-name{
-  text-align:right;
-}
-
-.device-name strong{
-  display:block;
-  font:12px "Share Tech Mono";
-  color:#ddd;
-  direction:ltr;
-}
-
-.device-name span{
-  color:#555;
-  font:8px "Share Tech Mono";
-}
-
-.stats{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:6px;
-  margin:12px;
-}
-
-.stat{
-  min-height:50px;
-  border:1px solid rgba(255,255,255,.05);
-  padding:8px;
-  background:rgba(255,255,255,.015);
-}
-
-.stat label{
-  display:block;
-  color:#555;
-  font:7px "Share Tech Mono";
-}
-
-.stat strong{
+.dataItem b{
   display:block;
   margin-top:3px;
-  color:#bbb;
-  font:10px "Share Tech Mono";
+  color:#fff;
+  font:10px var(--mono);
   direction:ltr;
 }
 
-.stat .red{
-  color:var(--red);
+.opProgress{
+  margin-top:10px;
+  border:1px solid var(--line);
+  padding:11px;
 }
 
-/* ===== FOOTER CONTROLS ===== */
-
-.controls{
-  height:54px;
-  min-height:54px;
+.opProgressTop{
   display:flex;
-  gap:8px;
+  justify-content:space-between;
+  font:9px var(--mono);
+  direction:ltr;
 }
 
-button{
-  flex:1;
-  border:1px solid rgba(255,18,56,.35);
-  background:rgba(0,0,0,.6);
-  color:#bbb;
-  font:700 10px "Cairo";
-  cursor:pointer;
-  transition:.2s;
+.progress{
+  height:7px;
+  margin-top:7px;
+  background:#10131b;
+  overflow:hidden;
 }
 
-button:hover{
-  color:#fff;
-  border-color:var(--red);
-  box-shadow:0 0 20px rgba(255,18,56,.16);
+.progress span{
+  display:block;
+  height:100%;
+  width:0;
+  background:linear-gradient(90deg,var(--purple),var(--red));
+  box-shadow:0 0 18px var(--red);
 }
 
-button.main{
-  color:white;
-  background:linear-gradient(
-    90deg,
-    rgba(255,18,56,.18),
-    rgba(255,18,56,.03)
-  );
+.opResult{
+  display:none;
+  margin-top:10px;
+  padding:13px;
+  border:1px solid rgba(0,255,157,.3);
+  background:rgba(0,255,157,.025);
 }
 
-/* ===== ALERT ===== */
+.opResult.show{
+  display:block;
+}
 
-.flash{
+.opResult h3{
+  color:var(--green);
+  font:15px var(--mono);
+  direction:ltr;
+}
+
+/* =========================================================
+   COMMAND PALETTE
+========================================================= */
+
+.palette{
   position:fixed;
   inset:0;
-  z-index:100;
-  pointer-events:none;
-  opacity:0;
-  background:rgba(255,0,35,.13);
+  z-index:8000;
+  display:none;
+  align-items:flex-start;
+  justify-content:center;
+  padding-top:12vh;
+  background:rgba(0,0,0,.75);
+  backdrop-filter:blur(10px);
 }
 
-.flash.on{
-  animation:flash .35s steps(2) 3;
+.palette.show{
+  display:flex;
 }
 
-@keyframes flash{
-  0%,100%{opacity:0}
-  50%{opacity:1}
+.paletteBox{
+  width:min(650px,92%);
+  border:1px solid rgba(0,234,255,.3);
+  background:#03060b;
+  box-shadow:0 30px 100px rgba(0,0,0,.8),0 0 40px rgba(0,234,255,.08);
 }
 
-/* ===== MOBILE ===== */
+.paletteInput{
+  width:100%;
+  height:55px;
+  border:0;
+  border-bottom:1px solid var(--line);
+  outline:0;
+  padding:0 15px;
+  background:#020407;
+  color:var(--cyan);
+  font:14px var(--mono);
+  direction:ltr;
+}
 
-@media(max-width:950px){
+.paletteItems{
+  max-height:360px;
+  overflow:auto;
+}
 
-  body{
+.paletteItem{
+  padding:12px 15px;
+  border-bottom:1px solid rgba(255,255,255,.04);
+  display:flex;
+  justify-content:space-between;
+  cursor:pointer;
+  direction:ltr;
+}
+
+.paletteItem:hover{
+  background:rgba(0,234,255,.05);
+}
+
+.paletteItem b{
+  font:11px var(--mono);
+  color:#fff;
+}
+
+.paletteItem span{
+  color:var(--muted);
+  font:9px var(--mono);
+}
+
+/* =========================================================
+   ALERT
+========================================================= */
+
+.alert{
+  position:fixed;
+  inset:0;
+  z-index:9500;
+  display:none;
+  place-items:center;
+  background:rgba(255,0,0,.08);
+}
+
+.alert.show{
+  display:grid;
+  animation:alertFlash .15s infinite alternate;
+}
+
+.alertBox{
+  width:min(620px,90%);
+  border:2px solid var(--red);
+  padding:30px;
+  text-align:center;
+  background:rgba(3,0,3,.97);
+  box-shadow:
+    0 0 50px rgba(255,0,50,.6),
+    0 0 160px rgba(255,0,50,.15);
+}
+
+.alertBox .symbol{
+  font-size:38px;
+}
+
+.alertBox h2{
+  margin-top:8px;
+  color:var(--red);
+  font:28px var(--mono);
+  letter-spacing:4px;
+}
+
+.alertBox p{
+  margin-top:7px;
+  color:#aaa;
+  font-size:11px;
+}
+
+.alertBox button{
+  margin-top:18px;
+  padding:10px 25px;
+  border:1px solid var(--red);
+  background:rgba(255,23,68,.07);
+  color:#fff;
+  font:10px var(--mono);
+}
+
+/* =========================================================
+   ANIMATION
+========================================================= */
+
+@keyframes pulse{
+  50%{opacity:.3;transform:scale(.65)}
+}
+
+@keyframes flicker{
+  0%,18%,22%,63%,100%{opacity:1}
+  20%,60%{opacity:.65}
+}
+
+@keyframes bootLine{
+  to{opacity:1}
+}
+
+@keyframes radarSweep{
+  from{transform:rotate(0)}
+  to{transform:rotate(360deg)}
+}
+
+@keyframes dash{
+  to{stroke-dashoffset:-30}
+}
+
+@keyframes floatDevice{
+  0%,100%{transform:perspective(800px) rotateY(-10deg) translateY(0)}
+  50%{transform:perspective(800px) rotateY(-5deg) translateY(-8px)}
+}
+
+@keyframes wave{
+  0%{transform:translateY(-30px) scaleX(.8)}
+  25%{transform:translateY(12px) scaleX(1.2)}
+  50%{transform:translateY(-20px) scaleX(.9)}
+  75%{transform:translateY(25px) scaleX(1.1)}
+  100%{transform:translateY(-30px) scaleX(.8)}
+}
+
+@keyframes modalIn{
+  from{opacity:0;transform:scale(.96) translateY(15px)}
+  to{opacity:1;transform:none}
+}
+
+@keyframes marquee{
+  from{transform:translateX(0)}
+  to{transform:translateX(-50%)}
+}
+
+@keyframes alertFlash{
+  from{background:rgba(255,0,0,.02)}
+  to{background:rgba(255,0,0,.25)}
+}
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media(max-width:1200px){
+
+  .workspace{
+    grid-template-columns:230px minmax(0,1fr);
+  }
+
+  .rightHud{
+    grid-column:1/-1;
+    display:grid;
+    grid-template-columns:1fr 1fr;
+  }
+
+  .moduleGrid{
+    grid-template-columns:repeat(4,1fr);
+  }
+}
+
+@media(max-width:850px){
+
+  .app{
+    padding:7px;
+  }
+
+  .top{
+    height:62px;
+  }
+
+  .topRight{
+    display:none;
+  }
+
+  .brand h1{
+    font-size:18px;
+  }
+
+  .brand small{
+    font-size:7px;
+  }
+
+  .commandStrip{
+    grid-template-columns:1fr;
+  }
+
+  .operatorBox{
     overflow:auto;
   }
 
-  .app{
-    min-height:100vh;
-    height:auto;
+  .targetSearch{
+    min-width:0;
+    width:100%;
+    height:48px;
   }
 
-  .header{
-    height:78px;
-    min-height:78px;
-    padding:10px 14px;
+  .coreContent{
+    grid-template-columns:1fr;
+    padding:25px 15px;
+    gap:10px;
   }
 
-  .logo h1{
-    font-size:24px;
-    letter-spacing:5px;
+  .coreSide{
+    grid-template-columns:repeat(4,1fr);
   }
 
-  .logo-mark{
-    width:45px;
-    height:45px;
-    font-size:22px;
-  }
-
-  .header-right{
+  .coreRight{
     display:none;
+  }
+
+  .targetCore{
+    min-height:290px;
+  }
+
+  .targetName h2{
+    font-size:44px;
   }
 
   .workspace{
     grid-template-columns:1fr;
-    min-height:calc(100vh - 78px);
   }
 
-  .left,
-  .right{
+  .rightHud{
+    grid-column:auto;
+    display:grid;
+    grid-template-columns:1fr;
+  }
+
+  .terminalPanel{
+    height:500px;
+  }
+
+  .moduleGrid{
+    grid-template-columns:repeat(2,1fr);
+  }
+
+  .opGrid{
+    grid-template-columns:1fr;
+  }
+}
+
+@media(max-width:500px){
+
+  .operatorBox{
+    gap:9px;
+  }
+
+  .opItem:nth-child(2),
+  .opItem:nth-child(3){
     display:none;
   }
 
-  .signal{
-    height:105px;
-    min-height:105px;
-    padding:15px;
+  .coreSide{
+    grid-template-columns:1fr 1fr;
   }
 
-  .signal h2{
-    font-size:18px;
+  .targetName h2{
+    font-size:36px;
+    letter-spacing:4px;
   }
 
-  .signal-number strong{
-    font-size:27px;
+  .terminalPanel{
+    height:470px;
   }
 
-  .terminal{
-    min-height:550px;
+  .command{
+    flex-wrap:wrap;
+  }
+
+  .prompt{
+    width:100%;
+  }
+
+  .command input{
+    width:calc(100% - 88px);
+  }
+
+  .command button{
+    width:80px;
+  }
+
+  .bootLogo{
+    font-size:45px;
+    letter-spacing:7px;
   }
 }
 </style>
@@ -766,108 +1613,264 @@ button.main{
 
 <body>
 
-<div class="flash" id="flash"></div>
+<!-- =====================================================
+     BOOT
+===================================================== -->
 
-<div class="app">
+<div class="boot" id="boot">
 
-  <!-- HEADER -->
-  <header class="header">
+  <div class="bootCore">
 
-    <div class="logo">
+    <div class="bootLogo">JOKER</div>
 
-      <div class="logo-mark">🃏</div>
+    <div class="bootSub">
+      CYBER COMMAND // INITIALIZING
+    </div>
+
+    <div class="bootLines" id="bootLines"></div>
+
+    <div class="bootProgress">
+      <span id="bootProgress"></span>
+    </div>
+
+  </div>
+
+</div>
+
+
+<!-- =====================================================
+     APP
+===================================================== -->
+
+<div class="app" id="app">
+
+  <!-- TOP -->
+  <header class="top">
+
+    <div class="brand">
+
+      <div class="brandIcon">🃏</div>
 
       <div>
         <h1>JOKER</h1>
-        <p>DARK NODE // SYSTEM INTERFACE</p>
+        <small>CYBER COMMAND // BLACK OPS INTERFACE</small>
       </div>
 
     </div>
 
-    <div class="header-right">
+    <div class="topRight">
 
-      <div class="live">
-        <i></i>
-        LIVE MONITOR
-      </div>
+      <span class="online">
+        <i></i>CORE ONLINE
+      </span>
 
-      <div style="color:#555;font-size:10px">
+      <span>
+        SESSION:
+        <b id="topSession">JKR-7A91</b>
+      </span>
+
+      <span class="topClock" id="clock">
         00:00:00
-      </div>
+      </span>
 
     </div>
 
   </header>
 
 
+  <!-- COMMAND STRIP -->
+  <div class="commandStrip">
+
+    <div class="operatorBox">
+
+      <div class="opItem">
+        <label>OPERATOR</label>
+        <b>JOKER-01</b>
+      </div>
+
+      <div class="opItem">
+        <label>CORE</label>
+        <b>BLACK-OPS</b>
+      </div>
+
+      <div class="opItem">
+        <label>ENCRYPTION</label>
+        <b>AES-X / LOCAL</b>
+      </div>
+
+      <div class="opItem">
+        <label>NODE LOAD</label>
+        <b id="nodeLoad">41%</b>
+      </div>
+
+    </div>
+
+    <div class="targetSearch">
+
+      <input
+        id="targetInput"
+        value="VANTA-77A1"
+        placeholder="TARGET-ID..."
+        autocomplete="off"
+      >
+
+      <button onclick="loadTarget()">
+        LOAD
+      </button>
+
+    </div>
+
+  </div>
+
+
+  <!-- TARGET CORE -->
+  <section class="targetCore">
+
+    <div class="coreContent">
+
+      <div class="coreSide">
+
+        <div class="coreStat">
+          <label>TARGET ID</label>
+          <b id="targetId">VANTA-77A1</b>
+        </div>
+
+        <div class="coreStat">
+          <label>ALIAS</label>
+          <b id="targetAlias">@vanta_node</b>
+        </div>
+
+        <div class="coreStat">
+          <label>DEVICE</label>
+          <b id="targetDevice">ANDROID-X</b>
+        </div>
+
+        <div class="coreStat">
+          <label>NODE</label>
+          <b id="targetNode">NODE-EGY-07</b>
+        </div>
+
+      </div>
+
+
+      <div class="targetName">
+
+        <small>// TARGET LOCKED //</small>
+
+        <h2 id="targetName">
+          VANTA
+        </h2>
+
+        <p id="fingerprint">
+          FP: 7A91-C4E2-91FF-00D8
+        </p>
+
+      </div>
+
+
+      <div class="coreRight">
+
+        <div class="threatRing">
+
+          <b>CRITICAL</b>
+          <span>THREAT LEVEL</span>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- WORKSPACE -->
   <main class="workspace">
 
 
-    <!-- LEFT -->
-    <aside class="box left">
+    <!-- LEFT HUD -->
+    <aside class="leftHud">
 
-      <div class="title">
-        <b>هوية الإشارة</b>
-        SIGNAL IDENTITY
-      </div>
 
-      <div class="identity">
+      <section class="panel radarPanel">
 
-        <div class="identity-symbol">🃏</div>
-
-        <div class="identity-name">
-          JOKER NODE
+        <div class="panelHead">
+          <span>RADAR MATRIX</span>
+          <span>LIVE</span>
         </div>
 
-        <div class="identity-sub">
-          DARK-CHANNEL / ACTIVE
+        <div class="radar">
+
+          <div class="radarCircle"></div>
+
+          <div class="radarCross h"></div>
+          <div class="radarCross v"></div>
+
+          <div class="radarLine"></div>
+
+          <div class="rDot r1"></div>
+          <div class="rDot r2"></div>
+          <div class="rDot r3"></div>
+          <div class="rDot r4"></div>
+          <div class="rDot r5"></div>
+
         </div>
 
-      </div>
+      </section>
 
-      <div class="rows">
 
-        <div class="row">
-          <label>EVENT ID</label>
-          <span class="red" id="eventId">JK-000000</span>
+      <section class="panel">
+
+        <div class="panelHead">
+          <span>TELEMETRY</span>
+          <span>REALTIME</span>
         </div>
 
-        <div class="row">
-          <label>REMOTE ID</label>
-          <span id="remoteId">RX-7A91F2</span>
+        <div class="telemetry">
+
+          <div class="telemetryRow">
+            <div class="telemetryTop">
+              <span>SIGNAL</span>
+              <b id="signal">98.7%</b>
+            </div>
+            <div class="tBar">
+              <span id="signalBar" style="width:98%"></span>
+            </div>
+          </div>
+
+          <div class="telemetryRow">
+            <div class="telemetryTop">
+              <span>PACKETS</span>
+              <b id="packets">18,492</b>
+            </div>
+            <div class="tBar green">
+              <span id="packetBar" style="width:72%"></span>
+            </div>
+          </div>
+
+          <div class="telemetryRow">
+            <div class="telemetryTop">
+              <span>LATENCY</span>
+              <b id="latency">18ms</b>
+            </div>
+            <div class="tBar purple">
+              <span id="latencyBar" style="width:35%"></span>
+            </div>
+          </div>
+
+          <div class="telemetryRow">
+            <div class="telemetryTop">
+              <span>NODE LOAD</span>
+              <b id="load">41%</b>
+            </div>
+            <div class="tBar red">
+              <span id="loadBar" style="width:41%"></span>
+            </div>
+          </div>
+
         </div>
 
-        <div class="row">
-          <label>SOURCE</label>
-          <span id="source">185.24.71.91</span>
-        </div>
-
-        <div class="row">
-          <label>LOCATION</label>
-          <span class="cyan" id="location">31.1124° N / 29.8811° E</span>
-        </div>
-
-        <div class="row">
-          <label>DEVICE</label>
-          <span id="device">MOBILE NODE / ANDROID</span>
-        </div>
-
-        <div class="row">
-          <label>SESSION</label>
-          <span id="session">X9-OMEGA-41</span>
-        </div>
-
-        <div class="row">
-          <label>CHANNEL</label>
-          <span class="red">DARK / UNKNOWN</span>
-        </div>
-
-        <div class="row">
-          <label>STATUS</label>
-          <span class="green">MONITORING</span>
-        </div>
-
-      </div>
+      </section>
 
     </aside>
 
@@ -875,132 +1878,290 @@ button.main{
     <!-- CENTER -->
     <section class="center">
 
-      <div class="signal">
 
-        <div>
-          <small>JOKER // SECURITY SIGNAL</small>
-          <h2 id="headline">إشارة غير معروفة دخلت النطاق</h2>
-          <p id="description">
-            مراقبة النشاط الجاري...
-          </p>
-        </div>
+      <section class="panel terminalPanel">
 
-        <div class="signal-number">
-          <strong id="percent">07%</strong>
-          <span>THREAT SIGNAL</span>
-        </div>
+        <div class="terminalHead">
 
-      </div>
+          <div>
+            JOKER TERMINAL
+            <span style="color:var(--muted)">
+              // COMMAND PROCESSOR
+            </span>
+          </div>
 
-
-      <div class="box terminal">
-
-        <div class="term-top">
-
-          <div class="dots">
+          <div class="terminalLights">
             <i></i>
             <i></i>
             <i></i>
           </div>
 
-          <div class="path">
-            joker@dark-node:~$
-          </div>
+        </div>
+
+
+        <div class="terminalOutput" id="terminalOutput"></div>
+
+
+        <div class="command">
+
+          <span class="prompt">
+            joker@core:~$
+          </span>
+
+          <input
+            id="commandInput"
+            placeholder="type 'help'..."
+            autocomplete="off"
+          >
+
+          <button onclick="executeCommand()">
+            EXECUTE
+          </button>
 
         </div>
 
-        <div class="console" id="console"></div>
-
-      </div>
+      </section>
 
 
-      <div class="controls">
+      <!-- NETWORK -->
+      <section class="panel networkPanel">
 
-        <button class="main" id="start">
-          ⚡ START SEQUENCE
-        </button>
+        <div class="panelHead">
+          <span>NETWORK TOPOLOGY</span>
+          <span>NODE GRAPH</span>
+        </div>
 
-        <button id="reset">
-          RESET
-        </button>
+        <div class="network">
+
+          <svg viewBox="0 0 1000 400" preserveAspectRatio="none">
+
+            <line class="netLine" x1="100" y1="130" x2="470" y2="200"/>
+            <line class="netLine" x1="370" y1="80" x2="470" y2="200"/>
+            <line class="netLine" x1="760" y1="120" x2="520" y2="200"/>
+            <line class="netLine hot" x1="140" y1="300" x2="470" y2="200"/>
+            <line class="netLine hot" x1="770" y1="290" x2="520" y2="200"/>
+
+          </svg>
+
+          <div class="netNode nn1">N01</div>
+          <div class="netNode nn2">N07</div>
+          <div class="netNode nn3">N19</div>
+          <div class="netNode nn4">N24</div>
+          <div class="netNode nn5">N31</div>
+          <div class="netNode core nn6">CORE</div>
+
+        </div>
+
+      </section>
+
+
+      <!-- MODULES -->
+      <section class="panel modulesPanel">
+
+        <div class="panelHead">
+          <span>OPERATION MATRIX</span>
+          <span>10 MODULES</span>
+        </div>
+
+        <div class="moduleGrid">
+
+          <button class="module" style="--c:#1877f2" onclick="openOperation('facebook')">
+            <div class="moduleIcon">ⓕ</div>
+            <b>FACEBOOK</b>
+            <small>SOCIAL NODE</small>
+          </button>
+
+          <button class="module" style="--c:#ff3d81" onclick="openOperation('instagram')">
+            <div class="moduleIcon">◎</div>
+            <b>INSTAGRAM</b>
+            <small>MEDIA NODE</small>
+          </button>
+
+          <button class="module" style="--c:#00eaff" onclick="openOperation('google')">
+            <div class="moduleIcon">G</div>
+            <b>GOOGLE</b>
+            <small>SEARCH NODE</small>
+          </button>
+
+          <button class="module" style="--c:#ffd43b" onclick="openOperation('email')">
+            <div class="moduleIcon">✉</div>
+            <b>EMAIL</b>
+            <small>MAIL NODE</small>
+          </button>
+
+          <button class="module" style="--c:#00ff9d" onclick="openOperation('device')">
+            <div class="moduleIcon">▣</div>
+            <b>DEVICE</b>
+            <small>DEVICE NODE</small>
+          </button>
+
+          <button class="module" style="--c:#9b4dff" onclick="openOperation('files')">
+            <div class="moduleIcon">▤</div>
+            <b>FILES</b>
+            <small>FILE INDEX</small>
+          </button>
+
+          <button class="module" style="--c:#ff1744" onclick="openOperation('camera')">
+            <div class="moduleIcon">◉</div>
+            <b>CAMERA</b>
+            <small>VISUAL NODE</small>
+          </button>
+
+          <button class="module" style="--c:#00eaff" onclick="openOperation('location')">
+            <div class="moduleIcon">⌖</div>
+            <b>GEO</b>
+            <small>GEO MATRIX</small>
+          </button>
+
+          <button class="module" style="--c:#ff1744" onclick="openOperation('trace')">
+            <div class="moduleIcon">⌁</div>
+            <b>TRACE</b>
+            <small>ROUTE NODE</small>
+          </button>
+
+          <button class="module" style="--c:#ff1744" onclick="openOperation('core')">
+            <div class="moduleIcon">⚠</div>
+            <b>CORE</b>
+            <small>CONTROL NODE</small>
+          </button>
+
+        </div>
+
+      </section>
+
+
+      <!-- EVENTS -->
+      <div class="events">
+
+        <div class="eventLabel">
+          EVENT STREAM
+        </div>
+
+        <div class="eventTrack">
+          <span>NODE-01 <b>ONLINE</b></span>
+          <span>SESSION <b>STABLE</b></span>
+          <span>ROUTE <b>LOCKED</b></span>
+          <span>CORE <b>ACTIVE</b></span>
+          <span>TARGET <b>INDEXED</b></span>
+          <span>TELEMETRY <b>LIVE</b></span>
+        </div>
 
       </div>
 
     </section>
 
 
-    <!-- RIGHT -->
-    <aside class="box right">
+    <!-- RIGHT HUD -->
+    <aside class="rightHud">
 
-      <div class="title">
-        <b>الموقع والنظام</b>
-        NODE TRACK
-      </div>
 
-      <div class="map">
+      <section class="panel devicePanel">
 
-        <div class="cross"></div>
-
-        <div class="map-tag">
-          SIGNAL MAP // LIVE GRID
+        <div class="panelHead">
+          <span>HOLOGRAPHIC DEVICE</span>
+          <span>LINKED</span>
         </div>
 
-      </div>
+        <div class="holoStage">
 
+          <div class="holoGrid"></div>
 
-      <div class="device">
+          <div class="device">
 
-        <div class="device-head">
+            <div class="deviceScreen">
 
-          <div class="phone"></div>
+              <div class="dHeader">
+                JOKER // DEVICE LINK
+              </div>
 
-          <div class="device-name">
-            <strong id="phoneName">
-              UNKNOWN DEVICE
-            </strong>
-            <span>
-              MOBILE SIGNAL
-            </span>
+              <div class="dText">
+                MODEL:
+                <b id="deviceModel">ANDROID-X</b>
+              </div>
+
+              <div class="dText">
+                SESSION:
+                <b id="deviceSession">A91X</b>
+              </div>
+
+              <div class="dText">
+                BATTERY:
+                <b id="battery">87%</b>
+              </div>
+
+              <div class="dText">
+                SIGNAL:
+                <b>STRONG</b>
+              </div>
+
+              <div class="miniWave">
+                <i></i>
+              </div>
+
+              <div class="dText">
+                CORE:
+                <b>JKR-01</b>
+              </div>
+
+              <div class="dText">
+                STATUS:
+                <b>ONLINE</b>
+              </div>
+
+            </div>
+
           </div>
 
         </div>
 
-      </div>
+      </section>
 
 
-      <div class="stats">
+      <section class="panel sessionPanel">
 
-        <div class="stat">
-          <label>PACKETS</label>
-          <strong id="packets">0000</strong>
+        <div class="panelHead">
+          <span>SESSION CORE</span>
+          <span>LOCKED</span>
         </div>
 
-        <div class="stat">
-          <label>ALERTS</label>
-          <strong class="red" id="alerts">00</strong>
+        <div class="sessionBody">
+
+          <div class="sessionCode" id="sessionCode">
+            JKR-7A91-C4E2
+          </div>
+
+          <div class="sessionRows">
+
+            <div class="sessionRow">
+              <span>MODE</span>
+              <b>BLACK OPS</b>
+            </div>
+
+            <div class="sessionRow">
+              <span>NODE</span>
+              <b id="sessionNode">NODE-EGY-07</b>
+            </div>
+
+            <div class="sessionRow">
+              <span>STATUS</span>
+              <b style="color:var(--green)">ACTIVE</b>
+            </div>
+
+            <div class="sessionRow">
+              <span>THREAT</span>
+              <b style="color:var(--red)">CRITICAL</b>
+            </div>
+
+            <div class="sessionRow">
+              <span>FINGERPRINT</span>
+              <b id="sessionFingerprint">7A91-C4E2</b>
+            </div>
+
+          </div>
+
         </div>
 
-        <div class="stat">
-          <label>TRACE</label>
-          <strong id="trace">WAITING</strong>
-        </div>
-
-        <div class="stat">
-          <label>FIREWALL</label>
-          <strong>ACTIVE</strong>
-        </div>
-
-        <div class="stat">
-          <label>SESSION</label>
-          <strong id="session2">X9-OMEGA</strong>
-        </div>
-
-        <div class="stat">
-          <label>NODE</label>
-          <strong class="red">JOKER</strong>
-        </div>
-
-      </div>
+      </section>
 
     </aside>
 
@@ -1009,458 +2170,1376 @@ button.main{
 </div>
 
 
+<!-- =====================================================
+     OPERATION OVERLAY
+===================================================== -->
+
+<div class="overlay" id="operationOverlay">
+
+  <div class="operation">
+
+    <div class="opHeader">
+
+      <div class="opBrand">
+
+        <div class="opIcon" id="opIcon">◉</div>
+
+        <div class="opTitle">
+          <h2 id="opTitle">OPERATION</h2>
+          <small id="opSubtitle">JOKER MODULE</small>
+        </div>
+
+      </div>
+
+      <button class="closeOp" onclick="closeOperation()">×</button>
+
+    </div>
+
+
+    <div class="opBody">
+
+      <div class="opGrid">
+
+        <div class="opTerminalBox">
+
+          <div class="boxTitle">
+            OPERATION TERMINAL
+          </div>
+
+          <div class="operationTerminal" id="operationTerminal"></div>
+
+        </div>
+
+
+        <div class="opDataBox">
+
+          <div class="boxTitle">
+            TARGET PARAMETERS
+          </div>
+
+          <div class="opData">
+
+            <div class="dataItem">
+              <label>TARGET</label>
+              <b id="opTarget">VANTA-77A1</b>
+            </div>
+
+            <div class="dataItem">
+              <label>MODULE</label>
+              <b id="opModule">FACEBOOK</b>
+            </div>
+
+            <div class="dataItem">
+              <label>SESSION</label>
+              <b id="opSession">JKR-91X</b>
+            </div>
+
+            <div class="dataItem">
+              <label>NODE</label>
+              <b id="opNode">NODE-EGY-07</b>
+            </div>
+
+            <div class="dataItem">
+              <label>MODE</label>
+              <b style="color:var(--red)">LOCAL CINEMATIC</b>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <div class="opProgress">
+
+        <div class="opProgressTop">
+          <span id="progressText">
+            INITIALIZING...
+          </span>
+
+          <b id="progressNumber">
+            0%
+          </b>
+        </div>
+
+        <div class="progress">
+          <span id="progressBar"></span>
+        </div>
+
+      </div>
+
+
+      <div class="opResult" id="opResult">
+
+        <h3 id="resultTitle">
+          ✓ OPERATION COMPLETE
+        </h3>
+
+        <div id="resultData"></div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<!-- =====================================================
+     COMMAND PALETTE
+===================================================== -->
+
+<div class="palette" id="palette">
+
+  <div class="paletteBox">
+
+    <input
+      class="paletteInput"
+      id="paletteInput"
+      placeholder="search operation..."
+      autocomplete="off"
+    >
+
+    <div class="paletteItems" id="paletteItems">
+
+      <div class="paletteItem" onclick="paletteRun('scan')">
+        <b>SCAN TARGET</b>
+        <span>scan</span>
+      </div>
+
+      <div class="paletteItem" onclick="paletteRun('facebook')">
+        <b>FACEBOOK NODE</b>
+        <span>facebook</span>
+      </div>
+
+      <div class="paletteItem" onclick="paletteRun('instagram')">
+        <b>INSTAGRAM NODE</b>
+        <span>instagram</span>
+      </div>
+
+      <div class="paletteItem" onclick="paletteRun('google')">
+        <b>GOOGLE NODE</b>
+        <span>google</span>
+      </div>
+
+      <div class="paletteItem" onclick="paletteRun('email')">
+        <b>EMAIL NODE</b>
+        <span>email</span>
+      </div>
+
+      <div class="paletteItem" onclick="paletteRun('files')">
+        <b>FILE INDEX</b>
+        <span>files</span>
+      </div>
+
+      <div class="paletteItem" onclick="paletteRun('device')">
+        <b>DEVICE NODE</b>
+        <span>device</span>
+      </div>
+
+      <div class="paletteItem" onclick="paletteRun('camera')">
+        <b>CAMERA NODE</b>
+        <span>camera</span>
+      </div>
+
+      <div class="paletteItem" onclick="paletteRun('location')">
+        <b>GEO NODE</b>
+        <span>location</span>
+      </div>
+
+      <div class="paletteItem" onclick="paletteRun('trace')">
+        <b>TRACE ROUTE</b>
+        <span>trace</span>
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<!-- =====================================================
+     CRITICAL EVENT
+===================================================== -->
+
+<div class="alert" id="alert">
+
+  <div class="alertBox">
+
+    <div class="symbol">⚠</div>
+
+    <h2>COUNTER-SIGNAL</h2>
+
+    <p>
+      JOKER CORE DETECTED A HIGH-THREAT SIMULATION EVENT
+    </p>
+
+    <button onclick="closeAlert()">
+      ACKNOWLEDGE EVENT
+    </button>
+
+  </div>
+
+</div>
+
+
 <script>
 
-const consoleBox =
-  document.getElementById("console");
-
-const percent =
-  document.getElementById("percent");
-
-const eventId =
-  document.getElementById("eventId");
-
-const remoteId =
-  document.getElementById("remoteId");
-
-const source =
-  document.getElementById("source");
-
-const locationEl =
-  document.getElementById("location");
-
-const device =
-  document.getElementById("device");
-
-const session =
-  document.getElementById("session");
-
-const session2 =
-  document.getElementById("session2");
-
-const trace =
-  document.getElementById("trace");
-
-const packets =
-  document.getElementById("packets");
-
-const alerts =
-  document.getElementById("alerts");
-
-const headline =
-  document.getElementById("headline");
-
-const description =
-  document.getElementById("description");
-
-const phoneName =
-  document.getElementById("phoneName");
-
-const flash =
-  document.getElementById("flash");
-
-let running = false;
-let timers = [];
-let packetCount = 0;
-let alertCount = 0;
+/* =========================================================
+   JOKER CYBER COMMAND
+   ---------------------------------------------------------
+   Fictional/local cinematic interface.
+   No real accounts, devices, cameras, files, GPS,
+   credentials, network scanning, or external systems
+   are accessed by this page.
+========================================================= */
 
 
-/* RANDOM */
+/* =========================================================
+   STATE
+========================================================= */
 
-function hex(n){
-  const chars="0123456789ABCDEF";
-  let x="";
-  for(let i=0;i<n;i++){
-    x += chars[Math.floor(Math.random()*chars.length)];
+let currentTarget = {
+  name:"VANTA",
+  alias:"@vanta_node",
+  id:"VANTA-77A1",
+  device:"ANDROID-X",
+  node:"NODE-EGY-07"
+};
+
+let operationTimer = null;
+
+
+/* =========================================================
+   DATA
+========================================================= */
+
+const targets = [
+
+  {
+    name:"VANTA",
+    alias:"@vanta_node",
+    id:"VANTA-77A1",
+    device:"ANDROID-X",
+    node:"NODE-EGY-07"
+  },
+
+  {
+    name:"RAVEN",
+    alias:"@raven_black",
+    id:"RAVEN-91C2",
+    device:"IPHONE-X",
+    node:"NODE-TR-02"
+  },
+
+  {
+    name:"GHOST",
+    alias:"@ghost_null",
+    id:"GHOST-44F8",
+    device:"PIXEL-Z",
+    node:"NODE-EU-04"
+  },
+
+  {
+    name:"NOIR",
+    alias:"@noir_zero",
+    id:"NOIR-19A7",
+    device:"GALAXY-X",
+    node:"NODE-EGY-03"
+  },
+
+  {
+    name:"PHANTOM",
+    alias:"@phantom_core",
+    id:"PHANTOM-0X91",
+    device:"JX-ULTRA",
+    node:"NODE-X-91"
   }
-  return x;
-}
-
-function fakeIp(){
-  return [
-    Math.floor(Math.random()*200)+20,
-    Math.floor(Math.random()*255),
-    Math.floor(Math.random()*255),
-    Math.floor(Math.random()*240)+10
-  ].join(".");
-}
-
-function fakeLocation(){
-  const a=(25+Math.random()*8).toFixed(4);
-  const b=(27+Math.random()*7).toFixed(4);
-  return `${a}° N / ${b}° E`;
-}
-
-function fakeSession(){
-  return "X"+hex(2)+"-"+[
-    "OMEGA",
-    "NIGHT",
-    "ZERO",
-    "DARK",
-    "ALPHA"
-  ][Math.floor(Math.random()*5)]+"-"+hex(2);
-}
-
-
-/* TERMINAL */
-
-function log(text,type="w"){
-
-  const line =
-    document.createElement("div");
-
-  line.className="line";
-
-  const d=new Date();
-
-  const time =
-    `[${String(d.getHours()).padStart(2,"0")}:`+
-    `${String(d.getMinutes()).padStart(2,"0")}:`+
-    `${String(d.getSeconds()).padStart(2,"0")}]`;
-
-  line.innerHTML =
-    `<span class="t">${time}</span> `+
-    `<span class="${type}">${text}</span>`;
-
-  consoleBox.appendChild(line);
-
-  while(consoleBox.children.length>45){
-    consoleBox.removeChild(consoleBox.firstChild);
-  }
-
-  consoleBox.scrollTop =
-    consoleBox.scrollHeight;
-}
-
-
-/* THREAT */
-
-function setThreat(n){
-
-  n=Math.max(0,Math.min(100,n));
-
-  percent.textContent =
-    String(n).padStart(2,"0")+"%";
-
-  if(n>=70){
-    percent.style.color="var(--red)";
-  }else{
-    percent.style.color="var(--cyan)";
-  }
-}
-
-
-/* FLASH */
-
-function flashAlert(){
-
-  flash.classList.remove("on");
-
-  void flash.offsetWidth;
-
-  flash.classList.add("on");
-
-  alertCount++;
-
-  alerts.textContent =
-    String(alertCount).padStart(2,"0");
-}
-
-
-/* SCENARIO */
-
-const sequence=[
-
-  [500,
-   "dark-node initialized.",
-   "p",
-   10],
-
-  [650,
-   "searching passive signal space...",
-   "c",
-   15],
-
-  [800,
-   "unknown signature detected.",
-   "y",
-   24],
-
-  [900,
-   "remote identity received: "+hex(8),
-   "r",
-   31],
-
-  [1000,
-   "session channel established.",
-   "c",
-   38],
-
-  [850,
-   "device signature: MOBILE / ANDROID",
-   "w",
-   43],
-
-  [950,
-   "signal coordinates acquired.",
-   "c",
-   49],
-
-  [1000,
-   "abnormal traffic pattern detected.",
-   "r",
-   57],
-
-  [900,
-   "trace sequence initiated.",
-   "y",
-   64],
-
-  [1000,
-   "firewall response layer active.",
-   "g",
-   71],
-
-  [850,
-   "unknown node entering restricted zone.",
-   "r",
-   79],
-
-  [900,
-   "signal intensity critical.",
-   "r",
-   86],
-
-  [1000,
-   "session isolation sequence.",
-   "p",
-   91],
-
-  [1100,
-   "signal contained.",
-   "g",
-   96],
-
-  [1300,
-   "monitoring channel restored.",
-   "c",
-   28]
 
 ];
 
 
-/* START */
+const operations = {
 
-async function start(){
+  facebook:{
+    icon:"ⓕ",
+    title:"FACEBOOK ACCESS NODE",
+    subtitle:"SOCIAL NETWORK // LOCAL CINEMATIC DATA",
+    result:"SOCIAL NODE OPEN",
+    data:[
+      ["PROFILE","VANTA"],
+      ["ACCOUNT ID","FB-NODE-77A1"],
+      ["MESSAGES","24 LOCAL RECORDS"],
+      ["MEDIA","137 INDEXED ITEMS"],
+      ["FRIENDS","482 LOCAL RECORDS"],
+      ["SESSION","FB-JKR-19X"]
+    ]
+  },
 
-  if(running)return;
+  instagram:{
+    icon:"◎",
+    title:"INSTAGRAM ACCESS NODE",
+    subtitle:"MEDIA NETWORK // LOCAL CINEMATIC DATA",
+    result:"MEDIA NODE OPEN",
+    data:[
+      ["PROFILE","@vanta_node"],
+      ["ACCOUNT ID","IG-77A1-X9"],
+      ["FOLLOWERS","18,492"],
+      ["MEDIA","426 LOCAL ITEMS"],
+      ["STORIES","07 INDEXED"],
+      ["SESSION","IG-JKR-88"]
+    ]
+  },
 
-  running=true;
+  google:{
+    icon:"G",
+    title:"GOOGLE SEARCH NODE",
+    subtitle:"SEARCH LAYER // LOCAL CINEMATIC DATA",
+    result:"SEARCH NODE OPEN",
+    data:[
+      ["QUERY INDEX","JOKER-NODE"],
+      ["RESULTS","2,481 LOCAL"],
+      ["HISTORY","63 RECORDS"],
+      ["CACHE","14.8 MB"],
+      ["INDEX","READY"],
+      ["SESSION","GGL-X91"]
+    ]
+  },
 
-  consoleBox.innerHTML="";
+  email:{
+    icon:"✉",
+    title:"EMAIL ACCESS NODE",
+    subtitle:"MAIL LAYER // LOCAL CINEMATIC DATA",
+    result:"MAIL NODE OPEN",
+    data:[
+      ["MAILBOX","vanta@local.node"],
+      ["INBOX","38 LOCAL MAILS"],
+      ["UNREAD","06"],
+      ["DRAFTS","03"],
+      ["ATTACHMENTS","21 INDEXED"],
+      ["STATUS","READY"]
+    ]
+  },
 
-  packetCount=0;
-  alertCount=0;
+  device:{
+    icon:"▣",
+    title:"DEVICE CONTROL NODE",
+    subtitle:"DEVICE LAYER // LOCAL CINEMATIC DATA",
+    result:"DEVICE NODE OPEN",
+    data:[
+      ["MODEL","JX-ANDROID 16"],
+      ["CPU","8 CORE // 3.1GHz"],
+      ["RAM","12 GB"],
+      ["STORAGE","381 / 512 GB"],
+      ["BATTERY","87%"],
+      ["STATUS","ONLINE"]
+    ]
+  },
 
-  alerts.textContent="00";
-  packets.textContent="0000";
+  files:{
+    icon:"▤",
+    title:"FILE SYSTEM NODE",
+    subtitle:"FILE INDEX // LOCAL CINEMATIC DATA",
+    result:"FILE INDEX OPEN",
+    data:[
+      ["ROOT","/LOCAL/TARGET"],
+      ["FILES","1,284 INDEXED"],
+      ["FOLDERS","73"],
+      ["LARGEST","media_vault.bin"],
+      ["SIZE","2.8 GB"],
+      ["INDEX","COMPLETE"]
+    ]
+  },
 
-  eventId.textContent=
-    "JK-"+hex(6);
+  camera:{
+    icon:"◉",
+    title:"CAMERA LINK NODE",
+    subtitle:"VISUAL SENSOR // LOCAL CINEMATIC FEED",
+    result:"CAMERA NODE OPEN",
+    data:[
+      ["SENSOR","JOKER-CAM-X"],
+      ["RESOLUTION","1920 × 1080"],
+      ["FRAME RATE","60 FPS"],
+      ["SIGNAL","STRONG"],
+      ["MODE","SIMULATED FEED"],
+      ["STATUS","LINK READY"]
+    ]
+  },
 
-  remoteId.textContent=
-    "RX-"+hex(6);
+  location:{
+    icon:"⌖",
+    title:"GEO LOCATION NODE",
+    subtitle:"GEO MATRIX // LOCAL CINEMATIC DATA",
+    result:"GEO NODE OPEN",
+    data:[
+      ["SECTOR","EGY-07"],
+      ["LAT","30.0444"],
+      ["LNG","31.2357"],
+      ["NODE","JKR-EGY-07"],
+      ["ACCURACY","LOCAL SIMULATION"],
+      ["STATUS","NODE LOCKED"]
+    ]
+  },
 
-  source.textContent=
-    fakeIp();
+  trace:{
+    icon:"⌁",
+    title:"TRACE ROUTE NODE",
+    subtitle:"ROUTE MATRIX // LOCAL CINEMATIC DATA",
+    result:"TRACE COMPLETE",
+    data:[
+      ["HOP 01","NODE-01"],
+      ["HOP 02","NODE-07"],
+      ["HOP 03","NODE-19"],
+      ["HOP 04","JOKER-CORE"],
+      ["LATENCY","18ms"],
+      ["ROUTE","LOCAL TEST PATH"]
+    ]
+  },
 
-  locationEl.textContent=
-    fakeLocation();
+  core:{
+    icon:"⚠",
+    title:"JOKER CORE CONTROL",
+    subtitle:"CORE LAYER // LOCAL CINEMATIC CONTROL",
+    result:"CORE NODE OPEN",
+    data:[
+      ["CORE","JOKER-01"],
+      ["FIREWALL","LOCKED"],
+      ["ENCRYPTION","AES-X LOCAL"],
+      ["NODES","07 ONLINE"],
+      ["THREAT","CRITICAL"],
+      ["SYSTEM","STABLE"]
+    ]
+  }
 
-  session.textContent=
-    fakeSession();
+};
 
-  session2.textContent=
-    session.textContent;
 
-  phoneName.textContent=
-    [
-      "ANDROID NODE",
-      "UNKNOWN MOBILE",
-      "REMOTE DEVICE",
-      "MOBILE NODE"
-    ][Math.floor(Math.random()*4)];
+/* =========================================================
+   HELPERS
+========================================================= */
 
-  trace.textContent="SCANNING";
+const $ = id => document.getElementById(id);
 
-  headline.textContent=
-    "إشارة غير معروفة دخلت النطاق";
+function randomHex(length=4){
 
-  description.textContent=
-    "النظام يراقب النشاط الجاري...";
+  const chars="0123456789ABCDEF";
 
-  for(const item of sequence){
+  let result="";
 
-    await new Promise(resolve=>{
+  for(let i=0;i<length;i++){
+    result += chars[
+      Math.floor(Math.random()*chars.length)
+    ];
+  }
 
-      const timer=setTimeout(()=>{
+  return result;
+}
 
-        log(item[1],item[2]);
-        setThreat(item[3]);
+function nowTime(){
 
-        if(item[3]>=70){
-          flashAlert();
-        }
+  return new Date().toLocaleTimeString("en-GB");
 
-        if(item[3]>=85){
-          trace.textContent="LOCKED";
-        }
+}
 
-        if(item[3]===96){
 
-          headline.textContent=
-            "النظام سيطر على الإشارة";
+/* =========================================================
+   BOOT
+========================================================= */
 
-          description.textContent=
-            "تم إغلاق الجلسة داخل النظام";
-        }
+const bootMessages = [
 
-        if(item[3]===28){
+  ["JOKER CORE POWER-UP SEQUENCE","info"],
+  ["loading black-ops interface...","white"],
+  ["initializing local command processor...","info"],
+  ["building target matrix...","info"],
+  ["loading telemetry engine...","white"],
+  ["radar subsystem online","good"],
+  ["network topology online","good"],
+  ["operation modules loaded","good"],
+  ["session encryption: LOCAL AES-X","purple"],
+  ["JOKER COMMAND READY","good"]
 
-          headline.textContent=
-            "المراقبة مستمرة";
+];
 
-          description.textContent=
-            "النظام بانتظار إشارة جديدة";
+let bootIndex=0;
 
-          trace.textContent=
-            "STANDBY";
-        }
+function bootSequence(){
 
-        resolve();
+  const box=$("bootLines");
 
-      },item[0]);
+  if(bootIndex < bootMessages.length){
 
-      timers.push(timer);
+    const item=bootMessages[bootIndex];
 
-    });
+    const line=document.createElement("div");
+
+    line.className=
+      "bootLine "+item[1];
+
+    line.textContent=
+      "["+nowTime()+"] "+item[0];
+
+    box.appendChild(line);
+
+    bootIndex++;
+
+    $("bootProgress").style.width=
+      ((bootIndex/bootMessages.length)*100)+"%";
+
+    setTimeout(bootSequence,260);
+
+  }else{
+
+    setTimeout(()=>{
+
+      $("boot").classList.add("hide");
+      $("app").classList.add("ready");
+
+      terminalLog(
+        "JOKER COMMAND ONLINE // AWAITING OPERATOR",
+        "good"
+      );
+
+    },700);
 
   }
 
-  running=false;
+}
+
+bootSequence();
+
+
+/* =========================================================
+   CLOCK
+========================================================= */
+
+function updateClock(){
+
+  $("clock").textContent=nowTime();
+
+}
+
+setInterval(updateClock,1000);
+
+
+/* =========================================================
+   TERMINAL
+========================================================= */
+
+function terminalLog(message,type="white"){
+
+  const box=$("terminalOutput");
+
+  const line=document.createElement("div");
+
+  line.className="log "+type;
+
+  line.innerHTML=
+    `<span class="logTime">[${nowTime()}]</span> ${message}`;
+
+  box.appendChild(line);
+
+  box.scrollTop=box.scrollHeight;
+
 }
 
 
-/* RESET */
+function showHelp(){
 
-function reset(){
+  const commands=[
 
-  timers.forEach(clearTimeout);
-  timers=[];
+    "AVAILABLE COMMAND MATRIX",
 
-  running=false;
+    "help       :: list commands",
 
-  consoleBox.innerHTML="";
+    "target     :: inspect current target",
 
-  setThreat(7);
+    "scan       :: analyze local target profile",
 
-  packetCount=0;
-  alertCount=0;
+    "status     :: display core telemetry",
 
-  alerts.textContent="00";
-  packets.textContent="0000";
+    "facebook   :: open social node",
 
-  eventId.textContent="JK-"+hex(6);
-  remoteId.textContent="RX-"+hex(6);
-  source.textContent=fakeIp();
-  locationEl.textContent=fakeLocation();
-  session.textContent=fakeSession();
-  session2.textContent=session.textContent;
+    "instagram  :: open media node",
 
-  trace.textContent="WAITING";
+    "google     :: open search node",
 
-  headline.textContent=
-    "إشارة غير معروفة دخلت النطاق";
+    "email      :: open mail node",
 
-  description.textContent=
-    "مراقبة النشاط الجاري...";
+    "device     :: open device node",
 
-  phoneName.textContent=
-    "UNKNOWN DEVICE";
+    "files      :: open file index",
 
-  log(
-    "JOKER DARK NODE // READY",
-    "p"
-  );
+    "camera     :: open camera simulation",
 
-  log(
-    "monitor channel initialized.",
-    "c"
-  );
+    "location   :: open geo matrix",
 
-  log(
-    "waiting for incoming signal...",
-    "w"
-  );
-}
+    "trace      :: open route matrix",
 
+    "core       :: open joker core",
 
-/* PACKETS */
+    "clear      :: clear terminal",
 
-setInterval(()=>{
+    "/           :: open command palette"
 
-  if(!running)return;
-
-  packetCount +=
-    Math.floor(Math.random()*120)+20;
-
-  if(packetCount>9999)
-    packetCount=0;
-
-  packets.textContent =
-    String(packetCount).padStart(4,"0");
-
-},170);
-
-
-/* IDLE LOG */
-
-setInterval(()=>{
-
-  if(running)return;
-
-  const idle=[
-    ["heartbeat // dark node online.","g"],
-    ["passive monitoring active.","w"],
-    ["signal space clear.","c"],
-    ["waiting for event...","t"],
-    ["joker channel standing by.","p"]
   ];
 
-  const item=
-    idle[Math.floor(Math.random()*idle.length)];
+  commands.forEach((x,i)=>{
 
-  log(item[0],item[1]);
+    setTimeout(()=>{
 
-},2600);
+      terminalLog(
+        x,
+        i===0 ? "purple":"info"
+      );
 
+    },i*55);
 
-/* BUTTONS */
+  });
 
-document
-  .getElementById("start")
-  .onclick=start;
-
-document
-  .getElementById("reset")
-  .onclick=reset;
+}
 
 
-/* INIT */
+function executeCommand(){
 
-reset();
+  const input=$("commandInput");
+
+  const raw=input.value.trim();
+
+  if(!raw)return;
+
+  terminalLog(
+    "joker@core:~$ "+raw,
+    "white"
+  );
+
+  input.value="";
+
+  const command=
+    raw.toLowerCase().split(/\s+/)[0];
+
+  switch(command){
+
+    case "help":
+      showHelp();
+      break;
+
+    case "target":
+      terminalLog(
+        "TARGET => "+currentTarget.id+
+        " // "+currentTarget.alias,
+        "info"
+      );
+      break;
+
+    case "scan":
+      runScan();
+      break;
+
+    case "status":
+      terminalLog(
+        "CORE STATUS => ONLINE // NODE LOAD "+
+        $("nodeLoad").textContent,
+        "good"
+      );
+      break;
+
+    case "facebook":
+    case "fb":
+      openOperation("facebook");
+      break;
+
+    case "instagram":
+    case "insta":
+      openOperation("instagram");
+      break;
+
+    case "google":
+      openOperation("google");
+      break;
+
+    case "email":
+    case "mail":
+      openOperation("email");
+      break;
+
+    case "device":
+    case "phone":
+      openOperation("device");
+      break;
+
+    case "files":
+    case "file":
+      openOperation("files");
+      break;
+
+    case "camera":
+    case "cam":
+      openOperation("camera");
+      break;
+
+    case "location":
+    case "geo":
+      openOperation("location");
+      break;
+
+    case "trace":
+      openOperation("trace");
+      break;
+
+    case "core":
+    case "system":
+      openOperation("core");
+      break;
+
+    case "clear":
+      $("terminalOutput").innerHTML="";
+      break;
+
+    case "/":
+      openPalette();
+      break;
+
+    default:
+
+      terminalLog(
+        "UNKNOWN COMMAND :: TYPE 'help'",
+        "danger"
+      );
+
+  }
+
+}
+
+
+/* =========================================================
+   SCAN
+========================================================= */
+
+function runScan(){
+
+  terminalLog(
+    "LOCAL TARGET ANALYSIS STARTED...",
+    "warn"
+  );
+
+  const stages=[
+
+    "loading target fingerprint...",
+    "reading local session matrix...",
+    "mapping simulated nodes...",
+    "processing telemetry...",
+    "calculating threat profile...",
+    "analysis complete :: target indexed"
+
+  ];
+
+  stages.forEach((stage,index)=>{
+
+    setTimeout(()=>{
+
+      terminalLog(
+        stage,
+        index===stages.length-1
+          ? "good"
+          : "info"
+      );
+
+    },index*480);
+
+  });
+
+}
+
+
+/* =========================================================
+   TARGET
+========================================================= */
+
+function loadTarget(){
+
+  const value=
+    $("targetInput").value.trim();
+
+  if(!value){
+
+    terminalLog(
+      "TARGET ID REQUIRED",
+      "danger"
+    );
+
+    return;
+  }
+
+  const found=
+    targets.find(
+      target=>
+        target.id.toLowerCase()===
+        value.toLowerCase()
+    );
+
+  currentTarget=
+    found ||
+    {
+      name:value
+        .split("-")[0]
+        .toUpperCase(),
+
+      alias:"@"+
+        value
+          .toLowerCase()
+          .replace(/\s/g,"_"),
+
+      id:value.toUpperCase(),
+
+      device:"UNKNOWN-X",
+
+      node:"NODE-"+randomHex(3)
+    };
+
+  const fingerprint=
+    randomHex(4)+"-"+
+    randomHex(4)+"-"+
+    randomHex(4)+"-"+
+    randomHex(4);
+
+  $("targetName").textContent=
+    currentTarget.name;
+
+  $("targetId").textContent=
+    currentTarget.id;
+
+  $("targetAlias").textContent=
+    currentTarget.alias;
+
+  $("targetDevice").textContent=
+    currentTarget.device;
+
+  $("targetNode").textContent=
+    currentTarget.node;
+
+  $("deviceModel").textContent=
+    currentTarget.device;
+
+  $("sessionNode").textContent=
+    currentTarget.node;
+
+  $("fingerprint").textContent=
+    "FP: "+fingerprint;
+
+  $("sessionFingerprint").textContent=
+    fingerprint.slice(0,9);
+
+  $("deviceSession").textContent=
+    randomHex(4);
+
+  $("sessionCode").textContent=
+    "JKR-"+randomHex(4)+"-"+randomHex(4);
+
+  $("topSession").textContent=
+    "JKR-"+randomHex(4);
+
+  terminalLog(
+    "TARGET LOCKED :: "+currentTarget.id,
+    "good"
+  );
+
+  terminalLog(
+    "NODE LINK :: "+currentTarget.node,
+    "info"
+  );
+
+}
+
+
+/* =========================================================
+   OPERATION
+========================================================= */
+
+function openOperation(type){
+
+  const data=operations[type];
+
+  if(!data)return;
+
+  $("operationOverlay")
+    .classList
+    .add("show");
+
+  $("opIcon").textContent=data.icon;
+
+  $("opTitle").textContent=data.title;
+
+  $("opSubtitle").textContent=
+    data.subtitle;
+
+  $("opTarget").textContent=
+    currentTarget.id;
+
+  $("opModule").textContent=
+    type.toUpperCase();
+
+  $("opSession").textContent=
+    "JKR-"+randomHex(3)+"-"+randomHex(3);
+
+  $("opNode").textContent=
+    currentTarget.node;
+
+  $("operationTerminal").innerHTML="";
+
+  $("progressBar").style.width="0%";
+
+  $("progressNumber").textContent="0%";
+
+  $("progressText").textContent=
+    "INITIALIZING...";
+
+  $("opResult").classList.remove("show");
+
+  const terminal=
+    $("operationTerminal");
+
+  const sequence=[
+
+    "JOKER CORE :: "+type.toUpperCase(),
+
+    "loading local module profile...",
+
+    "target => "+currentTarget.id,
+
+    "session => JKR-"+randomHex(6),
+
+    "initializing simulated handshake...",
+
+    "processing local data layer...",
+
+    "building result matrix..."
+
+  ];
+
+  sequence.forEach((message,index)=>{
+
+    setTimeout(()=>{
+
+      operationLog(
+        terminal,
+        message,
+        index===0
+          ? "purple"
+          : "info"
+      );
+
+    },index*260);
+
+  });
+
+
+  let progress=0;
+
+  clearInterval(operationTimer);
+
+  operationTimer=
+    setInterval(()=>{
+
+      progress +=
+        Math.floor(Math.random()*7)+3;
+
+      if(progress>=100){
+
+        progress=100;
+
+        clearInterval(operationTimer);
+
+        $("progressBar")
+          .style
+          .width="100%";
+
+        $("progressNumber")
+          .textContent="100%";
+
+        $("progressText")
+          .textContent="OPERATION COMPLETE";
+
+        operationLog(
+          terminal,
+          "ACCESS GRANTED :: LOCAL CINEMATIC RESULT",
+          "good"
+        );
+
+        setTimeout(()=>{
+
+          showResult(data);
+
+        },350);
+
+      }else{
+
+        $("progressBar")
+          .style
+          .width=progress+"%";
+
+        $("progressNumber")
+          .textContent=progress+"%";
+
+        if(progress<25){
+
+          $("progressText")
+            .textContent="INITIALIZING...";
+
+        }else if(progress<50){
+
+          $("progressText")
+            .textContent="PROCESSING...";
+
+        }else if(progress<75){
+
+          $("progressText")
+            .textContent="VERIFYING...";
+
+        }else{
+
+          $("progressText")
+            .textContent="FINALIZING...";
+
+        }
+
+      }
+
+    },170);
+
+}
+
+
+function operationLog(container,message,type){
+
+  const line=document.createElement("div");
+
+  line.className="log "+type;
+
+  line.innerHTML=
+    `<span class="logTime">[${nowTime()}]</span> ${message}`;
+
+  container.appendChild(line);
+
+  container.scrollTop=
+    container.scrollHeight;
+
+}
+
+
+function showResult(data){
+
+  $("resultTitle").textContent=
+    "✓ "+data.result;
+
+  const box=
+    $("resultData");
+
+  box.innerHTML="";
+
+  data.data.forEach(item=>{
+
+    const row=
+      document.createElement("div");
+
+    row.className="dataItem";
+
+    row.innerHTML=
+      `<label>${item[0]}</label>
+       <b>${item[1]}</b>`;
+
+    box.appendChild(row);
+
+  });
+
+  $("opResult")
+    .classList
+    .add("show");
+
+}
+
+
+function closeOperation(){
+
+  clearInterval(operationTimer);
+
+  $("operationOverlay")
+    .classList
+    .remove("show");
+
+}
+
+
+/* =========================================================
+   COMMAND PALETTE
+========================================================= */
+
+function openPalette(){
+
+  $("palette")
+    .classList
+    .add("show");
+
+  $("paletteInput").focus();
+
+}
+
+
+function closePalette(){
+
+  $("palette")
+    .classList
+    .remove("show");
+
+  $("paletteInput").value="";
+
+}
+
+
+function paletteRun(command){
+
+  closePalette();
+
+  if(operations[command]){
+
+    openOperation(command);
+
+  }else if(command==="scan"){
+
+    runScan();
+
+  }
+
+}
+
+
+/* =========================================================
+   PALETTE SEARCH
+========================================================= */
+
+$("paletteInput")
+  .addEventListener("input",function(){
+
+    const value=
+      this.value.toLowerCase();
+
+    document
+      .querySelectorAll(".paletteItem")
+      .forEach(item=>{
+
+        item.style.display=
+          item.textContent
+            .toLowerCase()
+            .includes(value)
+              ? "flex"
+              : "none";
+
+      });
+
+  });
+
+
+/* =========================================================
+   KEYBOARD
+========================================================= */
+
+$("commandInput")
+  .addEventListener("keydown",e=>{
+
+    if(e.key==="Enter"){
+
+      executeCommand();
+
+    }
+
+  });
+
+
+document.addEventListener("keydown",e=>{
+
+  if(
+    e.key==="/" &&
+    document.activeElement!==$("commandInput") &&
+    document.activeElement!==$("targetInput")
+  ){
+
+    e.preventDefault();
+
+    openPalette();
+
+  }
+
+  if(e.key==="Escape"){
+
+    closePalette();
+    closeOperation();
+    closeAlert();
+
+  }
+
+});
+
+
+$("targetInput")
+  .addEventListener("keydown",e=>{
+
+    if(e.key==="Enter"){
+
+      loadTarget();
+
+    }
+
+  });
+
+
+/* =========================================================
+   LIVE TELEMETRY
+========================================================= */
+
+setInterval(()=>{
+
+  const signal=
+    96+Math.random()*3.5;
+
+  $("signal").textContent=
+    signal.toFixed(1)+"%";
+
+  $("signalBar").style.width=
+    signal+"%";
+
+
+  const packets=
+    18000+
+    Math.floor(Math.random()*12000);
+
+  $("packets").textContent=
+    packets.toLocaleString();
+
+  $("packetBar").style.width=
+    (55+Math.random()*35)+"%";
+
+
+  const latency=
+    12+
+    Math.floor(Math.random()*17);
+
+  $("latency").textContent=
+    latency+"ms";
+
+  $("latencyBar").style.width=
+    (latency*2)+"%";
+
+
+  const load=
+    25+
+    Math.floor(Math.random()*45);
+
+  $("load").textContent=
+    load+"%";
+
+  $("loadBar").style.width=
+    load+"%";
+
+  $("nodeLoad").textContent=
+    load+"%";
+
+},1200);
+
+
+/* =========================================================
+   BATTERY
+========================================================= */
+
+setInterval(()=>{
+
+  let battery=
+    parseInt(
+      $("battery").textContent
+    );
+
+  if(Math.random()>.65){
+
+    battery--;
+
+  }
+
+  if(battery<62){
+
+    battery=87;
+
+  }
+
+  $("battery").textContent=
+    battery+"%";
+
+},5000);
+
+
+/* =========================================================
+   ALERT
+========================================================= */
+
+setTimeout(()=>{
+
+  $("alert")
+    .classList
+    .add("show");
+
+  terminalLog(
+    "!!! COUNTER-SIGNAL DETECTED !!!",
+    "danger"
+  );
+
+  terminalLog(
+    "JOKER CORE ENTERED HIGH-THREAT DISPLAY MODE",
+    "danger"
+  );
+
+},10000);
+
+
+function closeAlert(){
+
+  $("alert")
+    .classList
+    .remove("show");
+
+  terminalLog(
+    "COUNTER-SIGNAL EVENT ACKNOWLEDGED",
+    "warn"
+  );
+
+}
+
+
+/* =========================================================
+   INITIAL TERMINAL MESSAGE
+========================================================= */
+
+setTimeout(()=>{
+
+  terminalLog(
+    "---------------------------------------------",
+    "purple"
+  );
+
+  terminalLog(
+    "TARGET: "+currentTarget.id+
+    " // STATUS: LOCKED",
+    "good"
+  );
+
+  terminalLog(
+    "TYPE 'help' OR PRESS '/' FOR COMMAND MATRIX",
+    "info"
+  );
+
+},3800);
 
 </script>
 
 </body>
-</html>
+        </html>
