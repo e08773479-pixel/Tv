@@ -2,1437 +2,763 @@
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
-<meta name="theme-color" content="#070914">
-<meta name="description" content="NEXORA — منصة اجتماعية تجمع التواصل والفيديو والألعاب والغرف والبث المباشر.">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 
-<title>NEXORA — تواصل • فيديو • ألعاب • غرف</title>
+<title>JOKER // DARK NODE</title>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&family=Orbitron:wght@500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
 
 <style>
-/* =========================================================
-   NEXORA — FOUNDATION INDEX
-   المرحلة الأولى: Welcome + Loading + Authentication
-   ========================================================= */
-
 :root{
-  --bg:#050711;
-  --bg2:#080b18;
-  --surface:#0c1020;
-  --surface2:#11172b;
-  --surface3:#171e36;
-
-  --green:#20e39a;
-  --green2:#0bbf80;
-
-  --blue:#4388ff;
-  --purple:#8b5cf6;
-  --cyan:#2dd4ff;
-  --pink:#f05cff;
-
-  --text:#f7f9ff;
-  --muted:#929bb5;
-  --line:rgba(255,255,255,.09);
-
-  --danger:#ff5575;
-  --warning:#ffca5c;
-
-  --radius:24px;
-  --shadow:0 25px 80px rgba(0,0,0,.45);
+  --red:#ff1238;
+  --red2:#a60021;
+  --pink:#ff3971;
+  --purple:#a52cff;
+  --cyan:#00eaff;
+  --green:#00ff9d;
+  --yellow:#ffc400;
+  --bg:#020204;
+  --panel:rgba(3,4,7,.78);
+  --line:rgba(255,255,255,.075);
+  --muted:#686873;
 }
 
 *{
   box-sizing:border-box;
   margin:0;
   padding:0;
-  -webkit-tap-highlight-color:transparent;
 }
 
-html{
-  scroll-behavior:smooth;
+html,body{
+  width:100%;
+  height:100%;
 }
 
 body{
-  min-height:100vh;
+  overflow:hidden;
   background:
-    radial-gradient(circle at 15% 15%,rgba(67,136,255,.12),transparent 28%),
-    radial-gradient(circle at 85% 20%,rgba(139,92,246,.13),transparent 30%),
-    radial-gradient(circle at 50% 90%,rgba(32,227,154,.08),transparent 30%),
-    var(--bg);
-  color:var(--text);
+    linear-gradient(90deg,rgba(0,0,0,.96),rgba(0,0,0,.48),rgba(0,0,0,.96)),
+    linear-gradient(0deg,rgba(0,0,0,.9),transparent,rgba(0,0,0,.8)),
+    url("https://images.hdqwalls.com/download/joker-ghost-in-dark-rt-3840x2400.jpg")
+    center/cover fixed;
+  color:#eee;
   font-family:"Cairo",sans-serif;
-  overflow-x:hidden;
 }
 
-button,
-input{
-  font-family:inherit;
-}
-
-button{
-  border:0;
-  cursor:pointer;
-}
-
-a{
-  color:inherit;
-  text-decoration:none;
-}
-
-/* =========================================================
-   BACKGROUND
-   ========================================================= */
-
-.background{
-  position:fixed;
-  inset:0;
-  z-index:-20;
-  overflow:hidden;
-  pointer-events:none;
-}
-
-.bg-grid{
-  position:absolute;
-  inset:0;
-  opacity:.20;
-  background-image:
-    linear-gradient(rgba(255,255,255,.035) 1px,transparent 1px),
-    linear-gradient(90deg,rgba(255,255,255,.035) 1px,transparent 1px);
-  background-size:55px 55px;
-  mask-image:linear-gradient(to bottom,black,transparent 85%);
-}
-
-.orb{
-  position:absolute;
-  border-radius:50%;
-  filter:blur(3px);
-  opacity:.45;
-  animation:orbFloat 12s ease-in-out infinite;
-}
-
-.orb.one{
-  width:340px;
-  height:340px;
-  background:radial-gradient(circle,rgba(67,136,255,.32),transparent 68%);
-  top:-100px;
-  left:-100px;
-}
-
-.orb.two{
-  width:420px;
-  height:420px;
-  background:radial-gradient(circle,rgba(139,92,246,.27),transparent 68%);
-  right:-150px;
-  top:10%;
-  animation-delay:-4s;
-}
-
-.orb.three{
-  width:380px;
-  height:380px;
-  background:radial-gradient(circle,rgba(32,227,154,.18),transparent 70%);
-  bottom:-180px;
-  left:20%;
-  animation-delay:-8s;
-}
-
-@keyframes orbFloat{
-  0%,100%{transform:translate3d(0,0,0) scale(1)}
-  50%{transform:translate3d(30px,-25px,0) scale(1.08)}
-}
-
-/* =========================================================
-   PARTICLES
-   ========================================================= */
-
-.particles{
-  position:absolute;
-  inset:0;
-  overflow:hidden;
-}
-
-.particle{
-  position:absolute;
-  width:2px;
-  height:2px;
-  background:rgba(255,255,255,.75);
-  border-radius:50%;
-  box-shadow:0 0 10px rgba(255,255,255,.5);
-  animation:particleMove linear infinite;
-}
-
-@keyframes particleMove{
-  from{
-    transform:translateY(110vh);
-    opacity:0;
-  }
-  15%{
-    opacity:1;
-  }
-  85%{
-    opacity:.7;
-  }
-  to{
-    transform:translateY(-20vh);
-    opacity:0;
-  }
-}
-
-/* =========================================================
-   LOADER
-   ========================================================= */
-
-#loader{
-  position:fixed;
-  inset:0;
-  z-index:99999;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  background:
-    radial-gradient(circle at 50% 40%,rgba(67,136,255,.13),transparent 32%),
-    radial-gradient(circle at 50% 70%,rgba(139,92,246,.10),transparent 38%),
-    #03050c;
-  transition:opacity .8s ease,visibility .8s ease;
-}
-
-#loader.hide{
-  opacity:0;
-  visibility:hidden;
-}
-
-.loader-inner{
-  width:min(430px,90%);
-  text-align:center;
-}
-
-.loader-logo{
-  width:96px;
-  height:96px;
-  margin:0 auto 25px;
-  border-radius:30px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  position:relative;
-  background:
-    linear-gradient(145deg,#16264d,#0b1228);
-  border:1px solid rgba(255,255,255,.13);
-  box-shadow:
-    0 0 0 8px rgba(67,136,255,.035),
-    0 0 70px rgba(67,136,255,.22);
-}
-
-.loader-logo::before{
+body:before{
   content:"";
-  position:absolute;
-  inset:-8px;
-  border-radius:36px;
-  border:1px solid rgba(67,136,255,.25);
-  animation:pulseRing 2s infinite;
-}
-
-@keyframes pulseRing{
-  0%,100%{transform:scale(1);opacity:.2}
-  50%{transform:scale(1.08);opacity:.65}
-}
-
-.logo-symbol{
-  font-family:Orbitron,sans-serif;
-  font-weight:800;
-  font-size:29px;
-  letter-spacing:-3px;
-  background:linear-gradient(135deg,var(--cyan),var(--green),var(--purple));
-  -webkit-background-clip:text;
-  color:transparent;
-}
-
-.loader-title{
-  font-size:34px;
-  font-weight:900;
-  letter-spacing:2px;
-}
-
-.loader-sub{
-  color:var(--muted);
-  margin-top:5px;
-  font-size:13px;
-}
-
-.loader-status{
-  margin-top:28px;
-  color:#cdd4e8;
-  font-size:13px;
-}
-
-.progress{
-  height:7px;
-  background:rgba(255,255,255,.07);
-  border-radius:50px;
-  overflow:hidden;
-  margin-top:14px;
-}
-
-.progress-bar{
-  height:100%;
-  width:0%;
-  border-radius:inherit;
-  background:linear-gradient(90deg,var(--blue),var(--purple),var(--green));
-  box-shadow:0 0 20px rgba(67,136,255,.5);
-  transition:width .08s linear;
-}
-
-.progress-info{
-  display:flex;
-  justify-content:space-between;
-  margin-top:9px;
-  font-size:11px;
-  color:#717b95;
-}
-
-#progressPercent{
-  color:#dce4f9;
-  font-weight:800;
-}
-
-/* =========================================================
-   APP
-   ========================================================= */
-
-#app{
-  opacity:0;
-  visibility:hidden;
-  transition:opacity .8s ease;
-}
-
-#app.show{
-  opacity:1;
-  visibility:visible;
-}
-
-/* =========================================================
-   NAVBAR
-   ========================================================= */
-
-.navbar{
   position:fixed;
-  top:0;
-  left:0;
-  right:0;
-  z-index:1000;
-  height:76px;
+  inset:0;
+  pointer-events:none;
+  z-index:50;
+  background:
+    repeating-linear-gradient(
+      0deg,
+      rgba(255,255,255,.018) 0,
+      rgba(255,255,255,.018) 1px,
+      transparent 1px,
+      transparent 4px
+    );
+}
+
+body:after{
+  content:"";
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  z-index:51;
+  background:
+    radial-gradient(circle at center,transparent 25%,rgba(0,0,0,.78) 100%);
+}
+
+/* ===== MAIN ===== */
+
+.app{
+  width:100%;
+  height:100vh;
   display:flex;
-  align-items:center;
-  justify-content:space-between;
-  padding:0 5%;
-  background:rgba(5,7,17,.58);
-  border-bottom:1px solid rgba(255,255,255,.06);
-  backdrop-filter:blur(22px);
-}
-
-.brand{
-  display:flex;
-  align-items:center;
-  gap:11px;
-}
-
-.brand-mark{
-  width:42px;
-  height:42px;
-  border-radius:13px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  background:linear-gradient(145deg,#14264d,#0a1227);
-  border:1px solid rgba(255,255,255,.1);
-  box-shadow:0 10px 30px rgba(0,0,0,.25);
-}
-
-.brand-mark span{
-  font-family:Orbitron,sans-serif;
-  font-size:15px;
-  font-weight:900;
-  letter-spacing:-2px;
-  background:linear-gradient(135deg,var(--cyan),var(--green));
-  -webkit-background-clip:text;
-  color:transparent;
-}
-
-.brand-text{
-  font-size:18px;
-  font-weight:900;
-  letter-spacing:1px;
-}
-
-.brand-text small{
-  display:block;
-  color:#77829d;
-  font-size:8px;
-  font-weight:600;
-  letter-spacing:2px;
-}
-
-.nav-actions{
-  display:flex;
-  gap:10px;
-  align-items:center;
-}
-
-.nav-btn{
-  height:42px;
-  padding:0 17px;
-  border-radius:13px;
-  color:#dce3f6;
-  background:rgba(255,255,255,.045);
-  border:1px solid rgba(255,255,255,.07);
-  transition:.25s;
-}
-
-.nav-btn:hover{
-  background:rgba(255,255,255,.08);
-}
-
-.nav-btn.primary{
-  background:linear-gradient(135deg,#1767ff,#7046ed);
-  border:0;
-  box-shadow:0 10px 30px rgba(67,136,255,.2);
-}
-
-/* =========================================================
-   HERO
-   ========================================================= */
-
-.hero{
-  min-height:100vh;
-  padding:135px 5% 80px;
-  display:grid;
-  grid-template-columns:1.05fr .95fr;
-  align-items:center;
-  gap:60px;
-  max-width:1500px;
-  margin:auto;
-}
-
-.hero-content{
+  flex-direction:column;
   position:relative;
   z-index:2;
 }
 
-.eyebrow{
-  display:inline-flex;
+/* ===== HEADER ===== */
+
+.header{
+  height:100px;
+  min-height:100px;
+  display:flex;
   align-items:center;
-  gap:9px;
-  padding:8px 13px;
-  border-radius:50px;
-  background:rgba(32,227,154,.07);
-  border:1px solid rgba(32,227,154,.14);
-  color:#a5f5d5;
-  font-size:12px;
-  margin-bottom:22px;
+  justify-content:space-between;
+  padding:15px 28px;
+  border-bottom:1px solid rgba(255,18,56,.3);
+  background:rgba(0,0,0,.58);
+  backdrop-filter:blur(12px);
 }
 
-.live-dot{
-  width:7px;
-  height:7px;
-  background:var(--green);
+.logo{
+  display:flex;
+  align-items:center;
+  gap:16px;
+}
+
+.logo-mark{
+  width:62px;
+  height:62px;
+  border:1px solid rgba(255,18,56,.65);
+  display:grid;
+  place-items:center;
+  font-size:31px;
+  background:
+    radial-gradient(circle,rgba(255,18,56,.22),transparent 65%);
+  box-shadow:
+    0 0 20px rgba(255,18,56,.3),
+    inset 0 0 20px rgba(255,18,56,.08);
+  position:relative;
+}
+
+.logo-mark:before,
+.logo-mark:after{
+  content:"";
+  position:absolute;
+  background:var(--red);
+}
+
+.logo-mark:before{
+  width:2px;
+  height:100%;
+  left:-1px;
+  top:0;
+}
+
+.logo-mark:after{
+  height:2px;
+  width:100%;
+  top:-1px;
+  left:0;
+}
+
+.logo h1{
+  font-family:"Share Tech Mono",monospace;
+  font-size:36px;
+  letter-spacing:9px;
+  color:white;
+  text-shadow:
+    2px 0 var(--red),
+    -2px 0 var(--cyan),
+    0 0 25px rgba(255,18,56,.6);
+  animation:glitch 4s infinite;
+}
+
+.logo p{
+  font-family:"Share Tech Mono",monospace;
+  font-size:9px;
+  letter-spacing:4px;
+  color:#777;
+  margin-top:5px;
+  direction:ltr;
+}
+
+@keyframes glitch{
+  0%,88%,100%{transform:none}
+  89%{transform:translate(3px,-1px)}
+  90%{transform:translate(-4px,1px)}
+  91%{transform:none}
+  94%{transform:skewX(5deg)}
+  95%{transform:none}
+}
+
+.header-right{
+  display:flex;
+  align-items:center;
+  gap:20px;
+  direction:ltr;
+  font-family:"Share Tech Mono",monospace;
+}
+
+.live{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  font-size:10px;
+  color:#aaa;
+}
+
+.live i{
+  width:8px;
+  height:8px;
   border-radius:50%;
-  box-shadow:0 0 14px var(--green);
-  animation:blink 1.3s infinite;
+  background:var(--red);
+  box-shadow:0 0 12px var(--red);
+  animation:pulse 1s infinite;
 }
 
-@keyframes blink{
-  0%,100%{opacity:1}
+@keyframes pulse{
   50%{opacity:.25}
 }
 
-.hero h1{
-  font-size:clamp(44px,6vw,84px);
-  line-height:1.02;
-  font-weight:900;
-  letter-spacing:-3px;
-  max-width:850px;
-}
+/* ===== WORKSPACE ===== */
 
-.gradient-text{
-  background:linear-gradient(100deg,#fff,#8fdfff 35%,#a87bff 68%,#53eab0);
-  -webkit-background-clip:text;
-  color:transparent;
-}
-
-.hero-description{
-  max-width:650px;
-  margin-top:25px;
-  color:#9da7bf;
-  font-size:17px;
-  line-height:2;
-}
-
-.hero-buttons{
-  display:flex;
-  gap:12px;
-  margin-top:30px;
-  flex-wrap:wrap;
-}
-
-.main-btn{
-  min-height:54px;
-  padding:0 25px;
-  border-radius:16px;
-  color:white;
-  font-weight:800;
-  font-size:14px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  gap:9px;
-  transition:.3s;
-}
-
-.main-btn.primary{
-  background:linear-gradient(135deg,#287aff,#7447ef);
-  box-shadow:0 16px 40px rgba(62,111,255,.23);
-}
-
-.main-btn.primary:hover{
-  transform:translateY(-3px);
-  box-shadow:0 20px 50px rgba(62,111,255,.35);
-}
-
-.main-btn.secondary{
-  background:rgba(255,255,255,.045);
-  border:1px solid rgba(255,255,255,.09);
-}
-
-.main-btn.secondary:hover{
-  background:rgba(255,255,255,.08);
-}
-
-.hero-stats{
-  display:flex;
-  gap:30px;
-  margin-top:40px;
-  flex-wrap:wrap;
-}
-
-.stat strong{
-  display:block;
-  font-size:23px;
-}
-
-.stat span{
-  color:#68728b;
-  font-size:11px;
-}
-
-/* =========================================================
-   HERO VISUAL
-   ========================================================= */
-
-.hero-visual{
-  min-height:570px;
-  position:relative;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-}
-
-.visual-glow{
-  position:absolute;
-  width:460px;
-  height:460px;
-  border-radius:50%;
-  background:
-    radial-gradient(circle,
-      rgba(67,136,255,.22),
-      rgba(139,92,246,.12) 35%,
-      transparent 68%);
-  filter:blur(12px);
-}
-
-.main-visual-card{
-  position:relative;
-  width:min(510px,100%);
-  height:550px;
-  border-radius:34px;
-  overflow:hidden;
-  border:1px solid rgba(255,255,255,.11);
-  background:
-    linear-gradient(to bottom,transparent 20%,rgba(3,5,12,.95) 92%),
-    url("https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=1200&q=85")
-    center/cover;
-  box-shadow:
-    0 40px 100px rgba(0,0,0,.55),
-    0 0 80px rgba(67,136,255,.10);
-  transform:rotate(1.5deg);
-}
-
-.visual-overlay{
-  position:absolute;
-  inset:0;
-  background:
-    linear-gradient(135deg,rgba(67,136,255,.14),transparent 35%),
-    linear-gradient(to top,rgba(3,5,12,.95),transparent 60%);
-}
-
-.visual-top{
-  position:absolute;
-  top:20px;
-  left:20px;
-  right:20px;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-}
-
-.online-badge{
-  display:flex;
-  align-items:center;
-  gap:7px;
-  padding:8px 11px;
-  background:rgba(4,7,15,.65);
-  border:1px solid rgba(255,255,255,.12);
-  border-radius:12px;
-  backdrop-filter:blur(10px);
-  font-size:10px;
-}
-
-.visual-content{
-  position:absolute;
-  bottom:25px;
-  left:25px;
-  right:25px;
-}
-
-.visual-content h2{
-  font-size:31px;
-  line-height:1.2;
-  font-weight:900;
-}
-
-.visual-content p{
-  color:#b1bad0;
-  font-size:12px;
-  margin-top:8px;
-  line-height:1.8;
-}
-
-.visual-actions{
-  display:flex;
-  gap:8px;
-  margin-top:17px;
-}
-
-.mini-chip{
-  padding:8px 11px;
-  background:rgba(255,255,255,.08);
-  border:1px solid rgba(255,255,255,.09);
-  border-radius:11px;
-  font-size:10px;
-}
-
-/* floating cards */
-
-.float-card{
-  position:absolute;
-  z-index:5;
+.workspace{
+  flex:1;
+  min-height:0;
   padding:13px;
-  min-width:175px;
-  border-radius:17px;
-  background:rgba(10,14,28,.86);
-  border:1px solid rgba(255,255,255,.11);
-  box-shadow:var(--shadow);
-  backdrop-filter:blur(18px);
-  animation:floatCard 5s ease-in-out infinite;
-}
-
-.float-card.live{
-  top:90px;
-  right:-35px;
-}
-
-.float-card.game{
-  bottom:90px;
-  left:-45px;
-  animation-delay:-2.3s;
-}
-
-.float-head{
-  display:flex;
-  align-items:center;
-  gap:9px;
-}
-
-.float-icon{
-  width:34px;
-  height:34px;
-  border-radius:10px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  background:linear-gradient(135deg,rgba(67,136,255,.18),rgba(139,92,246,.18));
-  font-size:17px;
-}
-
-.float-card strong{
-  font-size:11px;
-  display:block;
-}
-
-.float-card small{
-  color:#727d97;
-  font-size:9px;
-}
-
-.float-number{
-  margin-top:10px;
-  font-size:10px;
-  color:#bfc8dd;
-}
-
-@keyframes floatCard{
-  0%,100%{transform:translateY(0)}
-  50%{transform:translateY(-12px)}
-}
-
-/* =========================================================
-   FEATURES STRIP
-   ========================================================= */
-
-.features{
-  padding:20px 5% 100px;
-  max-width:1500px;
-  margin:auto;
-}
-
-.section-heading{
-  text-align:center;
-  max-width:720px;
-  margin:0 auto 45px;
-}
-
-.section-heading .label{
-  color:#6f82ae;
-  font-size:11px;
-  letter-spacing:2px;
-  font-weight:800;
-}
-
-.section-heading h2{
-  font-size:clamp(30px,4vw,48px);
-  margin-top:8px;
-  font-weight:900;
-}
-
-.section-heading p{
-  color:#7e89a3;
-  font-size:13px;
-  line-height:1.9;
-  margin-top:10px;
-}
-
-.feature-grid{
   display:grid;
-  grid-template-columns:repeat(4,1fr);
-  gap:15px;
+  grid-template-columns:245px minmax(0,1fr) 285px;
+  gap:12px;
 }
 
-.feature-card{
-  min-height:230px;
+/* ===== COMMON ===== */
+
+.box{
+  border:1px solid var(--line);
+  background:var(--panel);
+  backdrop-filter:blur(13px);
   position:relative;
   overflow:hidden;
-  padding:24px;
-  border-radius:23px;
-  background:#0b0f1e;
-  border:1px solid var(--line);
-  transition:.35s;
 }
 
-.feature-card:hover{
-  transform:translateY(-6px);
-  border-color:rgba(255,255,255,.16);
-}
-
-.feature-card::before{
+.box:before{
   content:"";
   position:absolute;
-  inset:0;
-  background-position:center;
-  background-size:cover;
-  opacity:.23;
-  transition:.5s;
+  top:0;
+  left:0;
+  right:0;
+  height:1px;
+  background:linear-gradient(90deg,transparent,var(--red),transparent);
+  opacity:.7;
 }
 
-.feature-card:hover::before{
-  transform:scale(1.08);
-  opacity:.31;
+.title{
+  height:43px;
+  padding:0 13px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  border-bottom:1px solid var(--line);
+  color:#777;
+  font:10px "Share Tech Mono";
+  direction:ltr;
 }
 
-.feature-card.video::before{
-  background-image:url("https://images.unsplash.com/photo-1485846234645-a62644f84728?auto=format&fit=crop&w=800&q=80");
+.title b{
+  color:#ddd;
+  font:700 11px "Cairo";
 }
 
-.feature-card.games::before{
-  background-image:url("https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=800&q=80");
+/* ===== LEFT ===== */
+
+.left{
+  display:flex;
+  flex-direction:column;
+  min-height:0;
 }
 
-.feature-card.rooms::before{
-  background-image:url("https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=800&q=80");
+.identity{
+  padding:17px;
+  border-bottom:1px solid var(--line);
 }
 
-.feature-card.live::before{
-  background-image:url("https://images.unsplash.com/photo-1598387993281-cecf8b71a8f8?auto=format&fit=crop&w=800&q=80");
+.identity-symbol{
+  height:130px;
+  display:grid;
+  place-items:center;
+  border:1px solid rgba(255,18,56,.18);
+  background:
+    radial-gradient(circle,rgba(255,18,56,.13),transparent 60%);
+  font-size:62px;
+  text-shadow:0 0 35px rgba(255,18,56,.55);
+  margin-bottom:13px;
 }
 
-.feature-card > *{
+.identity-name{
+  font-family:"Share Tech Mono";
+  color:#fff;
+  font-size:17px;
+  letter-spacing:3px;
+}
+
+.identity-sub{
+  color:#666;
+  font:9px "Share Tech Mono";
+  margin-top:4px;
+  direction:ltr;
+}
+
+.rows{
+  padding:13px;
+  overflow:auto;
+}
+
+.row{
+  padding:9px 0;
+  border-bottom:1px solid rgba(255,255,255,.045);
+}
+
+.row label{
+  display:block;
+  color:#555;
+  font:8px "Share Tech Mono";
+  direction:ltr;
+}
+
+.row span{
+  display:block;
+  color:#c9c9ce;
+  margin-top:3px;
+  font:11px "Share Tech Mono";
+  direction:ltr;
+}
+
+.row .red{
+  color:var(--red);
+}
+
+.row .cyan{
+  color:var(--cyan);
+}
+
+.row .green{
+  color:var(--green);
+}
+
+/* ===== CENTER ===== */
+
+.center{
+  min-width:0;
+  min-height:0;
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+}
+
+.signal{
+  height:125px;
+  min-height:125px;
+  border:1px solid rgba(255,18,56,.3);
+  background:
+    linear-gradient(90deg,
+      rgba(255,18,56,.10),
+      rgba(0,0,0,.76),
+      rgba(165,44,255,.06));
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:22px;
+  overflow:hidden;
+  position:relative;
+}
+
+.signal:after{
+  content:"";
+  position:absolute;
+  width:45%;
+  height:200%;
+  top:-50%;
+  left:-60%;
+  background:linear-gradient(
+    90deg,
+    transparent,
+    rgba(255,255,255,.08),
+    transparent
+  );
+  transform:skewX(-20deg);
+  animation:sweep 3s infinite;
+}
+
+@keyframes sweep{
+  0%{left:-60%}
+  60%,100%{left:130%}
+}
+
+.signal h2{
+  position:relative;
+  z-index:2;
+  font-size:25px;
+  font-weight:900;
+}
+
+.signal small{
+  position:relative;
+  z-index:2;
+  display:block;
+  color:var(--red);
+  font:10px "Share Tech Mono";
+  letter-spacing:2px;
+  margin-bottom:6px;
+  direction:ltr;
+}
+
+.signal p{
+  color:#666;
+  font-size:9px;
+  margin-top:4px;
+}
+
+.signal-number{
+  direction:ltr;
+  text-align:right;
   position:relative;
   z-index:2;
 }
 
-.feature-icon{
-  width:48px;
-  height:48px;
+.signal-number strong{
+  display:block;
+  color:var(--red);
+  font:42px "Share Tech Mono";
+  text-shadow:0 0 20px rgba(255,18,56,.45);
+}
+
+.signal-number span{
+  color:#555;
+  font:8px "Share Tech Mono";
+}
+
+/* ===== TERMINAL ===== */
+
+.terminal{
+  flex:1;
+  min-height:0;
+  display:flex;
+  flex-direction:column;
+}
+
+.term-top{
+  height:39px;
+  min-height:39px;
+  padding:0 12px;
+  border-bottom:1px solid var(--line);
   display:flex;
   align-items:center;
-  justify-content:center;
-  border-radius:15px;
-  background:rgba(5,7,17,.72);
-  border:1px solid rgba(255,255,255,.11);
-  font-size:22px;
-}
-
-.feature-card h3{
-  margin-top:42px;
-  font-size:18px;
-}
-
-.feature-card p{
-  margin-top:5px;
-  color:#8993aa;
-  font-size:11px;
-  line-height:1.8;
-}
-
-/* =========================================================
-   PLATFORM PREVIEW
-   ========================================================= */
-
-.preview{
-  padding:20px 5% 110px;
-  max-width:1500px;
-  margin:auto;
-}
-
-.preview-shell{
-  border-radius:32px;
-  border:1px solid rgba(255,255,255,.09);
-  background:
-    radial-gradient(circle at 80% 10%,rgba(139,92,246,.11),transparent 25%),
-    #080c18;
-  overflow:hidden;
-  box-shadow:var(--shadow);
-}
-
-.preview-top{
-  padding:18px 20px;
-  display:flex;
   justify-content:space-between;
-  align-items:center;
-  border-bottom:1px solid rgba(255,255,255,.07);
+  direction:ltr;
 }
 
-.preview-dots{
+.dots{
   display:flex;
   gap:6px;
 }
 
-.preview-dots i{
-  width:7px;
-  height:7px;
+.dots i{
+  width:8px;
+  height:8px;
   border-radius:50%;
-  background:#3b4359;
+  background:#444;
 }
 
-.preview-title{
-  color:#7d88a2;
-  font-size:10px;
+.dots i:nth-child(1){background:#ff3050}
+.dots i:nth-child(2){background:#ffbf00}
+.dots i:nth-child(3){background:#00d98a}
+
+.path{
+  color:#666;
+  font:9px "Share Tech Mono";
 }
 
-.preview-body{
-  padding:20px;
-  display:grid;
-  grid-template-columns:190px 1fr 230px;
-  gap:15px;
-}
-
-.mock-sidebar,
-.mock-right,
-.mock-feed{
-  border:1px solid rgba(255,255,255,.07);
-  background:rgba(255,255,255,.025);
-  border-radius:19px;
-}
-
-.mock-sidebar{
-  padding:15px;
-}
-
-.mock-brand{
-  height:38px;
-  border-radius:10px;
-  background:rgba(255,255,255,.04);
-  margin-bottom:15px;
-}
-
-.mock-item{
-  height:34px;
-  border-radius:9px;
-  margin-bottom:6px;
-  background:rgba(255,255,255,.025);
-}
-
-.mock-item.active{
-  background:rgba(67,136,255,.13);
-}
-
-.mock-feed{
-  padding:15px;
-}
-
-.mock-story-row{
-  display:flex;
-  gap:9px;
+.console{
+  flex:1;
+  min-height:0;
   overflow:hidden;
-  margin-bottom:13px;
-}
-
-.story-circle{
-  min-width:45px;
-  height:45px;
-  border-radius:50%;
-  background:linear-gradient(135deg,#213a72,#6848a9);
-  border:2px solid rgba(255,255,255,.08);
-}
-
-.mock-post{
-  border-radius:15px;
-  overflow:hidden;
-  border:1px solid rgba(255,255,255,.06);
-}
-
-.mock-post-image{
-  height:200px;
-  background:
-    linear-gradient(to top,rgba(5,7,17,.8),transparent),
-    url("https://images.unsplash.com/photo-1511882150382-421056c89033?auto=format&fit=crop&w=900&q=80")
-    center/cover;
-}
-
-.mock-lines{
-  padding:12px;
+  padding:13px;
+  direction:ltr;
+  text-align:left;
+  font:10px/1.85 "Share Tech Mono";
 }
 
 .line{
-  height:8px;
-  border-radius:10px;
-  background:rgba(255,255,255,.07);
-  margin-bottom:7px;
-}
-
-.line.short{
-  width:55%;
-}
-
-.mock-right{
-  padding:15px;
-}
-
-.profile-mini{
-  height:100px;
-  border-radius:14px;
-  background:
-    linear-gradient(to top,rgba(7,9,20,.95),transparent),
-    url("https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=500&q=80")
-    center/cover;
-  margin-bottom:10px;
-}
-
-.right-line{
-  height:10px;
-  background:rgba(255,255,255,.06);
-  border-radius:10px;
-  margin-bottom:8px;
-}
-
-/* =========================================================
-   AUTH
-   ========================================================= */
-
-#auth{
-  display:none;
-  min-height:100vh;
-  position:relative;
-  padding:100px 5% 60px;
-}
-
-#auth.active{
-  display:flex;
-  align-items:center;
-  justify-content:center;
-}
-
-.auth-wrap{
-  width:min(1100px,100%);
-  display:grid;
-  grid-template-columns:1fr 440px;
-  gap:35px;
-  align-items:center;
-}
-
-.auth-promo{
-  min-height:580px;
-  border-radius:32px;
+  white-space:nowrap;
   overflow:hidden;
-  position:relative;
-  background:
-    linear-gradient(90deg,rgba(5,7,17,.95),rgba(5,7,17,.18)),
-    url("https://images.unsplash.com/photo-1542751110-97427bbecf20?auto=format&fit=crop&w=1300&q=85")
-    center/cover;
-  border:1px solid rgba(255,255,255,.1);
-  box-shadow:var(--shadow);
-  padding:40px;
+  text-overflow:ellipsis;
+}
+
+.t{color:#444}
+.r{color:var(--red)}
+.g{color:var(--green)}
+.c{color:var(--cyan)}
+.p{color:#b45cff}
+.y{color:var(--yellow)}
+.w{color:#aaa}
+
+/* ===== RIGHT ===== */
+
+.right{
+  min-height:0;
   display:flex;
   flex-direction:column;
-  justify-content:flex-end;
 }
 
-.auth-promo::after{
+.map{
+  height:190px;
+  position:relative;
+  overflow:hidden;
+  background:
+    linear-gradient(rgba(0,234,255,.035) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(0,234,255,.035) 1px,transparent 1px);
+  background-size:22px 22px;
+}
+
+.map:before{
   content:"";
   position:absolute;
   inset:0;
   background:
-    radial-gradient(circle at 80% 20%,rgba(67,136,255,.25),transparent 30%),
-    linear-gradient(to top,rgba(5,7,17,.95),transparent 65%);
+    radial-gradient(circle at 35% 40%,rgba(0,234,255,.16),transparent 3%),
+    radial-gradient(circle at 70% 65%,rgba(255,18,56,.2),transparent 3%),
+    linear-gradient(125deg,transparent 47%,rgba(0,234,255,.08) 48%,transparent 49%);
 }
 
-.auth-promo-content{
-  position:relative;
-  z-index:2;
+.cross{
+  position:absolute;
+  width:80px;
+  height:80px;
+  border:1px solid rgba(255,18,56,.45);
+  border-radius:50%;
+  left:65%;
+  top:40%;
+  transform:translate(-50%,-50%);
+  box-shadow:
+    0 0 0 14px rgba(255,18,56,.025),
+    0 0 0 30px rgba(255,18,56,.018);
 }
 
-.auth-promo h2{
-  font-size:42px;
-  line-height:1.15;
-  font-weight:900;
+.cross:before,
+.cross:after{
+  content:"";
+  position:absolute;
+  background:var(--red);
 }
 
-.auth-promo p{
-  color:#aeb8cf;
-  font-size:13px;
-  line-height:1.9;
-  margin-top:12px;
-  max-width:550px;
+.cross:before{
+  width:100%;
+  height:1px;
+  top:50%;
 }
 
-.promo-tags{
+.cross:after{
+  height:100%;
+  width:1px;
+  left:50%;
+}
+
+.map-tag{
+  position:absolute;
+  left:14px;
+  bottom:12px;
+  color:#777;
+  font:8px "Share Tech Mono";
+  direction:ltr;
+}
+
+.device{
+  margin:12px;
+  padding:13px;
+  border:1px solid rgba(255,255,255,.06);
+  background:rgba(255,255,255,.018);
+}
+
+.device-head{
   display:flex;
-  flex-wrap:wrap;
-  gap:7px;
-  margin-top:20px;
-}
-
-.promo-tag{
-  padding:7px 10px;
-  border-radius:10px;
-  background:rgba(255,255,255,.08);
-  border:1px solid rgba(255,255,255,.1);
-  font-size:10px;
-}
-
-.auth-card{
-  background:rgba(10,14,27,.9);
-  border:1px solid rgba(255,255,255,.09);
-  border-radius:29px;
-  padding:30px;
-  box-shadow:var(--shadow);
-  backdrop-filter:blur(20px);
-}
-
-.auth-head{
-  text-align:center;
-}
-
-.auth-logo{
-  width:60px;
-  height:60px;
-  border-radius:19px;
-  margin:0 auto 16px;
-  display:flex;
+  justify-content:space-between;
   align-items:center;
-  justify-content:center;
-  background:linear-gradient(145deg,#16264d,#0b1227);
-  border:1px solid rgba(255,255,255,.1);
+  direction:ltr;
 }
 
-.auth-logo span{
-  font-family:Orbitron,sans-serif;
-  font-size:17px;
-  font-weight:900;
-  letter-spacing:-2px;
-  background:linear-gradient(135deg,var(--cyan),var(--green));
-  -webkit-background-clip:text;
-  color:transparent;
+.phone{
+  width:36px;
+  height:58px;
+  border:2px solid #666;
+  border-radius:7px;
+  position:relative;
+  box-shadow:0 0 15px rgba(0,234,255,.08);
 }
 
-.auth-head h2{
-  font-size:25px;
+.phone:before{
+  content:"";
+  position:absolute;
+  width:13px;
+  height:2px;
+  background:#555;
+  top:4px;
+  left:50%;
+  transform:translateX(-50%);
 }
 
-.auth-head p{
-  color:#737e99;
-  font-size:11px;
-  margin-top:5px;
+.phone:after{
+  content:"";
+  position:absolute;
+  width:5px;
+  height:5px;
+  border:1px solid #555;
+  border-radius:50%;
+  bottom:3px;
+  left:50%;
+  transform:translateX(-50%);
 }
 
-.auth-tabs{
+.device-name{
+  text-align:right;
+}
+
+.device-name strong{
+  display:block;
+  font:12px "Share Tech Mono";
+  color:#ddd;
+  direction:ltr;
+}
+
+.device-name span{
+  color:#555;
+  font:8px "Share Tech Mono";
+}
+
+.stats{
   display:grid;
   grid-template-columns:1fr 1fr;
-  gap:5px;
-  padding:5px;
-  background:rgba(255,255,255,.035);
-  border-radius:13px;
-  margin-top:25px;
+  gap:6px;
+  margin:12px;
 }
 
-.auth-tab{
-  height:38px;
-  border-radius:9px;
-  background:transparent;
-  color:#78829b;
-  font-weight:700;
-  font-size:11px;
+.stat{
+  min-height:50px;
+  border:1px solid rgba(255,255,255,.05);
+  padding:8px;
+  background:rgba(255,255,255,.015);
 }
 
-.auth-tab.active{
-  color:#fff;
-  background:#18213a;
-}
-
-.form{
-  margin-top:20px;
-}
-
-.field{
-  margin-bottom:13px;
-}
-
-.field label{
+.stat label{
   display:block;
-  color:#a5aec3;
-  font-size:10px;
-  margin-bottom:7px;
+  color:#555;
+  font:7px "Share Tech Mono";
 }
 
-.input-wrap{
-  position:relative;
+.stat strong{
+  display:block;
+  margin-top:3px;
+  color:#bbb;
+  font:10px "Share Tech Mono";
+  direction:ltr;
 }
 
-.input-wrap input{
-  width:100%;
-  height:48px;
-  padding:0 15px;
-  border-radius:13px;
-  color:white;
-  background:#090d1a;
-  border:1px solid rgba(255,255,255,.08);
-  outline:none;
-  transition:.25s;
-  font-size:12px;
+.stat .red{
+  color:var(--red);
 }
 
-.input-wrap input:focus{
-  border-color:rgba(67,136,255,.55);
-  box-shadow:0 0 0 4px rgba(67,136,255,.07);
-}
+/* ===== FOOTER CONTROLS ===== */
 
-.password-toggle{
-  position:absolute;
-  left:10px;
-  top:50%;
-  transform:translateY(-50%);
-  color:#707a93;
-  background:transparent;
-  font-size:13px;
-}
-
-.auth-submit{
-  width:100%;
-  height:51px;
-  margin-top:5px;
-  border-radius:14px;
-  color:#fff;
-  font-size:12px;
-  font-weight:900;
-  background:linear-gradient(135deg,#287aff,#7447ef);
-  box-shadow:0 13px 30px rgba(67,136,255,.19);
-  transition:.3s;
-}
-
-.auth-submit:hover{
-  transform:translateY(-2px);
-}
-
-.divider{
+.controls{
+  height:54px;
+  min-height:54px;
   display:flex;
-  align-items:center;
-  gap:10px;
-  color:#5e687f;
-  font-size:9px;
-  margin:19px 0;
+  gap:8px;
 }
 
-.divider::before,
-.divider::after{
-  content:"";
-  height:1px;
+button{
   flex:1;
-  background:rgba(255,255,255,.07);
+  border:1px solid rgba(255,18,56,.35);
+  background:rgba(0,0,0,.6);
+  color:#bbb;
+  font:700 10px "Cairo";
+  cursor:pointer;
+  transition:.2s;
 }
 
-.social-login{
-  width:100%;
-  height:46px;
-  border-radius:13px;
-  background:rgba(255,255,255,.04);
-  color:#dce2f2;
-  border:1px solid rgba(255,255,255,.07);
-  font-size:11px;
-  font-weight:700;
+button:hover{
+  color:#fff;
+  border-color:var(--red);
+  box-shadow:0 0 20px rgba(255,18,56,.16);
 }
 
-.auth-note{
-  text-align:center;
-  color:#5e687f;
-  font-size:9px;
-  line-height:1.8;
-  margin-top:16px;
+button.main{
+  color:white;
+  background:linear-gradient(
+    90deg,
+    rgba(255,18,56,.18),
+    rgba(255,18,56,.03)
+  );
 }
 
-.terms{
-  color:#7784a0;
-}
+/* ===== ALERT ===== */
 
-/* =========================================================
-   TOAST
-   ========================================================= */
-
-.toast{
+.flash{
   position:fixed;
-  z-index:100000;
-  left:50%;
-  bottom:25px;
-  transform:translate(-50%,20px);
-  min-width:240px;
-  max-width:90%;
-  padding:13px 17px;
-  border-radius:13px;
-  background:rgba(14,19,35,.95);
-  border:1px solid rgba(255,255,255,.1);
-  box-shadow:0 20px 50px rgba(0,0,0,.4);
-  color:#e8edf8;
-  font-size:11px;
-  text-align:center;
-  opacity:0;
+  inset:0;
+  z-index:100;
   pointer-events:none;
-  transition:.35s;
+  opacity:0;
+  background:rgba(255,0,35,.13);
 }
 
-.toast.show{
-  opacity:1;
-  transform:translate(-50%,0);
+.flash.on{
+  animation:flash .35s steps(2) 3;
 }
 
-/* =========================================================
-   MOBILE
-   ========================================================= */
-
-@media(max-width:1050px){
-  .hero{
-    grid-template-columns:1fr;
-    text-align:center;
-    padding-top:125px;
-  }
-
-  .hero-content{
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-  }
-
-  .hero-description{
-    max-width:720px;
-  }
-
-  .hero-visual{
-    min-height:530px;
-  }
-
-  .feature-grid{
-    grid-template-columns:repeat(2,1fr);
-  }
-
-  .auth-wrap{
-    grid-template-columns:1fr;
-    max-width:650px;
-  }
-
-  .auth-promo{
-    min-height:390px;
-  }
-
-  .preview-body{
-    grid-template-columns:160px 1fr;
-  }
-
-  .mock-right{
-    display:none;
-  }
+@keyframes flash{
+  0%,100%{opacity:0}
+  50%{opacity:1}
 }
 
-@media(max-width:650px){
-  .navbar{
-    height:65px;
-    padding:0 16px;
+/* ===== MOBILE ===== */
+
+@media(max-width:950px){
+
+  body{
+    overflow:auto;
   }
 
-  .brand-text{
-    font-size:15px;
+  .app{
+    min-height:100vh;
+    height:auto;
   }
 
-  .brand-text small{
+  .header{
+    height:78px;
+    min-height:78px;
+    padding:10px 14px;
+  }
+
+  .logo h1{
+    font-size:24px;
+    letter-spacing:5px;
+  }
+
+  .logo-mark{
+    width:45px;
+    height:45px;
+    font-size:22px;
+  }
+
+  .header-right{
     display:none;
   }
 
-  .nav-btn:not(.primary){
+  .workspace{
+    grid-template-columns:1fr;
+    min-height:calc(100vh - 78px);
+  }
+
+  .left,
+  .right{
     display:none;
   }
 
-  .nav-btn.primary{
-    height:38px;
-    padding:0 13px;
-    font-size:10px;
+  .signal{
+    height:105px;
+    min-height:105px;
+    padding:15px;
   }
 
-  .hero{
-    padding:105px 16px 55px;
-    gap:35px;
+  .signal h2{
+    font-size:18px;
   }
 
-  .hero h1{
-    font-size:44px;
-    letter-spacing:-2px;
+  .signal-number strong{
+    font-size:27px;
   }
 
-  .hero-description{
-    font-size:13px;
-    line-height:2;
-  }
-
-  .hero-buttons{
-    width:100%;
-    justify-content:center;
-  }
-
-  .main-btn{
-    width:100%;
-  }
-
-  .hero-stats{
-    justify-content:center;
-    gap:22px;
-  }
-
-  .hero-visual{
-    min-height:460px;
-  }
-
-  .main-visual-card{
-    height:460px;
-    border-radius:27px;
-  }
-
-  .float-card.live{
-    right:-4px;
-    top:45px;
-  }
-
-  .float-card.game{
-    left:-4px;
-    bottom:45px;
-  }
-
-  .features,
-  .preview{
-    padding-left:16px;
-    padding-right:16px;
-  }
-
-  .feature-grid{
-    grid-template-columns:1fr;
-  }
-
-  .feature-card{
-    min-height:200px;
-  }
-
-  .preview-body{
-    grid-template-columns:1fr;
-  }
-
-  .mock-sidebar{
-    display:none;
-  }
-
-  .mock-post-image{
-    height:180px;
-  }
-
-  #auth{
-    padding:90px 14px 30px;
-  }
-
-  .auth-promo{
-    min-height:330px;
-    padding:25px;
-  }
-
-  .auth-promo h2{
-    font-size:29px;
-  }
-
-  .auth-card{
-    padding:23px 18px;
-    border-radius:24px;
-  }
-
-  .loader-title{
-    font-size:29px;
-  }
-}
-
-/* =========================================================
-   ACCESSIBILITY
-   ========================================================= */
-
-@media(prefers-reduced-motion:reduce){
-  *,
-  *::before,
-  *::after{
-    animation-duration:.001ms!important;
-    animation-iteration-count:1!important;
-    scroll-behavior:auto!important;
+  .terminal{
+    min-height:550px;
   }
 }
 </style>
@@ -1440,917 +766,701 @@ a{
 
 <body>
 
-<!-- =======================================================
-     BACKGROUND
-     ======================================================= -->
+<div class="flash" id="flash"></div>
 
-<div class="background">
-  <div class="bg-grid"></div>
-  <div class="orb one"></div>
-  <div class="orb two"></div>
-  <div class="orb three"></div>
-  <div class="particles" id="particles"></div>
-</div>
+<div class="app">
 
-<!-- =======================================================
-     LOADER
-     ======================================================= -->
+  <!-- HEADER -->
+  <header class="header">
 
-<div id="loader">
-  <div class="loader-inner">
+    <div class="logo">
 
-    <div class="loader-logo">
-      <span class="logo-symbol">NX</span>
-    </div>
+      <div class="logo-mark">🃏</div>
 
-    <div class="loader-title">NEXORA</div>
-
-    <div class="loader-sub">
-      تواصل • فيديو • ألعاب • غرف • بث
-    </div>
-
-    <div class="loader-status" id="loaderStatus">
-      جاري تجهيز عالمك...
-    </div>
-
-    <div class="progress">
-      <div class="progress-bar" id="progressBar"></div>
-    </div>
-
-    <div class="progress-info">
-      <span>INITIALIZING PLATFORM</span>
-      <span id="progressPercent">0%</span>
-    </div>
-
-  </div>
-</div>
-
-<!-- =======================================================
-     APP
-     ======================================================= -->
-
-<div id="app">
-
-  <!-- NAVBAR -->
-  <nav class="navbar">
-
-    <a href="#" class="brand" onclick="goTop();return false;">
-      <div class="brand-mark">
-        <span>NX</span>
+      <div>
+        <h1>JOKER</h1>
+        <p>DARK NODE // SYSTEM INTERFACE</p>
       </div>
 
-      <div class="brand-text">
-        NEXORA
-        <small>CONNECT • PLAY • LIVE</small>
-      </div>
-    </a>
-
-    <div class="nav-actions">
-      <button class="nav-btn" onclick="scrollToFeatures()">
-        اكتشف المنصة
-      </button>
-
-      <button class="nav-btn primary" onclick="openAuth('login')">
-        دخول
-      </button>
     </div>
 
-  </nav>
+    <div class="header-right">
 
-  <!-- =====================================================
-       HERO
-       ===================================================== -->
+      <div class="live">
+        <i></i>
+        LIVE MONITOR
+      </div>
 
-  <main id="landing">
+      <div style="color:#555;font-size:10px">
+        00:00:00
+      </div>
 
-    <section class="hero">
+    </div>
 
-      <div class="hero-content">
+  </header>
 
-        <div class="eyebrow">
-          <span class="live-dot"></span>
-          عالم اجتماعي جديد يبدأ من هنا
+
+  <main class="workspace">
+
+
+    <!-- LEFT -->
+    <aside class="box left">
+
+      <div class="title">
+        <b>هوية الإشارة</b>
+        SIGNAL IDENTITY
+      </div>
+
+      <div class="identity">
+
+        <div class="identity-symbol">🃏</div>
+
+        <div class="identity-name">
+          JOKER NODE
         </div>
 
-        <h1>
-          مش مجرد منصة...
-          <br>
-          <span class="gradient-text">عالم كامل ليك.</span>
-        </h1>
-
-        <p class="hero-description">
-          مكان واحد يجمع الناس، الفيديو، الألعاب، الغرف الصوتية،
-          البث المباشر، التحديات والمجتمع في تجربة واحدة مصممة
-          لتكون سريعة، ممتعة وحية.
-        </p>
-
-        <div class="hero-buttons">
-
-          <button class="main-btn primary" onclick="openAuth('register')">
-            🚀 ابدأ الآن
-          </button>
-
-          <button class="main-btn secondary" onclick="scrollToFeatures()">
-            استكشف العالم ↓
-          </button>
-
-        </div>
-
-        <div class="hero-stats">
-
-          <div class="stat">
-            <strong>01</strong>
-            <span>عالم اجتماعي</span>
-          </div>
-
-          <div class="stat">
-            <strong>04+</strong>
-            <span>تجارب رئيسية</span>
-          </div>
-
-          <div class="stat">
-            <strong>∞</strong>
-            <span>تجارب قادمة</span>
-          </div>
-
+        <div class="identity-sub">
+          DARK-CHANNEL / ACTIVE
         </div>
 
       </div>
 
-      <!-- HERO VISUAL -->
+      <div class="rows">
 
-      <div class="hero-visual">
-
-        <div class="visual-glow"></div>
-
-        <div class="main-visual-card">
-
-          <div class="visual-overlay"></div>
-
-          <div class="visual-top">
-
-            <div class="online-badge">
-              <span class="live-dot"></span>
-              LIVE EXPERIENCE
-            </div>
-
-            <div class="online-badge">
-              ✦ NEXORA
-            </div>
-
-          </div>
-
-          <div class="visual-content">
-
-            <h2>
-              العب.
-              <br>
-              اتكلم.
-              <br>
-              شوف.
-              <br>
-              وعيش اللحظة.
-            </h2>
-
-            <p>
-              الغرفة الواحدة ممكن تجمع لعبة شغالة،
-              لاعبين، فيديو، شات، صوت وهدايا.
-            </p>
-
-            <div class="visual-actions">
-              <span class="mini-chip">🎮 Gaming</span>
-              <span class="mini-chip">🎥 Video</span>
-              <span class="mini-chip">🎙️ Rooms</span>
-              <span class="mini-chip">📡 Live</span>
-            </div>
-
-          </div>
-
+        <div class="row">
+          <label>EVENT ID</label>
+          <span class="red" id="eventId">JK-000000</span>
         </div>
 
-        <div class="float-card live">
-
-          <div class="float-head">
-
-            <div class="float-icon">📡</div>
-
-            <div>
-              <strong>بث مباشر الآن</strong>
-              <small>غرفة الألعاب</small>
-            </div>
-
-          </div>
-
-          <div class="float-number">
-            👥 1,284 متابع داخل التجربة
-          </div>
-
+        <div class="row">
+          <label>REMOTE ID</label>
+          <span id="remoteId">RX-7A91F2</span>
         </div>
 
-        <div class="float-card game">
+        <div class="row">
+          <label>SOURCE</label>
+          <span id="source">185.24.71.91</span>
+        </div>
 
-          <div class="float-head">
+        <div class="row">
+          <label>LOCATION</label>
+          <span class="cyan" id="location">31.1124° N / 29.8811° E</span>
+        </div>
 
-            <div class="float-icon">☀️</div>
+        <div class="row">
+          <label>DEVICE</label>
+          <span id="device">MOBILE NODE / ANDROID</span>
+        </div>
 
-            <div>
-              <strong>الشمس × القمر</strong>
-              <small>Game Room</small>
-            </div>
+        <div class="row">
+          <label>SESSION</label>
+          <span id="session">X9-OMEGA-41</span>
+        </div>
 
-          </div>
+        <div class="row">
+          <label>CHANNEL</label>
+          <span class="red">DARK / UNKNOWN</span>
+        </div>
 
-          <div class="float-number">
-            🎮 الجولة بدأت — اللاعبون يلعبون الآن
-          </div>
-
+        <div class="row">
+          <label>STATUS</label>
+          <span class="green">MONITORING</span>
         </div>
 
       </div>
 
-    </section>
+    </aside>
 
-    <!-- ===================================================
-         FEATURES
-         =================================================== -->
 
-    <section class="features" id="features">
+    <!-- CENTER -->
+    <section class="center">
 
-      <div class="section-heading">
+      <div class="signal">
 
-        <div class="label">
-          ONE PLATFORM — MANY WORLDS
-        </div>
-
-        <h2>كل حاجة في مكان واحد.</h2>
-
-        <p>
-          المنصة مبنية من البداية بحيث كل تجربة تقدر تتصل
-          بالتجارب الثانية بدل ما تكون أجزاء منفصلة.
-        </p>
-
-      </div>
-
-      <div class="feature-grid">
-
-        <article class="feature-card video">
-
-          <div class="feature-icon">🎬</div>
-
-          <h3>الفيديو</h3>
-
-          <p>
-            فيديوهات قصيرة وطويلة، ترند، متابعة، تفاعل
-            ومحتوى يظهر لك حسب اهتماماتك.
+        <div>
+          <small>JOKER // SECURITY SIGNAL</small>
+          <h2 id="headline">إشارة غير معروفة دخلت النطاق</h2>
+          <p id="description">
+            مراقبة النشاط الجاري...
           </p>
-
-        </article>
-
-        <article class="feature-card games">
-
-          <div class="feature-icon">🎮</div>
-
-          <h3>الألعاب</h3>
-
-          <p>
-            ألعاب فردية ومتعددة وتحديات ونقاط ومتصدّرين،
-            والأهم أن الألعاب تدخل مباشرة داخل الغرف.
-          </p>
-
-        </article>
-
-        <article class="feature-card rooms">
-
-          <div class="feature-icon">🎙️</div>
-
-          <h3>الغرف</h3>
-
-          <p>
-            ادخل غرفة، قابل الناس، شغّل لعبة، اتكلم،
-            شاهد الفيديو وتفاعل مع الموجودين.
-          </p>
-
-        </article>
-
-        <article class="feature-card live">
-
-          <div class="feature-icon">📡</div>
-
-          <h3>البث المباشر</h3>
-
-          <p>
-            مشاهدة وتفاعل ودردشة وهدايا وتجارب مباشرة
-            مرتبطة بالمجتمع والألعاب.
-          </p>
-
-        </article>
-
-      </div>
-
-    </section>
-
-    <!-- ===================================================
-         PLATFORM PREVIEW
-         =================================================== -->
-
-    <section class="preview">
-
-      <div class="section-heading">
-
-        <div class="label">
-          PLATFORM PREVIEW
         </div>
 
-        <h2>المنصة من الداخل.</h2>
-
-        <p>
-          الواجهة النهائية هتكون أكبر من مجرد Feed:
-          Navigation، Stories، فيديو، Rooms، Gaming
-          ومحتوى حي في نفس التجربة.
-        </p>
+        <div class="signal-number">
+          <strong id="percent">07%</strong>
+          <span>THREAT SIGNAL</span>
+        </div>
 
       </div>
 
-      <div class="preview-shell">
 
-        <div class="preview-top">
+      <div class="box terminal">
 
-          <div class="preview-dots">
+        <div class="term-top">
+
+          <div class="dots">
             <i></i>
             <i></i>
             <i></i>
           </div>
 
-          <div class="preview-title">
-            NEXORA / HOME
+          <div class="path">
+            joker@dark-node:~$
           </div>
 
         </div>
 
-        <div class="preview-body">
+        <div class="console" id="console"></div>
 
-          <aside class="mock-sidebar">
+      </div>
 
-            <div class="mock-brand"></div>
 
-            <div class="mock-item active"></div>
-            <div class="mock-item"></div>
-            <div class="mock-item"></div>
-            <div class="mock-item"></div>
-            <div class="mock-item"></div>
-            <div class="mock-item"></div>
+      <div class="controls">
 
-          </aside>
+        <button class="main" id="start">
+          ⚡ START SEQUENCE
+        </button>
 
-          <div class="mock-feed">
+        <button id="reset">
+          RESET
+        </button>
 
-            <div class="mock-story-row">
+      </div>
 
-              <div class="story-circle"></div>
-              <div class="story-circle"></div>
-              <div class="story-circle"></div>
-              <div class="story-circle"></div>
-              <div class="story-circle"></div>
-              <div class="story-circle"></div>
+    </section>
 
-            </div>
 
-            <div class="mock-post">
+    <!-- RIGHT -->
+    <aside class="box right">
 
-              <div class="mock-post-image"></div>
+      <div class="title">
+        <b>الموقع والنظام</b>
+        NODE TRACK
+      </div>
 
-              <div class="mock-lines">
+      <div class="map">
 
-                <div class="line"></div>
-                <div class="line short"></div>
+        <div class="cross"></div>
 
-              </div>
+        <div class="map-tag">
+          SIGNAL MAP // LIVE GRID
+        </div>
 
-            </div>
+      </div>
 
+
+      <div class="device">
+
+        <div class="device-head">
+
+          <div class="phone"></div>
+
+          <div class="device-name">
+            <strong id="phoneName">
+              UNKNOWN DEVICE
+            </strong>
+            <span>
+              MOBILE SIGNAL
+            </span>
           </div>
-
-          <aside class="mock-right">
-
-            <div class="profile-mini"></div>
-
-            <div class="right-line"></div>
-            <div class="right-line"></div>
-            <div class="right-line" style="width:65%"></div>
-
-          </aside>
 
         </div>
 
       </div>
 
-    </section>
+
+      <div class="stats">
+
+        <div class="stat">
+          <label>PACKETS</label>
+          <strong id="packets">0000</strong>
+        </div>
+
+        <div class="stat">
+          <label>ALERTS</label>
+          <strong class="red" id="alerts">00</strong>
+        </div>
+
+        <div class="stat">
+          <label>TRACE</label>
+          <strong id="trace">WAITING</strong>
+        </div>
+
+        <div class="stat">
+          <label>FIREWALL</label>
+          <strong>ACTIVE</strong>
+        </div>
+
+        <div class="stat">
+          <label>SESSION</label>
+          <strong id="session2">X9-OMEGA</strong>
+        </div>
+
+        <div class="stat">
+          <label>NODE</label>
+          <strong class="red">JOKER</strong>
+        </div>
+
+      </div>
+
+    </aside>
 
   </main>
 
-  <!-- =====================================================
-       AUTH SCREEN
-       ===================================================== -->
-
-  <section id="auth">
-
-    <div class="auth-wrap">
-
-      <!-- PROMO -->
-
-      <div class="auth-promo">
-
-        <div class="auth-promo-content">
-
-          <div class="eyebrow">
-            <span class="live-dot"></span>
-            مرحبًا بك في NEXORA
-          </div>
-
-          <h2>
-            مكان واحد...
-            <br>
-            <span class="gradient-text">
-              كل عالمك.
-            </span>
-          </h2>
-
-          <p>
-            حساب واحد يفتح لك عالم التواصل والفيديو والألعاب
-            والغرف والبث والتجارب القادمة.
-          </p>
-
-          <div class="promo-tags">
-            <span class="promo-tag">🎮 Games</span>
-            <span class="promo-tag">🎥 Videos</span>
-            <span class="promo-tag">🎙️ Rooms</span>
-            <span class="promo-tag">📡 Live</span>
-            <span class="promo-tag">💬 Chat</span>
-            <span class="promo-tag">🏆 Challenges</span>
-          </div>
-
-        </div>
-
-      </div>
-
-      <!-- AUTH CARD -->
-
-      <div class="auth-card">
-
-        <div class="auth-head">
-
-          <div class="auth-logo">
-            <span>NX</span>
-          </div>
-
-          <h2 id="authTitle">
-            أهلًا بك
-          </h2>
-
-          <p id="authSubtitle">
-            سجل دخولك واستكمل رحلتك.
-          </p>
-
-        </div>
-
-        <div class="auth-tabs">
-
-          <button
-            class="auth-tab active"
-            id="loginTab"
-            onclick="switchAuth('login')">
-            تسجيل الدخول
-          </button>
-
-          <button
-            class="auth-tab"
-            id="registerTab"
-            onclick="switchAuth('register')">
-            إنشاء حساب
-          </button>
-
-        </div>
-
-        <form class="form" id="authForm">
-
-          <div class="field" id="nameField" style="display:none">
-
-            <label>اسمك داخل المنصة</label>
-
-            <div class="input-wrap">
-              <input
-                id="nameInput"
-                type="text"
-                placeholder="اكتب الاسم الذي سيظهر للناس">
-            </div>
-
-          </div>
-
-          <div class="field">
-
-            <label>البريد الإلكتروني</label>
-
-            <div class="input-wrap">
-
-              <input
-                id="emailInput"
-                type="email"
-                placeholder="example@email.com"
-                required>
-
-            </div>
-
-          </div>
-
-          <div class="field">
-
-            <label>كلمة المرور</label>
-
-            <div class="input-wrap">
-
-              <input
-                id="passwordInput"
-                type="password"
-                placeholder="••••••••"
-                minlength="6"
-                required>
-
-              <button
-                type="button"
-                class="password-toggle"
-                onclick="togglePassword()">
-                👁
-              </button>
-
-            </div>
-
-          </div>
-
-          <button
-            type="submit"
-            class="auth-submit"
-            id="submitAuth">
-            دخول إلى NEXORA
-          </button>
-
-        </form>
-
-        <div class="divider">
-          أو تابع بطريقة أخرى
-        </div>
-
-        <button class="social-login" onclick="demoSocialLogin()">
-          ◎ المتابعة بحساب خارجي
-        </button>
-
-        <div class="auth-note">
-          بالمتابعة أنت توافق على
-          <span class="terms">الشروط وسياسة الخصوصية</span>
-          الخاصة بالمنصة.
-        </div>
-
-      </div>
-
-    </div>
-
-  </section>
-
 </div>
 
-<!-- TOAST -->
-
-<div class="toast" id="toast"></div>
 
 <script>
-/* =========================================================
-   NEXORA FOUNDATION JAVASCRIPT
-   ========================================================= */
 
-/* -----------------------------
-   PARTICLES
------------------------------ */
+const consoleBox =
+  document.getElementById("console");
 
-const particles = document.getElementById("particles");
+const percent =
+  document.getElementById("percent");
 
-for(let i = 0; i < 65; i++){
+const eventId =
+  document.getElementById("eventId");
 
-  const p = document.createElement("span");
+const remoteId =
+  document.getElementById("remoteId");
 
-  p.className = "particle";
+const source =
+  document.getElementById("source");
 
-  p.style.left = Math.random() * 100 + "%";
-  p.style.animationDuration = (7 + Math.random() * 13) + "s";
-  p.style.animationDelay = (-Math.random() * 15) + "s";
-  p.style.opacity = (0.15 + Math.random() * .7).toFixed(2);
+const locationEl =
+  document.getElementById("location");
 
-  const size = (1 + Math.random() * 2.5);
+const device =
+  document.getElementById("device");
 
-  p.style.width = size + "px";
-  p.style.height = size + "px";
+const session =
+  document.getElementById("session");
 
-  particles.appendChild(p);
+const session2 =
+  document.getElementById("session2");
+
+const trace =
+  document.getElementById("trace");
+
+const packets =
+  document.getElementById("packets");
+
+const alerts =
+  document.getElementById("alerts");
+
+const headline =
+  document.getElementById("headline");
+
+const description =
+  document.getElementById("description");
+
+const phoneName =
+  document.getElementById("phoneName");
+
+const flash =
+  document.getElementById("flash");
+
+let running = false;
+let timers = [];
+let packetCount = 0;
+let alertCount = 0;
+
+
+/* RANDOM */
+
+function hex(n){
+  const chars="0123456789ABCDEF";
+  let x="";
+  for(let i=0;i<n;i++){
+    x += chars[Math.floor(Math.random()*chars.length)];
+  }
+  return x;
+}
+
+function fakeIp(){
+  return [
+    Math.floor(Math.random()*200)+20,
+    Math.floor(Math.random()*255),
+    Math.floor(Math.random()*255),
+    Math.floor(Math.random()*240)+10
+  ].join(".");
+}
+
+function fakeLocation(){
+  const a=(25+Math.random()*8).toFixed(4);
+  const b=(27+Math.random()*7).toFixed(4);
+  return `${a}° N / ${b}° E`;
+}
+
+function fakeSession(){
+  return "X"+hex(2)+"-"+[
+    "OMEGA",
+    "NIGHT",
+    "ZERO",
+    "DARK",
+    "ALPHA"
+  ][Math.floor(Math.random()*5)]+"-"+hex(2);
 }
 
 
-/* -----------------------------
-   LOADER
------------------------------ */
+/* TERMINAL */
 
-const loader = document.getElementById("loader");
-const app = document.getElementById("app");
-const progressBar = document.getElementById("progressBar");
-const progressPercent = document.getElementById("progressPercent");
-const loaderStatus = document.getElementById("loaderStatus");
+function log(text,type="w"){
 
-const loaderMessages = [
-  "جاري تجهيز عالمك...",
-  "جاري تحميل التجربة الاجتماعية...",
-  "جاري تجهيز الفيديو والألعاب...",
-  "جاري تجهيز الغرف...",
-  "جاري تجهيز عالم NEXORA...",
-  "اكتمل التجهيز."
+  const line =
+    document.createElement("div");
+
+  line.className="line";
+
+  const d=new Date();
+
+  const time =
+    `[${String(d.getHours()).padStart(2,"0")}:`+
+    `${String(d.getMinutes()).padStart(2,"0")}:`+
+    `${String(d.getSeconds()).padStart(2,"0")}]`;
+
+  line.innerHTML =
+    `<span class="t">${time}</span> `+
+    `<span class="${type}">${text}</span>`;
+
+  consoleBox.appendChild(line);
+
+  while(consoleBox.children.length>45){
+    consoleBox.removeChild(consoleBox.firstChild);
+  }
+
+  consoleBox.scrollTop =
+    consoleBox.scrollHeight;
+}
+
+
+/* THREAT */
+
+function setThreat(n){
+
+  n=Math.max(0,Math.min(100,n));
+
+  percent.textContent =
+    String(n).padStart(2,"0")+"%";
+
+  if(n>=70){
+    percent.style.color="var(--red)";
+  }else{
+    percent.style.color="var(--cyan)";
+  }
+}
+
+
+/* FLASH */
+
+function flashAlert(){
+
+  flash.classList.remove("on");
+
+  void flash.offsetWidth;
+
+  flash.classList.add("on");
+
+  alertCount++;
+
+  alerts.textContent =
+    String(alertCount).padStart(2,"0");
+}
+
+
+/* SCENARIO */
+
+const sequence=[
+
+  [500,
+   "dark-node initialized.",
+   "p",
+   10],
+
+  [650,
+   "searching passive signal space...",
+   "c",
+   15],
+
+  [800,
+   "unknown signature detected.",
+   "y",
+   24],
+
+  [900,
+   "remote identity received: "+hex(8),
+   "r",
+   31],
+
+  [1000,
+   "session channel established.",
+   "c",
+   38],
+
+  [850,
+   "device signature: MOBILE / ANDROID",
+   "w",
+   43],
+
+  [950,
+   "signal coordinates acquired.",
+   "c",
+   49],
+
+  [1000,
+   "abnormal traffic pattern detected.",
+   "r",
+   57],
+
+  [900,
+   "trace sequence initiated.",
+   "y",
+   64],
+
+  [1000,
+   "firewall response layer active.",
+   "g",
+   71],
+
+  [850,
+   "unknown node entering restricted zone.",
+   "r",
+   79],
+
+  [900,
+   "signal intensity critical.",
+   "r",
+   86],
+
+  [1000,
+   "session isolation sequence.",
+   "p",
+   91],
+
+  [1100,
+   "signal contained.",
+   "g",
+   96],
+
+  [1300,
+   "monitoring channel restored.",
+   "c",
+   28]
+
 ];
 
-let progress = 0;
-let messageIndex = 0;
 
-const loaderTimer = setInterval(() => {
+/* START */
 
-  progress += 1;
+async function start(){
 
-  progressBar.style.width = progress + "%";
-  progressPercent.textContent = progress + "%";
+  if(running)return;
 
-  if(progress % 20 === 0 && messageIndex < loaderMessages.length - 1){
-    messageIndex++;
-    loaderStatus.textContent = loaderMessages[messageIndex];
-  }
+  running=true;
 
-  if(progress >= 100){
+  consoleBox.innerHTML="";
 
-    clearInterval(loaderTimer);
+  packetCount=0;
+  alertCount=0;
 
-    setTimeout(() => {
+  alerts.textContent="00";
+  packets.textContent="0000";
 
-      loader.classList.add("hide");
-      app.classList.add("show");
+  eventId.textContent=
+    "JK-"+hex(6);
 
-    }, 350);
+  remoteId.textContent=
+    "RX-"+hex(6);
 
-  }
+  source.textContent=
+    fakeIp();
 
-}, 50);
+  locationEl.textContent=
+    fakeLocation();
 
+  session.textContent=
+    fakeSession();
 
-/* -----------------------------
-   NAVIGATION
------------------------------ */
+  session2.textContent=
+    session.textContent;
 
-function goTop(){
+  phoneName.textContent=
+    [
+      "ANDROID NODE",
+      "UNKNOWN MOBILE",
+      "REMOTE DEVICE",
+      "MOBILE NODE"
+    ][Math.floor(Math.random()*4)];
 
-  window.scrollTo({
-    top:0,
-    behavior:"smooth"
-  });
+  trace.textContent="SCANNING";
 
-}
+  headline.textContent=
+    "إشارة غير معروفة دخلت النطاق";
 
-function scrollToFeatures(){
+  description.textContent=
+    "النظام يراقب النشاط الجاري...";
 
-  document.getElementById("features").scrollIntoView({
-    behavior:"smooth"
-  });
+  for(const item of sequence){
 
-}
+    await new Promise(resolve=>{
 
+      const timer=setTimeout(()=>{
 
-/* -----------------------------
-   AUTH
------------------------------ */
+        log(item[1],item[2]);
+        setThreat(item[3]);
 
-const auth = document.getElementById("auth");
-const landing = document.getElementById("landing");
+        if(item[3]>=70){
+          flashAlert();
+        }
 
-function openAuth(mode = "login"){
+        if(item[3]>=85){
+          trace.textContent="LOCKED";
+        }
 
-  landing.style.display = "none";
-  auth.classList.add("active");
+        if(item[3]===96){
 
-  switchAuth(mode);
+          headline.textContent=
+            "النظام سيطر على الإشارة";
 
-  window.scrollTo({
-    top:0,
-    behavior:"smooth"
-  });
+          description.textContent=
+            "تم إغلاق الجلسة داخل النظام";
+        }
 
-}
+        if(item[3]===28){
 
-function switchAuth(mode){
+          headline.textContent=
+            "المراقبة مستمرة";
 
-  const loginTab = document.getElementById("loginTab");
-  const registerTab = document.getElementById("registerTab");
+          description.textContent=
+            "النظام بانتظار إشارة جديدة";
 
-  const nameField = document.getElementById("nameField");
+          trace.textContent=
+            "STANDBY";
+        }
 
-  const title = document.getElementById("authTitle");
-  const subtitle = document.getElementById("authSubtitle");
+        resolve();
 
-  const submit = document.getElementById("submitAuth");
+      },item[0]);
 
-  if(mode === "register"){
+      timers.push(timer);
 
-    registerTab.classList.add("active");
-    loginTab.classList.remove("active");
-
-    nameField.style.display = "block";
-
-    title.textContent = "أنشئ حسابك";
-    subtitle.textContent = "ابدأ عالمك داخل NEXORA.";
-
-    submit.textContent = "إنشاء حساب";
-
-  }else{
-
-    loginTab.classList.add("active");
-    registerTab.classList.remove("active");
-
-    nameField.style.display = "none";
-
-    title.textContent = "أهلًا بك";
-    subtitle.textContent = "سجل دخولك واستكمل رحلتك.";
-
-    submit.textContent = "دخول إلى NEXORA";
-
-  }
-
-}
-
-
-/* -----------------------------
-   PASSWORD
------------------------------ */
-
-function togglePassword(){
-
-  const input = document.getElementById("passwordInput");
-
-  input.type =
-    input.type === "password"
-      ? "text"
-      : "password";
-
-}
-
-
-/* -----------------------------
-   AUTH FORM
------------------------------ */
-
-document.getElementById("authForm").addEventListener("submit", function(e){
-
-  e.preventDefault();
-
-  const activeRegister =
-    document.getElementById("registerTab").classList.contains("active");
-
-  const email =
-    document.getElementById("emailInput").value.trim();
-
-  const password =
-    document.getElementById("passwordInput").value.trim();
-
-  if(!email || !password){
-
-    showToast("من فضلك أكمل البيانات المطلوبة.");
-
-    return;
-
-  }
-
-  if(activeRegister){
-
-    const name =
-      document.getElementById("nameInput").value.trim();
-
-    if(!name){
-
-      showToast("اكتب اسمك داخل المنصة أولًا.");
-
-      return;
-
-    }
-
-    /*
-      DATABASE CONNECTION — المرحلة الأخيرة
-
-      هنا لاحقًا سنستبدل هذا الجزء
-      باستدعاء نظام الحساب الحقيقي.
-    */
-
-    localStorage.setItem(
-      "nexora_demo_user",
-      JSON.stringify({
-        name,
-        email,
-        createdAt:Date.now()
-      })
-    );
-
-    showToast("تم إنشاء الحساب التجريبي بنجاح.");
-
-  }else{
-
-    /*
-      DATABASE CONNECTION — المرحلة الأخيرة
-
-      هنا لاحقًا سيتم التحقق من:
-      email + password
-      من قاعدة البيانات.
-    */
-
-    showToast("تم تسجيل الدخول التجريبي.");
-
-  }
-
-});
-
-
-/* -----------------------------
-   SOCIAL LOGIN
------------------------------ */
-
-function demoSocialLogin(){
-
-  showToast(
-    "تسجيل الدخول الخارجي سيتم ربطه في مرحلة الحساب وقاعدة البيانات."
-  );
-
-}
-
-
-/* -----------------------------
-   TOAST
------------------------------ */
-
-let toastTimer;
-
-function showToast(message){
-
-  const toast =
-    document.getElementById("toast");
-
-  toast.textContent = message;
-
-  toast.classList.add("show");
-
-  clearTimeout(toastTimer);
-
-  toastTimer = setTimeout(() => {
-
-    toast.classList.remove("show");
-
-  }, 3000);
-
-}
-
-
-/* -----------------------------
-   BACK BUTTON SUPPORT
------------------------------ */
-
-window.addEventListener("popstate", () => {
-
-  if(auth.classList.contains("active")){
-
-    auth.classList.remove("active");
-    landing.style.display = "";
-
-    window.scrollTo({
-      top:0,
-      behavior:"smooth"
     });
 
   }
 
-});
+  running=false;
+}
 
 
-/* -----------------------------
-   PREVENT DEMO LINKS
------------------------------ */
+/* RESET */
 
-document.querySelectorAll("a[href='#']").forEach(link => {
+function reset(){
 
-  link.addEventListener("click", e => {
+  timers.forEach(clearTimeout);
+  timers=[];
 
-    if(link.getAttribute("href") === "#"){
-      e.preventDefault();
-    }
+  running=false;
 
-  });
+  consoleBox.innerHTML="";
 
-});
+  setThreat(7);
+
+  packetCount=0;
+  alertCount=0;
+
+  alerts.textContent="00";
+  packets.textContent="0000";
+
+  eventId.textContent="JK-"+hex(6);
+  remoteId.textContent="RX-"+hex(6);
+  source.textContent=fakeIp();
+  locationEl.textContent=fakeLocation();
+  session.textContent=fakeSession();
+  session2.textContent=session.textContent;
+
+  trace.textContent="WAITING";
+
+  headline.textContent=
+    "إشارة غير معروفة دخلت النطاق";
+
+  description.textContent=
+    "مراقبة النشاط الجاري...";
+
+  phoneName.textContent=
+    "UNKNOWN DEVICE";
+
+  log(
+    "JOKER DARK NODE // READY",
+    "p"
+  );
+
+  log(
+    "monitor channel initialized.",
+    "c"
+  );
+
+  log(
+    "waiting for incoming signal...",
+    "w"
+  );
+}
+
+
+/* PACKETS */
+
+setInterval(()=>{
+
+  if(!running)return;
+
+  packetCount +=
+    Math.floor(Math.random()*120)+20;
+
+  if(packetCount>9999)
+    packetCount=0;
+
+  packets.textContent =
+    String(packetCount).padStart(4,"0");
+
+},170);
+
+
+/* IDLE LOG */
+
+setInterval(()=>{
+
+  if(running)return;
+
+  const idle=[
+    ["heartbeat // dark node online.","g"],
+    ["passive monitoring active.","w"],
+    ["signal space clear.","c"],
+    ["waiting for event...","t"],
+    ["joker channel standing by.","p"]
+  ];
+
+  const item=
+    idle[Math.floor(Math.random()*idle.length)];
+
+  log(item[0],item[1]);
+
+},2600);
+
+
+/* BUTTONS */
+
+document
+  .getElementById("start")
+  .onclick=start;
+
+document
+  .getElementById("reset")
+  .onclick=reset;
+
+
+/* INIT */
+
+reset();
+
 </script>
 
 </body>
-  </html>
+</html>
