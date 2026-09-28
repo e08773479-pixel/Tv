@@ -1,0 +1,2788 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
+
+<meta name="theme-color" content="#050711">
+<meta name="description" content="NEXORA — الصفحة الرئيسية">
+
+<title>NEXORA — الرئيسية</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&family=Orbitron:wght@500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+
+/* =========================================================
+   NEXORA HOME
+   المرحلة الثانية — HOME
+   ========================================================= */
+
+:root{
+  --bg:#050711;
+  --bg2:#080b18;
+  --surface:#0b1020;
+  --surface2:#10172a;
+  --surface3:#151e34;
+
+  --blue:#4388ff;
+  --blue2:#286fff;
+  --purple:#8b5cf6;
+  --green:#20e39a;
+  --cyan:#2dd4ff;
+  --pink:#f05cff;
+
+  --text:#f7f9ff;
+  --muted:#858fa8;
+  --muted2:#69738c;
+
+  --line:rgba(255,255,255,.08);
+  --line2:rgba(255,255,255,.12);
+
+  --danger:#ff5575;
+  --warning:#ffca5c;
+
+  --radius:20px;
+}
+
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+  -webkit-tap-highlight-color:transparent;
+}
+
+html{
+  scroll-behavior:smooth;
+}
+
+body{
+  background:
+    radial-gradient(circle at 80% 0%,rgba(67,136,255,.07),transparent 28%),
+    radial-gradient(circle at 10% 30%,rgba(139,92,246,.06),transparent 25%),
+    var(--bg);
+
+  color:var(--text);
+  font-family:"Cairo",sans-serif;
+  overflow-x:hidden;
+}
+
+button,
+input,
+textarea{
+  font-family:inherit;
+}
+
+button{
+  cursor:pointer;
+  border:0;
+}
+
+a{
+  color:inherit;
+  text-decoration:none;
+}
+
+/* =========================================================
+   BACKGROUND
+   ========================================================= */
+
+.background{
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  z-index:-10;
+  overflow:hidden;
+}
+
+.background::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  opacity:.13;
+
+  background-image:
+    linear-gradient(rgba(255,255,255,.035) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(255,255,255,.035) 1px,transparent 1px);
+
+  background-size:55px 55px;
+  mask-image:linear-gradient(to bottom,black,transparent);
+}
+
+.bg-light{
+  position:absolute;
+  width:500px;
+  height:500px;
+  border-radius:50%;
+  filter:blur(80px);
+  opacity:.12;
+}
+
+.bg-light.a{
+  background:#4388ff;
+  top:-250px;
+  right:-200px;
+}
+
+.bg-light.b{
+  background:#8b5cf6;
+  bottom:-250px;
+  left:-200px;
+}
+
+/* =========================================================
+   TOP NAV
+   ========================================================= */
+
+.topbar{
+  position:fixed;
+  top:0;
+  right:0;
+  left:0;
+  height:72px;
+  z-index:1000;
+
+  display:flex;
+  align-items:center;
+  gap:20px;
+
+  padding:0 24px;
+
+  background:rgba(5,7,17,.82);
+  border-bottom:1px solid var(--line);
+
+  backdrop-filter:blur(24px);
+}
+
+.brand{
+  min-width:205px;
+
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+
+.brand-mark{
+  width:42px;
+  height:42px;
+
+  border-radius:13px;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  background:
+    linear-gradient(145deg,#172b55,#0a1228);
+
+  border:1px solid rgba(255,255,255,.1);
+
+  box-shadow:0 8px 25px rgba(0,0,0,.25);
+}
+
+.brand-mark span{
+  font-family:Orbitron,sans-serif;
+  font-size:15px;
+  font-weight:900;
+  letter-spacing:-2px;
+
+  background:linear-gradient(135deg,var(--cyan),var(--green));
+  -webkit-background-clip:text;
+  color:transparent;
+}
+
+.brand-name{
+  font-size:17px;
+  font-weight:900;
+  letter-spacing:1px;
+}
+
+.brand-name small{
+  display:block;
+  font-size:7px;
+  color:#6e7892;
+  letter-spacing:2px;
+}
+
+/* search */
+
+.search{
+  flex:1;
+  max-width:600px;
+  position:relative;
+}
+
+.search input{
+  width:100%;
+  height:43px;
+
+  padding:0 45px 0 15px;
+
+  color:#fff;
+  background:rgba(255,255,255,.045);
+
+  border:1px solid var(--line);
+  border-radius:13px;
+
+  outline:none;
+}
+
+.search input:focus{
+  border-color:rgba(67,136,255,.45);
+}
+
+.search-icon{
+  position:absolute;
+  right:15px;
+  top:50%;
+  transform:translateY(-50%);
+
+  color:#77829b;
+}
+
+/* top actions */
+
+.top-actions{
+  margin-right:auto;
+
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+
+.top-icon{
+  width:42px;
+  height:42px;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  border-radius:13px;
+
+  color:#b9c2d6;
+  background:rgba(255,255,255,.04);
+
+  border:1px solid var(--line);
+
+  position:relative;
+}
+
+.top-icon:hover{
+  background:rgba(255,255,255,.08);
+}
+
+.notification-dot{
+  position:absolute;
+  width:8px;
+  height:8px;
+
+  top:7px;
+  right:7px;
+
+  border-radius:50%;
+  background:var(--pink);
+
+  box-shadow:0 0 12px var(--pink);
+}
+
+.user-mini{
+  display:flex;
+  align-items:center;
+  gap:8px;
+
+  padding:5px 9px 5px 6px;
+
+  border-radius:14px;
+
+  background:rgba(255,255,255,.04);
+  border:1px solid var(--line);
+}
+
+.user-avatar{
+  width:34px;
+  height:34px;
+
+  border-radius:11px;
+
+  background:
+    url("https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=200&q=80")
+    center/cover;
+}
+
+.user-mini strong{
+  font-size:10px;
+}
+
+.user-mini small{
+  display:block;
+  color:#68738c;
+  font-size:8px;
+}
+
+/* =========================================================
+   LAYOUT
+   ========================================================= */
+
+.page{
+  width:min(1450px,100%);
+  margin:auto;
+
+  padding:
+    98px
+    24px
+    40px;
+
+  display:grid;
+
+  grid-template-columns:230px minmax(0,680px) 300px;
+
+  gap:18px;
+
+  align-items:start;
+}
+
+/* =========================================================
+   SIDEBAR
+   ========================================================= */
+
+.sidebar{
+  position:sticky;
+  top:90px;
+
+  padding:13px;
+
+  border:1px solid var(--line);
+  border-radius:22px;
+
+  background:rgba(10,14,27,.72);
+  backdrop-filter:blur(18px);
+}
+
+.side-profile{
+  padding:13px;
+
+  border-radius:16px;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(67,136,255,.13),
+      rgba(139,92,246,.09)
+    );
+
+  border:1px solid rgba(255,255,255,.06);
+
+  margin-bottom:12px;
+}
+
+.side-avatar{
+  width:43px;
+  height:43px;
+  border-radius:13px;
+
+  background:
+    url("https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=200&q=80")
+    center/cover;
+
+  margin-bottom:8px;
+}
+
+.side-profile strong{
+  display:block;
+  font-size:11px;
+}
+
+.side-profile span{
+  color:#69748c;
+  font-size:9px;
+}
+
+.side-menu{
+  display:flex;
+  flex-direction:column;
+  gap:4px;
+}
+
+.side-link{
+  height:42px;
+
+  display:flex;
+  align-items:center;
+
+  gap:11px;
+
+  padding:0 12px;
+
+  border-radius:12px;
+
+  color:#818ca4;
+
+  font-size:10px;
+  font-weight:700;
+
+  transition:.2s;
+}
+
+.side-link:hover{
+  background:rgba(255,255,255,.045);
+  color:#fff;
+}
+
+.side-link.active{
+  color:#fff;
+
+  background:
+    linear-gradient(
+      90deg,
+      rgba(67,136,255,.17),
+      rgba(139,92,246,.08)
+    );
+
+  border:1px solid rgba(67,136,255,.1);
+}
+
+.side-icon{
+  width:23px;
+  text-align:center;
+  font-size:16px;
+}
+
+.side-separator{
+  height:1px;
+  background:var(--line);
+  margin:9px 3px;
+}
+
+.side-title{
+  padding:5px 12px;
+
+  color:#505b74;
+  font-size:8px;
+  letter-spacing:1px;
+}
+
+/* =========================================================
+   MAIN FEED
+   ========================================================= */
+
+.feed{
+  min-width:0;
+}
+
+/* stories */
+
+.stories{
+  display:flex;
+  gap:10px;
+
+  overflow-x:auto;
+
+  scrollbar-width:none;
+
+  padding-bottom:3px;
+
+  margin-bottom:15px;
+}
+
+.stories::-webkit-scrollbar{
+  display:none;
+}
+
+.story{
+  min-width:92px;
+  height:137px;
+
+  position:relative;
+  overflow:hidden;
+
+  border-radius:17px;
+
+  border:1px solid rgba(255,255,255,.1);
+
+  background-size:cover;
+  background-position:center;
+
+  cursor:pointer;
+
+  box-shadow:0 12px 30px rgba(0,0,0,.2);
+}
+
+.story::after{
+  content:"";
+
+  position:absolute;
+  inset:0;
+
+  background:
+    linear-gradient(
+      to top,
+      rgba(3,5,12,.9),
+      transparent 60%
+    );
+}
+
+.story.add{
+  background:
+    linear-gradient(
+      to bottom,
+      rgba(67,136,255,.14),
+      rgba(10,15,30,.9)
+    );
+}
+
+.story.add .plus{
+  position:absolute;
+  top:32px;
+  left:50%;
+  transform:translateX(-50%);
+
+  width:39px;
+  height:39px;
+
+  border-radius:50%;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  background:linear-gradient(135deg,var(--blue),var(--purple));
+
+  font-size:20px;
+  z-index:2;
+}
+
+.story.add span{
+  position:absolute;
+  bottom:17px;
+  left:0;
+  right:0;
+
+  text-align:center;
+
+  font-size:9px;
+  color:#c9d0df;
+
+  z-index:2;
+}
+
+.story-avatar{
+  position:absolute;
+
+  top:9px;
+  right:9px;
+
+  width:28px;
+  height:28px;
+
+  border-radius:50%;
+
+  border:2px solid var(--green);
+
+  background-size:cover;
+  background-position:center;
+
+  z-index:3;
+}
+
+.story-name{
+  position:absolute;
+
+  bottom:9px;
+  right:9px;
+  left:9px;
+
+  z-index:3;
+
+  font-size:9px;
+  font-weight:700;
+}
+
+/* =========================================================
+   CREATE POST
+   ========================================================= */
+
+.create-post{
+  padding:15px;
+
+  border-radius:20px;
+
+  background:rgba(11,16,32,.84);
+
+  border:1px solid var(--line);
+
+  margin-bottom:15px;
+}
+
+.create-top{
+  display:flex;
+  gap:10px;
+  align-items:center;
+}
+
+.create-avatar{
+  width:43px;
+  height:43px;
+
+  flex:0 0 auto;
+
+  border-radius:13px;
+
+  background:
+    url("https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=200&q=80")
+    center/cover;
+}
+
+.create-input{
+  flex:1;
+
+  height:43px;
+
+  border-radius:13px;
+
+  display:flex;
+  align-items:center;
+
+  padding:0 14px;
+
+  color:#707a91;
+  background:rgba(255,255,255,.04);
+
+  border:1px solid rgba(255,255,255,.05);
+
+  font-size:10px;
+
+  cursor:pointer;
+}
+
+.create-input:hover{
+  background:rgba(255,255,255,.065);
+}
+
+.create-actions{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+
+  gap:6px;
+
+  margin-top:12px;
+}
+
+.create-action{
+  height:37px;
+
+  display:flex;
+  justify-content:center;
+  align-items:center;
+
+  gap:6px;
+
+  border-radius:10px;
+
+  background:rgba(255,255,255,.035);
+
+  color:#8892a9;
+
+  font-size:9px;
+}
+
+.create-action:hover{
+  background:rgba(255,255,255,.065);
+  color:#fff;
+}
+
+/* =========================================================
+   SECTION BAR
+   ========================================================= */
+
+.section-bar{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+
+  margin:20px 2px 10px;
+}
+
+.section-bar h2{
+  font-size:14px;
+  font-weight:900;
+}
+
+.section-bar a{
+  color:#71809f;
+  font-size:9px;
+}
+
+/* =========================================================
+   ROOMS
+   ========================================================= */
+
+.rooms-row{
+  display:flex;
+  gap:10px;
+
+  overflow-x:auto;
+
+  scrollbar-width:none;
+
+  margin-bottom:18px;
+}
+
+.rooms-row::-webkit-scrollbar{
+  display:none;
+}
+
+.room-card{
+  min-width:215px;
+  height:126px;
+
+  position:relative;
+  overflow:hidden;
+
+  border-radius:18px;
+
+  border:1px solid rgba(255,255,255,.09);
+
+  background-size:cover;
+  background-position:center;
+
+  cursor:pointer;
+}
+
+.room-card::after{
+  content:"";
+
+  position:absolute;
+  inset:0;
+
+  background:
+    linear-gradient(
+      to top,
+      rgba(3,5,12,.95),
+      rgba(3,5,12,.12)
+    );
+}
+
+.room-content{
+  position:absolute;
+
+  right:12px;
+  bottom:11px;
+  left:12px;
+
+  z-index:2;
+}
+
+.room-live{
+  display:inline-flex;
+  align-items:center;
+  gap:5px;
+
+  padding:4px 7px;
+
+  border-radius:7px;
+
+  background:rgba(255,55,93,.15);
+
+  color:#ff91a6;
+
+  font-size:7px;
+
+  margin-bottom:6px;
+}
+
+.room-content h3{
+  font-size:11px;
+}
+
+.room-content p{
+  color:#8994ab;
+  font-size:8px;
+  margin-top:3px;
+}
+
+.room-people{
+  position:absolute;
+  left:10px;
+  top:10px;
+
+  z-index:2;
+
+  padding:5px 7px;
+
+  border-radius:8px;
+
+  background:rgba(4,6,14,.7);
+
+  color:#c7d0df;
+
+  font-size:7px;
+}
+
+/* =========================================================
+   POST
+   ========================================================= */
+
+.post{
+  margin-bottom:15px;
+
+  padding:16px;
+
+  border-radius:21px;
+
+  background:rgba(10,15,29,.86);
+
+  border:1px solid var(--line);
+}
+
+.post-head{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+
+.post-avatar{
+  width:43px;
+  height:43px;
+
+  border-radius:13px;
+
+  background-size:cover;
+  background-position:center;
+}
+
+.post-author{
+  flex:1;
+}
+
+.post-author strong{
+  font-size:11px;
+}
+
+.post-author small{
+  display:block;
+
+  color:#67728b;
+
+  font-size:8px;
+
+  margin-top:2px;
+}
+
+.more{
+  width:30px;
+  height:30px;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  border-radius:9px;
+
+  color:#6d7891;
+  background:transparent;
+}
+
+.post-text{
+  color:#b8c0d2;
+
+  font-size:11px;
+
+  line-height:1.9;
+
+  margin:14px 0;
+}
+
+.post-media{
+  width:100%;
+  min-height:330px;
+
+  border-radius:17px;
+
+  background-size:cover;
+  background-position:center;
+
+  overflow:hidden;
+
+  position:relative;
+}
+
+.post-media::after{
+  content:"";
+
+  position:absolute;
+  inset:0;
+
+  background:
+    linear-gradient(
+      to top,
+      rgba(3,5,12,.42),
+      transparent 40%
+    );
+}
+
+.media-label{
+  position:absolute;
+
+  top:12px;
+  right:12px;
+
+  z-index:2;
+
+  padding:6px 9px;
+
+  border-radius:8px;
+
+  background:rgba(4,6,14,.65);
+
+  border:1px solid rgba(255,255,255,.08);
+
+  font-size:8px;
+}
+
+.post-stats{
+  display:flex;
+  justify-content:space-between;
+
+  color:#65708a;
+
+  font-size:8px;
+
+  padding:11px 2px;
+
+  border-bottom:1px solid var(--line);
+}
+
+.post-actions{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+
+  gap:5px;
+
+  padding-top:8px;
+}
+
+.post-action{
+  height:36px;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:5px;
+
+  border-radius:10px;
+
+  color:#7f8aa3;
+
+  background:transparent;
+
+  font-size:9px;
+}
+
+.post-action:hover{
+  background:rgba(255,255,255,.045);
+  color:#fff;
+}
+
+.post-action.liked{
+  color:#ff5e8a;
+}
+
+/* =========================================================
+   VIDEO CARD
+   ========================================================= */
+
+.video-card{
+  display:grid;
+
+  grid-template-columns:190px 1fr;
+
+  gap:14px;
+
+  padding:12px;
+
+  border-radius:18px;
+
+  background:rgba(255,255,255,.025);
+
+  border:1px solid rgba(255,255,255,.06);
+
+  margin-bottom:10px;
+}
+
+.video-thumb{
+  height:115px;
+
+  border-radius:13px;
+
+  background-size:cover;
+  background-position:center;
+
+  position:relative;
+
+  overflow:hidden;
+}
+
+.video-thumb::after{
+  content:"";
+
+  position:absolute;
+  inset:0;
+
+  background:rgba(0,0,0,.1);
+}
+
+.play-button{
+  position:absolute;
+
+  top:50%;
+  left:50%;
+
+  transform:translate(-50%,-50%);
+
+  width:42px;
+  height:42px;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  border-radius:50%;
+
+  background:rgba(5,7,17,.75);
+
+  border:1px solid rgba(255,255,255,.15);
+
+  z-index:2;
+
+  font-size:16px;
+}
+
+.video-info{
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+}
+
+.video-info h3{
+  font-size:12px;
+  line-height:1.6;
+}
+
+.video-info p{
+  color:#68738b;
+  font-size:8px;
+  margin-top:5px;
+}
+
+.video-meta{
+  margin-top:10px;
+
+  display:flex;
+  gap:9px;
+
+  color:#77829a;
+  font-size:7px;
+}
+
+/* =========================================================
+   RIGHT COLUMN
+   ========================================================= */
+
+.right-column{
+  position:sticky;
+  top:90px;
+}
+
+.panel{
+  padding:15px;
+
+  border-radius:20px;
+
+  background:rgba(10,14,27,.72);
+
+  border:1px solid var(--line);
+
+  margin-bottom:14px;
+
+  backdrop-filter:blur(16px);
+}
+
+.panel-title{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+
+  margin-bottom:13px;
+}
+
+.panel-title h3{
+  font-size:11px;
+}
+
+.panel-title a{
+  color:#68748f;
+  font-size:8px;
+}
+
+.trend{
+  display:flex;
+  gap:9px;
+
+  padding:9px 0;
+
+  border-bottom:1px solid rgba(255,255,255,.045);
+}
+
+.trend:last-child{
+  border-bottom:0;
+}
+
+.trend-num{
+  color:#4e5b77;
+  font-size:9px;
+  width:17px;
+}
+
+.trend strong{
+  display:block;
+  font-size:9px;
+}
+
+.trend span{
+  color:#68738c;
+  font-size:7px;
+}
+
+.people{
+  display:flex;
+  align-items:center;
+
+  gap:9px;
+
+  margin-bottom:11px;
+}
+
+.people-avatar{
+  width:35px;
+  height:35px;
+
+  border-radius:11px;
+
+  background-size:cover;
+  background-position:center;
+}
+
+.people-info{
+  flex:1;
+}
+
+.people-info strong{
+  display:block;
+  font-size:9px;
+}
+
+.people-info small{
+  color:#68738c;
+  font-size:7px;
+}
+
+.follow-btn{
+  padding:6px 9px;
+
+  border-radius:8px;
+
+  color:#fff;
+
+  background:rgba(67,136,255,.13);
+
+  border:1px solid rgba(67,136,255,.18);
+
+  font-size:7px;
+}
+
+.follow-btn.following{
+  color:#20e39a;
+  border-color:rgba(32,227,154,.16);
+}
+
+/* =========================================================
+   MODAL
+   ========================================================= */
+
+.modal{
+  position:fixed;
+  inset:0;
+
+  z-index:5000;
+
+  display:none;
+  align-items:center;
+  justify-content:center;
+
+  padding:20px;
+
+  background:rgba(0,0,0,.7);
+
+  backdrop-filter:blur(12px);
+}
+
+.modal.active{
+  display:flex;
+}
+
+.modal-card{
+  width:min(560px,100%);
+
+  background:#0a0f1e;
+
+  border:1px solid var(--line2);
+
+  border-radius:25px;
+
+  padding:20px;
+
+  box-shadow:
+    0 35px 100px rgba(0,0,0,.6);
+}
+
+.modal-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+
+  margin-bottom:17px;
+}
+
+.modal-head h2{
+  font-size:16px;
+}
+
+.close{
+  width:34px;
+  height:34px;
+
+  border-radius:10px;
+
+  color:#8993aa;
+
+  background:rgba(255,255,255,.04);
+}
+
+.post-editor{
+  width:100%;
+  min-height:150px;
+
+  resize:none;
+
+  padding:15px;
+
+  color:white;
+
+  background:#070b17;
+
+  border:1px solid var(--line);
+
+  border-radius:15px;
+
+  outline:none;
+
+  font-size:11px;
+  line-height:1.9;
+}
+
+.post-editor:focus{
+  border-color:rgba(67,136,255,.45);
+}
+
+.modal-tools{
+  display:flex;
+  gap:7px;
+
+  margin-top:10px;
+}
+
+.tool{
+  padding:8px 10px;
+
+  border-radius:9px;
+
+  color:#8c96ab;
+
+  background:rgba(255,255,255,.04);
+
+  font-size:8px;
+}
+
+.publish{
+  width:100%;
+
+  height:46px;
+
+  margin-top:14px;
+
+  border-radius:12px;
+
+  color:#fff;
+
+  background:
+    linear-gradient(
+      135deg,
+      #287aff,
+      #7447ef
+    );
+
+  font-weight:900;
+  font-size:10px;
+}
+
+/* =========================================================
+   MOBILE NAV
+   ========================================================= */
+
+.mobile-nav{
+  display:none;
+
+  position:fixed;
+
+  bottom:0;
+  right:0;
+  left:0;
+
+  height:68px;
+
+  z-index:3000;
+
+  background:rgba(5,7,17,.93);
+
+  border-top:1px solid var(--line);
+
+  backdrop-filter:blur(22px);
+
+  grid-template-columns:repeat(5,1fr);
+}
+
+.mobile-nav button{
+  background:transparent;
+  color:#68738d;
+
+  display:flex;
+  flex-direction:column;
+
+  align-items:center;
+  justify-content:center;
+
+  gap:3px;
+
+  font-size:8px;
+}
+
+.mobile-nav button span{
+  font-size:18px;
+}
+
+.mobile-nav button.active{
+  color:#fff;
+}
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media(max-width:1150px){
+
+  .page{
+    grid-template-columns:210px minmax(0,1fr);
+  }
+
+  .right-column{
+    display:none;
+  }
+
+}
+
+@media(max-width:800px){
+
+  .topbar{
+    padding:0 12px;
+    gap:8px;
+  }
+
+  .brand{
+    min-width:auto;
+  }
+
+  .brand-name{
+    display:none;
+  }
+
+  .search{
+    max-width:none;
+  }
+
+  .top-icon:nth-child(2){
+    display:none;
+  }
+
+  .user-mini{
+    display:none;
+  }
+
+  .page{
+    display:block;
+    padding:
+      87px
+      10px
+      85px;
+  }
+
+  .sidebar{
+    display:none;
+  }
+
+  .mobile-nav{
+    display:grid;
+  }
+
+  .stories{
+    margin-left:-10px;
+    margin-right:-10px;
+    padding-right:10px;
+    padding-left:10px;
+  }
+
+  .story{
+    min-width:83px;
+    height:125px;
+  }
+
+  .create-actions{
+    grid-template-columns:repeat(2,1fr);
+  }
+
+  .post{
+    border-radius:18px;
+    padding:13px;
+  }
+
+  .post-media{
+    min-height:270px;
+  }
+
+  .video-card{
+    grid-template-columns:130px 1fr;
+  }
+
+  .video-thumb{
+    height:100px;
+  }
+
+}
+
+@media(max-width:450px){
+
+  .topbar{
+    height:62px;
+  }
+
+  .brand-mark{
+    width:37px;
+    height:37px;
+  }
+
+  .search input{
+    height:39px;
+    font-size:10px;
+  }
+
+  .top-icon{
+    width:37px;
+    height:37px;
+  }
+
+  .page{
+    padding-top:75px;
+  }
+
+  .post-media{
+    min-height:235px;
+  }
+
+  .room-card{
+    min-width:190px;
+  }
+
+}
+
+/* =========================================================
+   LIGHT EFFECT
+   ========================================================= */
+
+.ripple{
+  position:fixed;
+
+  pointer-events:none;
+
+  width:10px;
+  height:10px;
+
+  border-radius:50%;
+
+  background:rgba(67,136,255,.15);
+
+  transform:translate(-50%,-50%) scale(1);
+
+  animation:ripple .7s ease-out forwards;
+
+  z-index:99999;
+}
+
+@keyframes ripple{
+  to{
+    transform:translate(-50%,-50%) scale(18);
+    opacity:0;
+  }
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="background">
+  <div class="bg-light a"></div>
+  <div class="bg-light b"></div>
+</div>
+
+<!-- =======================================================
+     TOP BAR
+     ======================================================= -->
+
+<header class="topbar">
+
+  <a href="home.html" class="brand">
+
+    <div class="brand-mark">
+      <span>NX</span>
+    </div>
+
+    <div class="brand-name">
+      NEXORA
+      <small>CONNECT • PLAY • LIVE</small>
+    </div>
+
+  </a>
+
+  <div class="search">
+
+    <span class="search-icon">⌕</span>
+
+    <input
+      id="searchInput"
+      type="search"
+      placeholder="ابحث عن أشخاص، فيديوهات، ألعاب، غرف...">
+
+  </div>
+
+  <div class="top-actions">
+
+    <button
+      class="top-icon"
+      onclick="showToast('تم فتح الرسائل')">
+      💬
+    </button>
+
+    <button
+      class="top-icon"
+      onclick="showToast('لديك إشعارات جديدة')">
+
+      🔔
+      <span class="notification-dot"></span>
+
+    </button>
+
+    <button
+      class="user-mini"
+      onclick="showToast('الملف الشخصي سيصبح متصلًا بالـDatabase لاحقًا')">
+
+      <div class="user-avatar"></div>
+
+      <div>
+        <strong>مستخدم NEXORA</strong>
+        <small>متصل الآن</small>
+      </div>
+
+    </button>
+
+  </div>
+
+</header>
+
+
+<!-- =======================================================
+     PAGE
+     ======================================================= -->
+
+<div class="page">
+
+  <!-- =====================================================
+       SIDEBAR
+       ===================================================== -->
+
+  <aside class="sidebar">
+
+    <div class="side-profile">
+
+      <div class="side-avatar"></div>
+
+      <strong>مستخدم NEXORA</strong>
+
+      <span>@nexora_user</span>
+
+    </div>
+
+    <nav class="side-menu">
+
+      <a class="side-link active" href="home.html">
+        <span class="side-icon">⌂</span>
+        الرئيسية
+      </a>
+
+      <a class="side-link" href="videos.html">
+        <span class="side-icon">▶</span>
+        الفيديو
+      </a>
+
+      <a class="side-link" href="games.html">
+        <span class="side-icon">🎮</span>
+        الألعاب
+      </a>
+
+      <a class="side-link" href="rooms.html">
+        <span class="side-icon">🎙️</span>
+        الغرف
+      </a>
+
+      <a class="side-link" href="live.html">
+        <span class="side-icon">📡</span>
+        البث المباشر
+      </a>
+
+      <a class="side-link" href="messages.html">
+        <span class="side-icon">💬</span>
+        الرسائل
+      </a>
+
+      <div class="side-separator"></div>
+
+      <div class="side-title">
+        YOUR SPACE
+      </div>
+
+      <a class="side-link" href="profile.html">
+        <span class="side-icon">👤</span>
+        ملفي الشخصي
+      </a>
+
+      <a class="side-link" href="wallet.html">
+        <span class="side-icon">🪙</span>
+        المحفظة
+      </a>
+
+      <a class="side-link" href="#">
+        <span class="side-icon">🔔</span>
+        الإشعارات
+      </a>
+
+      <a class="side-link" href="#">
+        <span class="side-icon">⚙️</span>
+        الإعدادات
+      </a>
+
+    </nav>
+
+  </aside>
+
+
+  <!-- =====================================================
+       FEED
+       ===================================================== -->
+
+  <main class="feed">
+
+    <!-- STORIES -->
+
+    <div class="stories">
+
+      <div class="story add" onclick="openPostModal()">
+
+        <div class="plus">+</div>
+
+        <span>أضف قصتك</span>
+
+      </div>
+
+      <div
+        class="story"
+        style="background-image:url('https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=400&q=80')"
+        onclick="showToast('فتح قصة الألعاب')">
+
+        <div
+          class="story-avatar"
+          style="background-image:url('https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=100&q=80')">
+        </div>
+
+        <div class="story-name">Gaming</div>
+
+      </div>
+
+      <div
+        class="story"
+        style="background-image:url('https://images.unsplash.com/photo-1485846234645-a62644f84728?auto=format&fit=crop&w=400&q=80')"
+        onclick="showToast('فتح قصة الفيديو')">
+
+        <div
+          class="story-avatar"
+          style="background-image:url('https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=100&q=80')">
+        </div>
+
+        <div class="story-name">سارة</div>
+
+      </div>
+
+      <div
+        class="story"
+        style="background-image:url('https://images.unsplash.com/photo-1598387993281-cecf8b71a8f8?auto=format&fit=crop&w=400&q=80')"
+        onclick="showToast('فتح قصة Live')">
+
+        <div
+          class="story-avatar"
+          style="background-image:url('https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=100&q=80')">
+        </div>
+
+        <div class="story-name">LIVE</div>
+
+      </div>
+
+      <div
+        class="story"
+        style="background-image:url('https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=400&q=80')"
+        onclick="showToast('فتح قصة المجتمع')">
+
+        <div
+          class="story-avatar"
+          style="background-image:url('https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=100&q=80')">
+        </div>
+
+        <div class="story-name">أصدقاء</div>
+
+      </div>
+
+    </div>
+
+
+    <!-- CREATE POST -->
+
+    <section class="create-post">
+
+      <div class="create-top">
+
+        <div class="create-avatar"></div>
+
+        <div
+          class="create-input"
+          onclick="openPostModal()">
+          في إيه جديد؟ شارك الناس لحظتك...
+        </div>
+
+      </div>
+
+      <div class="create-actions">
+
+        <button
+          class="create-action"
+          onclick="showToast('إضافة صورة — جاهزة للربط لاحقًا')">
+          🖼️ صورة
+        </button>
+
+        <button
+          class="create-action"
+          onclick="showToast('إضافة فيديو — جاهزة للربط لاحقًا')">
+          🎥 فيديو
+        </button>
+
+        <button
+          class="create-action"
+          onclick="showToast('بدء بث مباشر — سيتم ربطه لاحقًا')">
+          📡 بث مباشر
+        </button>
+
+        <button
+          class="create-action"
+          onclick="showToast('بدء نشاط لعبة — سيتم ربطه لاحقًا')">
+          🎮 لعبة
+        </button>
+
+      </div>
+
+    </section>
+
+
+    <!-- LIVE ROOMS -->
+
+    <div class="section-bar">
+
+      <h2>🔥 غرف شغالة الآن</h2>
+
+      <a href="rooms.html">
+        مشاهدة الكل
+      </a>
+
+    </div>
+
+    <div class="rooms-row">
+
+      <article
+        class="room-card"
+        style="background-image:url('https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=700&q=85')"
+        onclick="enterRoom('الشمس والقمر')">
+
+        <div class="room-people">
+          👥 128
+        </div>
+
+        <div class="room-content">
+
+          <div class="room-live">
+            <span class="live-dot"></span>
+            LIVE
+          </div>
+
+          <h3>☀️ الشمس × 🌙 القمر</h3>
+
+          <p>
+            الجولة الرابعة بدأت الآن
+          </p>
+
+        </div>
+
+      </article>
+
+
+      <article
+        class="room-card"
+        style="background-image:url('https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=700&q=85')"
+        onclick="enterRoom('ليلة الأصدقاء')">
+
+        <div class="room-people">
+          👥 76
+        </div>
+
+        <div class="room-content">
+
+          <div class="room-live">
+            <span class="live-dot"></span>
+            LIVE
+          </div>
+
+          <h3>🎙️ ليلة الأصدقاء</h3>
+
+          <p>
+            دردشة وموسيقى وألعاب
+          </p>
+
+        </div>
+
+      </article>
+
+
+      <article
+        class="room-card"
+        style="background-image:url('https://images.unsplash.com/photo-1598387993281-cecf8b71a8f8?auto=format&fit=crop&w=700&q=85')"
+        onclick="enterRoom('Gaming Arena')">
+
+        <div class="room-people">
+          👥 214
+        </div>
+
+        <div class="room-content">
+
+          <div class="room-live">
+            <span class="live-dot"></span>
+            LIVE
+          </div>
+
+          <h3>🎮 Gaming Arena</h3>
+
+          <p>
+            تحديات Multiplayer
+          </p>
+
+        </div>
+
+      </article>
+
+    </div>
+
+
+    <!-- POST 1 -->
+
+    <article class="post">
+
+      <div class="post-head">
+
+        <div
+          class="post-avatar"
+          style="background-image:url('https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=200&q=80')">
+        </div>
+
+        <div class="post-author">
+
+          <strong>Omar Gaming</strong>
+
+          <small>
+            منذ 8 دقائق • 🎮 Gaming
+          </small>
+
+        </div>
+
+        <button
+          class="more"
+          onclick="showToast('المزيد من الخيارات')">
+          ⋮
+        </button>
+
+      </div>
+
+      <p class="post-text">
+        أول جولة في غرفة الشمس والقمر كانت مجنونة 😂🔥
+        مين داخل الجولة الجاية؟
+      </p>
+
+      <div
+        class="post-media"
+        style="background-image:url('https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=1100&q=90')">
+
+        <div class="media-label">
+          🎮 GAME SESSION
+        </div>
+
+      </div>
+
+      <div class="post-stats">
+        <span>❤️ 1.8K إعجاب</span>
+        <span>💬 164 تعليق • ↗ 82 مشاركة</span>
+      </div>
+
+      <div class="post-actions">
+
+        <button
+          class="post-action"
+          onclick="toggleLike(this)">
+          ❤️ إعجاب
+        </button>
+
+        <button
+          class="post-action"
+          onclick="showToast('التعليقات ستظهر هنا')">
+          💬 تعليق
+        </button>
+
+        <button
+          class="post-action"
+          onclick="showToast('تم فتح المشاركة')">
+          ↗ مشاركة
+        </button>
+
+        <button
+          class="post-action"
+          onclick="showToast('تم حفظ المنشور')">
+          🔖 حفظ
+        </button>
+
+      </div>
+
+    </article>
+
+
+    <!-- VIDEO SECTION -->
+
+    <div class="section-bar">
+
+      <h2>🎬 فيديوهات مقترحة</h2>
+
+      <a href="videos.html">
+        المزيد
+      </a>
+
+    </div>
+
+
+    <article class="video-card">
+
+      <div
+        class="video-thumb"
+        style="background-image:url('https://images.unsplash.com/photo-1485846234645-a62644f84728?auto=format&fit=crop&w=700&q=85')"
+        onclick="playVideo('video-1')">
+
+        <div class="play-button">
+          ▶
+        </div>
+
+      </div>
+
+      <div class="video-info">
+
+        <h3>
+          لحظة الفوز الأخيرة... شوف اللي حصل 😳🔥
+        </h3>
+
+        <p>
+          Gaming Moments • NEXORA
+        </p>
+
+        <div class="video-meta">
+          <span>👁 42K</span>
+          <span>❤️ 4.2K</span>
+          <span>💬 381</span>
+        </div>
+
+      </div>
+
+    </article>
+
+
+    <article class="video-card">
+
+      <div
+        class="video-thumb"
+        style="background-image:url('https://images.unsplash.com/photo-1598387993281-cecf8b71a8f8?auto=format&fit=crop&w=700&q=85')"
+        onclick="playVideo('video-2')">
+
+        <div class="play-button">
+          ▶
+        </div>
+
+      </div>
+
+      <div class="video-info">
+
+        <h3>
+          دخلنا روم عشوائية... والنتيجة كانت غير متوقعة 😂
+        </h3>
+
+        <p>
+          Rooms • Community
+        </p>
+
+        <div class="video-meta">
+          <span>👁 19K</span>
+          <span>❤️ 2.1K</span>
+          <span>💬 194</span>
+        </div>
+
+      </div>
+
+    </article>
+
+
+    <!-- POST 2 -->
+
+    <article class="post">
+
+      <div class="post-head">
+
+        <div
+          class="post-avatar"
+          style="background-image:url('https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=200&q=80')">
+        </div>
+
+        <div class="post-author">
+
+          <strong>Sara</strong>
+
+          <small>
+            منذ 21 دقيقة • 🌌 Community
+          </small>
+
+        </div>
+
+        <button
+          class="more"
+          onclick="showToast('المزيد من الخيارات')">
+          ⋮
+        </button>
+
+      </div>
+
+      <p class="post-text">
+        أحيانًا أحلى حاجة في أي لعبة مش الفوز...
+        الناس اللي قابلتهم فيها ❤️
+      </p>
+
+      <div
+        class="post-media"
+        style="background-image:url('https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=1100&q=90')">
+
+        <div class="media-label">
+          👥 COMMUNITY
+        </div>
+
+      </div>
+
+      <div class="post-stats">
+        <span>❤️ 936 إعجاب</span>
+        <span>💬 78 تعليق • ↗ 31 مشاركة</span>
+      </div>
+
+      <div class="post-actions">
+
+        <button
+          class="post-action"
+          onclick="toggleLike(this)">
+          ❤️ إعجاب
+        </button>
+
+        <button
+          class="post-action"
+          onclick="showToast('التعليقات ستظهر هنا')">
+          💬 تعليق
+        </button>
+
+        <button
+          class="post-action"
+          onclick="showToast('تم فتح المشاركة')">
+          ↗ مشاركة
+        </button>
+
+        <button
+          class="post-action"
+          onclick="showToast('تم حفظ المنشور')">
+          🔖 حفظ
+        </button>
+
+      </div>
+
+    </article>
+
+  </main>
+
+
+  <!-- =====================================================
+       RIGHT COLUMN
+       ===================================================== -->
+
+  <aside class="right-column">
+
+    <!-- TRENDS -->
+
+    <div class="panel">
+
+      <div class="panel-title">
+
+        <h3>🔥 المتصدر الآن</h3>
+
+        <a href="#">
+          الكل
+        </a>
+
+      </div>
+
+      <div class="trend">
+
+        <div class="trend-num">01</div>
+
+        <div>
+          <strong>#الشمس_والقمر</strong>
+          <span>12.4K منشور</span>
+        </div>
+
+      </div>
+
+      <div class="trend">
+
+        <div class="trend-num">02</div>
+
+        <div>
+          <strong>#GamingNight</strong>
+          <span>8.9K منشور</span>
+        </div>
+
+      </div>
+
+      <div class="trend">
+
+        <div class="trend-num">03</div>
+
+        <div>
+          <strong>#NEXORA_LIVE</strong>
+          <span>7.3K منشور</span>
+        </div>
+
+      </div>
+
+      <div class="trend">
+
+        <div class="trend-num">04</div>
+
+        <div>
+          <strong>#تحدي_اليوم</strong>
+          <span>5.8K منشور</span>
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!-- PEOPLE -->
+
+    <div class="panel">
+
+      <div class="panel-title">
+
+        <h3>👥 أشخاص قد تعرفهم</h3>
+
+        <a href="#">
+          المزيد
+        </a>
+
+      </div>
+
+
+      <div class="people">
+
+        <div
+          class="people-avatar"
+          style="background-image:url('https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=150&q=80')">
+        </div>
+
+        <div class="people-info">
+          <strong>Ahmed</strong>
+          <small>🎮 14 صديق مشترك</small>
+        </div>
+
+        <button
+          class="follow-btn"
+          onclick="followUser(this)">
+          متابعة
+        </button>
+
+      </div>
+
+
+      <div class="people">
+
+        <div
+          class="people-avatar"
+          style="background-image:url('https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=150&q=80')">
+        </div>
+
+        <div class="people-info">
+          <strong>Mariam</strong>
+          <small>🎥 صانع محتوى</small>
+        </div>
+
+        <button
+          class="follow-btn"
+          onclick="followUser(this)">
+          متابعة
+        </button>
+
+      </div>
+
+
+      <div class="people">
+
+        <div
+          class="people-avatar"
+          style="background-image:url('https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=150&q=80')">
+        </div>
+
+        <div class="people-info">
+          <strong>Youssef</strong>
+          <small>🎙️ في غرفة الآن</small>
+        </div>
+
+        <button
+          class="follow-btn"
+          onclick="followUser(this)">
+          متابعة
+        </button>
+
+      </div>
+
+    </div>
+
+
+    <!-- WALLET PREVIEW -->
+
+    <div class="panel">
+
+      <div class="panel-title">
+        <h3>🪙 رصيدك</h3>
+        <a href="wallet.html">المحفظة</a>
+      </div>
+
+      <div style="
+        padding:18px;
+        border-radius:15px;
+        background:
+          linear-gradient(
+            135deg,
+            rgba(67,136,255,.14),
+            rgba(139,92,246,.12)
+          );
+        border:1px solid rgba(255,255,255,.06);
+      ">
+
+        <div style="
+          color:#6d7891;
+          font-size:8px;
+        ">
+          NEXORA COINS
+        </div>
+
+        <div style="
+          font-family:Orbitron;
+          font-size:24px;
+          font-weight:800;
+          margin-top:5px;
+        ">
+          2,480
+        </div>
+
+        <div style="
+          color:#20e39a;
+          font-size:8px;
+          margin-top:5px;
+        ">
+          +120 هذا الأسبوع
+        </div>
+
+      </div>
+
+    </div>
+
+  </aside>
+
+</div>
+
+
+<!-- =======================================================
+     MOBILE NAV
+     ======================================================= -->
+
+<nav class="mobile-nav">
+
+  <button class="active" onclick="goHome()">
+    <span>⌂</span>
+    الرئيسية
+  </button>
+
+  <button onclick="goTo('videos.html')">
+    <span>▶</span>
+    فيديو
+  </button>
+
+  <button onclick="goTo('games.html')">
+    <span>🎮</span>
+    ألعاب
+  </button>
+
+  <button onclick="goTo('rooms.html')">
+    <span>🎙️</span>
+    غرف
+  </button>
+
+  <button onclick="goTo('profile.html')">
+    <span>👤</span>
+    حسابي
+  </button>
+
+</nav>
+
+
+<!-- =======================================================
+     POST MODAL
+     ======================================================= -->
+
+<div
+  class="modal"
+  id="postModal"
+  onclick="closeModalOutside(event)">
+
+  <div class="modal-card">
+
+    <div class="modal-head">
+
+      <h2>أنشئ منشورًا</h2>
+
+      <button
+        class="close"
+        onclick="closePostModal()">
+        ×
+      </button>
+
+    </div>
+
+    <textarea
+      id="postEditor"
+      class="post-editor"
+      placeholder="اكتب اللي عايز تشاركه مع مجتمع NEXORA..."></textarea>
+
+    <div class="modal-tools">
+
+      <button class="tool">
+        🖼️ صورة
+      </button>
+
+      <button class="tool">
+        🎥 فيديو
+      </button>
+
+      <button class="tool">
+        😊 شعور
+      </button>
+
+      <button class="tool">
+        📍 مكان
+      </button>
+
+    </div>
+
+    <button
+      class="publish"
+      onclick="publishPost()">
+      نشر المنشور
+    </button>
+
+  </div>
+
+</div>
+
+
+<!-- =======================================================
+     TOAST
+     ======================================================= -->
+
+<div
+  id="toast"
+  style="
+    position:fixed;
+    z-index:10000;
+    bottom:85px;
+    left:50%;
+    transform:translate(-50%,20px);
+    padding:12px 17px;
+    min-width:220px;
+    max-width:90%;
+    text-align:center;
+    border-radius:12px;
+    background:rgba(12,17,31,.96);
+    border:1px solid rgba(255,255,255,.1);
+    box-shadow:0 20px 50px rgba(0,0,0,.45);
+    color:#e8edf8;
+    font-size:10px;
+    opacity:0;
+    pointer-events:none;
+    transition:.3s;
+  ">
+</div>
+
+
+<script>
+
+/* =========================================================
+   NEXORA HOME JS
+   ========================================================= */
+
+/* -----------------------------
+   TOAST
+----------------------------- */
+
+let toastTimer;
+
+function showToast(message){
+
+  const toast =
+    document.getElementById("toast");
+
+  toast.textContent = message;
+
+  toast.style.opacity = "1";
+  toast.style.transform = "translate(-50%,0)";
+
+  clearTimeout(toastTimer);
+
+  toastTimer = setTimeout(() => {
+
+    toast.style.opacity = "0";
+    toast.style.transform = "translate(-50%,20px)";
+
+  },3000);
+
+}
+
+
+/* -----------------------------
+   NAVIGATION
+----------------------------- */
+
+function goTo(page){
+
+  window.location.href = page;
+
+}
+
+function goHome(){
+
+  window.scrollTo({
+    top:0,
+    behavior:"smooth"
+  });
+
+}
+
+
+/* -----------------------------
+   CREATE POST
+----------------------------- */
+
+const postModal =
+  document.getElementById("postModal");
+
+function openPostModal(){
+
+  postModal.classList.add("active");
+
+  setTimeout(() => {
+    document.getElementById("postEditor").focus();
+  },100);
+
+}
+
+function closePostModal(){
+
+  postModal.classList.remove("active");
+
+}
+
+function closeModalOutside(event){
+
+  if(event.target === postModal){
+    closePostModal();
+  }
+
+}
+
+function publishPost(){
+
+  const editor =
+    document.getElementById("postEditor");
+
+  const text =
+    editor.value.trim();
+
+  if(!text){
+
+    showToast("اكتب شيئًا قبل النشر.");
+
+    return;
+
+  }
+
+  /*
+    DATABASE HOOK
+
+    لاحقًا:
+    await database.posts.create(...)
+  */
+
+  editor.value = "";
+
+  closePostModal();
+
+  showToast("تم تجهيز المنشور للنشر.");
+
+}
+
+
+/* -----------------------------
+   LIKE
+----------------------------- */
+
+function toggleLike(button){
+
+  button.classList.toggle("liked");
+
+  if(button.classList.contains("liked")){
+
+    button.innerHTML = "❤️ أعجبني";
+
+  }else{
+
+    button.innerHTML = "♡ إعجاب";
+
+  }
+
+}
+
+
+/* -----------------------------
+   FOLLOW
+----------------------------- */
+
+function followUser(button){
+
+  button.classList.toggle("following");
+
+  if(button.classList.contains("following")){
+
+    button.textContent = "متابَع";
+
+    showToast("تمت المتابعة.");
+
+  }else{
+
+    button.textContent = "متابعة";
+
+    showToast("تم إلغاء المتابعة.");
+
+  }
+
+}
+
+
+/* -----------------------------
+   ROOM
+----------------------------- */
+
+function enterRoom(roomName){
+
+  showToast(
+    "جارٍ فتح غرفة " + roomName + " — ملف rooms.html هو المرحلة التالية."
+  );
+
+}
+
+
+/* -----------------------------
+   VIDEO
+----------------------------- */
+
+function playVideo(id){
+
+  showToast(
+    "تم اختيار الفيديو " + id + " — مشغل الفيديو الكامل في videos.html."
+  );
+
+}
+
+
+/* -----------------------------
+   SEARCH
+----------------------------- */
+
+const searchInput =
+  document.getElementById("searchInput");
+
+searchInput.addEventListener("keydown",(event)=>{
+
+  if(event.key === "Enter"){
+
+    const value =
+      searchInput.value.trim();
+
+    if(!value){
+
+      showToast("اكتب شيئًا للبحث.");
+
+      return;
+
+    }
+
+    showToast(
+      "البحث عن: " + value
+    );
+
+    /*
+      DATABASE / SEARCH HOOK
+
+      لاحقًا سيتم البحث في:
+      Users
+      Posts
+      Videos
+      Games
+      Rooms
+    */
+
+  }
+
+});
+
+
+/* -----------------------------
+   RIPPLE EFFECT
+----------------------------- */
+
+document.addEventListener("click",(event)=>{
+
+  const ripple =
+    document.createElement("span");
+
+  ripple.className = "ripple";
+
+  ripple.style.left =
+    event.clientX + "px";
+
+  ripple.style.top =
+    event.clientY + "px";
+
+  document.body.appendChild(ripple);
+
+  setTimeout(()=>{
+    ripple.remove();
+  },700);
+
+});
+
+
+/* -----------------------------
+   DEMO USER STATE
+----------------------------- */
+
+const demoUser =
+  localStorage.getItem("nexora_demo_user");
+
+if(demoUser){
+
+  try{
+
+    const user =
+      JSON.parse(demoUser);
+
+    document.querySelectorAll(".user-mini strong")
+      .forEach(el => {
+        el.textContent = user.name || "مستخدم NEXORA";
+      });
+
+    document.querySelectorAll(".side-profile strong")
+      .forEach(el => {
+        el.textContent = user.name || "مستخدم NEXORA";
+      });
+
+  }catch(error){
+
+    console.log("Demo user data unavailable.");
+
+  }
+
+}
+
+</script>
+
+</body>
+  </html>
