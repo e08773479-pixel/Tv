@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>المتجر | ملك خفاجي 👑</title>
+  <link rel="stylesheet" href="../css/platform.css">
+</head>
+
+<body>
+<div class="malak-app">
+
+  <aside class="malak-sidebar">
+    <a class="malak-brand" href="../index.html">
+      <span class="brand-mark">👑</span>
+      <span>
+        <b>ملك خفاجي</b>
+        <small>Store</small>
+      </span>
+    </a>
+
+    <nav class="malak-nav">
+      <a href="../index.html">🏠 الرئيسية</a>
+      <a href="chat.html">💬 المحادثات</a>
+      <a href="rooms.html">🎙️ الغرف</a>
+      <a href="games.html">🎮 الألعاب</a>
+      <a href="friends.html">👥 الأصدقاء</a>
+      <a href="profile.html">👤 حسابي</a>
+      <a href="wallet.html">🪙 المحفظة</a>
+      <a class="active" href="store.html">🛍️ المتجر</a>
+      <a href="club.html">👑 النادي</a>
+      <a href="notifications.html">🔔 الإشعارات</a>
+      <a href="settings.html">⚙️ الإعدادات</a>
+    </nav>
+  </aside>
+
+  <main class="malak-content">
+
+    <header class="malak-topbar">
+      <button class="malak-btn" onclick="history.back()">←</button>
+
+      <div class="malak-search">
+        🔎
+        <input id="search" placeholder="ابحث في المتجر...">
+      </div>
+
+      <a class="malak-btn" href="wallet.html">🪙 المحفظة</a>
+    </header>
+
+    <section class="malak-page-head">
+      <div>
+        <span class="mk-kicker">STORE</span>
+        <h1>المتجر 🛍️</h1>
+        <p>عناصر رقمية مرتبطة بحسابك وملكية العناصر الخاصة بك.</p>
+      </div>
+    </section>
+
+    <div id="categories" class="store-categories"></div>
+
+    <section id="storeGrid" class="store-grid">
+      <div class="malak-empty">
+        <div>⏳</div>
+        <h3>جاري تحميل المتجر</h3>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<div id="itemModal" class="mk-modal hidden">
+  <div class="mk-modal-box">
+
+    <button class="modal-close" onclick="closeItem()">×</button>
+
+    <div id="itemDetails"></div>
+
+  </div>
+</div>
+
+<script src="../js/platform.js"></script>
+
+<script>
+const API = "/api";
+
+let items = [];
+let selectedCategory = "";
+
+async function request(url, options = {}) {
+  const response = await fetch(API + url, {
+    credentials: "include",
+    headers: {
+      "Content-Type": "application/json",
+      ...(options.headers || {})
+    },
+    ...options
+  });
+
+  const data = await response.json().catch(() => ({}));
+
+  if (!response.ok) {
+    throw new Error(data.message || "حدث خطأ");
+  }
+
+  return data;
+}
+
+async function loadStore() {
+  const grid = document.getElementById("storeGrid");
+
+  try {
+    const data = await request("/store/items");
+
+    items = data.items || [];
+
+    renderCategories(data.categories || []);
+    renderItems();
+
+  } catch (error) {
+
+    grid.innerHTML = `
+      <div class="malak-empty">
+        <div>⚠️</div>
+        <h3>تعذر تحميل المتجر</h3>
+        <p>${escapeHTML(error.message)}</p>
+        <button class="malak-btn primary" onclick="loadStore()">إعادة المحاولة</button>
+      </div>
+    `;
+  }
+}
+
+function renderCategories(categories) {
+  const box = document.getElementById("categories");
+
+  box.innerHTML = `
+    <button class="store-category active" onclick="filterCategory('')">
+      الكل
+    </button>
+    ${categories.map(category => `
+      <button
+        class="store-category"
+        onclick="filterCategory('${escapeAttr(category.id)}')">
+        ${escapeHTML(category.name)}
+      </button>
+    `).join("")}
+  `;
+}
+
+function filterCategory(id) {
+  selectedCategory = id;
+
+  document.querySelectorAll(".store-category")
+    .forEach(button => button.classList.remove("active"));
+
+  renderItems();
+}
+
+function renderItems() {
+  const query =
+    document.getElementById("search").value.trim().toLowerCase();
+
+  const filtered = items.filter(item => {
+
+    const categoryMatch =
+      !selectedCategory ||
+      item.categoryId === selectedCategory;
+
+    const searchMatch =
+      !query ||
+      String(item.name || "").toLowerCase().includes(query) ||
+      String(item.description || "").toLowerCase().includes(query);
+
+    return categoryMatch && searchMatch;
+  });
+
+  const grid = document.getElementById("storeGrid");
+
+  if (!filtered.length) {
+    grid.innerHTML = `
+      <div class="malak-empty">
+        <div>🛍️</div>
+        <h3>لا توجد نتائج</h3>
+        <p>جرّب البحث بكلمة أخرى.</p>
+      </div>
+    `;
+    return;
+  }
+
+  grid.innerHTML = filtered.map(item => `
+    <article class="store-card">
+
+      <div class="store-image">
+        ${
+          item.image
+          ? `<img src="${escapeAttr(item.image)}" alt="">`
+          : `<span>✨</span>`
+        }
+      </div>
+
+      <div class="store-body">
+
+        <span class="store-type">
+          ${escapeHTML(item.type || "عنصر رقمي")}
+        </span>
+
+        <h3>${escapeHTML(item.name)}</h3>
+
+        <p>
+          ${escapeHTML(item.description || "")}
+        </p>
+
+        <div class="store-bottom">
+
+          <strong>
+            ${Number(item.price || 0).toLocaleString("ar-EG")} 🪙
+          </strong>
+
+          <button
+            class="malak-btn primary"
+            onclick="openItem('${escapeAttr(item.id)}')">
+            عرض
+          </button>
+
+        </div>
+
+      </div>
+    </article>
+  `).join("");
+}
+
+function openItem(id) {
+  const item = items.find(x => String(x.id) === String(id));
+
+  if (!item) return;
+
+  document.getElementById("itemDetails").innerHTML = `
+    <div class="store-detail">
+
+      <div class="store-detail-image">
+        ${
+          item.image
+          ? `<img src="${escapeAttr(item.image)}" alt="">`
+          : `✨`
+        }
+      </div>
+
+      <span class="store-type">
+        ${escapeHTML(item.type || "عنصر رقمي")}
+      </span>
+
+      <h2>${escapeHTML(item.name)}</h2>
+
+      <p>${escapeHTML(item.description || "")}</p>
+
+      <strong class="detail-price">
+        ${Number(item.price || 0).toLocaleString("ar-EG")} 🪙
+      </strong>
+
+      <button
+        class="malak-btn primary wide"
+        onclick="purchaseItem('${escapeAttr(item.id)}')">
+        شراء العنصر
+      </button>
+
+    </div>
+  `;
+
+  document.getElementById("itemModal").classList.remove("hidden");
+}
+
+function closeItem() {
+  document.getElementById("itemModal").classList.add("hidden");
+}
+
+async function purchaseItem(id) {
+  try {
+    await request("/store/purchase", {
+      method: "POST",
+      body: JSON.stringify({
+        itemId: id
+      })
+    });
+
+    alert("تمت عملية الشراء.");
+    closeItem();
+
+  } catch (error) {
+    alert(error.message);
+  }
+}
+
+function escapeHTML(value) {
+  return String(value ?? "")
+    .replaceAll("&","&amp;")
+    .replaceAll("<","&lt;")
+    .replaceAll(">","&gt;")
+    .replaceAll('"',"&quot;")
+    .replaceAll("'","&#039;");
+}
+
+function escapeAttr(value) {
+  return escapeHTML(value);
+}
+
+document.getElementById("search").addEventListener("input", renderItems);
+
+document.addEventListener("DOMContentLoaded", loadStore);
+</script>
+
+<style>
+.store-categories {
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;
+  padding: 10px 0 20px;
+}
+
+.store-category {
+  border: 1px solid rgba(255,255,255,.08);
+  background: rgba(255,255,255,.03);
+  color: white;
+  border-radius: 999px;
+  padding: 10px 17px;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.store-category.active {
+  background: #19d47c;
+  color: #06110d;
+}
+
+.store-grid {
+  display: grid;
+  grid-template-columns: repeat(4,minmax(0,1fr));
+  gap: 18px;
+}
+
+.store-card {
+  overflow: hidden;
+  border: 1px solid rgba(255,255,255,.08);
+  background: rgba(255,255,255,.035);
+  border-radius: 22px;
+}
+
+.store-image {
+  height: 190px;
+  display: grid;
+  place-items: center;
+  background:
+    radial-gradient(circle at 50% 20%,rgba(25,212,124,.25),transparent 50%),
+    #0c1515;
+  overflow: hidden;
+}
+
+.store-image img,
+.store-detail-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.store-image span {
+  font-size: 60px;
+}
+
+.store-body {
+  padding: 17px;
+}
+
+.store-type {
+  font-size: 12px;
+  opacity: .55;
+}
+
+.store-body h3 {
+  margin: 7px 0;
+}
+
+.store-body p {
+  min-height: 45px;
+  opacity: .65;
+  font-size: 13px;
+}
+
+.store-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.mk-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  background: rgba(0,0,0,.75);
+  display: grid;
+  place-items: center;
+  padding: 20px;
+}
+
+.mk-modal.hidden {
+  display: none;
+}
+
+.mk-modal-box {
+  width: min(550px,100%);
+  max-height: 90vh;
+  overflow: auto;
+  background: #10191a;
+  border-radius: 25px;
+  padding: 25px;
+  position: relative;
+}
+
+.modal-close {
+  position: absolute;
+  left: 18px;
+  top: 15px;
+  border: 0;
+  background: transparent;
+  color: white;
+  font-size: 28px;
+}
+
+.store-detail {
+  text-align: center;
+}
+
+.store-detail-image {
+  height: 230px;
+  border-radius: 20px;
+  overflow: hidden;
+  display: grid;
+  place-items: center;
+  background: #0b1515;
+  font-size: 70px;
+  margin-bottom: 20px;
+}
+
+.detail-price {
+  display: block;
+  font-size: 28px;
+  margin: 20px;
+}
+
+.wide {
+  width: 100%;
+}
+
+@media(max-width:1000px) {
+  .store-grid {
+    grid-template-columns: repeat(2,minmax(0,1fr));
+  }
+}
+
+@media(max-width:600px) {
+  .store-grid {
+    grid-template-columns: 1fr;
+  }
+}
+</style>
+
+</body>
+</html>
