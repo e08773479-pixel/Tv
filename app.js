@@ -1,1824 +1,1364 @@
 /* =========================================================
-   JOKER — APPLICATION CORE
+   JOKER
+   app.js
+   Application controller
 ========================================================= */
 
-"use strict";
+(() => {
+
+  "use strict";
 
 
-/* =========================================================
-   SHORTCUTS
-========================================================= */
+  /* =======================================================
+     DOM
+  ======================================================= */
 
-const $ = (selector, root = document) =>
-  root.querySelector(selector);
+  const $ = selector =>
+    document.querySelector(selector);
 
-const $$ = (selector, root = document) =>
-  [...root.querySelectorAll(selector)];
-
-
-/* =========================================================
-   APP STATE
-========================================================= */
-
-const JOKER_APP = {
-
-  currentRoute: "home",
-
-  loading: true,
-
-  theme:
-    localStorage.getItem("joker_theme") || "dark",
-
-  storageKey: "joker_session",
-
-  searchTimer: null
-
-};
+  const $$ = selector =>
+    [...document.querySelectorAll(selector)];
 
 
-/* =========================================================
-   DOM READY
-========================================================= */
+  /* =======================================================
+     ELEMENTS
+  ======================================================= */
 
-document.addEventListener("DOMContentLoaded", () => {
+  const splash =
+    $("#splash");
 
-  initializeApp();
+  const authScreen =
+    $("#authScreen");
 
-});
+  const app =
+    $("#app");
 
+  const sidebar =
+    $("#sidebar");
 
-/* =========================================================
-   INITIALIZATION
-========================================================= */
+  const sidebarBackdrop =
+    $("#sidebarBackdrop");
 
-async function initializeApp() {
+  const toast =
+    $("#toast");
 
-  setupTheme();
+  const searchModal =
+    $("#searchModal");
 
-  setupNavigation();
+  const roomModal =
+    $("#roomModal");
 
-  setupAuth();
+  const cameraModal =
+    $("#cameraModal");
 
-  setupPasswordToggles();
-
-  setupSearch();
-
-  setupModal();
-
-  setupLogout();
-
-  await runLoader();
-
-  await restoreSession();
-
-  refreshInterface();
-
-}
+  const profileModal =
+    $("#profileModal");
 
 
-/* =========================================================
-   LOADER
-========================================================= */
+  /* =======================================================
+     APP INIT
+  ======================================================= */
 
-async function runLoader() {
+  function init() {
 
-  const loader = $("#appLoader");
-  const progress = $("#loaderProgress");
-  const status = $("#loaderStatus");
+    setupSplash();
 
-  if (!loader || !progress) {
-    return;
+    setupAuth();
+
+    setupNavigation();
+
+    setupSidebar();
+
+    setupSearch();
+
+    setupModals();
+
+    setupProfile();
+
+    setupCamera();
+
+    setupTheme();
+
+    setupGames();
+
+    setupRoom();
+
+    setupMisc();
+
+    restoreInterface();
+
+    JOKER.state.initialized = true;
+
+    persist();
+
   }
 
-  const steps = [
 
-    [12, "جاري تجهيز الهوية..."],
-    [28, "جاري تجهيز الواجهة..."],
-    [46, "جاري فحص الجلسة..."],
-    [63, "جاري تجهيز المسارات..."],
-    [81, "جاري تجهيز الحساب..."],
-    [94, "جاري إنهاء التجهيز..."],
-    [100, "تم تجهيز المنصة"]
+  /* =======================================================
+     SPLASH
+  ======================================================= */
 
-  ];
+  function setupSplash() {
+
+    setTimeout(() => {
+
+      splash.classList.add("hide");
+
+      const authenticated =
+        JOKER.state.authenticated;
+
+      if (authenticated) {
+
+        showApp();
+
+      } else {
+
+        showAuth();
+
+      }
+
+    }, 1500);
+
+  }
 
 
-  for (const [value, message] of steps) {
+  function showAuth() {
 
-    progress.style.width = `${value}%`;
+    authScreen.classList.remove("hidden");
 
-    if (status) {
-      status.textContent = message;
-    }
+    app.classList.add("hidden");
 
-    await sleep(
-      value === 100 ? 250 : 180
+  }
+
+
+  function showApp() {
+
+    authScreen.classList.add("hidden");
+
+    app.classList.remove("hidden");
+
+    updateUserUI();
+
+    navigate(
+      JOKER.state.currentPage || "home",
+      false
     );
 
   }
 
 
-  loader.classList.add("done");
+  /* =======================================================
+     AUTH
+  ======================================================= */
 
-  await sleep(450);
+  function setupAuth() {
 
-}
+    $$(".auth-tab").forEach(tab => {
 
+      tab.addEventListener(
+        "click",
+        () => {
 
-/* =========================================================
-   SESSION
-========================================================= */
+          $$(".auth-tab")
+            .forEach(item =>
+              item.classList.remove("active")
+            );
 
-async function restoreSession() {
+          tab.classList.add("active");
 
-  let raw = null;
+          const type =
+            tab.dataset.auth;
 
-  try {
+          if (type === "register") {
 
-    raw =
-      localStorage.getItem(
-        JOKER_APP.storageKey
+            $("#loginForm")
+              .classList.add("hidden");
+
+            $("#registerForm")
+              .classList.remove("hidden");
+
+          } else {
+
+            $("#registerForm")
+              .classList.add("hidden");
+
+            $("#loginForm")
+              .classList.remove("hidden");
+
+          }
+
+        }
       );
 
-  } catch (error) {
+    });
 
-    raw = null;
+
+    $("#loginForm")
+      .addEventListener(
+        "submit",
+        handleLogin
+      );
+
+
+    $("#registerForm")
+      .addEventListener(
+        "submit",
+        handleRegister
+      );
+
+
+    $("#googleLoginBtn")
+      .addEventListener(
+        "click",
+        () => {
+
+          if (!JOKER.config.features.googleAuth) {
+
+            showToast(
+              "Google",
+              "تسجيل Google الحقيقي يحتاج إعداد OAuth وBackend.",
+              "!"
+            );
+
+            return;
+
+          }
+
+        }
+      );
+
+
+    $("#logoutBtn")
+      .addEventListener(
+        "click",
+        logout
+      );
 
   }
 
 
-  if (!raw) {
+  function handleLogin(event) {
+
+    event.preventDefault();
+
+    const email =
+      $("#loginEmail").value.trim();
+
+    const password =
+      $("#loginPassword").value;
+
+    if (!email || !password) {
+
+      showToast(
+        "تسجيل الدخول",
+        "أكمل البيانات المطلوبة.",
+        "!"
+      );
+
+      return;
+
+    }
+
+    /*
+      مهم:
+      هذه الدفعة لا تدعي أن الدخول تم على سيرفر حقيقي.
+      يتم إنشاء جلسة محلية فقط لتجربة واجهة التطبيق.
+    */
+
+    JOKER.state.authenticated = true;
+
+    JOKER.state.user = {
+
+      ...JOKER.state.user,
+
+      name:
+        JOKER.state.user.name ||
+        email.split("@")[0],
+
+      email,
+
+      online: true
+
+    };
+
+    persist();
+
+    showApp();
+
+    showToast(
+      "أهلًا بك",
+      "تم فتح واجهة حسابك المحلية.",
+      "✓"
+    );
+
+  }
+
+
+  function handleRegister(event) {
+
+    event.preventDefault();
+
+    const name =
+      $("#registerName").value.trim();
+
+    const email =
+      $("#registerEmail").value.trim();
+
+    const password =
+      $("#registerPassword").value;
+
+    if (
+      !name ||
+      !email ||
+      password.length < 8
+    ) {
+
+      showToast(
+        "إنشاء الحساب",
+        "أدخل اسمًا وبريدًا وكلمة مرور لا تقل عن 8 أحرف.",
+        "!"
+      );
+
+      return;
+
+    }
+
+    JOKER.state.authenticated = true;
+
+    JOKER.state.user = {
+
+      ...JOKER.state.user,
+
+      id:
+        `local-${Date.now()}`,
+
+      name,
+
+      email,
+
+      bio: "",
+
+      level: 1,
+
+      coins: 0,
+
+      friendsCount: 0,
+
+      followersCount: 0,
+
+      roomsCount: 0,
+
+      online: true
+
+    };
+
+    persist();
+
+    showApp();
+
+    showToast(
+      "تم إنشاء الحساب",
+      "تم تجهيز حسابك المحلي. الربط الحقيقي سيأتي مع Backend.",
+      "✓"
+    );
+
+  }
+
+
+  function logout() {
+
+    JOKER.state.authenticated = false;
+
+    JOKER.state.user = {
+      ...JOKER.defaultUser
+    };
+
+    JOKER.storage.clear();
+
+    stopCamera();
+
+    closeAllModals();
 
     showAuth();
 
-    return;
+    showToast(
+      "تم تسجيل الخروج",
+      "تم إنهاء الجلسة المحلية.",
+      "✓"
+    );
 
   }
 
 
-  try {
+  /* =======================================================
+     NAVIGATION
+  ======================================================= */
 
-    const session = JSON.parse(raw);
+  function setupNavigation() {
 
-    /*
-     * لا نقبل جلسة ناقصة على أنها مستخدم حقيقي.
-     */
+    document.addEventListener(
+      "click",
+      event => {
 
-    if (
-      !session ||
-      !session.user ||
-      !session.user.id ||
-      !session.user.email
-    ) {
+        const trigger =
+          event.target.closest("[data-page]");
 
-      clearSession();
+        if (!trigger) return;
 
-      showAuth();
+        const page =
+          trigger.dataset.page;
+
+        if (!page) return;
+
+        navigate(page);
+
+      }
+    );
+
+  }
+
+
+  function navigate(
+    page,
+    save = true
+  ) {
+
+    if (!JOKER.ui.pages.includes(page)) {
+
+      page = "home";
+
+    }
+
+    $$(".page").forEach(section => {
+
+      section.classList.toggle(
+        "active",
+        section.id === `page-${page}`
+      );
+
+    });
+
+
+    $$(".nav-item").forEach(item => {
+
+      item.classList.toggle(
+        "active",
+        item.dataset.page === page
+      );
+
+    });
+
+
+    $$(".bottom-item").forEach(item => {
+
+      item.classList.toggle(
+        "active",
+        item.dataset.page === page
+      );
+
+    });
+
+
+    JOKER.state.currentPage = page;
+
+
+    closeSidebar();
+
+
+    if (save) {
+
+      persist();
+
+    }
+
+
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth"
+    });
+
+
+    JOKER.events.emit(
+      "pageChanged",
+      page
+    );
+
+  }
+
+
+  /* =======================================================
+     SIDEBAR
+  ======================================================= */
+
+  function setupSidebar() {
+
+    $("#openSidebar")
+      ?.addEventListener(
+        "click",
+        openSidebar
+      );
+
+    $("#closeSidebar")
+      ?.addEventListener(
+        "click",
+        closeSidebar
+      );
+
+    sidebarBackdrop
+      ?.addEventListener(
+        "click",
+        closeSidebar
+      );
+
+  }
+
+
+  function openSidebar() {
+
+    sidebar.classList.add("open");
+
+    sidebarBackdrop.classList.add("show");
+
+    JOKER.state.sidebarOpen = true;
+
+  }
+
+
+  function closeSidebar() {
+
+    sidebar.classList.remove("open");
+
+    sidebarBackdrop.classList.remove("show");
+
+    JOKER.state.sidebarOpen = false;
+
+  }
+
+
+  /* =======================================================
+     SEARCH
+  ======================================================= */
+
+  function setupSearch() {
+
+    $("#globalSearchBtn")
+      .addEventListener(
+        "click",
+        openSearch
+      );
+
+
+    $("#globalSearchInput")
+      .addEventListener(
+        "input",
+        event => {
+
+          renderSearch(
+            event.target.value
+          );
+
+        }
+      );
+
+
+    document.addEventListener(
+      "keydown",
+      event => {
+
+        if (
+          (event.ctrlKey || event.metaKey) &&
+          event.key.toLowerCase() === "k"
+        ) {
+
+          event.preventDefault();
+
+          openSearch();
+
+        }
+
+
+        if (
+          event.key === "Escape"
+        ) {
+
+          closeAllModals();
+
+        }
+
+      }
+    );
+
+  }
+
+
+  function openSearch() {
+
+    searchModal.classList.remove(
+      "hidden"
+    );
+
+    $("#globalSearchInput")
+      .value = "";
+
+    $("#searchResults").innerHTML = `
+
+      <div class="search-empty">
+
+        ابدأ بكتابة كلمة للبحث.
+
+      </div>
+
+    `;
+
+    setTimeout(
+      () =>
+        $("#globalSearchInput").focus(),
+      50
+    );
+
+  }
+
+
+  function renderSearch(query) {
+
+    const clean =
+      String(query || "").trim();
+
+    if (!clean) {
+
+      $("#searchResults").innerHTML = `
+
+        <div class="search-empty">
+          ابدأ بكتابة كلمة للبحث.
+        </div>
+
+      `;
 
       return;
 
     }
 
 
-    window.JOKER_DATA.currentUser =
-      window.JOKER_DATA_HELPERS.normalizeUser(
-        session.user
-      );
-
-
-    window.JOKER_DATA.session = {
-
-      authenticated: true,
-
-      provider:
-        session.provider || "email",
-
-      remember:
-        Boolean(session.remember)
-
-    };
-
-
     /*
-     * مهم:
-     * هذه الجلسة ليست Backend Auth.
-     *
-     * عند ربط Firebase/Supabase/API حقيقي
-     * سيتم استبدال هذا الجزء بجلسة الخادم.
-     */
+      لا توجد بيانات مستخدمين حقيقية بعد.
+      لذلك لا نعرض نتائج وهمية.
+    */
 
-    showApp();
+    $("#searchResults").innerHTML = `
 
+      <div class="search-empty">
 
-  } catch (error) {
-
-    console.warn(
-      "Invalid local session.",
-      error
-    );
-
-    clearSession();
-
-    showAuth();
-
-  }
-
-}
-
-
-/* =========================================================
-   AUTH UI
-========================================================= */
-
-function showAuth() {
-
-  $("#authScreen")?.classList.remove("hidden");
-
-  $("#app")?.classList.add("hidden");
-
-}
-
-
-function showApp() {
-
-  $("#authScreen")?.classList.add("hidden");
-
-  $("#app")?.classList.remove("hidden");
-
-}
-
-
-/* =========================================================
-   AUTH SWITCH
-========================================================= */
-
-function setupAuth() {
-
-  $$("[data-auth-switch]").forEach(button => {
-
-    button.addEventListener("click", () => {
-
-      const target =
-        button.dataset.authSwitch;
-
-      switchAuthView(target);
-
-    });
-
-  });
-
-
-  $("#loginForm")?.addEventListener(
-    "submit",
-    handleLogin
-  );
-
-
-  $("#registerForm")?.addEventListener(
-    "submit",
-    handleRegister
-  );
-
-
-  $("#googleLoginBtn")?.addEventListener(
-    "click",
-    handleGoogleAuth
-  );
-
-
-  $("#googleRegisterBtn")?.addEventListener(
-    "click",
-    handleGoogleAuth
-  );
-
-
-  $("#forgotPasswordBtn")?.addEventListener(
-    "click",
-    () => {
-
-      openModal({
-
-        title: "استعادة كلمة المرور",
-
-        body: `
-          <div class="modal-message">
-            <p>
-              استعادة كلمة المرور تحتاج إلى مزود
-              مصادقة حقيقي متصل بالمنصة.
-            </p>
-
-            <p style="margin-top:10px;color:#8f96a8;font-size:11px">
-              في الدفعة الأولى لن ندّعي أن هناك
-              نظام بريد حقيقي من غير Backend.
-            </p>
-          </div>
-        `
-
-      });
-
-    }
-  );
-
-}
-
-
-function switchAuthView(view) {
-
-  const login = $("#loginView");
-  const register = $("#registerView");
-
-  if (!login || !register) {
-    return;
-  }
-
-  if (view === "register") {
-
-    login.classList.add("hidden");
-    register.classList.remove("hidden");
-
-  } else {
-
-    register.classList.add("hidden");
-    login.classList.remove("hidden");
-
-  }
-
-}
-
-
-/* =========================================================
-   EMAIL LOGIN
-========================================================= */
-
-async function handleLogin(event) {
-
-  event.preventDefault();
-
-  const email =
-    $("#loginEmail")?.value.trim();
-
-  const password =
-    $("#loginPassword")?.value;
-
-
-  if (!email || !password) {
-
-    showToast(
-      "أدخل البريد الإلكتروني وكلمة المرور.",
-      "error"
-    );
-
-    return;
-
-  }
-
-
-  /*
-   * مهم جداً:
-   *
-   * لن ننشئ مستخدم وهمي عند الضغط على Login.
-   *
-   * حالياً نحتاج Auth Backend حقيقي.
-   */
-
-  if (
-    !window.JOKER_DATA.backend.authConfigured
-  ) {
-
-    showAuthSetupMessage();
-
-    return;
-
-  }
-
-
-  /*
-   * نقطة الربط المستقبلية:
-   *
-   * const user =
-   * await authProvider.signIn(email, password);
-   */
-
-}
-
-
-/* =========================================================
-   REGISTER
-========================================================= */
-
-async function handleRegister(event) {
-
-  event.preventDefault();
-
-  const name =
-    $("#registerName")?.value.trim();
-
-  const email =
-    $("#registerEmail")?.value.trim();
-
-  const password =
-    $("#registerPassword")?.value;
-
-  const confirm =
-    $("#registerConfirmPassword")?.value;
-
-  const terms =
-    $("#acceptTerms")?.checked;
-
-
-  if (!name || !email || !password || !confirm) {
-
-    showToast(
-      "أكمل بيانات إنشاء الحساب.",
-      "error"
-    );
-
-    return;
-
-  }
-
-
-  if (password.length < 8) {
-
-    showToast(
-      "كلمة المرور يجب أن تكون 8 أحرف على الأقل.",
-      "error"
-    );
-
-    return;
-
-  }
-
-
-  if (password !== confirm) {
-
-    showToast(
-      "كلمتا المرور غير متطابقتين.",
-      "error"
-    );
-
-    return;
-
-  }
-
-
-  if (!terms) {
-
-    showToast(
-      "يجب الموافقة على الشروط.",
-      "error"
-    );
-
-    return;
-
-  }
-
-
-  if (
-    !window.JOKER_DATA.backend.authConfigured
-  ) {
-
-    showAuthSetupMessage();
-
-    return;
-
-  }
-
-
-  /*
-   * نقطة الربط مع Auth Provider الحقيقي.
-   */
-
-}
-
-
-/* =========================================================
-   GOOGLE AUTH
-========================================================= */
-
-function handleGoogleAuth() {
-
-  /*
-   * لا نقوم بعمل fake login.
-   *
-   * Google OAuth يحتاج:
-   * - OAuth Client
-   * - Redirect URI
-   * - Auth Provider / Backend
-   */
-
-  openModal({
-
-    title: "Google",
-
-    body: `
-
-      <div class="modal-message">
-
-        <div style="
-          width:56px;
-          height:56px;
-          display:grid;
-          place-items:center;
-          margin:0 auto 15px;
-          border-radius:17px;
-          background:#fff;
-          color:#4285f4;
-          font:bold 24px Arial;
-        ">
-          G
-        </div>
-
-        <h3 style="text-align:center;font-size:15px">
-          Google Login جاهز للربط
-        </h3>
-
-        <p style="
-          margin-top:9px;
-          color:#8f96a8;
-          font-size:10px;
-          line-height:1.9;
-          text-align:center;
-        ">
-          لن ننشئ جلسة مزيفة.
-          عند إضافة OAuth الحقيقي سيتم فتح
-          تسجيل Google الفعلي وإرجاع الحساب الحقيقي.
-        </p>
-
-      </div>
-
-    `
-
-  });
-
-}
-
-
-/* =========================================================
-   AUTH SETUP MESSAGE
-========================================================= */
-
-function showAuthSetupMessage() {
-
-  openModal({
-
-    title: "المصادقة الحقيقية",
-
-    body: `
-
-      <div class="modal-message">
-
-        <h3 style="font-size:15px">
-          الواجهة جاهزة — Backend مطلوب
-        </h3>
-
-        <p style="
-          margin-top:10px;
-          color:#8f96a8;
-          font-size:10px;
-          line-height:2;
-        ">
-          لن يتم إنشاء حساب وهمي أو تخزين كلمة مرور
-          داخل Front-End.
-          تسجيل الدخول الحقيقي يحتاج خدمة مصادقة
-          وقاعدة بيانات آمنة.
-        </p>
-
-        <div style="
-          margin-top:18px;
-          padding:13px;
-          border:1px solid rgba(139,92,246,.15);
-          border-radius:13px;
-          background:rgba(139,92,246,.05);
-          color:#b9b0e8;
-          font-size:9px;
-          line-height:1.9;
-        ">
-          الدفعة الأولى جهزت كل الواجهة ونقاط الربط،
-          وفي مرحلة الـBackend سيتم توصيل الحسابات
-          الحقيقية بدون إعادة تصميم المنصة.
-        </div>
-
-      </div>
-
-    `
-
-  });
-
-}
-
-
-/* =========================================================
-   NAVIGATION
-========================================================= */
-
-function setupNavigation() {
-
-  $$("[data-route]").forEach(button => {
-
-    button.addEventListener(
-      "click",
-      () => {
-
-        const route =
-          button.dataset.route;
-
-        if (route) {
-          navigate(route);
-        }
-
-      }
-    );
-
-  });
-
-
-  $("#mobileMenuBtn")?.addEventListener(
-    "click",
-    () => {
-
-      $("#sidebar")
-        ?.classList.toggle("open");
-
-    }
-  );
-
-}
-
-
-function navigate(route) {
-
-  const target =
-    $(`#page-${route}`);
-
-  if (!target) {
-    return;
-  }
-
-
-  $$(".page").forEach(page => {
-
-    page.classList.remove("active-page");
-
-  });
-
-
-  target.classList.add("active-page");
-
-
-  $$(".nav-item").forEach(item => {
-
-    item.classList.toggle(
-      "active",
-      item.dataset.route === route
-    );
-
-  });
-
-
-  $$(".mobile-nav-item").forEach(item => {
-
-    item.classList.toggle(
-      "active",
-      item.dataset.route === route
-    );
-
-  });
-
-
-  JOKER_APP.currentRoute = route;
-
-
-  $("#sidebar")?.classList.remove("open");
-
-
-  window.scrollTo({
-    top: 0,
-    behavior: "smooth"
-  });
-
-
-  if (route === "profile") {
-    renderProfile();
-  }
-
-
-  if (route === "wallet") {
-    renderWallet();
-  }
-
-
-  if (route === "notifications") {
-    renderNotifications();
-  }
-
-
-  if (route === "friends") {
-    renderFriends();
-  }
-
-
-  if (route === "rooms") {
-    renderRooms();
-  }
-
-
-  if (route === "chat") {
-    renderChat();
-  }
-
-}
-
-
-/* =========================================================
-   INTERFACE REFRESH
-========================================================= */
-
-function refreshInterface() {
-
-  const user =
-    window.JOKER_DATA_HELPERS.getUser();
-
-
-  if (!user) {
-
-    showAuth();
-
-    return;
-
-  }
-
-
-  showApp();
-
-  renderUser();
-
-  renderNotifications();
-
-  renderFriends();
-
-  renderRooms();
-
-  renderChat();
-
-  renderProfile();
-
-  renderWallet();
-
-}
-
-
-/* =========================================================
-   USER
-========================================================= */
-
-function renderUser() {
-
-  const user =
-    window.JOKER_DATA_HELPERS.getUser();
-
-  if (!user) {
-    return;
-  }
-
-
-  const displayName =
-    user.name || "حسابك";
-
-
-  setText(
-    "#topUserName",
-    displayName
-  );
-
-  setText(
-    "#homeUserName",
-    displayName
-  );
-
-  setText(
-    "#profileName",
-    displayName
-  );
-
-
-  setText(
-    "#userLevel",
-    user.level || "—"
-  );
-
-  setText(
-    "#userXp",
-    formatNumber(user.xp)
-  );
-
-  setText(
-    "#userCoins",
-    formatNumber(user.coins)
-  );
-
-
-  setText(
-    "#profileLevel",
-    user.level || "—"
-  );
-
-  setText(
-    "#profileXp",
-    formatNumber(user.xp)
-  );
-
-  setText(
-    "#profileCoins",
-    formatNumber(user.coins)
-  );
-
-  setText(
-    "#walletCoins",
-    formatNumber(user.coins)
-  );
-
-
-  setText(
-    "#profileHandle",
-    user.username
-      ? `@${user.username}`
-      : "@account"
-  );
-
-
-  setText(
-    "#profileBio",
-    user.bio ||
-    "أهلاً بك في الجوكر."
-  );
-
-
-  setAvatar(
-    "#topAvatar",
-    user
-  );
-
-  setAvatar(
-    "#homeAvatar",
-    user
-  );
-
-  setAvatar(
-    "#profileAvatar",
-    user
-  );
-
-}
-
-
-/* =========================================================
-   AVATAR
-========================================================= */
-
-function setAvatar(selector, user) {
-
-  const element = $(selector);
-
-  if (!element) {
-    return;
-  }
-
-
-  element.innerHTML = "";
-
-
-  if (user.avatar) {
-
-    const image =
-      document.createElement("img");
-
-    image.src = user.avatar;
-
-    image.alt =
-      user.name || "User";
-
-    image.loading = "lazy";
-
-    image.onerror = () => {
-
-      element.textContent =
-        getInitial(user.name);
-
-    };
-
-
-    element.appendChild(image);
-
-  } else {
-
-    element.textContent =
-      getInitial(user.name);
-
-  }
-
-}
-
-
-function getInitial(name) {
-
-  const value =
-    String(name || "").trim();
-
-  return value
-    ? value.charAt(0).toUpperCase()
-    : "?";
-
-}
-
-
-/* =========================================================
-   FRIENDS
-========================================================= */
-
-function renderFriends() {
-
-  const friends =
-    window.JOKER_DATA_HELPERS.getFriends();
-
-  const empty =
-    $("#friendsEmpty");
-
-
-  if (!empty) {
-    return;
-  }
-
-
-  /*
-   * لا توجد بيانات وهمية.
-   */
-
-  if (!friends.length) {
-
-    empty.classList.remove("hidden");
-
-    return;
-
-  }
-
-
-  empty.classList.add("hidden");
-
-}
-
-
-/* =========================================================
-   ROOMS
-========================================================= */
-
-function renderRooms() {
-
-  const rooms =
-    window.JOKER_DATA_HELPERS.getRooms();
-
-
-  const empty =
-    $("#roomsEmpty");
-
-  const count =
-    $("#roomsNavCount");
-
-
-  if (count) {
-
-    if (rooms.length) {
-
-      count.textContent =
-        rooms.length;
-
-    } else {
-
-      count.textContent =
-        "";
-
-    }
-
-  }
-
-
-  if (!empty) {
-    return;
-  }
-
-
-  if (!rooms.length) {
-
-    empty.classList.remove("hidden");
-
-    return;
-
-  }
-
-
-  empty.classList.add("hidden");
-
-}
-
-
-/* =========================================================
-   CHAT
-========================================================= */
-
-function renderChat() {
-
-  const chats =
-    window.JOKER_DATA_HELPERS.getConversations();
-
-  const list =
-    $("#chatList");
-
-
-  if (!list) {
-    return;
-  }
-
-
-  if (!chats.length) {
-
-    list.innerHTML = `
-
-      <div class="chat-empty">
-
-        <span>▱</span>
-
-        <p>
-          لا توجد محادثات بعد.
-        </p>
-
-      </div>
-
-    `;
-
-    return;
-
-  }
-
-
-  /*
-   * عند وجود Backend:
-   * يتم بناء المحادثات هنا من البيانات الحقيقية.
-   */
-
-}
-
-
-/* =========================================================
-   NOTIFICATIONS
-========================================================= */
-
-function renderNotifications() {
-
-  const notifications =
-    window.JOKER_DATA_HELPERS
-      .getNotifications();
-
-
-  const unread =
-    window.JOKER_DATA_HELPERS
-      .getUnreadNotifications();
-
-
-  const list =
-    $("#notificationsList");
-
-  const topBadge =
-    $("#notificationBadge");
-
-  const sideCount =
-    $("#sideNotificationCount");
-
-
-  updateBadge(
-    topBadge,
-    unread.length
-  );
-
-  updateBadge(
-    sideCount,
-    unread.length
-  );
-
-
-  if (!list) {
-    return;
-  }
-
-
-  if (!notifications.length) {
-
-    list.innerHTML = `
-
-      <div class="data-state large">
-
-        <div class="data-state-icon">
-          ♢
-        </div>
-
-        <h3>
-          لا توجد إشعارات
-        </h3>
-
-        <p>
-          عند وصول إشعار حقيقي سيظهر هنا.
-        </p>
-
-      </div>
-
-    `;
-
-    return;
-
-  }
-
-
-  /*
-   * البيانات الحقيقية سيتم رسمها هنا.
-   */
-
-}
-
-
-/* =========================================================
-   PROFILE
-========================================================= */
-
-function renderProfile() {
-
-  const user =
-    window.JOKER_DATA_HELPERS.getUser();
-
-  const activity =
-    $("#profileActivity");
-
-
-  if (!activity) {
-    return;
-  }
-
-
-  if (!user) {
-
-    activity.innerHTML = `
-
-      <p>
-        لا يوجد حساب مسجل.
-      </p>
-
-    `;
-
-    return;
-
-  }
-
-
-  activity.innerHTML = `
-
-    <div class="data-state">
-
-      <div class="data-state-icon">
-        ◎
-      </div>
-
-      <h3>
-        لا يوجد نشاط مسجل بعد
-      </h3>
-
-      <p>
-        النشاط سيظهر هنا من الأحداث الحقيقية
-        للحساب.
-      </p>
-
-    </div>
-
-  `;
-
-}
-
-
-/* =========================================================
-   WALLET
-========================================================= */
-
-function renderWallet() {
-
-  const user =
-    window.JOKER_DATA_HELPERS.getUser();
-
-  if (!user) {
-    return;
-  }
-
-
-  setText(
-    "#walletCoins",
-    formatNumber(user.coins)
-  );
-
-}
-
-
-/* =========================================================
-   SEARCH
-========================================================= */
-
-function setupSearch() {
-
-  const global =
-    $("#globalSearch");
-
-  const page =
-    $("#pageSearchInput");
-
-
-  global?.addEventListener(
-    "input",
-    event => {
-
-      handleSearch(
-        event.target.value
-      );
-
-    }
-  );
-
-
-  page?.addEventListener(
-    "input",
-    event => {
-
-      handleSearch(
-        event.target.value
-      );
-
-    }
-  );
-
-
-  document.addEventListener(
-    "keydown",
-    event => {
-
-      if (
-        (event.ctrlKey || event.metaKey) &&
-        event.key.toLowerCase() === "k"
-      ) {
-
-        event.preventDefault();
-
-        global?.focus();
-
-      }
-
-    }
-  );
-
-}
-
-
-function handleSearch(value) {
-
-  const query =
-    String(value || "").trim();
-
-
-  if (!query) {
-
-    if (
-      JOKER_APP.currentRoute === "search"
-    ) {
-
-      renderEmptySearch();
-
-    }
-
-    return;
-
-  }
-
-
-  navigate("search");
-
-
-  clearTimeout(
-    JOKER_APP.searchTimer
-  );
-
-
-  JOKER_APP.searchTimer =
-    setTimeout(() => {
-
-      executeSearch(query);
-
-    }, 180);
-
-}
-
-
-function executeSearch(query) {
-
-  const results =
-    $("#searchResults");
-
-
-  if (!results) {
-    return;
-  }
-
-
-  /*
-   * البحث هنا لا يخترع نتائج.
-   *
-   * لا نبحث إلا داخل بيانات حقيقية
-   * تم تحميلها في JOKER_DATA.
-   */
-
-  const users =
-    window.JOKER_DATA_HELPERS
-      .getFriends()
-      .filter(user => {
-
-        const text = `
-
-          ${user.name || ""}
-          ${user.username || ""}
-          ${user.bio || ""}
-
-        `.toLowerCase();
-
-        return text.includes(
-          query.toLowerCase()
-        );
-
-      });
-
-
-  const rooms =
-    window.JOKER_DATA_HELPERS
-      .getRooms()
-      .filter(room => {
-
-        const text = `
-
-          ${room.name || ""}
-          ${room.description || ""}
-
-        `.toLowerCase();
-
-        return text.includes(
-          query.toLowerCase()
-        );
-
-      });
-
-
-  if (!users.length && !rooms.length) {
-
-    results.innerHTML = `
-
-      <div class="data-state large">
-
-        <div class="data-state-icon">
+        <div style="font-size:30px;margin-bottom:10px;">
           ⌕
         </div>
 
-        <h3>
-          لا توجد نتائج
-        </h3>
+        <strong style="display:block;color:#fff;margin-bottom:5px;">
+          لا توجد بيانات متصلة
+        </strong>
 
-        <p>
-          لم نجد نتيجة في البيانات المتاحة حالياً.
-        </p>
+        <span>
+          البحث عن «${escapeHTML(clean)}»
+          سيعمل عند ربط قاعدة البيانات.
+        </span>
 
       </div>
 
     `;
 
-    return;
-
   }
 
 
-  /*
-   * سيتم تطوير Cards النتائج
-   * في الدفعة الثانية.
-   */
+  /* =======================================================
+     MODALS
+  ======================================================= */
 
-  results.innerHTML = `
+  function setupModals() {
 
-    <div class="data-state">
-
-      <h3>
-        تم العثور على بيانات
-      </h3>
-
-      <p>
-        سيتم عرض نتائج البحث الكاملة في
-        وحدة الاكتشاف والملفات الشخصية.
-      </p>
-
-    </div>
-
-  `;
-
-}
-
-
-function renderEmptySearch() {
-
-  const results =
-    $("#searchResults");
-
-  if (!results) {
-    return;
-  }
-
-
-  results.innerHTML = `
-
-    <div class="data-state large">
-
-      <div class="data-state-icon">
-        ⌕
-      </div>
-
-      <h3>
-        ابدأ البحث
-      </h3>
-
-      <p>
-        النتائج ستأتي من البيانات الحقيقية للمنصة.
-      </p>
-
-    </div>
-
-  `;
-
-}
-
-
-/* =========================================================
-   THEME
-========================================================= */
-
-function setupTheme() {
-
-  applyTheme(
-    JOKER_APP.theme
-  );
-
-
-  $("#themeToggle")?.addEventListener(
-    "click",
-    toggleTheme
-  );
-
-
-  $("#settingsThemeBtn")?.addEventListener(
-    "click",
-    toggleTheme
-  );
-
-}
-
-
-function toggleTheme() {
-
-  JOKER_APP.theme =
-    JOKER_APP.theme === "dark"
-      ? "light"
-      : "dark";
-
-
-  localStorage.setItem(
-    "joker_theme",
-    JOKER_APP.theme
-  );
-
-
-  applyTheme(
-    JOKER_APP.theme
-  );
-
-}
-
-
-function applyTheme(theme) {
-
-  document.body.classList.toggle(
-    "light",
-    theme === "light"
-  );
-
-}
-
-
-/* =========================================================
-   PASSWORD TOGGLE
-========================================================= */
-
-function setupPasswordToggles() {
-
-  $$(".password-toggle").forEach(button => {
-
-    button.addEventListener(
+    document.addEventListener(
       "click",
-      () => {
+      event => {
 
-        const target =
-          document.getElementById(
-            button.dataset.target
+        const close =
+          event.target.closest(
+            "[data-close-modal]"
           );
 
-        if (!target) {
-          return;
-        }
+        if (!close) return;
 
-
-        target.type =
-          target.type === "password"
-            ? "text"
-            : "password";
+        closeAllModals();
 
       }
     );
 
-  });
-
-}
+  }
 
 
-/* =========================================================
-   MODAL
-========================================================= */
+  function closeAllModals() {
 
-function setupModal() {
+    [
+      searchModal,
+      roomModal,
+      cameraModal,
+      profileModal
+    ].forEach(modal => {
 
-  $$("[data-modal-close]").forEach(
-    element => {
+      modal?.classList.add("hidden");
 
-      element.addEventListener(
+    });
+
+
+    stopCamera();
+
+    JOKER.state.currentModal = null;
+
+  }
+
+
+  /* =======================================================
+     PROFILE
+  ======================================================= */
+
+  function setupProfile() {
+
+    $("#editProfileBtn")
+      .addEventListener(
         "click",
-        closeModal
+        openProfileEditor
+      );
+
+
+    $("#profileForm")
+      .addEventListener(
+        "submit",
+        saveProfile
+      );
+
+  }
+
+
+  function openProfileEditor() {
+
+    const user =
+      JOKER.state.user;
+
+    $("#editName").value =
+      user.name || "";
+
+    $("#editBio").value =
+      user.bio || "";
+
+    profileModal.classList.remove(
+      "hidden"
+    );
+
+    JOKER.state.currentModal =
+      "profile";
+
+  }
+
+
+  function saveProfile(event) {
+
+    event.preventDefault();
+
+    const name =
+      $("#editName").value.trim();
+
+    const bio =
+      $("#editBio").value.trim();
+
+    if (!name) {
+
+      showToast(
+        "الملف الشخصي",
+        "الاسم مطلوب.",
+        "!"
+      );
+
+      return;
+
+    }
+
+    JOKER.state.user.name =
+      name;
+
+    JOKER.state.user.bio =
+      bio;
+
+    persist();
+
+    updateUserUI();
+
+    closeAllModals();
+
+    showToast(
+      "تم الحفظ",
+      "تم تحديث بيانات الملف المحلي.",
+      "✓"
+    );
+
+  }
+
+
+  function updateUserUI() {
+
+    const user =
+      JOKER.state.user;
+
+    const name =
+      user.name ||
+      "حسابك";
+
+    const email =
+      user.email ||
+      "لم يتم ربط البريد بعد";
+
+    const initial =
+      getInitial(name);
+
+
+    $("#miniName").textContent =
+      name;
+
+    $("#topName").textContent =
+      name;
+
+    $("#profileName").textContent =
+      name;
+
+    $("#profileEmail").textContent =
+      email;
+
+    $("#profileBio").textContent =
+      user.bio ||
+      "أضف نبذة عنك من إعدادات الملف الشخصي.";
+
+
+    $("#miniAvatar").textContent =
+      initial;
+
+    $("#topAvatar").textContent =
+      initial;
+
+    $("#profileAvatar").textContent =
+      initial;
+
+
+    $("#statFriends").textContent =
+      user.friendsCount || 0;
+
+    $("#statFollowers").textContent =
+      user.followersCount || 0;
+
+    $("#statRooms").textContent =
+      user.roomsCount || 0;
+
+    $("#statCoins").textContent =
+      user.coins || 0;
+
+    $("#walletCoins").textContent =
+      user.coins || 0;
+
+  }
+
+
+  function getInitial(name) {
+
+    if (!name) return "ج";
+
+    return name
+      .trim()
+      .charAt(0)
+      .toUpperCase();
+
+  }
+
+
+  /* =======================================================
+     CAMERA
+  ======================================================= */
+
+  function setupCamera() {
+
+    /*
+      زر تشغيل الكاميرا موجود في النظام.
+      يمكن استدعاء نافذة الكاميرا مستقبلًا من أي زر.
+    */
+
+    $("#startCameraBtn")
+      .addEventListener(
+        "click",
+        startCamera
+      );
+
+
+    $("#cameraEndBtn")
+      .addEventListener(
+        "click",
+        closeAllModals
+      );
+
+
+    $("#cameraMuteBtn")
+      .addEventListener(
+        "click",
+        toggleCameraMute
+      );
+
+  }
+
+
+  async function startCamera() {
+
+    if (
+      !navigator.mediaDevices ||
+      !navigator.mediaDevices.getUserMedia
+    ) {
+
+      showToast(
+        "الكاميرا",
+        "المتصفح لا يدعم الوصول إلى الكاميرا.",
+        "!"
+      );
+
+      return;
+
+    }
+
+
+    try {
+
+      const stream =
+        await navigator.mediaDevices.getUserMedia({
+
+          video: true,
+
+          audio: true
+
+        });
+
+
+      const video =
+        $("#cameraPreview");
+
+      video.srcObject =
+        stream;
+
+      video.style.display =
+        "block";
+
+      $("#cameraPermissionState")
+        .style.display =
+        "none";
+
+      $(".camera-controls")
+        .style.display =
+        "flex";
+
+
+      JOKER.state.camera.active =
+        true;
+
+      JOKER.state.camera.stream =
+        stream;
+
+      JOKER.state.camera.muted =
+        false;
+
+
+      showToast(
+        "الكاميرا",
+        "تم تشغيل الكاميرا والمايك بإذن جهازك.",
+        "✓"
+      );
+
+    } catch (error) {
+
+      console.warn(
+        "Camera permission:",
+        error
+      );
+
+      showToast(
+        "الكاميرا",
+        "لم يتم السماح بالوصول إلى الكاميرا أو المايك.",
+        "!"
       );
 
     }
-  );
 
-
-  document.addEventListener(
-    "keydown",
-    event => {
-
-      if (
-        event.key === "Escape"
-      ) {
-
-        closeModal();
-
-      }
-
-    }
-  );
-
-}
-
-
-function openModal({
-  title = "",
-  body = ""
-}) {
-
-  const modal =
-    $("#globalModal");
-
-  const content =
-    $("#modalContent");
-
-
-  if (!modal || !content) {
-    return;
   }
 
 
-  content.innerHTML = `
+  function toggleCameraMute() {
 
-    <div>
+    const stream =
+      JOKER.state.camera.stream;
 
-      <span class="section-kicker">
-        JOKER
-      </span>
+    if (!stream) return;
 
-      <h2 style="
-        margin-top:7px;
-        font-size:21px;
-      ">
-        ${escapeHtml(title)}
-      </h2>
+    const tracks =
+      stream.getAudioTracks();
 
-      <div style="margin-top:17px">
-        ${body}
-      </div>
+    const next =
+      !JOKER.state.camera.muted;
 
-    </div>
+    tracks.forEach(track => {
 
-  `;
+      track.enabled =
+        !next;
 
+    });
 
-  modal.classList.remove("hidden");
+    JOKER.state.camera.muted =
+      next;
 
-}
+    $("#cameraMuteBtn")
+      .textContent =
+      next ? "🔇" : "🎙️";
 
-
-function closeModal() {
-
-  $("#globalModal")
-    ?.classList.add("hidden");
-
-}
+  }
 
 
-/* =========================================================
-   LOGOUT
-========================================================= */
+  function stopCamera() {
 
-function setupLogout() {
+    const stream =
+      JOKER.state.camera.stream;
 
-  $("#logoutBtn")?.addEventListener(
-    "click",
-    logout
-  );
+    if (stream) {
+
+      stream
+        .getTracks()
+        .forEach(track =>
+          track.stop()
+        );
+
+    }
 
 
-  $("#settingsLogoutBtn")
-    ?.addEventListener(
-      "click",
-      logout
+    const video =
+      $("#cameraPreview");
+
+    if (video) {
+
+      video.srcObject = null;
+
+      video.style.display =
+        "none";
+
+    }
+
+
+    if ($("#cameraPermissionState")) {
+
+      $("#cameraPermissionState")
+        .style.display =
+        "flex";
+
+    }
+
+
+    if ($(".camera-controls")) {
+
+      $(".camera-controls")
+        .style.display =
+        "none";
+
+    }
+
+
+    JOKER.state.camera = {
+
+      active: false,
+
+      stream: null,
+
+      muted: false
+
+    };
+
+  }
+
+
+  /* =======================================================
+     ROOM
+  ======================================================= */
+
+  function setupRoom() {
+
+    $("#openRoomDemo")
+      .addEventListener(
+        "click",
+        () => {
+
+          roomModal.classList.remove(
+            "hidden"
+          );
+
+          JOKER.state.currentModal =
+            "room";
+
+        }
+      );
+
+
+    $("#createRoomBtn")
+      .addEventListener(
+        "click",
+        () => {
+
+          showToast(
+            "إنشاء روم",
+            "إنشاء الرومات الحقيقي يحتاج Realtime Backend.",
+            "!"
+          );
+
+        }
+      );
+
+  }
+
+
+  /* =======================================================
+     GAMES
+  ======================================================= */
+
+  function setupGames() {
+
+    $$(".game-card")
+      .forEach(card => {
+
+        card.addEventListener(
+          "click",
+          () => {
+
+            showToast(
+              "Joker Arcade",
+              "نظام الألعاب سيتم ربطه بحسابك في دفعة الألعاب.",
+              "🎮"
+            );
+
+          }
+        );
+
+      });
+
+  }
+
+
+  /* =======================================================
+     THEME
+  ======================================================= */
+
+  function setupTheme() {
+
+    $("#themeBtn")
+      .addEventListener(
+        "click",
+        toggleTheme
+      );
+
+  }
+
+
+  function toggleTheme() {
+
+    /*
+      الوضع الداكن هو الهوية الأساسية.
+      التغيير هنا يجهز النظام لتوسعة Light Mode.
+    */
+
+    JOKER.state.theme =
+      JOKER.state.theme === "dark"
+        ? "light"
+        : "dark";
+
+    document.body.dataset.theme =
+      JOKER.state.theme;
+
+    $("#themeBtn").textContent =
+      JOKER.state.theme === "dark"
+        ? "☾"
+        : "☀";
+
+    persist();
+
+    showToast(
+      "المظهر",
+      JOKER.state.theme === "dark"
+        ? "تم تفعيل المظهر الداكن."
+        : "تم تفعيل المظهر الفاتح التجريبي.",
+      "✦"
     );
 
-}
+  }
 
 
-function logout() {
+  /* =======================================================
+     MISC
+  ======================================================= */
 
-  clearSession();
+  function setupMisc() {
 
-  window.JOKER_DATA.currentUser = null;
+    $("#giftInfoBtn")
+      ?.addEventListener(
+        "click",
+        () => {
 
-  window.JOKER_DATA.session = {
+          showToast(
+            "الهدايا",
+            "نظام الهدايا والعملات الحقيقي سيُربط بالحساب في الدفعات القادمة.",
+            "♢"
+          );
 
-    authenticated: false,
-    provider: null,
-    remember: false
+        }
+      );
+
+  }
+
+
+  /* =======================================================
+     RESTORE
+  ======================================================= */
+
+  function restoreInterface() {
+
+    if (
+      JOKER.state.theme
+    ) {
+
+      document.body.dataset.theme =
+        JOKER.state.theme;
+
+      $("#themeBtn").textContent =
+        JOKER.state.theme === "dark"
+          ? "☾"
+          : "☀";
+
+    }
+
+
+    updateUserUI();
+
+  }
+
+
+  /* =======================================================
+     TOAST
+  ======================================================= */
+
+  let toastTimer = null;
+
+
+  function showToast(
+    title,
+    message,
+    icon = "✦"
+  ) {
+
+    $("#toastTitle")
+      .textContent =
+      title;
+
+    $("#toastMessage")
+      .textContent =
+      message;
+
+    $("#toastIcon")
+      .textContent =
+      icon;
+
+    toast.classList.add("show");
+
+    clearTimeout(toastTimer);
+
+    toastTimer =
+      setTimeout(
+        () => {
+
+          toast.classList.remove(
+            "show"
+          );
+
+        },
+        3500
+      );
+
+  }
+
+
+  /* =======================================================
+     PERSIST
+  ======================================================= */
+
+  function persist() {
+
+    JOKER.storage.save(
+      JOKER.state
+    );
+
+  }
+
+
+  /* =======================================================
+     ESCAPE HTML
+  ======================================================= */
+
+  function escapeHTML(value) {
+
+    return String(value)
+
+      .replaceAll("&", "&amp;")
+
+      .replaceAll("<", "&lt;")
+
+      .replaceAll(">", "&gt;")
+
+      .replaceAll('"', "&quot;")
+
+      .replaceAll("'", "&#039;");
+
+  }
+
+
+  /* =======================================================
+     PUBLIC API
+  ======================================================= */
+
+  window.JokerApp = {
+
+    navigate,
+
+    openSearch,
+
+    openRoom() {
+
+      roomModal.classList.remove(
+        "hidden"
+      );
+
+    },
+
+    openCamera() {
+
+      cameraModal.classList.remove(
+        "hidden"
+      );
+
+    },
+
+    showToast
 
   };
 
 
-  switchAuthView("login");
+  /* =======================================================
+     START
+  ======================================================= */
 
-  showAuth();
-
-  showToast(
-    "تم إنهاء الجلسة.",
-    "success"
+  document.addEventListener(
+    "DOMContentLoaded",
+    init
   );
 
-}
-
-
-function clearSession() {
-
-  try {
-
-    localStorage.removeItem(
-      JOKER_APP.storageKey
-    );
-
-  } catch (error) {
-
-    console.warn(
-      "Could not clear session.",
-      error
-    );
-
-  }
-
-}
-
-
-/* =========================================================
-   UTILITIES
-========================================================= */
-
-function updateBadge(
-  element,
-  count
-) {
-
-  if (!element) {
-    return;
-  }
-
-
-  if (count > 0) {
-
-    element.textContent =
-      count > 99
-        ? "99+"
-        : String(count);
-
-    element.classList.remove(
-      "hidden"
-    );
-
-  } else {
-
-    element.textContent = "";
-
-    element.classList.add(
-      "hidden"
-    );
-
-  }
-
-}
-
-
-function setText(
-  selector,
-  value
-) {
-
-  const element =
-    $(selector);
-
-  if (element) {
-    element.textContent =
-      value ?? "";
-  }
-
-}
-
-
-function formatNumber(value) {
-
-  const number =
-    Number(value);
-
-  if (!Number.isFinite(number)) {
-    return "—";
-  }
-
-  return new Intl.NumberFormat(
-    "ar-EG"
-  ).format(number);
-
-}
-
-
-function sleep(ms) {
-
-  return new Promise(
-    resolve =>
-      setTimeout(resolve, ms)
-  );
-
-}
-
-
-function escapeHtml(value) {
-
-  return String(value ?? "")
-    .replaceAll("&", "&amp;")
-    .replaceAll("<", "&lt;")
-    .replaceAll(">", "&gt;")
-    .replaceAll('"', "&quot;")
-    .replaceAll("'", "&#039;");
-
-}
-
-
-/* =========================================================
-   DEBUG API
-========================================================= */
-
-window.JOKER_APP = JOKER_APP;
-
-window.JOKER = {
-
-  navigate,
-
-  openModal,
-
-  closeModal,
-
-  refresh: refreshInterface,
-
-  logout
-
-};
+})();
