@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>الخريطة | ملك خفاجي 👑</title>
+  <link rel="stylesheet" href="../css/platform.css">
+</head>
+
+<body>
+
+<div class="malak-app">
+
+  <aside class="malak-sidebar">
+    <a class="malak-brand" href="../index.html">
+      <span class="brand-mark">👑</span>
+      <span>
+        <b>ملك خفاجي</b>
+        <small>Map</small>
+      </span>
+    </a>
+
+    <nav class="malak-nav">
+      <a href="../index.html">🏠 الرئيسية</a>
+      <a href="chat.html">💬 المحادثات</a>
+      <a href="rooms.html">🎙️ الغرف</a>
+      <a href="games.html">🎮 الألعاب</a>
+      <a href="friends.html">👥 الأصدقاء</a>
+      <a href="profile.html">👤 حسابي</a>
+      <a href="wallet.html">🪙 المحفظة</a>
+      <a href="store.html">🛍️ المتجر</a>
+      <a href="club.html">👑 النادي</a>
+      <a class="active" href="map.html">🗺️ الخريطة</a>
+      <a href="notifications.html">🔔 الإشعارات</a>
+      <a href="settings.html">⚙️ الإعدادات</a>
+    </nav>
+  </aside>
+
+  <main class="malak-content">
+
+    <header class="malak-topbar">
+      <button class="malak-btn" onclick="history.back()">←</button>
+
+      <div class="malak-search">
+        🔎
+        <input id="search" placeholder="ابحث عن مكان أو غرفة...">
+      </div>
+
+      <button class="malak-btn" onclick="locateMe()">
+        📍 موقعي
+      </button>
+    </header>
+
+    <section class="malak-page-head">
+      <div>
+        <span class="mk-kicker">DISCOVER MAP</span>
+        <h1>الخريطة 🗺️</h1>
+        <p>
+          اكتشف الغرف والمجتمعات والفعاليات حسب ما يسمح به إعداد الخصوصية.
+        </p>
+      </div>
+    </section>
+
+    <section class="map-layout">
+
+      <div class="map-panel malak-card">
+
+        <div id="mapCanvas" class="map-canvas">
+
+          <div class="map-center">
+            <span>🗺️</span>
+            <strong>خريطة ملك خفاجي</strong>
+            <small>
+              سيتم ربط الخريطة الجغرافية الفعلية بخدمة الخرائط من الـAPI.
+            </small>
+          </div>
+
+        </div>
+
+      </div>
+
+      <aside class="map-results malak-card">
+
+        <div class="section-head">
+          <div>
+            <h2>الموجود حولك</h2>
+            <p>نتائج تسمح بها الخصوصية.</p>
+          </div>
+        </div>
+
+        <div id="places">
+          <div class="malak-empty">
+            جاري تحميل النتائج...
+          </div>
+        </div>
+
+      </aside>
+
+    </section>
+
+  </main>
+</div>
+
+<script src="../js/platform.js"></script>
+
+<script>
+const API = "/api";
+
+let places = [];
+
+async function request(url, options = {}) {
+
+  const response = await fetch(API + url, {
+    credentials: "include",
+    headers: {
+      "Content-Type": "application/json",
+      ...(options.headers || {})
+    },
+    ...options
+  });
+
+  const data = await response.json().catch(() => ({}));
+
+  if (!response.ok) {
+    throw new Error(data.message || "حدث خطأ");
+  }
+
+  return data;
+}
+
+async function loadPlaces(params = "") {
+
+  try {
+
+    const data = await request("/map/places" + params);
+
+    places = data.places || [];
+
+    renderPlaces();
+
+  } catch(error) {
+
+    document.getElementById("places").innerHTML = `
+      <div class="malak-empty">
+        <div>⚠️</div>
+        <h3>تعذر تحميل الخريطة</h3>
+        <p>${escapeHTML(error.message)}</p>
+        <button class="malak-btn primary" onclick="loadPlaces()">إعادة المحاولة</button>
+      </div>
+    `;
+  }
+}
+
+function renderPlaces() {
+
+  const query =
+    document.getElementById("search").value.trim().toLowerCase();
+
+  const filtered = places.filter(place =>
+    !query ||
+    String(place.name || "").toLowerCase().includes(query) ||
+    String(place.type || "").toLowerCase().includes(query)
+  );
+
+  const box = document.getElementById("places");
+
+  if (!filtered.length) {
+
+    box.innerHTML = `
+      <div class="malak-empty">
+        <div>📍</div>
+        <h3>لا توجد نتائج</h3>
+      </div>
+    `;
+
+    return;
+  }
+
+  box.innerHTML = filtered.map(place => `
+
+    <button
+      class="map-place"
+      onclick="focusPlace('${escapeAttr(place.id)}')">
+
+      <span class="place-icon">
+        ${place.icon || "📍"}
+      </span>
+
+      <span>
+        <strong>${escapeHTML(place.name || "")}</strong>
+        <small>${escapeHTML(place.type || "")}</small>
+      </span>
+
+    </button>
+
+  `).join("");
+}
+
+function focusPlace(id) {
+
+  const place = places.find(
+    item => String(item.id) === String(id)
+  );
+
+  if (!place) return;
+
+  document.getElementById("mapCanvas").dataset.selected = id;
+
+  alert(
+    place.name +
+    (place.description ? "\n" + place.description : "")
+  );
+}
+
+function locateMe() {
+
+  if (!navigator.geolocation) {
+    alert("المتصفح لا يدعم تحديد الموقع.");
+    return;
+  }
+
+  navigator.geolocation.getCurrentPosition(
+
+    position => {
+
+      const lat = position.coords.latitude;
+      const lng = position.coords.longitude;
+
+      loadPlaces(
+        `?lat=${encodeURIComponent(lat)}&lng=${encodeURIComponent(lng)}`
+      );
+    },
+
+    () => {
+      alert("لم يتم السماح بالوصول إلى موقعك.");
+    },
+
+    {
+      enableHighAccuracy: true,
+      timeout: 10000
+    }
+  );
+}
+
+function escapeHTML(value) {
+  return String(value ?? "")
+    .replaceAll("&","&amp;")
+    .replaceAll("<","&lt;")
+    .replaceAll(">","&gt;")
+    .replaceAll('"',"&quot;")
+    .replaceAll("'","&#039;");
+}
+
+function escapeAttr(value) {
+  return escapeHTML(value);
+}
+
+document.getElementById("search")
+  .addEventListener("input", renderPlaces);
+
+document.addEventListener("DOMContentLoaded", loadPlaces);
+</script>
+
+<style>
+.map-layout {
+  display: grid;
+  grid-template-columns: minmax(0,1fr) 340px;
+  gap: 20px;
+}
+
+.map-panel {
+  min-height: 620px;
+  padding: 0;
+  overflow: hidden;
+}
+
+.map-canvas {
+  min-height: 620px;
+  position: relative;
+  background:
+    radial-gradient(circle at 25% 25%,rgba(25,212,124,.12),transparent 25%),
+    radial-gradient(circle at 75% 70%,rgba(0,209,255,.12),transparent 30%),
+    linear-gradient(135deg,#091313,#0a151b);
+}
+
+.map-canvas::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  opacity: .18;
+  background-image:
+    linear-gradient(rgba(255,255,255,.15) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(255,255,255,.15) 1px,transparent 1px);
+  background-size: 45px 45px;
+}
+
+.map-center {
+  position: absolute;
+  inset: 50% auto auto 50%;
+  transform: translate(-50%,-50%);
+  text-align: center;
+  z-index: 1;
+  padding: 30px;
+  width: min(400px,90%);
+}
+
+.map-center span {
+  font-size: 70px;
+  display: block;
+}
+
+.map-center strong,
+.map-center small {
+  display: block;
+}
+
+.map-center strong {
+  margin: 15px 0 7px;
+  font-size: 22px;
+}
+
+.map-center small {
+  opacity: .55;
+  line-height: 1.8;
+}
+
+.map-results {
+  height: fit-content;
+}
+
+.map-place {
+  width: 100%;
+  border: 0;
+  border-bottom: 1px solid rgba(255,255,255,.06);
+  background: transparent;
+  color: white;
+  padding: 14px 0;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-align: right;
+  cursor: pointer;
+}
+
+.place-icon {
+  width: 42px;
+  height: 42px;
+  display: grid;
+  place-items: center;
+  border-radius: 14px;
+  background: rgba(25,212,124,.08);
+}
+
+.map-place strong,
+.map-place small {
+  display: block;
+}
+
+.map-place small {
+  opacity: .5;
+  margin-top: 4px;
+}
+
+@media(max-width:900px) {
+  .map-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .map-panel,
+  .map-canvas {
+    min-height: 450px;
+  }
+}
+</style>
+
+</body>
+</html>
