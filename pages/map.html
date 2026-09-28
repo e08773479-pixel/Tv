@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>النادي | ملك خفاجي 👑</title>
+  <link rel="stylesheet" href="../css/platform.css">
+</head>
+
+<body>
+<div class="malak-app">
+
+  <aside class="malak-sidebar">
+    <a class="malak-brand" href="../index.html">
+      <span class="brand-mark">👑</span>
+      <span>
+        <b>ملك خفاجي</b>
+        <small>Club</small>
+      </span>
+    </a>
+
+    <nav class="malak-nav">
+      <a href="../index.html">🏠 الرئيسية</a>
+      <a href="chat.html">💬 المحادثات</a>
+      <a href="rooms.html">🎙️ الغرف</a>
+      <a href="games.html">🎮 الألعاب</a>
+      <a href="friends.html">👥 الأصدقاء</a>
+      <a href="profile.html">👤 حسابي</a>
+      <a href="wallet.html">🪙 المحفظة</a>
+      <a href="store.html">🛍️ المتجر</a>
+      <a class="active" href="club.html">👑 النادي</a>
+      <a href="notifications.html">🔔 الإشعارات</a>
+      <a href="settings.html">⚙️ الإعدادات</a>
+    </nav>
+  </aside>
+
+  <main class="malak-content">
+
+    <header class="malak-topbar">
+      <button class="malak-btn" onclick="history.back()">←</button>
+
+      <div class="malak-search">
+        🔎
+        <input id="search" placeholder="ابحث في النادي...">
+      </div>
+
+      <a class="malak-btn" href="profile.html">👤 حسابي</a>
+    </header>
+
+    <section class="club-hero malak-card">
+
+      <div>
+        <span class="mk-kicker">MALAK CLUB</span>
+        <h1 id="clubName">النادي 👑</h1>
+        <p id="clubDescription">
+          جاري تحميل معلومات النادي...
+        </p>
+      </div>
+
+      <div class="club-status">
+        <span>حالة العضوية</span>
+        <strong id="membershipStatus">—</strong>
+      </div>
+
+    </section>
+
+    <section class="malak-grid">
+
+      <article class="malak-card">
+        <span>المستوى</span>
+        <strong class="big-number" id="membershipLevel">—</strong>
+      </article>
+
+      <article class="malak-card">
+        <span>نقاط النادي</span>
+        <strong class="big-number" id="clubPoints">—</strong>
+      </article>
+
+      <article class="malak-card">
+        <span>تنتهي العضوية</span>
+        <strong id="expiresAt">—</strong>
+      </article>
+
+    </section>
+
+    <section class="malak-card club-benefits">
+
+      <div class="section-head">
+        <div>
+          <h2>مميزات العضوية</h2>
+          <p>المميزات التي يمنحها اشتراكك الحالي.</p>
+        </div>
+      </div>
+
+      <div id="benefits" class="benefits-grid">
+        <div class="malak-empty">جاري التحميل...</div>
+      </div>
+
+    </section>
+
+    <section class="malak-card club-plans">
+
+      <div class="section-head">
+        <div>
+          <h2>خطط العضوية</h2>
+          <p>الخطط الفعلية التي يرسلها الخادم.</p>
+        </div>
+      </div>
+
+      <div id="plans" class="plans-grid">
+        <div class="malak-empty">جاري تحميل الخطط...</div>
+      </div>
+
+    </section>
+
+  </main>
+</div>
+
+<script src="../js/platform.js"></script>
+
+<script>
+const API = "/api";
+
+async function request(url, options = {}) {
+  const response = await fetch(API + url, {
+    credentials: "include",
+    headers: {
+      "Content-Type": "application/json",
+      ...(options.headers || {})
+    },
+    ...options
+  });
+
+  const data = await response.json().catch(() => ({}));
+
+  if (!response.ok) {
+    throw new Error(data.message || "حدث خطأ");
+  }
+
+  return data;
+}
+
+async function loadClub() {
+
+  try {
+
+    const data = await request("/club");
+
+    const club = data.club || {};
+    const membership = data.membership || {};
+    const benefits = data.benefits || [];
+    const plans = data.plans || [];
+
+    document.getElementById("clubName").textContent =
+      club.name || "النادي 👑";
+
+    document.getElementById("clubDescription").textContent =
+      club.description || "";
+
+    document.getElementById("membershipStatus").textContent =
+      membership.statusLabel || "غير مشترك";
+
+    document.getElementById("membershipLevel").textContent =
+      membership.level ?? "—";
+
+    document.getElementById("clubPoints").textContent =
+      Number(membership.points || 0).toLocaleString("ar-EG");
+
+    document.getElementById("expiresAt").textContent =
+      membership.expiresAt || "—";
+
+    renderBenefits(benefits);
+    renderPlans(plans);
+
+  } catch(error) {
+
+    document.getElementById("benefits").innerHTML = `
+      <div class="malak-empty">
+        ⚠️ ${escapeHTML(error.message)}
+      </div>
+    `;
+  }
+}
+
+function renderBenefits(items) {
+
+  const box = document.getElementById("benefits");
+
+  if (!items.length) {
+    box.innerHTML = `
+      <div class="malak-empty">
+        لا توجد مميزات متاحة حاليًا.
+      </div>
+    `;
+    return;
+  }
+
+  box.innerHTML = items.map(item => `
+    <div class="benefit-card">
+      <div>${item.icon || "✨"}</div>
+      <strong>${escapeHTML(item.title || "")}</strong>
+      <p>${escapeHTML(item.description || "")}</p>
+    </div>
+  `).join("");
+}
+
+function renderPlans(plans) {
+
+  const box = document.getElementById("plans");
+
+  if (!plans.length) {
+    box.innerHTML = `
+      <div class="malak-empty">
+        لا توجد خطط متاحة حاليًا.
+      </div>
+    `;
+    return;
+  }
+
+  box.innerHTML = plans.map(plan => `
+    <article class="plan-card">
+
+      <span>${escapeHTML(plan.name || "")}</span>
+
+      <strong>
+        ${Number(plan.price || 0).toLocaleString("ar-EG")}
+        ${escapeHTML(plan.currency || "🪙")}
+      </strong>
+
+      <p>${escapeHTML(plan.description || "")}</p>
+
+      <button
+        class="malak-btn primary"
+        onclick="subscribe('${escapeAttr(plan.id)}')">
+        الاشتراك
+      </button>
+
+    </article>
+  `).join("");
+}
+
+async function subscribe(planId) {
+
+  try {
+
+    const result = await request("/club/subscribe", {
+      method: "POST",
+      body: JSON.stringify({
+        planId
+      })
+    });
+
+    if (result.checkoutUrl) {
+      location.href = result.checkoutUrl;
+      return;
+    }
+
+    alert("تم إنشاء طلب الاشتراك.");
+    loadClub();
+
+  } catch(error) {
+    alert(error.message);
+  }
+}
+
+function escapeHTML(value) {
+  return String(value ?? "")
+    .replaceAll("&","&amp;")
+    .replaceAll("<","&lt;")
+    .replaceAll(">","&gt;")
+    .replaceAll('"',"&quot;")
+    .replaceAll("'","&#039;");
+}
+
+function escapeAttr(value) {
+  return escapeHTML(value);
+}
+
+document.addEventListener("DOMContentLoaded", loadClub);
+</script>
+
+<style>
+.club-hero {
+  display: flex;
+  justify-content: space-between;
+  gap: 30px;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.club-status {
+  min-width: 180px;
+  padding: 20px;
+  border-radius: 20px;
+  background: rgba(25,212,124,.07);
+  border: 1px solid rgba(25,212,124,.15);
+}
+
+.club-status span,
+.club-status strong {
+  display: block;
+}
+
+.club-status strong {
+  margin-top: 8px;
+  color: #19d47c;
+}
+
+.big-number {
+  display: block;
+  margin-top: 12px;
+  font-size: 30px;
+}
+
+.club-benefits,
+.club-plans {
+  margin-top: 20px;
+}
+
+.benefits-grid,
+.plans-grid {
+  display: grid;
+  grid-template-columns: repeat(3,minmax(0,1fr));
+  gap: 15px;
+}
+
+.benefit-card,
+.plan-card {
+  padding: 20px;
+  border: 1px solid rgba(255,255,255,.08);
+  border-radius: 18px;
+  background: rgba(255,255,255,.025);
+}
+
+.benefit-card > div {
+  font-size: 30px;
+  margin-bottom: 12px;
+}
+
+.benefit-card p,
+.plan-card p {
+  opacity: .6;
+  font-size: 13px;
+}
+
+.plan-card strong {
+  display: block;
+  font-size: 27px;
+  margin: 14px 0;
+}
+
+@media(max-width:800px) {
+  .club-hero {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .benefits-grid,
+  .plans-grid {
+    grid-template-columns: 1fr;
+  }
+}
+</style>
+
+</body>
+</html>
