@@ -1,112 +1,38 @@
 /* =========================================================
-   JOKER — DATA LAYER
-   لا توجد بيانات مستخدمين وهمية هنا.
+   JOKER
+   data.js
+   Shared configuration + local state schema
 ========================================================= */
 
-"use strict";
+window.JOKER = window.JOKER || {};
 
+JOKER.config = {
 
-window.JOKER_DATA = {
+  appName: "الجوكر",
 
-  app: {
-    name: "الجوكر",
-    version: "1.0.0",
-    locale: "ar-EG"
-  },
+  version: "1.0.0",
 
+  environment: "frontend",
 
-  /*
-   * الحساب الحالي.
-   *
-   * null = لا يوجد مستخدم مسجل حالياً.
-   *
-   * عندما يتم ربط Backend حقيقي:
-   * يتم ملء هذا الكائن من قاعدة البيانات / جلسة المستخدم.
-   */
+  backendConnected: false,
 
-  currentUser: null,
+  features: {
 
+    authentication: true,
 
-  /*
-   * بيانات الجلسة.
-   */
+    googleAuth: false,
 
-  session: {
-    authenticated: false,
-    provider: null,
-    remember: false
-  },
+    realtimeChat: false,
 
+    voiceRooms: false,
 
-  /*
-   * بيانات المستخدم المستقبلية.
-   */
+    videoCalls: false,
 
-  userSchema: {
+    games: false,
 
-    id: null,
+    wallet: false,
 
-    name: "",
-    email: "",
-
-    username: "",
-    avatar: "",
-    cover: "",
-    bio: "",
-
-    level: 0,
-    xp: 0,
-    coins: 0,
-
-    friendsCount: 0,
-    followersCount: 0,
-
-    createdAt: null,
-    lastActiveAt: null
-
-  },
-
-
-  /*
-   * مجموعات البيانات الحقيقية.
-   *
-   * تظل فارغة حتى يصل مصدر حقيقي للبيانات.
-   */
-
-  friends: [],
-  conversations: [],
-  rooms: [],
-  games: [],
-  notifications: [],
-  transactions: [],
-  achievements: [],
-
-
-  /*
-   * إعدادات الواجهة.
-   */
-
-  settings: {
-    theme: "dark"
-  },
-
-
-  /*
-   * معلومات الربط بالـBackend.
-   *
-   * لا نضع مفاتيح سرية داخل Front-End.
-   */
-
-  backend: {
-
-    configured: false,
-
-    provider: null,
-
-    apiBaseUrl: "",
-
-    authConfigured: false,
-    realtimeConfigured: false
+    notifications: false
 
   }
 
@@ -114,87 +40,166 @@ window.JOKER_DATA = {
 
 
 /* =========================================================
-   SAFE HELPERS
+   STATIC UI CONTENT
 ========================================================= */
 
-window.JOKER_DATA_HELPERS = {
+JOKER.ui = {
+
+  pages: [
+    "home",
+    "discover",
+    "rooms",
+    "games",
+    "chat",
+    "friends",
+    "notifications",
+    "profile",
+    "wallet",
+    "store"
+  ],
+
+  searchCategories: [
+    "الأشخاص",
+    "الرومات",
+    "الألعاب",
+    "المجتمعات"
+  ]
+
+};
 
 
-  hasUser() {
+/* =========================================================
+   USER STATE
+========================================================= */
 
-    return Boolean(
-      window.JOKER_DATA.currentUser &&
-      window.JOKER_DATA.currentUser.id
-    );
+JOKER.defaultUser = {
+
+  id: null,
+
+  name: "",
+
+  email: "",
+
+  avatar: "",
+
+  bio: "",
+
+  level: 1,
+
+  coins: 0,
+
+  friendsCount: 0,
+
+  followersCount: 0,
+
+  roomsCount: 0,
+
+  online: true
+
+};
+
+
+/* =========================================================
+   LOCAL APPLICATION STATE
+========================================================= */
+
+JOKER.state = {
+
+  initialized: false,
+
+  authenticated: false,
+
+  currentPage: "home",
+
+  theme: "dark",
+
+  user: {
+    ...JOKER.defaultUser
+  },
+
+  camera: {
+
+    active: false,
+
+    stream: null,
+
+    muted: false
 
   },
 
+  sidebarOpen: false,
 
-  getUser() {
+  currentModal: null
 
-    return window.JOKER_DATA.currentUser;
-
-  },
-
-
-  getFriends() {
-
-    return Array.isArray(window.JOKER_DATA.friends)
-      ? window.JOKER_DATA.friends
-      : [];
-
-  },
+};
 
 
-  getRooms() {
+/* =========================================================
+   STORAGE
+========================================================= */
 
-    return Array.isArray(window.JOKER_DATA.rooms)
-      ? window.JOKER_DATA.rooms
-      : [];
+JOKER.storage = {
 
-  },
+  key: "joker_local_state_v1",
 
+  load() {
 
-  getGames() {
+    try {
 
-    return Array.isArray(window.JOKER_DATA.games)
-      ? window.JOKER_DATA.games
-      : [];
+      const raw =
+        localStorage.getItem(this.key);
 
-  },
+      if (!raw) return null;
 
+      return JSON.parse(raw);
 
-  getNotifications() {
+    } catch (error) {
 
-    return Array.isArray(window.JOKER_DATA.notifications)
-      ? window.JOKER_DATA.notifications
-      : [];
+      console.warn(
+        "Joker storage load failed:",
+        error
+      );
+
+      return null;
+
+    }
 
   },
 
+  save(state) {
 
-  getUnreadNotifications() {
+    try {
 
-    return this.getNotifications()
-      .filter(item => item && item.read === false);
+      localStorage.setItem(
+        this.key,
+        JSON.stringify(state)
+      );
+
+    } catch (error) {
+
+      console.warn(
+        "Joker storage save failed:",
+        error
+      );
+
+    }
 
   },
 
+  clear() {
 
-  getConversations() {
+    try {
 
-    return Array.isArray(window.JOKER_DATA.conversations)
-      ? window.JOKER_DATA.conversations
-      : [];
+      localStorage.removeItem(this.key);
 
-  },
+    } catch (error) {
 
+      console.warn(
+        "Joker storage clear failed:",
+        error
+      );
 
-  getTransactions() {
-
-    return Array.isArray(window.JOKER_DATA.transactions)
-      ? window.JOKER_DATA.transactions
-      : [];
+    }
 
   }
 
@@ -202,71 +207,38 @@ window.JOKER_DATA_HELPERS = {
 
 
 /* =========================================================
-   DATA NORMALIZATION
+   SAFE STATE MERGE
 ========================================================= */
 
-window.JOKER_DATA_HELPERS.normalizeUser = function(raw) {
+JOKER.mergeState = function(saved) {
 
-  if (!raw || typeof raw !== "object") {
-    return null;
+  if (!saved || typeof saved !== "object") {
+
+    return;
+
   }
 
-  return {
+  JOKER.state = {
 
-    id: raw.id ?? null,
+    ...JOKER.state,
 
-    name: String(raw.name ?? "").trim(),
+    ...saved,
 
-    email: String(raw.email ?? "").trim(),
+    user: {
 
-    username:
-      String(raw.username ?? "")
-      .replace(/^@/, "")
-      .trim(),
+      ...JOKER.defaultUser,
 
-    avatar:
-      typeof raw.avatar === "string"
-        ? raw.avatar
-        : "",
+      ...(saved.user || {})
 
-    cover:
-      typeof raw.cover === "string"
-        ? raw.cover
-        : "",
+    },
 
-    bio:
-      typeof raw.bio === "string"
-        ? raw.bio
-        : "",
+    camera: {
 
-    level:
-      Number.isFinite(Number(raw.level))
-        ? Number(raw.level)
-        : 0,
+      ...JOKER.state.camera,
 
-    xp:
-      Number.isFinite(Number(raw.xp))
-        ? Number(raw.xp)
-        : 0,
+      ...(saved.camera || {})
 
-    coins:
-      Number.isFinite(Number(raw.coins))
-        ? Number(raw.coins)
-        : 0,
-
-    friendsCount:
-      Number.isFinite(Number(raw.friendsCount))
-        ? Number(raw.friendsCount)
-        : 0,
-
-    followersCount:
-      Number.isFinite(Number(raw.followersCount))
-        ? Number(raw.followersCount)
-        : 0,
-
-    createdAt: raw.createdAt ?? null,
-
-    lastActiveAt: raw.lastActiveAt ?? null
+    }
 
   };
 
@@ -274,23 +246,131 @@ window.JOKER_DATA_HELPERS.normalizeUser = function(raw) {
 
 
 /* =========================================================
-   NO FAKE DATA POLICY
+   SEARCH
 ========================================================= */
 
-window.JOKER_DATA_POLICY = {
+JOKER.search = {
 
-  allowFakePeople: false,
+  query: "",
 
-  allowFakeMessages: false,
+  results: [],
 
-  allowFakeRooms: false,
+  /**
+   * لا يوجد مصدر بيانات اجتماعي حقيقي في هذه الدفعة.
+   * لذلك لا نُنشئ أشخاصًا وهميين.
+   */
+  execute(query) {
 
-  allowFakeBalances: false,
+    this.query = String(query || "").trim();
 
-  allowFakeOnlineCounts: false,
+    this.results = [];
 
-  allowFakeGameResults: false,
+    return this.results;
 
-  allowFakeNotifications: false
+  }
 
 };
+
+
+/* =========================================================
+   BACKEND CONTRACT
+========================================================= */
+
+JOKER.backend = {
+
+  baseURL: "",
+
+  endpoints: {
+
+    login: "/auth/login",
+
+    register: "/auth/register",
+
+    google: "/auth/google",
+
+    me: "/users/me",
+
+    users: "/users",
+
+    friends: "/friends",
+
+    chats: "/chats",
+
+    messages: "/messages",
+
+    rooms: "/rooms",
+
+    games: "/games",
+
+    notifications: "/notifications",
+
+    wallet: "/wallet"
+
+  }
+
+};
+
+
+/* =========================================================
+   EVENTS BUS
+========================================================= */
+
+JOKER.events = {
+
+  listeners: {},
+
+  on(event, callback) {
+
+    if (!this.listeners[event]) {
+
+      this.listeners[event] = [];
+
+    }
+
+    this.listeners[event].push(callback);
+
+  },
+
+  emit(event, payload) {
+
+    const callbacks =
+      this.listeners[event] || [];
+
+    callbacks.forEach(callback => {
+
+      try {
+
+        callback(payload);
+
+      } catch (error) {
+
+        console.error(
+          `Joker event "${event}" failed:`,
+          error
+        );
+
+      }
+
+    });
+
+  }
+
+};
+
+
+/* =========================================================
+   INITIAL LOAD
+========================================================= */
+
+(function loadJokerState() {
+
+  const saved =
+    JOKER.storage.load();
+
+  if (saved) {
+
+    JOKER.mergeState(saved);
+
+  }
+
+})();
