@@ -1,437 +1,2012 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
+<meta name="theme-color" content="#070914">
+<meta name="description" content="NEXORA — منصة اجتماعية تجمع التواصل والفيديو والألعاب والغرف والبث المباشر.">
 
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
-  >
+<title>NEXORA — تواصل • فيديو • ألعاب • غرف</title>
 
-  <meta name="theme-color" content="#07080d">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&family=Orbitron:wght@500;600;700;800&display=swap" rel="stylesheet">
 
-  <meta
-    name="description"
-    content="الجوكر 👑 — منصة اجتماعية للتواصل والمحتوى والغرف والألعاب والمحادثات"
-  >
+<style>
+/* =========================================================
+   NEXORA — FOUNDATION INDEX
+   المرحلة الأولى: Welcome + Loading + Authentication
+   ========================================================= */
 
-  <title>الجوكر 👑 | منصة اجتماعية</title>
+:root{
+  --bg:#050711;
+  --bg2:#080b18;
+  --surface:#0c1020;
+  --surface2:#11172b;
+  --surface3:#171e36;
 
-  <!-- =========================================================
-       FONTS
-  ========================================================== -->
+  --green:#20e39a;
+  --green2:#0bbf80;
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  --blue:#4388ff;
+  --purple:#8b5cf6;
+  --cyan:#2dd4ff;
+  --pink:#f05cff;
 
-  <link
-    href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&family=Orbitron:wght@400;500;600;700;800;900&display=swap"
-    rel="stylesheet"
-  >
+  --text:#f7f9ff;
+  --muted:#929bb5;
+  --line:rgba(255,255,255,.09);
 
-  <!-- =========================================================
-       MAIN STYLE
-  ========================================================== -->
+  --danger:#ff5575;
+  --warning:#ffca5c;
 
-  <link rel="stylesheet" href="style.css">
+  --radius:24px;
+  --shadow:0 25px 80px rgba(0,0,0,.45);
+}
+
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+  -webkit-tap-highlight-color:transparent;
+}
+
+html{
+  scroll-behavior:smooth;
+}
+
+body{
+  min-height:100vh;
+  background:
+    radial-gradient(circle at 15% 15%,rgba(67,136,255,.12),transparent 28%),
+    radial-gradient(circle at 85% 20%,rgba(139,92,246,.13),transparent 30%),
+    radial-gradient(circle at 50% 90%,rgba(32,227,154,.08),transparent 30%),
+    var(--bg);
+  color:var(--text);
+  font-family:"Cairo",sans-serif;
+  overflow-x:hidden;
+}
+
+button,
+input{
+  font-family:inherit;
+}
+
+button{
+  border:0;
+  cursor:pointer;
+}
+
+a{
+  color:inherit;
+  text-decoration:none;
+}
+
+/* =========================================================
+   BACKGROUND
+   ========================================================= */
+
+.background{
+  position:fixed;
+  inset:0;
+  z-index:-20;
+  overflow:hidden;
+  pointer-events:none;
+}
+
+.bg-grid{
+  position:absolute;
+  inset:0;
+  opacity:.20;
+  background-image:
+    linear-gradient(rgba(255,255,255,.035) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(255,255,255,.035) 1px,transparent 1px);
+  background-size:55px 55px;
+  mask-image:linear-gradient(to bottom,black,transparent 85%);
+}
+
+.orb{
+  position:absolute;
+  border-radius:50%;
+  filter:blur(3px);
+  opacity:.45;
+  animation:orbFloat 12s ease-in-out infinite;
+}
+
+.orb.one{
+  width:340px;
+  height:340px;
+  background:radial-gradient(circle,rgba(67,136,255,.32),transparent 68%);
+  top:-100px;
+  left:-100px;
+}
+
+.orb.two{
+  width:420px;
+  height:420px;
+  background:radial-gradient(circle,rgba(139,92,246,.27),transparent 68%);
+  right:-150px;
+  top:10%;
+  animation-delay:-4s;
+}
+
+.orb.three{
+  width:380px;
+  height:380px;
+  background:radial-gradient(circle,rgba(32,227,154,.18),transparent 70%);
+  bottom:-180px;
+  left:20%;
+  animation-delay:-8s;
+}
+
+@keyframes orbFloat{
+  0%,100%{transform:translate3d(0,0,0) scale(1)}
+  50%{transform:translate3d(30px,-25px,0) scale(1.08)}
+}
+
+/* =========================================================
+   PARTICLES
+   ========================================================= */
+
+.particles{
+  position:absolute;
+  inset:0;
+  overflow:hidden;
+}
+
+.particle{
+  position:absolute;
+  width:2px;
+  height:2px;
+  background:rgba(255,255,255,.75);
+  border-radius:50%;
+  box-shadow:0 0 10px rgba(255,255,255,.5);
+  animation:particleMove linear infinite;
+}
+
+@keyframes particleMove{
+  from{
+    transform:translateY(110vh);
+    opacity:0;
+  }
+  15%{
+    opacity:1;
+  }
+  85%{
+    opacity:.7;
+  }
+  to{
+    transform:translateY(-20vh);
+    opacity:0;
+  }
+}
+
+/* =========================================================
+   LOADER
+   ========================================================= */
+
+#loader{
+  position:fixed;
+  inset:0;
+  z-index:99999;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:
+    radial-gradient(circle at 50% 40%,rgba(67,136,255,.13),transparent 32%),
+    radial-gradient(circle at 50% 70%,rgba(139,92,246,.10),transparent 38%),
+    #03050c;
+  transition:opacity .8s ease,visibility .8s ease;
+}
+
+#loader.hide{
+  opacity:0;
+  visibility:hidden;
+}
+
+.loader-inner{
+  width:min(430px,90%);
+  text-align:center;
+}
+
+.loader-logo{
+  width:96px;
+  height:96px;
+  margin:0 auto 25px;
+  border-radius:30px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  position:relative;
+  background:
+    linear-gradient(145deg,#16264d,#0b1228);
+  border:1px solid rgba(255,255,255,.13);
+  box-shadow:
+    0 0 0 8px rgba(67,136,255,.035),
+    0 0 70px rgba(67,136,255,.22);
+}
+
+.loader-logo::before{
+  content:"";
+  position:absolute;
+  inset:-8px;
+  border-radius:36px;
+  border:1px solid rgba(67,136,255,.25);
+  animation:pulseRing 2s infinite;
+}
+
+@keyframes pulseRing{
+  0%,100%{transform:scale(1);opacity:.2}
+  50%{transform:scale(1.08);opacity:.65}
+}
+
+.logo-symbol{
+  font-family:Orbitron,sans-serif;
+  font-weight:800;
+  font-size:29px;
+  letter-spacing:-3px;
+  background:linear-gradient(135deg,var(--cyan),var(--green),var(--purple));
+  -webkit-background-clip:text;
+  color:transparent;
+}
+
+.loader-title{
+  font-size:34px;
+  font-weight:900;
+  letter-spacing:2px;
+}
+
+.loader-sub{
+  color:var(--muted);
+  margin-top:5px;
+  font-size:13px;
+}
+
+.loader-status{
+  margin-top:28px;
+  color:#cdd4e8;
+  font-size:13px;
+}
+
+.progress{
+  height:7px;
+  background:rgba(255,255,255,.07);
+  border-radius:50px;
+  overflow:hidden;
+  margin-top:14px;
+}
+
+.progress-bar{
+  height:100%;
+  width:0%;
+  border-radius:inherit;
+  background:linear-gradient(90deg,var(--blue),var(--purple),var(--green));
+  box-shadow:0 0 20px rgba(67,136,255,.5);
+  transition:width .08s linear;
+}
+
+.progress-info{
+  display:flex;
+  justify-content:space-between;
+  margin-top:9px;
+  font-size:11px;
+  color:#717b95;
+}
+
+#progressPercent{
+  color:#dce4f9;
+  font-weight:800;
+}
+
+/* =========================================================
+   APP
+   ========================================================= */
+
+#app{
+  opacity:0;
+  visibility:hidden;
+  transition:opacity .8s ease;
+}
+
+#app.show{
+  opacity:1;
+  visibility:visible;
+}
+
+/* =========================================================
+   NAVBAR
+   ========================================================= */
+
+.navbar{
+  position:fixed;
+  top:0;
+  left:0;
+  right:0;
+  z-index:1000;
+  height:76px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:0 5%;
+  background:rgba(5,7,17,.58);
+  border-bottom:1px solid rgba(255,255,255,.06);
+  backdrop-filter:blur(22px);
+}
+
+.brand{
+  display:flex;
+  align-items:center;
+  gap:11px;
+}
+
+.brand-mark{
+  width:42px;
+  height:42px;
+  border-radius:13px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:linear-gradient(145deg,#14264d,#0a1227);
+  border:1px solid rgba(255,255,255,.1);
+  box-shadow:0 10px 30px rgba(0,0,0,.25);
+}
+
+.brand-mark span{
+  font-family:Orbitron,sans-serif;
+  font-size:15px;
+  font-weight:900;
+  letter-spacing:-2px;
+  background:linear-gradient(135deg,var(--cyan),var(--green));
+  -webkit-background-clip:text;
+  color:transparent;
+}
+
+.brand-text{
+  font-size:18px;
+  font-weight:900;
+  letter-spacing:1px;
+}
+
+.brand-text small{
+  display:block;
+  color:#77829d;
+  font-size:8px;
+  font-weight:600;
+  letter-spacing:2px;
+}
+
+.nav-actions{
+  display:flex;
+  gap:10px;
+  align-items:center;
+}
+
+.nav-btn{
+  height:42px;
+  padding:0 17px;
+  border-radius:13px;
+  color:#dce3f6;
+  background:rgba(255,255,255,.045);
+  border:1px solid rgba(255,255,255,.07);
+  transition:.25s;
+}
+
+.nav-btn:hover{
+  background:rgba(255,255,255,.08);
+}
+
+.nav-btn.primary{
+  background:linear-gradient(135deg,#1767ff,#7046ed);
+  border:0;
+  box-shadow:0 10px 30px rgba(67,136,255,.2);
+}
+
+/* =========================================================
+   HERO
+   ========================================================= */
+
+.hero{
+  min-height:100vh;
+  padding:135px 5% 80px;
+  display:grid;
+  grid-template-columns:1.05fr .95fr;
+  align-items:center;
+  gap:60px;
+  max-width:1500px;
+  margin:auto;
+}
+
+.hero-content{
+  position:relative;
+  z-index:2;
+}
+
+.eyebrow{
+  display:inline-flex;
+  align-items:center;
+  gap:9px;
+  padding:8px 13px;
+  border-radius:50px;
+  background:rgba(32,227,154,.07);
+  border:1px solid rgba(32,227,154,.14);
+  color:#a5f5d5;
+  font-size:12px;
+  margin-bottom:22px;
+}
+
+.live-dot{
+  width:7px;
+  height:7px;
+  background:var(--green);
+  border-radius:50%;
+  box-shadow:0 0 14px var(--green);
+  animation:blink 1.3s infinite;
+}
+
+@keyframes blink{
+  0%,100%{opacity:1}
+  50%{opacity:.25}
+}
+
+.hero h1{
+  font-size:clamp(44px,6vw,84px);
+  line-height:1.02;
+  font-weight:900;
+  letter-spacing:-3px;
+  max-width:850px;
+}
+
+.gradient-text{
+  background:linear-gradient(100deg,#fff,#8fdfff 35%,#a87bff 68%,#53eab0);
+  -webkit-background-clip:text;
+  color:transparent;
+}
+
+.hero-description{
+  max-width:650px;
+  margin-top:25px;
+  color:#9da7bf;
+  font-size:17px;
+  line-height:2;
+}
+
+.hero-buttons{
+  display:flex;
+  gap:12px;
+  margin-top:30px;
+  flex-wrap:wrap;
+}
+
+.main-btn{
+  min-height:54px;
+  padding:0 25px;
+  border-radius:16px;
+  color:white;
+  font-weight:800;
+  font-size:14px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:9px;
+  transition:.3s;
+}
+
+.main-btn.primary{
+  background:linear-gradient(135deg,#287aff,#7447ef);
+  box-shadow:0 16px 40px rgba(62,111,255,.23);
+}
+
+.main-btn.primary:hover{
+  transform:translateY(-3px);
+  box-shadow:0 20px 50px rgba(62,111,255,.35);
+}
+
+.main-btn.secondary{
+  background:rgba(255,255,255,.045);
+  border:1px solid rgba(255,255,255,.09);
+}
+
+.main-btn.secondary:hover{
+  background:rgba(255,255,255,.08);
+}
+
+.hero-stats{
+  display:flex;
+  gap:30px;
+  margin-top:40px;
+  flex-wrap:wrap;
+}
+
+.stat strong{
+  display:block;
+  font-size:23px;
+}
+
+.stat span{
+  color:#68728b;
+  font-size:11px;
+}
+
+/* =========================================================
+   HERO VISUAL
+   ========================================================= */
+
+.hero-visual{
+  min-height:570px;
+  position:relative;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.visual-glow{
+  position:absolute;
+  width:460px;
+  height:460px;
+  border-radius:50%;
+  background:
+    radial-gradient(circle,
+      rgba(67,136,255,.22),
+      rgba(139,92,246,.12) 35%,
+      transparent 68%);
+  filter:blur(12px);
+}
+
+.main-visual-card{
+  position:relative;
+  width:min(510px,100%);
+  height:550px;
+  border-radius:34px;
+  overflow:hidden;
+  border:1px solid rgba(255,255,255,.11);
+  background:
+    linear-gradient(to bottom,transparent 20%,rgba(3,5,12,.95) 92%),
+    url("https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=1200&q=85")
+    center/cover;
+  box-shadow:
+    0 40px 100px rgba(0,0,0,.55),
+    0 0 80px rgba(67,136,255,.10);
+  transform:rotate(1.5deg);
+}
+
+.visual-overlay{
+  position:absolute;
+  inset:0;
+  background:
+    linear-gradient(135deg,rgba(67,136,255,.14),transparent 35%),
+    linear-gradient(to top,rgba(3,5,12,.95),transparent 60%);
+}
+
+.visual-top{
+  position:absolute;
+  top:20px;
+  left:20px;
+  right:20px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+.online-badge{
+  display:flex;
+  align-items:center;
+  gap:7px;
+  padding:8px 11px;
+  background:rgba(4,7,15,.65);
+  border:1px solid rgba(255,255,255,.12);
+  border-radius:12px;
+  backdrop-filter:blur(10px);
+  font-size:10px;
+}
+
+.visual-content{
+  position:absolute;
+  bottom:25px;
+  left:25px;
+  right:25px;
+}
+
+.visual-content h2{
+  font-size:31px;
+  line-height:1.2;
+  font-weight:900;
+}
+
+.visual-content p{
+  color:#b1bad0;
+  font-size:12px;
+  margin-top:8px;
+  line-height:1.8;
+}
+
+.visual-actions{
+  display:flex;
+  gap:8px;
+  margin-top:17px;
+}
+
+.mini-chip{
+  padding:8px 11px;
+  background:rgba(255,255,255,.08);
+  border:1px solid rgba(255,255,255,.09);
+  border-radius:11px;
+  font-size:10px;
+}
+
+/* floating cards */
+
+.float-card{
+  position:absolute;
+  z-index:5;
+  padding:13px;
+  min-width:175px;
+  border-radius:17px;
+  background:rgba(10,14,28,.86);
+  border:1px solid rgba(255,255,255,.11);
+  box-shadow:var(--shadow);
+  backdrop-filter:blur(18px);
+  animation:floatCard 5s ease-in-out infinite;
+}
+
+.float-card.live{
+  top:90px;
+  right:-35px;
+}
+
+.float-card.game{
+  bottom:90px;
+  left:-45px;
+  animation-delay:-2.3s;
+}
+
+.float-head{
+  display:flex;
+  align-items:center;
+  gap:9px;
+}
+
+.float-icon{
+  width:34px;
+  height:34px;
+  border-radius:10px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:linear-gradient(135deg,rgba(67,136,255,.18),rgba(139,92,246,.18));
+  font-size:17px;
+}
+
+.float-card strong{
+  font-size:11px;
+  display:block;
+}
+
+.float-card small{
+  color:#727d97;
+  font-size:9px;
+}
+
+.float-number{
+  margin-top:10px;
+  font-size:10px;
+  color:#bfc8dd;
+}
+
+@keyframes floatCard{
+  0%,100%{transform:translateY(0)}
+  50%{transform:translateY(-12px)}
+}
+
+/* =========================================================
+   FEATURES STRIP
+   ========================================================= */
+
+.features{
+  padding:20px 5% 100px;
+  max-width:1500px;
+  margin:auto;
+}
+
+.section-heading{
+  text-align:center;
+  max-width:720px;
+  margin:0 auto 45px;
+}
+
+.section-heading .label{
+  color:#6f82ae;
+  font-size:11px;
+  letter-spacing:2px;
+  font-weight:800;
+}
+
+.section-heading h2{
+  font-size:clamp(30px,4vw,48px);
+  margin-top:8px;
+  font-weight:900;
+}
+
+.section-heading p{
+  color:#7e89a3;
+  font-size:13px;
+  line-height:1.9;
+  margin-top:10px;
+}
+
+.feature-grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:15px;
+}
+
+.feature-card{
+  min-height:230px;
+  position:relative;
+  overflow:hidden;
+  padding:24px;
+  border-radius:23px;
+  background:#0b0f1e;
+  border:1px solid var(--line);
+  transition:.35s;
+}
+
+.feature-card:hover{
+  transform:translateY(-6px);
+  border-color:rgba(255,255,255,.16);
+}
+
+.feature-card::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background-position:center;
+  background-size:cover;
+  opacity:.23;
+  transition:.5s;
+}
+
+.feature-card:hover::before{
+  transform:scale(1.08);
+  opacity:.31;
+}
+
+.feature-card.video::before{
+  background-image:url("https://images.unsplash.com/photo-1485846234645-a62644f84728?auto=format&fit=crop&w=800&q=80");
+}
+
+.feature-card.games::before{
+  background-image:url("https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=800&q=80");
+}
+
+.feature-card.rooms::before{
+  background-image:url("https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=800&q=80");
+}
+
+.feature-card.live::before{
+  background-image:url("https://images.unsplash.com/photo-1598387993281-cecf8b71a8f8?auto=format&fit=crop&w=800&q=80");
+}
+
+.feature-card > *{
+  position:relative;
+  z-index:2;
+}
+
+.feature-icon{
+  width:48px;
+  height:48px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border-radius:15px;
+  background:rgba(5,7,17,.72);
+  border:1px solid rgba(255,255,255,.11);
+  font-size:22px;
+}
+
+.feature-card h3{
+  margin-top:42px;
+  font-size:18px;
+}
+
+.feature-card p{
+  margin-top:5px;
+  color:#8993aa;
+  font-size:11px;
+  line-height:1.8;
+}
+
+/* =========================================================
+   PLATFORM PREVIEW
+   ========================================================= */
+
+.preview{
+  padding:20px 5% 110px;
+  max-width:1500px;
+  margin:auto;
+}
+
+.preview-shell{
+  border-radius:32px;
+  border:1px solid rgba(255,255,255,.09);
+  background:
+    radial-gradient(circle at 80% 10%,rgba(139,92,246,.11),transparent 25%),
+    #080c18;
+  overflow:hidden;
+  box-shadow:var(--shadow);
+}
+
+.preview-top{
+  padding:18px 20px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  border-bottom:1px solid rgba(255,255,255,.07);
+}
+
+.preview-dots{
+  display:flex;
+  gap:6px;
+}
+
+.preview-dots i{
+  width:7px;
+  height:7px;
+  border-radius:50%;
+  background:#3b4359;
+}
+
+.preview-title{
+  color:#7d88a2;
+  font-size:10px;
+}
+
+.preview-body{
+  padding:20px;
+  display:grid;
+  grid-template-columns:190px 1fr 230px;
+  gap:15px;
+}
+
+.mock-sidebar,
+.mock-right,
+.mock-feed{
+  border:1px solid rgba(255,255,255,.07);
+  background:rgba(255,255,255,.025);
+  border-radius:19px;
+}
+
+.mock-sidebar{
+  padding:15px;
+}
+
+.mock-brand{
+  height:38px;
+  border-radius:10px;
+  background:rgba(255,255,255,.04);
+  margin-bottom:15px;
+}
+
+.mock-item{
+  height:34px;
+  border-radius:9px;
+  margin-bottom:6px;
+  background:rgba(255,255,255,.025);
+}
+
+.mock-item.active{
+  background:rgba(67,136,255,.13);
+}
+
+.mock-feed{
+  padding:15px;
+}
+
+.mock-story-row{
+  display:flex;
+  gap:9px;
+  overflow:hidden;
+  margin-bottom:13px;
+}
+
+.story-circle{
+  min-width:45px;
+  height:45px;
+  border-radius:50%;
+  background:linear-gradient(135deg,#213a72,#6848a9);
+  border:2px solid rgba(255,255,255,.08);
+}
+
+.mock-post{
+  border-radius:15px;
+  overflow:hidden;
+  border:1px solid rgba(255,255,255,.06);
+}
+
+.mock-post-image{
+  height:200px;
+  background:
+    linear-gradient(to top,rgba(5,7,17,.8),transparent),
+    url("https://images.unsplash.com/photo-1511882150382-421056c89033?auto=format&fit=crop&w=900&q=80")
+    center/cover;
+}
+
+.mock-lines{
+  padding:12px;
+}
+
+.line{
+  height:8px;
+  border-radius:10px;
+  background:rgba(255,255,255,.07);
+  margin-bottom:7px;
+}
+
+.line.short{
+  width:55%;
+}
+
+.mock-right{
+  padding:15px;
+}
+
+.profile-mini{
+  height:100px;
+  border-radius:14px;
+  background:
+    linear-gradient(to top,rgba(7,9,20,.95),transparent),
+    url("https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=500&q=80")
+    center/cover;
+  margin-bottom:10px;
+}
+
+.right-line{
+  height:10px;
+  background:rgba(255,255,255,.06);
+  border-radius:10px;
+  margin-bottom:8px;
+}
+
+/* =========================================================
+   AUTH
+   ========================================================= */
+
+#auth{
+  display:none;
+  min-height:100vh;
+  position:relative;
+  padding:100px 5% 60px;
+}
+
+#auth.active{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.auth-wrap{
+  width:min(1100px,100%);
+  display:grid;
+  grid-template-columns:1fr 440px;
+  gap:35px;
+  align-items:center;
+}
+
+.auth-promo{
+  min-height:580px;
+  border-radius:32px;
+  overflow:hidden;
+  position:relative;
+  background:
+    linear-gradient(90deg,rgba(5,7,17,.95),rgba(5,7,17,.18)),
+    url("https://images.unsplash.com/photo-1542751110-97427bbecf20?auto=format&fit=crop&w=1300&q=85")
+    center/cover;
+  border:1px solid rgba(255,255,255,.1);
+  box-shadow:var(--shadow);
+  padding:40px;
+  display:flex;
+  flex-direction:column;
+  justify-content:flex-end;
+}
+
+.auth-promo::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:
+    radial-gradient(circle at 80% 20%,rgba(67,136,255,.25),transparent 30%),
+    linear-gradient(to top,rgba(5,7,17,.95),transparent 65%);
+}
+
+.auth-promo-content{
+  position:relative;
+  z-index:2;
+}
+
+.auth-promo h2{
+  font-size:42px;
+  line-height:1.15;
+  font-weight:900;
+}
+
+.auth-promo p{
+  color:#aeb8cf;
+  font-size:13px;
+  line-height:1.9;
+  margin-top:12px;
+  max-width:550px;
+}
+
+.promo-tags{
+  display:flex;
+  flex-wrap:wrap;
+  gap:7px;
+  margin-top:20px;
+}
+
+.promo-tag{
+  padding:7px 10px;
+  border-radius:10px;
+  background:rgba(255,255,255,.08);
+  border:1px solid rgba(255,255,255,.1);
+  font-size:10px;
+}
+
+.auth-card{
+  background:rgba(10,14,27,.9);
+  border:1px solid rgba(255,255,255,.09);
+  border-radius:29px;
+  padding:30px;
+  box-shadow:var(--shadow);
+  backdrop-filter:blur(20px);
+}
+
+.auth-head{
+  text-align:center;
+}
+
+.auth-logo{
+  width:60px;
+  height:60px;
+  border-radius:19px;
+  margin:0 auto 16px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:linear-gradient(145deg,#16264d,#0b1227);
+  border:1px solid rgba(255,255,255,.1);
+}
+
+.auth-logo span{
+  font-family:Orbitron,sans-serif;
+  font-size:17px;
+  font-weight:900;
+  letter-spacing:-2px;
+  background:linear-gradient(135deg,var(--cyan),var(--green));
+  -webkit-background-clip:text;
+  color:transparent;
+}
+
+.auth-head h2{
+  font-size:25px;
+}
+
+.auth-head p{
+  color:#737e99;
+  font-size:11px;
+  margin-top:5px;
+}
+
+.auth-tabs{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:5px;
+  padding:5px;
+  background:rgba(255,255,255,.035);
+  border-radius:13px;
+  margin-top:25px;
+}
+
+.auth-tab{
+  height:38px;
+  border-radius:9px;
+  background:transparent;
+  color:#78829b;
+  font-weight:700;
+  font-size:11px;
+}
+
+.auth-tab.active{
+  color:#fff;
+  background:#18213a;
+}
+
+.form{
+  margin-top:20px;
+}
+
+.field{
+  margin-bottom:13px;
+}
+
+.field label{
+  display:block;
+  color:#a5aec3;
+  font-size:10px;
+  margin-bottom:7px;
+}
+
+.input-wrap{
+  position:relative;
+}
+
+.input-wrap input{
+  width:100%;
+  height:48px;
+  padding:0 15px;
+  border-radius:13px;
+  color:white;
+  background:#090d1a;
+  border:1px solid rgba(255,255,255,.08);
+  outline:none;
+  transition:.25s;
+  font-size:12px;
+}
+
+.input-wrap input:focus{
+  border-color:rgba(67,136,255,.55);
+  box-shadow:0 0 0 4px rgba(67,136,255,.07);
+}
+
+.password-toggle{
+  position:absolute;
+  left:10px;
+  top:50%;
+  transform:translateY(-50%);
+  color:#707a93;
+  background:transparent;
+  font-size:13px;
+}
+
+.auth-submit{
+  width:100%;
+  height:51px;
+  margin-top:5px;
+  border-radius:14px;
+  color:#fff;
+  font-size:12px;
+  font-weight:900;
+  background:linear-gradient(135deg,#287aff,#7447ef);
+  box-shadow:0 13px 30px rgba(67,136,255,.19);
+  transition:.3s;
+}
+
+.auth-submit:hover{
+  transform:translateY(-2px);
+}
+
+.divider{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  color:#5e687f;
+  font-size:9px;
+  margin:19px 0;
+}
+
+.divider::before,
+.divider::after{
+  content:"";
+  height:1px;
+  flex:1;
+  background:rgba(255,255,255,.07);
+}
+
+.social-login{
+  width:100%;
+  height:46px;
+  border-radius:13px;
+  background:rgba(255,255,255,.04);
+  color:#dce2f2;
+  border:1px solid rgba(255,255,255,.07);
+  font-size:11px;
+  font-weight:700;
+}
+
+.auth-note{
+  text-align:center;
+  color:#5e687f;
+  font-size:9px;
+  line-height:1.8;
+  margin-top:16px;
+}
+
+.terms{
+  color:#7784a0;
+}
+
+/* =========================================================
+   TOAST
+   ========================================================= */
+
+.toast{
+  position:fixed;
+  z-index:100000;
+  left:50%;
+  bottom:25px;
+  transform:translate(-50%,20px);
+  min-width:240px;
+  max-width:90%;
+  padding:13px 17px;
+  border-radius:13px;
+  background:rgba(14,19,35,.95);
+  border:1px solid rgba(255,255,255,.1);
+  box-shadow:0 20px 50px rgba(0,0,0,.4);
+  color:#e8edf8;
+  font-size:11px;
+  text-align:center;
+  opacity:0;
+  pointer-events:none;
+  transition:.35s;
+}
+
+.toast.show{
+  opacity:1;
+  transform:translate(-50%,0);
+}
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media(max-width:1050px){
+  .hero{
+    grid-template-columns:1fr;
+    text-align:center;
+    padding-top:125px;
+  }
+
+  .hero-content{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+  }
+
+  .hero-description{
+    max-width:720px;
+  }
+
+  .hero-visual{
+    min-height:530px;
+  }
+
+  .feature-grid{
+    grid-template-columns:repeat(2,1fr);
+  }
+
+  .auth-wrap{
+    grid-template-columns:1fr;
+    max-width:650px;
+  }
+
+  .auth-promo{
+    min-height:390px;
+  }
+
+  .preview-body{
+    grid-template-columns:160px 1fr;
+  }
+
+  .mock-right{
+    display:none;
+  }
+}
+
+@media(max-width:650px){
+  .navbar{
+    height:65px;
+    padding:0 16px;
+  }
+
+  .brand-text{
+    font-size:15px;
+  }
+
+  .brand-text small{
+    display:none;
+  }
+
+  .nav-btn:not(.primary){
+    display:none;
+  }
+
+  .nav-btn.primary{
+    height:38px;
+    padding:0 13px;
+    font-size:10px;
+  }
+
+  .hero{
+    padding:105px 16px 55px;
+    gap:35px;
+  }
+
+  .hero h1{
+    font-size:44px;
+    letter-spacing:-2px;
+  }
+
+  .hero-description{
+    font-size:13px;
+    line-height:2;
+  }
+
+  .hero-buttons{
+    width:100%;
+    justify-content:center;
+  }
+
+  .main-btn{
+    width:100%;
+  }
+
+  .hero-stats{
+    justify-content:center;
+    gap:22px;
+  }
+
+  .hero-visual{
+    min-height:460px;
+  }
+
+  .main-visual-card{
+    height:460px;
+    border-radius:27px;
+  }
+
+  .float-card.live{
+    right:-4px;
+    top:45px;
+  }
+
+  .float-card.game{
+    left:-4px;
+    bottom:45px;
+  }
+
+  .features,
+  .preview{
+    padding-left:16px;
+    padding-right:16px;
+  }
+
+  .feature-grid{
+    grid-template-columns:1fr;
+  }
+
+  .feature-card{
+    min-height:200px;
+  }
+
+  .preview-body{
+    grid-template-columns:1fr;
+  }
+
+  .mock-sidebar{
+    display:none;
+  }
+
+  .mock-post-image{
+    height:180px;
+  }
+
+  #auth{
+    padding:90px 14px 30px;
+  }
+
+  .auth-promo{
+    min-height:330px;
+    padding:25px;
+  }
+
+  .auth-promo h2{
+    font-size:29px;
+  }
+
+  .auth-card{
+    padding:23px 18px;
+    border-radius:24px;
+  }
+
+  .loader-title{
+    font-size:29px;
+  }
+}
+
+/* =========================================================
+   ACCESSIBILITY
+   ========================================================= */
+
+@media(prefers-reduced-motion:reduce){
+  *,
+  *::before,
+  *::after{
+    animation-duration:.001ms!important;
+    animation-iteration-count:1!important;
+    scroll-behavior:auto!important;
+  }
+}
+</style>
 </head>
 
 <body>
 
-  <!-- =========================================================
-       GLOBAL BACKGROUND
-  ========================================================== -->
+<!-- =======================================================
+     BACKGROUND
+     ======================================================= -->
 
-  <div class="app-background" aria-hidden="true">
-    <div class="bg-noise"></div>
-    <div class="bg-grid"></div>
+<div class="background">
+  <div class="bg-grid"></div>
+  <div class="orb one"></div>
+  <div class="orb two"></div>
+  <div class="orb three"></div>
+  <div class="particles" id="particles"></div>
+</div>
 
-    <div class="bg-glow glow-one"></div>
-    <div class="bg-glow glow-two"></div>
-    <div class="bg-glow glow-three"></div>
+<!-- =======================================================
+     LOADER
+     ======================================================= -->
+
+<div id="loader">
+  <div class="loader-inner">
+
+    <div class="loader-logo">
+      <span class="logo-symbol">NX</span>
+    </div>
+
+    <div class="loader-title">NEXORA</div>
+
+    <div class="loader-sub">
+      تواصل • فيديو • ألعاب • غرف • بث
+    </div>
+
+    <div class="loader-status" id="loaderStatus">
+      جاري تجهيز عالمك...
+    </div>
+
+    <div class="progress">
+      <div class="progress-bar" id="progressBar"></div>
+    </div>
+
+    <div class="progress-info">
+      <span>INITIALIZING PLATFORM</span>
+      <span id="progressPercent">0%</span>
+    </div>
+
   </div>
+</div>
 
+<!-- =======================================================
+     APP
+     ======================================================= -->
 
-  <!-- =========================================================
-       SPLASH SCREEN
-  ========================================================== -->
+<div id="app">
 
-  <section id="splashScreen" class="splash-screen">
+  <!-- NAVBAR -->
+  <nav class="navbar">
 
-    <div class="splash-particles"></div>
-
-    <div class="splash-logo">
-
-      <div class="logo-crown">
-        ♛
+    <a href="#" class="brand" onclick="goTop();return false;">
+      <div class="brand-mark">
+        <span>NX</span>
       </div>
 
-      <div class="logo-title">
-        JOKER
+      <div class="brand-text">
+        NEXORA
+        <small>CONNECT • PLAY • LIVE</small>
       </div>
+    </a>
 
-      <div class="logo-arabic">
-        الجوكر
-      </div>
+    <div class="nav-actions">
+      <button class="nav-btn" onclick="scrollToFeatures()">
+        اكتشف المنصة
+      </button>
 
-      <div class="logo-line"></div>
-
-      <p>
-        CONNECT • PLAY • TALK • CREATE
-      </p>
-
+      <button class="nav-btn primary" onclick="openAuth('login')">
+        دخول
+      </button>
     </div>
 
-    <div class="splash-loader">
+  </nav>
 
-      <div class="loader-track">
-        <div
-          id="splashProgress"
-          class="loader-progress"
-        ></div>
+  <!-- =====================================================
+       HERO
+       ===================================================== -->
+
+  <main id="landing">
+
+    <section class="hero">
+
+      <div class="hero-content">
+
+        <div class="eyebrow">
+          <span class="live-dot"></span>
+          عالم اجتماعي جديد يبدأ من هنا
+        </div>
+
+        <h1>
+          مش مجرد منصة...
+          <br>
+          <span class="gradient-text">عالم كامل ليك.</span>
+        </h1>
+
+        <p class="hero-description">
+          مكان واحد يجمع الناس، الفيديو، الألعاب، الغرف الصوتية،
+          البث المباشر، التحديات والمجتمع في تجربة واحدة مصممة
+          لتكون سريعة، ممتعة وحية.
+        </p>
+
+        <div class="hero-buttons">
+
+          <button class="main-btn primary" onclick="openAuth('register')">
+            🚀 ابدأ الآن
+          </button>
+
+          <button class="main-btn secondary" onclick="scrollToFeatures()">
+            استكشف العالم ↓
+          </button>
+
+        </div>
+
+        <div class="hero-stats">
+
+          <div class="stat">
+            <strong>01</strong>
+            <span>عالم اجتماعي</span>
+          </div>
+
+          <div class="stat">
+            <strong>04+</strong>
+            <span>تجارب رئيسية</span>
+          </div>
+
+          <div class="stat">
+            <strong>∞</strong>
+            <span>تجارب قادمة</span>
+          </div>
+
+        </div>
+
       </div>
 
-      <div class="loader-info">
+      <!-- HERO VISUAL -->
 
-        <span id="splashStatus">
-          جاري تجهيز المنصة...
-        </span>
+      <div class="hero-visual">
 
-        <span id="splashPercent">
-          0%
-        </span>
+        <div class="visual-glow"></div>
+
+        <div class="main-visual-card">
+
+          <div class="visual-overlay"></div>
+
+          <div class="visual-top">
+
+            <div class="online-badge">
+              <span class="live-dot"></span>
+              LIVE EXPERIENCE
+            </div>
+
+            <div class="online-badge">
+              ✦ NEXORA
+            </div>
+
+          </div>
+
+          <div class="visual-content">
+
+            <h2>
+              العب.
+              <br>
+              اتكلم.
+              <br>
+              شوف.
+              <br>
+              وعيش اللحظة.
+            </h2>
+
+            <p>
+              الغرفة الواحدة ممكن تجمع لعبة شغالة،
+              لاعبين، فيديو، شات، صوت وهدايا.
+            </p>
+
+            <div class="visual-actions">
+              <span class="mini-chip">🎮 Gaming</span>
+              <span class="mini-chip">🎥 Video</span>
+              <span class="mini-chip">🎙️ Rooms</span>
+              <span class="mini-chip">📡 Live</span>
+            </div>
+
+          </div>
+
+        </div>
+
+        <div class="float-card live">
+
+          <div class="float-head">
+
+            <div class="float-icon">📡</div>
+
+            <div>
+              <strong>بث مباشر الآن</strong>
+              <small>غرفة الألعاب</small>
+            </div>
+
+          </div>
+
+          <div class="float-number">
+            👥 1,284 متابع داخل التجربة
+          </div>
+
+        </div>
+
+        <div class="float-card game">
+
+          <div class="float-head">
+
+            <div class="float-icon">☀️</div>
+
+            <div>
+              <strong>الشمس × القمر</strong>
+              <small>Game Room</small>
+            </div>
+
+          </div>
+
+          <div class="float-number">
+            🎮 الجولة بدأت — اللاعبون يلعبون الآن
+          </div>
+
+        </div>
 
       </div>
 
-    </div>
+    </section>
 
-  </section>
+    <!-- ===================================================
+         FEATURES
+         =================================================== -->
 
+    <section class="features" id="features">
 
-  <!-- =========================================================
-       AUTH SCREEN
-  ========================================================== -->
+      <div class="section-heading">
 
-  <section id="authScreen" class="auth-screen hidden">
-
-    <div class="auth-background">
-      <div class="auth-orb auth-orb-one"></div>
-      <div class="auth-orb auth-orb-two"></div>
-      <div class="auth-lines"></div>
-    </div>
-
-    <div class="auth-container">
-
-      <div class="auth-brand">
-
-        <div class="auth-crown">
-          ♛
+        <div class="label">
+          ONE PLATFORM — MANY WORLDS
         </div>
 
-        <div class="auth-brand-name">
-          JOKER
-        </div>
-
-        <div class="auth-brand-ar">
-          الجوكر
-        </div>
+        <h2>كل حاجة في مكان واحد.</h2>
 
         <p>
-          عالمك الاجتماعي يبدأ من هنا
+          المنصة مبنية من البداية بحيث كل تجربة تقدر تتصل
+          بالتجارب الثانية بدل ما تكون أجزاء منفصلة.
         </p>
 
       </div>
 
+      <div class="feature-grid">
+
+        <article class="feature-card video">
+
+          <div class="feature-icon">🎬</div>
+
+          <h3>الفيديو</h3>
+
+          <p>
+            فيديوهات قصيرة وطويلة، ترند، متابعة، تفاعل
+            ومحتوى يظهر لك حسب اهتماماتك.
+          </p>
+
+        </article>
+
+        <article class="feature-card games">
+
+          <div class="feature-icon">🎮</div>
+
+          <h3>الألعاب</h3>
+
+          <p>
+            ألعاب فردية ومتعددة وتحديات ونقاط ومتصدّرين،
+            والأهم أن الألعاب تدخل مباشرة داخل الغرف.
+          </p>
+
+        </article>
+
+        <article class="feature-card rooms">
+
+          <div class="feature-icon">🎙️</div>
+
+          <h3>الغرف</h3>
+
+          <p>
+            ادخل غرفة، قابل الناس، شغّل لعبة، اتكلم،
+            شاهد الفيديو وتفاعل مع الموجودين.
+          </p>
+
+        </article>
+
+        <article class="feature-card live">
+
+          <div class="feature-icon">📡</div>
+
+          <h3>البث المباشر</h3>
+
+          <p>
+            مشاهدة وتفاعل ودردشة وهدايا وتجارب مباشرة
+            مرتبطة بالمجتمع والألعاب.
+          </p>
+
+        </article>
+
+      </div>
+
+    </section>
+
+    <!-- ===================================================
+         PLATFORM PREVIEW
+         =================================================== -->
+
+    <section class="preview">
+
+      <div class="section-heading">
+
+        <div class="label">
+          PLATFORM PREVIEW
+        </div>
+
+        <h2>المنصة من الداخل.</h2>
+
+        <p>
+          الواجهة النهائية هتكون أكبر من مجرد Feed:
+          Navigation، Stories، فيديو، Rooms، Gaming
+          ومحتوى حي في نفس التجربة.
+        </p>
+
+      </div>
+
+      <div class="preview-shell">
+
+        <div class="preview-top">
+
+          <div class="preview-dots">
+            <i></i>
+            <i></i>
+            <i></i>
+          </div>
+
+          <div class="preview-title">
+            NEXORA / HOME
+          </div>
+
+        </div>
+
+        <div class="preview-body">
+
+          <aside class="mock-sidebar">
+
+            <div class="mock-brand"></div>
+
+            <div class="mock-item active"></div>
+            <div class="mock-item"></div>
+            <div class="mock-item"></div>
+            <div class="mock-item"></div>
+            <div class="mock-item"></div>
+            <div class="mock-item"></div>
+
+          </aside>
+
+          <div class="mock-feed">
+
+            <div class="mock-story-row">
+
+              <div class="story-circle"></div>
+              <div class="story-circle"></div>
+              <div class="story-circle"></div>
+              <div class="story-circle"></div>
+              <div class="story-circle"></div>
+              <div class="story-circle"></div>
+
+            </div>
+
+            <div class="mock-post">
+
+              <div class="mock-post-image"></div>
+
+              <div class="mock-lines">
+
+                <div class="line"></div>
+                <div class="line short"></div>
+
+              </div>
+
+            </div>
+
+          </div>
+
+          <aside class="mock-right">
+
+            <div class="profile-mini"></div>
+
+            <div class="right-line"></div>
+            <div class="right-line"></div>
+            <div class="right-line" style="width:65%"></div>
+
+          </aside>
+
+        </div>
+
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- =====================================================
+       AUTH SCREEN
+       ===================================================== -->
+
+  <section id="auth">
+
+    <div class="auth-wrap">
+
+      <!-- PROMO -->
+
+      <div class="auth-promo">
+
+        <div class="auth-promo-content">
+
+          <div class="eyebrow">
+            <span class="live-dot"></span>
+            مرحبًا بك في NEXORA
+          </div>
+
+          <h2>
+            مكان واحد...
+            <br>
+            <span class="gradient-text">
+              كل عالمك.
+            </span>
+          </h2>
+
+          <p>
+            حساب واحد يفتح لك عالم التواصل والفيديو والألعاب
+            والغرف والبث والتجارب القادمة.
+          </p>
+
+          <div class="promo-tags">
+            <span class="promo-tag">🎮 Games</span>
+            <span class="promo-tag">🎥 Videos</span>
+            <span class="promo-tag">🎙️ Rooms</span>
+            <span class="promo-tag">📡 Live</span>
+            <span class="promo-tag">💬 Chat</span>
+            <span class="promo-tag">🏆 Challenges</span>
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- AUTH CARD -->
 
       <div class="auth-card">
 
-        <div class="auth-card-header">
+        <div class="auth-head">
 
-          <span class="auth-eyebrow">
-            WELCOME
-          </span>
+          <div class="auth-logo">
+            <span>NX</span>
+          </div>
 
-          <h1 id="authTitle">
-            أهلاً بك في الجوكر
-          </h1>
+          <h2 id="authTitle">
+            أهلًا بك
+          </h2>
 
           <p id="authSubtitle">
-            سجّل دخولك للوصول إلى عالمك
+            سجل دخولك واستكمل رحلتك.
           </p>
 
         </div>
 
-
-        <!-- LOGIN -->
-
-        <form id="loginForm" class="auth-form">
-
-          <div class="input-group">
-
-            <label for="loginEmail">
-              البريد الإلكتروني
-            </label>
-
-            <div class="input-box">
-
-              <span class="input-icon">
-                ✉
-              </span>
-
-              <input
-                id="loginEmail"
-                type="email"
-                placeholder="example@email.com"
-                autocomplete="email"
-                required
-              >
-
-            </div>
-
-          </div>
-
-
-          <div class="input-group">
-
-            <label for="loginPassword">
-              كلمة المرور
-            </label>
-
-            <div class="input-box">
-
-              <span class="input-icon">
-                ◉
-              </span>
-
-              <input
-                id="loginPassword"
-                type="password"
-                placeholder="••••••••"
-                autocomplete="current-password"
-                required
-              >
-
-              <button
-                type="button"
-                class="password-toggle"
-                data-password-toggle="loginPassword"
-                aria-label="إظهار كلمة المرور"
-              >
-                ◌
-              </button>
-
-            </div>
-
-          </div>
-
-
-          <div class="form-options">
-
-            <label class="remember-option">
-
-              <input
-                id="rememberMe"
-                type="checkbox"
-              >
-
-              <span>
-                تذكرني
-              </span>
-
-            </label>
-
-            <button
-              type="button"
-              id="forgotPasswordBtn"
-              class="text-button"
-            >
-              نسيت كلمة المرور؟
-            </button>
-
-          </div>
-
+        <div class="auth-tabs">
 
           <button
-            type="submit"
-            class="primary-button auth-submit"
-          >
-
-            <span>
-              تسجيل الدخول
-            </span>
-
-            <span class="button-arrow">
-              ←
-            </span>
-
+            class="auth-tab active"
+            id="loginTab"
+            onclick="switchAuth('login')">
+            تسجيل الدخول
           </button>
 
-        </form>
-
-
-        <!-- REGISTER -->
-
-        <form id="registerForm" class="auth-form hidden">
-
-          <div class="input-group">
-
-            <label for="registerName">
-              الاسم
-            </label>
-
-            <div class="input-box">
-
-              <span class="input-icon">
-                ◉
-              </span>
-
-              <input
-                id="registerName"
-                type="text"
-                placeholder="اكتب اسمك"
-                autocomplete="name"
-                required
-              >
-
-            </div>
-
-          </div>
-
-
-          <div class="input-group">
-
-            <label for="registerEmail">
-              البريد الإلكتروني
-            </label>
-
-            <div class="input-box">
-
-              <span class="input-icon">
-                ✉
-              </span>
-
-              <input
-                id="registerEmail"
-                type="email"
-                placeholder="example@email.com"
-                autocomplete="email"
-                required
-              >
-
-            </div>
-
-          </div>
-
-
-          <div class="input-group">
-
-            <label for="registerPassword">
-              كلمة المرور
-            </label>
-
-            <div class="input-box">
-
-              <span class="input-icon">
-                ◉
-              </span>
-
-              <input
-                id="registerPassword"
-                type="password"
-                placeholder="أنشئ كلمة مرور"
-                autocomplete="new-password"
-                required
-              >
-
-              <button
-                type="button"
-                class="password-toggle"
-                data-password-toggle="registerPassword"
-                aria-label="إظهار كلمة المرور"
-              >
-                ◌
-              </button>
-
-            </div>
-
-          </div>
-
-
           <button
-            type="submit"
-            class="primary-button auth-submit"
-          >
-
-            <span>
-              إنشاء الحساب
-            </span>
-
-            <span class="button-arrow">
-              ←
-            </span>
-
-          </button>
-
-        </form>
-
-
-        <div class="auth-divider">
-
-          <span></span>
-
-          <b>
-            أو
-          </b>
-
-          <span></span>
-
-        </div>
-
-
-        <button
-          id="googleLoginBtn"
-          type="button"
-          class="google-button"
-        >
-
-          <span class="google-icon">
-            G
-          </span>
-
-          <span>
-            المتابعة باستخدام Google
-          </span>
-
-        </button>
-
-
-        <div class="auth-switch">
-
-          <span id="authSwitchText">
-            ليس لديك حساب؟
-          </span>
-
-          <button
-            type="button"
-            id="authSwitchBtn"
-            class="text-button strong"
-          >
+            class="auth-tab"
+            id="registerTab"
+            onclick="switchAuth('register')">
             إنشاء حساب
           </button>
 
         </div>
 
+        <form class="form" id="authForm">
+
+          <div class="field" id="nameField" style="display:none">
+
+            <label>اسمك داخل المنصة</label>
+
+            <div class="input-wrap">
+              <input
+                id="nameInput"
+                type="text"
+                placeholder="اكتب الاسم الذي سيظهر للناس">
+            </div>
+
+          </div>
+
+          <div class="field">
+
+            <label>البريد الإلكتروني</label>
+
+            <div class="input-wrap">
+
+              <input
+                id="emailInput"
+                type="email"
+                placeholder="example@email.com"
+                required>
+
+            </div>
+
+          </div>
+
+          <div class="field">
+
+            <label>كلمة المرور</label>
+
+            <div class="input-wrap">
+
+              <input
+                id="passwordInput"
+                type="password"
+                placeholder="••••••••"
+                minlength="6"
+                required>
+
+              <button
+                type="button"
+                class="password-toggle"
+                onclick="togglePassword()">
+                👁
+              </button>
+
+            </div>
+
+          </div>
+
+          <button
+            type="submit"
+            class="auth-submit"
+            id="submitAuth">
+            دخول إلى NEXORA
+          </button>
+
+        </form>
+
+        <div class="divider">
+          أو تابع بطريقة أخرى
+        </div>
+
+        <button class="social-login" onclick="demoSocialLogin()">
+          ◎ المتابعة بحساب خارجي
+        </button>
 
         <div class="auth-note">
-
-          <span>
-            🔒
-          </span>
-
-          <p>
-            الواجهة مجهزة لربط نظام المصادقة الحقيقي عند توصيل الـ Backend.
-          </p>
-
+          بالمتابعة أنت توافق على
+          <span class="terms">الشروط وسياسة الخصوصية</span>
+          الخاصة بالمنصة.
         </div>
 
       </div>
@@ -440,2733 +2015,342 @@
 
   </section>
 
+</div>
 
-  <!-- =========================================================
-       MAIN APPLICATION
-  ========================================================== -->
+<!-- TOAST -->
 
-  <div id="mainApp" class="main-app hidden">
+<div class="toast" id="toast"></div>
 
+<script>
+/* =========================================================
+   NEXORA FOUNDATION JAVASCRIPT
+   ========================================================= */
 
-    <!-- =======================================================
-         TOP BAR
-    ======================================================== -->
+/* -----------------------------
+   PARTICLES
+----------------------------- */
 
-    <header class="topbar">
+const particles = document.getElementById("particles");
 
-      <div class="topbar-right">
+for(let i = 0; i < 65; i++){
 
-        <button
-          id="mobileMenuBtn"
-          class="icon-button mobile-only"
-          type="button"
-          aria-label="القائمة"
-        >
-          ☰
-        </button>
+  const p = document.createElement("span");
 
+  p.className = "particle";
 
-        <button
-          id="brandHomeBtn"
-          class="brand-mini"
-          type="button"
-        >
+  p.style.left = Math.random() * 100 + "%";
+  p.style.animationDuration = (7 + Math.random() * 13) + "s";
+  p.style.animationDelay = (-Math.random() * 15) + "s";
+  p.style.opacity = (0.15 + Math.random() * .7).toFixed(2);
 
-          <span class="brand-mini-crown">
-            ♛
-          </span>
+  const size = (1 + Math.random() * 2.5);
 
-          <span class="brand-mini-text">
-            الجوكر
-          </span>
+  p.style.width = size + "px";
+  p.style.height = size + "px";
 
-        </button>
+  particles.appendChild(p);
+}
 
-      </div>
 
+/* -----------------------------
+   LOADER
+----------------------------- */
 
-      <div class="topbar-center">
+const loader = document.getElementById("loader");
+const app = document.getElementById("app");
+const progressBar = document.getElementById("progressBar");
+const progressPercent = document.getElementById("progressPercent");
+const loaderStatus = document.getElementById("loaderStatus");
 
-        <button
-          id="globalSearchBtn"
-          class="global-search"
-          type="button"
-        >
+const loaderMessages = [
+  "جاري تجهيز عالمك...",
+  "جاري تحميل التجربة الاجتماعية...",
+  "جاري تجهيز الفيديو والألعاب...",
+  "جاري تجهيز الغرف...",
+  "جاري تجهيز عالم NEXORA...",
+  "اكتمل التجهيز."
+];
 
-          <span>
-            ⌕
-          </span>
+let progress = 0;
+let messageIndex = 0;
 
-          <span class="search-placeholder">
-            ابحث عن أشخاص، غرف، ألعاب، منشورات...
-          </span>
+const loaderTimer = setInterval(() => {
 
-          <kbd>
-            /
-          </kbd>
+  progress += 1;
 
-        </button>
+  progressBar.style.width = progress + "%";
+  progressPercent.textContent = progress + "%";
 
-      </div>
+  if(progress % 20 === 0 && messageIndex < loaderMessages.length - 1){
+    messageIndex++;
+    loaderStatus.textContent = loaderMessages[messageIndex];
+  }
 
+  if(progress >= 100){
 
-      <div class="topbar-left">
+    clearInterval(loaderTimer);
 
-        <button
-          id="quickCameraBtn"
-          class="icon-button"
-          type="button"
-          aria-label="الكاميرا"
-        >
-          ◉
-        </button>
+    setTimeout(() => {
 
+      loader.classList.add("hide");
+      app.classList.add("show");
 
-        <button
-          id="notificationsBtn"
-          class="icon-button notification-trigger"
-          type="button"
-          aria-label="الإشعارات"
-        >
+    }, 350);
 
-          ♧
+  }
 
-          <span
-            id="notificationBadge"
-            class="notification-badge hidden"
-          >
-            0
-          </span>
+}, 50);
 
-        </button>
 
+/* -----------------------------
+   NAVIGATION
+----------------------------- */
 
-        <button
-          id="topProfileBtn"
-          class="top-avatar"
-          type="button"
-        >
+function goTop(){
 
-          <div
-            id="topAvatarPlaceholder"
-            class="avatar-placeholder"
-          >
-            👤
-          </div>
+  window.scrollTo({
+    top:0,
+    behavior:"smooth"
+  });
 
-        </button>
+}
 
-      </div>
+function scrollToFeatures(){
 
-    </header>
+  document.getElementById("features").scrollIntoView({
+    behavior:"smooth"
+  });
 
+}
 
-    <!-- =======================================================
-         SIDE NAV
-    ======================================================== -->
 
-    <aside id="sideNav" class="side-nav">
+/* -----------------------------
+   AUTH
+----------------------------- */
 
-      <div class="side-brand">
+const auth = document.getElementById("auth");
+const landing = document.getElementById("landing");
 
-        <div class="side-brand-logo">
-          ♛
-        </div>
+function openAuth(mode = "login"){
 
-        <div>
+  landing.style.display = "none";
+  auth.classList.add("active");
 
-          <strong>
-            JOKER
-          </strong>
+  switchAuth(mode);
 
-          <small>
-            SOCIAL WORLD
-          </small>
+  window.scrollTo({
+    top:0,
+    behavior:"smooth"
+  });
 
-        </div>
+}
 
-      </div>
+function switchAuth(mode){
 
+  const loginTab = document.getElementById("loginTab");
+  const registerTab = document.getElementById("registerTab");
 
-      <nav class="main-navigation">
+  const nameField = document.getElementById("nameField");
 
-        <button
-          class="nav-item active"
-          data-section="home"
-          type="button"
-        >
+  const title = document.getElementById("authTitle");
+  const subtitle = document.getElementById("authSubtitle");
 
-          <span class="nav-icon">
-            ⌂
-          </span>
+  const submit = document.getElementById("submitAuth");
 
-          <span>
-            الرئيسية
-          </span>
+  if(mode === "register"){
 
-        </button>
+    registerTab.classList.add("active");
+    loginTab.classList.remove("active");
 
+    nameField.style.display = "block";
 
-        <button
-          class="nav-item"
-          data-section="discover"
-          type="button"
-        >
+    title.textContent = "أنشئ حسابك";
+    subtitle.textContent = "ابدأ عالمك داخل NEXORA.";
 
-          <span class="nav-icon">
-            ✦
-          </span>
+    submit.textContent = "إنشاء حساب";
 
-          <span>
-            اكتشف
-          </span>
+  }else{
 
-        </button>
+    loginTab.classList.add("active");
+    registerTab.classList.remove("active");
 
+    nameField.style.display = "none";
 
-        <button
-          class="nav-item"
-          data-section="rooms"
-          type="button"
-        >
+    title.textContent = "أهلًا بك";
+    subtitle.textContent = "سجل دخولك واستكمل رحلتك.";
 
-          <span class="nav-icon">
-            ◉
-          </span>
+    submit.textContent = "دخول إلى NEXORA";
 
-          <span>
-            الغرف
-          </span>
+  }
 
-          <em class="nav-live">
-            LIVE
-          </em>
+}
 
-        </button>
 
+/* -----------------------------
+   PASSWORD
+----------------------------- */
 
-        <button
-          class="nav-item"
-          data-section="games"
-          type="button"
-        >
+function togglePassword(){
 
-          <span class="nav-icon">
-            ♠
-          </span>
+  const input = document.getElementById("passwordInput");
 
-          <span>
-            الألعاب
-          </span>
+  input.type =
+    input.type === "password"
+      ? "text"
+      : "password";
 
-        </button>
+}
 
 
-        <button
-          class="nav-item"
-          data-section="chat"
-          type="button"
-        >
+/* -----------------------------
+   AUTH FORM
+----------------------------- */
 
-          <span class="nav-icon">
-            ▱
-          </span>
+document.getElementById("authForm").addEventListener("submit", function(e){
 
-          <span>
-            المحادثات
-          </span>
+  e.preventDefault();
 
-          <em
-            id="chatNavBadge"
-            class="nav-badge hidden"
-          >
-            0
-          </em>
+  const activeRegister =
+    document.getElementById("registerTab").classList.contains("active");
 
-        </button>
+  const email =
+    document.getElementById("emailInput").value.trim();
 
+  const password =
+    document.getElementById("passwordInput").value.trim();
 
-        <button
-          class="nav-item"
-          data-section="friends"
-          type="button"
-        >
+  if(!email || !password){
 
-          <span class="nav-icon">
-            ◎
-          </span>
+    showToast("من فضلك أكمل البيانات المطلوبة.");
 
-          <span>
-            الأصدقاء
-          </span>
+    return;
 
-        </button>
+  }
 
+  if(activeRegister){
 
-        <button
-          class="nav-item"
-          data-section="notifications"
-          type="button"
-        >
+    const name =
+      document.getElementById("nameInput").value.trim();
 
-          <span class="nav-icon">
-            ♧
-          </span>
+    if(!name){
 
-          <span>
-            الإشعارات
-          </span>
+      showToast("اكتب اسمك داخل المنصة أولًا.");
 
-        </button>
+      return;
 
-      </nav>
+    }
 
+    /*
+      DATABASE CONNECTION — المرحلة الأخيرة
 
-      <div class="nav-separator"></div>
+      هنا لاحقًا سنستبدل هذا الجزء
+      باستدعاء نظام الحساب الحقيقي.
+    */
 
+    localStorage.setItem(
+      "nexora_demo_user",
+      JSON.stringify({
+        name,
+        email,
+        createdAt:Date.now()
+      })
+    );
 
-      <div class="nav-secondary">
+    showToast("تم إنشاء الحساب التجريبي بنجاح.");
 
-        <button
-          class="nav-item"
-          data-section="profile"
-          type="button"
-        >
+  }else{
 
-          <span class="nav-icon">
-            ◉
-          </span>
+    /*
+      DATABASE CONNECTION — المرحلة الأخيرة
 
-          <span>
-            ملفي الشخصي
-          </span>
+      هنا لاحقًا سيتم التحقق من:
+      email + password
+      من قاعدة البيانات.
+    */
 
-        </button>
+    showToast("تم تسجيل الدخول التجريبي.");
 
+  }
 
-        <button
-          class="nav-item"
-          data-section="coins"
-          type="button"
-        >
+});
 
-          <span class="nav-icon">
-            ◈
-          </span>
 
-          <span>
-            العملات
-          </span>
+/* -----------------------------
+   SOCIAL LOGIN
+----------------------------- */
 
-        </button>
+function demoSocialLogin(){
 
+  showToast(
+    "تسجيل الدخول الخارجي سيتم ربطه في مرحلة الحساب وقاعدة البيانات."
+  );
 
-        <button
-          class="nav-item"
-          data-section="store"
-          type="button"
-        >
+}
 
-          <span class="nav-icon">
-            ▣
-          </span>
 
-          <span>
-            المتجر
-          </span>
+/* -----------------------------
+   TOAST
+----------------------------- */
 
-        </button>
+let toastTimer;
 
-      </div>
+function showToast(message){
 
+  const toast =
+    document.getElementById("toast");
 
-      <div class="side-footer">
+  toast.textContent = message;
 
-        <div class="connection-status">
+  toast.classList.add("show");
 
-          <span class="status-dot"></span>
+  clearTimeout(toastTimer);
 
-          <div>
+  toastTimer = setTimeout(() => {
 
-            <strong>
-              النظام جاهز
-            </strong>
+    toast.classList.remove("show");
 
-            <small>
-              JOKER WORLD
-            </small>
+  }, 3000);
 
-          </div>
+}
 
-        </div>
 
-      </div>
+/* -----------------------------
+   BACK BUTTON SUPPORT
+----------------------------- */
 
-    </aside>
+window.addEventListener("popstate", () => {
 
+  if(auth.classList.contains("active")){
 
-    <!-- =======================================================
-         MAIN CONTENT
-    ======================================================== -->
+    auth.classList.remove("active");
+    landing.style.display = "";
 
-    <main id="appContent" class="app-content">
+    window.scrollTo({
+      top:0,
+      behavior:"smooth"
+    });
 
+  }
 
-      <!-- =====================================================
-           HOME / FEED
-      ====================================================== -->
+});
 
-      <section
-        id="section-home"
-        class="app-section active-section"
-        data-page="home"
-      >
 
-        <div class="section-shell">
+/* -----------------------------
+   PREVENT DEMO LINKS
+----------------------------- */
 
+document.querySelectorAll("a[href='#']").forEach(link => {
 
-          <!-- HERO -->
+  link.addEventListener("click", e => {
 
-          <div class="hero-banner">
+    if(link.getAttribute("href") === "#"){
+      e.preventDefault();
+    }
 
-            <div class="hero-background-art">
+  });
 
-              <div class="hero-circle hero-circle-one"></div>
-              <div class="hero-circle hero-circle-two"></div>
+});
+</script>
 
-              <div class="hero-particles"></div>
-
-            </div>
-
-
-            <div class="hero-content">
-
-              <span class="hero-kicker">
-                JOKER WORLD
-              </span>
-
-              <h1>
-                عالمك...
-                <span>
-                  بطريقتك.
-                </span>
-              </h1>
-
-              <p>
-                تواصل، شارك، اكتشف، العب، وادخل عالم الغرف
-                والمجتمعات في تجربة اجتماعية واحدة.
-              </p>
-
-
-              <div class="hero-actions">
-
-                <button
-                  class="primary-button"
-                  data-action="discover"
-                  type="button"
-                >
-                  <span>
-                    ابدأ الاستكشاف
-                  </span>
-
-                  <span>
-                    ←
-                  </span>
-                </button>
-
-
-                <button
-                  class="ghost-button"
-                  data-action="create-room"
-                  type="button"
-                >
-                  إنشاء غرفة
-                </button>
-
-              </div>
-
-            </div>
-
-
-            <div class="hero-visual">
-
-              <div class="hero-orbit orbit-one"></div>
-              <div class="hero-orbit orbit-two"></div>
-
-              <div class="hero-card-stack">
-
-                <div class="floating-card floating-card-back">
-                  ♠
-                </div>
-
-                <div class="floating-card floating-card-main">
-
-                  <span class="card-crown">
-                    ♛
-                  </span>
-
-                  <strong>
-                    JOKER
-                  </strong>
-
-                  <small>
-                    SOCIAL WORLD
-                  </small>
-
-                </div>
-
-              </div>
-
-            </div>
-
-          </div>
-
-
-          <!-- =================================================
-               STORIES
-          ================================================== -->
-
-          <div class="content-card stories-section">
-
-            <div class="card-heading">
-
-              <div>
-
-                <span class="section-label">
-                  STORIES
-                </span>
-
-                <h2>
-                  الحكايات
-                </h2>
-
-              </div>
-
-              <button
-                id="openStoryCreatorBtn"
-                class="link-button"
-                type="button"
-              >
-                + أضف حكاية
-              </button>
-
-            </div>
-
-
-            <div
-              id="storiesContainer"
-              class="stories-container"
-            >
-
-              <!-- Story creator -->
-
-              <button
-                id="storyCreateCard"
-                class="story-card story-create-card"
-                type="button"
-              >
-
-                <div class="story-create-icon">
-                  +
-                </div>
-
-                <strong>
-                  حكايتك
-                </strong>
-
-                <small>
-                  أضف صورة أو نص
-                </small>
-
-              </button>
-
-
-              <!-- Stories are rendered by app.js -->
-
-              <div
-                id="storiesList"
-                class="stories-list"
-              >
-              </div>
-
-            </div>
-
-          </div>
-
-
-          <!-- =================================================
-               HOME GRID
-          ================================================== -->
-
-          <div class="home-layout">
-
-
-            <!-- =================================================
-                 FEED COLUMN
-            ================================================== -->
-
-            <div class="feed-column">
-
-
-              <!-- CREATE POST -->
-
-              <div class="content-card create-post-card">
-
-                <div class="create-post-top">
-
-                  <div
-                    id="feedComposerAvatar"
-                    class="avatar-placeholder"
-                  >
-                    👤
-                  </div>
-
-                  <button
-                    id="openPostComposerBtn"
-                    class="post-placeholder"
-                    type="button"
-                  >
-                    في بالك إيه؟
-                  </button>
-
-                </div>
-
-
-                <div class="create-post-actions">
-
-                  <button
-                    id="postImageBtn"
-                    type="button"
-                    class="post-action"
-                  >
-                    <span>
-                      ▧
-                    </span>
-
-                    صورة
-                  </button>
-
-
-                  <button
-                    id="postVideoBtn"
-                    type="button"
-                    class="post-action"
-                  >
-                    <span>
-                      ▶
-                    </span>
-
-                    فيديو
-                  </button>
-
-
-                  <button
-                    id="postFeelingBtn"
-                    type="button"
-                    class="post-action"
-                  >
-                    <span>
-                      ☺
-                    </span>
-
-                    شعور
-                  </button>
-
-
-                  <button
-                    id="postRoomBtn"
-                    type="button"
-                    class="post-action"
-                  >
-                    <span>
-                      ◉
-                    </span>
-
-                    غرفة
-                  </button>
-
-                </div>
-
-              </div>
-
-
-              <!-- FEED HEADER -->
-
-              <div class="feed-toolbar">
-
-                <div>
-
-                  <span class="section-label">
-                    JOKER FEED
-                  </span>
-
-                  <h2>
-                    آخر المنشورات
-                  </h2>
-
-                </div>
-
-
-                <div class="feed-sort">
-
-                  <button
-                    class="feed-sort-btn active"
-                    data-feed-sort="latest"
-                    type="button"
-                  >
-                    الأحدث
-                  </button>
-
-                  <button
-                    class="feed-sort-btn"
-                    data-feed-sort="popular"
-                    type="button"
-                  >
-                    الأكثر تفاعلاً
-                  </button>
-
-                </div>
-
-              </div>
-
-
-              <!-- FEED -->
-
-              <div
-                id="feedContainer"
-                class="feed-container"
-              >
-
-                <div
-                  id="feedLoading"
-                  class="feed-loading hidden"
-                >
-
-                  <div class="loading-spinner"></div>
-
-                  <span>
-                    جاري تحميل المنشورات...
-                  </span>
-
-                </div>
-
-
-                <div
-                  id="feedEmpty"
-                  class="empty-state"
-                >
-
-                  <div class="empty-icon large">
-                    ✦
-                  </div>
-
-                  <h2>
-                    لا توجد منشورات بعد
-                  </h2>
-
-                  <p>
-                    أول ما يتم توفير بيانات حقيقية للمنصة،
-                    المنشورات هتظهر هنا.
-                  </p>
-
-                  <button
-                    id="emptyFeedCreateBtn"
-                    class="primary-button"
-                    type="button"
-                  >
-                    اكتب أول منشور
-                  </button>
-
-                </div>
-
-
-                <div
-                  id="feedPosts"
-                  class="feed-posts"
-                >
-                </div>
-
-              </div>
-
-            </div>
-
-
-            <!-- =================================================
-                 HOME SIDEBAR
-            ================================================== -->
-
-            <aside class="home-sidebar">
-
-
-              <!-- ONLINE -->
-
-              <div class="content-card online-section">
-
-                <div class="card-heading">
-
-                  <div>
-
-                    <span class="section-label">
-                      ONLINE
-                    </span>
-
-                    <h2>
-                      المتصلون الآن
-                    </h2>
-
-                  </div>
-
-                  <span class="live-pill">
-                    ● مباشر
-                  </span>
-
-                </div>
-
-
-                <div
-                  id="onlineUsers"
-                  class="online-list"
-                >
-
-                  <div class="empty-state compact">
-
-                    <div class="empty-icon">
-                      ◎
-                    </div>
-
-                    <p>
-                      لا توجد بيانات مستخدمين متصلة حالياً.
-                    </p>
-
-                  </div>
-
-                </div>
-
-              </div>
-
-
-              <!-- TRENDING -->
-
-              <div class="content-card trending-section">
-
-                <div class="card-heading">
-
-                  <div>
-
-                    <span class="section-label">
-                      TRENDING
-                    </span>
-
-                    <h2>
-                      المتداول الآن
-                    </h2>
-
-                  </div>
-
-                </div>
-
-
-                <div
-                  id="trendingList"
-                  class="trending-list"
-                >
-
-                  <div class="empty-state compact">
-
-                    <div class="empty-icon">
-                      #
-                    </div>
-
-                    <p>
-                      لا يوجد محتوى متداول حالياً.
-                    </p>
-
-                  </div>
-
-                </div>
-
-              </div>
-
-
-              <!-- ACTIVE ROOMS -->
-
-              <div class="content-card rooms-preview">
-
-                <div class="card-heading">
-
-                  <div>
-
-                    <span class="section-label">
-                      LIVE ROOMS
-                    </span>
-
-                    <h2>
-                      الغرف النشطة
-                    </h2>
-
-                  </div>
-
-                  <button
-                    class="link-button"
-                    data-section="rooms"
-                    type="button"
-                  >
-                    الكل ←
-                  </button>
-
-                </div>
-
-
-                <div
-                  id="homeRooms"
-                  class="rooms-horizontal"
-                >
-
-                  <div class="empty-state compact">
-
-                    <div class="empty-icon">
-                      ◉
-                    </div>
-
-                    <p>
-                      لا توجد غرف متاحة حالياً.
-                    </p>
-
-                  </div>
-
-                </div>
-
-              </div>
-
-            </aside>
-
-          </div>
-
-        </div>
-
-      </section>
-
-
-      <!-- =====================================================
-           DISCOVER
-      ====================================================== -->
-
-      <section
-        id="section-discover"
-        class="app-section"
-        data-page="discover"
-      >
-
-        <div class="section-shell">
-
-          <div class="page-header">
-
-            <div>
-
-              <span class="section-label">
-                DISCOVER
-              </span>
-
-              <h1>
-                اكتشف
-              </h1>
-
-              <p>
-                ابحث عن الأشخاص والغرف والألعاب والمحتوى.
-              </p>
-
-            </div>
-
-
-            <button
-              class="primary-button"
-              id="discoverSearchBtn"
-              type="button"
-            >
-              ⌕ بحث
-            </button>
-
-          </div>
-
-
-          <div class="discover-tabs">
-
-            <button
-              class="discover-tab active"
-              data-discover-tab="all"
-              type="button"
-            >
-              الكل
-            </button>
-
-            <button
-              class="discover-tab"
-              data-discover-tab="people"
-              type="button"
-            >
-              أشخاص
-            </button>
-
-            <button
-              class="discover-tab"
-              data-discover-tab="rooms"
-              type="button"
-            >
-              غرف
-            </button>
-
-            <button
-              class="discover-tab"
-              data-discover-tab="games"
-              type="button"
-            >
-              ألعاب
-            </button>
-
-            <button
-              class="discover-tab"
-              data-discover-tab="posts"
-              type="button"
-            >
-              منشورات
-            </button>
-
-          </div>
-
-
-          <div
-            id="discoverGrid"
-            class="discover-grid"
-          >
-
-            <div class="empty-state">
-
-              <div class="empty-icon large">
-                ✦
-              </div>
-
-              <h2>
-                ابدأ الاستكشاف
-              </h2>
-
-              <p>
-                ابحث عن محتوى وأشخاص وغرف حقيقية داخل المنصة.
-              </p>
-
-            </div>
-
-          </div>
-
-        </div>
-
-      </section>
-
-
-      <!-- =====================================================
-           ROOMS
-      ====================================================== -->
-
-      <section
-        id="section-rooms"
-        class="app-section"
-        data-page="rooms"
-      >
-
-        <div class="section-shell">
-
-          <div class="page-header room-page-header">
-
-            <div>
-
-              <span class="section-label">
-                VOICE & VIDEO
-              </span>
-
-              <h1>
-                الغرف
-              </h1>
-
-              <p>
-                ادخل غرفة، تحدث، استمع، العب، وشارك اللحظة.
-              </p>
-
-            </div>
-
-
-            <button
-              id="createRoomBtn"
-              class="primary-button"
-              type="button"
-            >
-
-              <span>
-                +
-              </span>
-
-              إنشاء غرفة
-
-            </button>
-
-          </div>
-
-
-          <!-- FEATURED ROOM -->
-
-          <div class="room-feature">
-
-            <div class="room-feature-art">
-
-              <div class="room-neon-circle"></div>
-
-              <div class="room-mic">
-                🎙
-              </div>
-
-            </div>
-
-
-            <div class="room-feature-content">
-
-              <span class="live-pill">
-                LIVE ROOMS
-              </span>
-
-              <h2>
-                صوتك له مكان هنا
-              </h2>
-
-              <p>
-                مساحة اجتماعية تجمع المحادثة الصوتية والفيديو
-                والدردشة والألعاب والهدايا.
-              </p>
-
-
-              <div class="room-feature-actions">
-
-                <button
-                  class="primary-button"
-                  id="openRoomViewBtn"
-                  type="button"
-                >
-                  استكشف الغرف
-                </button>
-
-                <button
-                  class="ghost-button"
-                  id="roomRulesBtn"
-                  type="button"
-                >
-                  قواعد الغرف
-                </button>
-
-              </div>
-
-            </div>
-
-          </div>
-
-
-          <!-- ROOM FILTERS -->
-
-          <div class="room-filters">
-
-            <button
-              class="room-filter active"
-              data-room-filter="all"
-              type="button"
-            >
-              كل الغرف
-            </button>
-
-            <button
-              class="room-filter"
-              data-room-filter="voice"
-              type="button"
-            >
-              صوت
-            </button>
-
-            <button
-              class="room-filter"
-              data-room-filter="video"
-              type="button"
-            >
-              فيديو
-            </button>
-
-            <button
-              class="room-filter"
-              data-room-filter="game"
-              type="button"
-            >
-              ألعاب
-            </button>
-
-          </div>
-
-
-          <div class="subsection-header">
-
-            <h2>
-              الغرف الحالية
-            </h2>
-
-            <span id="roomCountLabel">
-              0 غرفة
-            </span>
-
-          </div>
-
-
-          <div
-            id="roomsGrid"
-            class="rooms-grid"
-          >
-
-            <div class="empty-state">
-
-              <div class="empty-icon large">
-                ◉
-              </div>
-
-              <h2>
-                لا توجد غرف معروضة
-              </h2>
-
-              <p>
-                لن يتم عرض غرف أو مستخدمين وهميين.
-                عند توفر البيانات الحقيقية ستظهر هنا.
-              </p>
-
-            </div>
-
-          </div>
-
-        </div>
-
-      </section>
-
-
-      <!-- =====================================================
-           GAMES
-      ====================================================== -->
-
-      <section
-        id="section-games"
-        class="app-section"
-        data-page="games"
-      >
-
-        <div class="section-shell">
-
-          <div class="page-header">
-
-            <div>
-
-              <span class="section-label">
-                JOKER ARCADE
-              </span>
-
-              <h1>
-                الألعاب
-              </h1>
-
-              <p>
-                ألعاب اجتماعية تنافسية داخل وخارج الغرف.
-              </p>
-
-            </div>
-
-          </div>
-
-
-          <div class="games-hero">
-
-            <div class="games-hero-art">
-
-              <div class="game-symbol game-symbol-one">
-                ♠
-              </div>
-
-              <div class="game-symbol game-symbol-two">
-                ♦
-              </div>
-
-              <div class="game-symbol game-symbol-three">
-                ♣
-              </div>
-
-              <div class="game-symbol game-symbol-four">
-                ♥
-              </div>
-
-            </div>
-
-
-            <div class="games-hero-content">
-
-              <span class="section-label">
-                PLAY TOGETHER
-              </span>
-
-              <h2>
-                العب مع أصحابك
-              </h2>
-
-              <p>
-                الألعاب هنا جزء من التجربة الاجتماعية،
-                مش صفحة منفصلة عن عالم الجوكر.
-              </p>
-
-            </div>
-
-          </div>
-
-
-          <div class="games-category-bar">
-
-            <button
-              class="game-category active"
-              data-game-category="all"
-              type="button"
-            >
-              الكل
-            </button>
-
-            <button
-              class="game-category"
-              data-game-category="cards"
-              type="button"
-            >
-              ورق
-            </button>
-
-            <button
-              class="game-category"
-              data-game-category="board"
-              type="button"
-            >
-              لوحية
-            </button>
-
-            <button
-              class="game-category"
-              data-game-category="party"
-              type="button"
-            >
-              جماعية
-            </button>
-
-            <button
-              class="game-category"
-              data-game-category="arcade"
-              type="button"
-            >
-              أركيد
-            </button>
-
-          </div>
-
-
-          <div
-            id="gamesGrid"
-            class="games-main-grid"
-          >
-
-            <div class="empty-state">
-
-              <div class="empty-icon large">
-                ♠
-              </div>
-
-              <h2>
-                الألعاب قيد التجهيز
-              </h2>
-
-              <p>
-                سيتم ربط الألعاب بالحساب والغرف والنتائج
-                عند إضافة نظام الألعاب.
-              </p>
-
-            </div>
-
-          </div>
-
-        </div>
-
-      </section>
-
-
-      <!-- =====================================================
-           CHAT
-      ====================================================== -->
-
-      <section
-        id="section-chat"
-        class="app-section chat-section"
-        data-page="chat"
-      >
-
-        <div class="chat-layout">
-
-
-          <!-- CONVERSATIONS -->
-
-          <aside class="conversation-sidebar">
-
-            <div class="conversation-header">
-
-              <div>
-
-                <span class="section-label">
-                  MESSAGES
-                </span>
-
-                <h2>
-                  المحادثات
-                </h2>
-
-              </div>
-
-
-              <button
-                id="newChatBtn"
-                class="icon-button"
-                type="button"
-                aria-label="محادثة جديدة"
-              >
-                +
-              </button>
-
-            </div>
-
-
-            <div class="conversation-search">
-
-              <span>
-                ⌕
-              </span>
-
-              <input
-                id="conversationSearch"
-                type="search"
-                placeholder="ابحث في المحادثات"
-              >
-
-            </div>
-
-
-            <div class="chat-filter-tabs">
-
-              <button
-                class="chat-filter active"
-                data-chat-filter="all"
-                type="button"
-              >
-                الكل
-              </button>
-
-              <button
-                class="chat-filter"
-                data-chat-filter="unread"
-                type="button"
-              >
-                غير مقروءة
-              </button>
-
-            </div>
-
-
-            <div
-              id="conversationList"
-              class="conversation-list"
-            >
-
-              <div class="empty-chat-state">
-
-                <div>
-                  ▱
-                </div>
-
-                <strong>
-                  لا توجد محادثات
-                </strong>
-
-                <span>
-                  المحادثات الحقيقية ستظهر بعد توفر بيانات الحساب.
-                </span>
-
-              </div>
-
-            </div>
-
-          </aside>
-
-
-          <!-- CHAT WINDOW -->
-
-          <div class="chat-window">
-
-            <div
-              id="chatEmpty"
-              class="chat-empty"
-            >
-
-              <div class="chat-empty-icon">
-                ▱
-              </div>
-
-              <h2>
-                اختر محادثة
-              </h2>
-
-              <p>
-                اختر محادثة من القائمة لبدء التواصل.
-              </p>
-
-            </div>
-
-
-            <div
-              id="chatActive"
-              class="chat-active hidden"
-            >
-
-              <header class="chat-header">
-
-                <div class="chat-person">
-
-                  <div
-                    id="chatPersonAvatar"
-                    class="avatar-placeholder"
-                  >
-                    👤
-                  </div>
-
-                  <div>
-
-                    <strong id="chatPersonName">
-                      —
-                    </strong>
-
-                    <span id="chatPersonStatus">
-                      —
-                    </span>
-
-                  </div>
-
-                </div>
-
-
-                <div class="chat-header-actions">
-
-                  <button
-                    id="chatVoiceBtn"
-                    class="icon-button"
-                    type="button"
-                    title="مكالمة صوتية"
-                  >
-                    ☎
-                  </button>
-
-                  <button
-                    id="chatVideoBtn"
-                    class="icon-button"
-                    type="button"
-                    title="مكالمة فيديو"
-                  >
-                    ◉
-                  </button>
-
-                  <button
-                    id="chatMoreBtn"
-                    class="icon-button"
-                    type="button"
-                    title="المزيد"
-                  >
-                    ⋮
-                  </button>
-
-                </div>
-
-              </header>
-
-
-              <div
-                id="messagesContainer"
-                class="messages-container"
-              >
-              </div>
-
-
-              <form
-                id="messageForm"
-                class="message-composer"
-              >
-
-                <button
-                  id="attachFileBtn"
-                  type="button"
-                  class="composer-button"
-                  title="إرفاق"
-                >
-                  +
-                </button>
-
-
-                <input
-                  id="messageInput"
-                  type="text"
-                  autocomplete="off"
-                  placeholder="اكتب رسالة..."
-                >
-
-
-                <button
-                  id="emojiBtn"
-                  type="button"
-                  class="composer-button"
-                  title="رموز"
-                >
-                  ☺
-                </button>
-
-
-                <button
-                  type="submit"
-                  class="send-button"
-                  aria-label="إرسال"
-                >
-                  ←
-                </button>
-
-              </form>
-
-            </div>
-
-          </div>
-
-        </div>
-
-      </section>
-
-
-      <!-- =====================================================
-           FRIENDS
-      ====================================================== -->
-
-      <section
-        id="section-friends"
-        class="app-section"
-        data-page="friends"
-      >
-
-        <div class="section-shell">
-
-          <div class="page-header">
-
-            <div>
-
-              <span class="section-label">
-                SOCIAL
-              </span>
-
-              <h1>
-                الأصدقاء
-              </h1>
-
-              <p>
-                إدارة الأصدقاء والطلبات والمتابعة.
-              </p>
-
-            </div>
-
-
-            <button
-              id="findFriendsBtn"
-              class="primary-button"
-              type="button"
-            >
-              اكتشف أشخاصاً
-            </button>
-
-          </div>
-
-
-          <div class="friends-tabs">
-
-            <button
-              class="friend-tab active"
-              data-friend-tab="friends"
-              type="button"
-            >
-              أصدقائي
-            </button>
-
-            <button
-              class="friend-tab"
-              data-friend-tab="requests"
-              type="button"
-            >
-              الطلبات
-            </button>
-
-            <button
-              class="friend-tab"
-              data-friend-tab="following"
-              type="button"
-            >
-              أتابعهم
-            </button>
-
-            <button
-              class="friend-tab"
-              data-friend-tab="followers"
-              type="button"
-            >
-              المتابعون
-            </button>
-
-          </div>
-
-
-          <div
-            id="friendsContent"
-            class="friends-content"
-          >
-
-            <div class="empty-state">
-
-              <div class="empty-icon large">
-                ◎
-              </div>
-
-              <h2>
-                لا يوجد أصدقاء بعد
-              </h2>
-
-              <p>
-                لن يتم اختراع حسابات هنا.
-                البيانات ستأتي من نظام المستخدمين الحقيقي.
-              </p>
-
-            </div>
-
-          </div>
-
-        </div>
-
-      </section>
-
-
-      <!-- =====================================================
-           NOTIFICATIONS
-      ====================================================== -->
-
-      <section
-        id="section-notifications"
-        class="app-section"
-        data-page="notifications"
-      >
-
-        <div class="section-shell narrow-shell">
-
-          <div class="page-header">
-
-            <div>
-
-              <span class="section-label">
-                ACTIVITY
-              </span>
-
-              <h1>
-                الإشعارات
-              </h1>
-
-              <p>
-                تابع آخر النشاطات المتعلقة بحسابك.
-              </p>
-
-            </div>
-
-
-            <button
-              id="markNotificationsReadBtn"
-              class="ghost-button"
-              type="button"
-            >
-              تحديد الكل كمقروء
-            </button>
-
-          </div>
-
-
-          <div class="notification-toolbar">
-
-            <button
-              class="notification-filter active"
-              data-notification-filter="all"
-              type="button"
-            >
-              الكل
-            </button>
-
-            <button
-              class="notification-filter"
-              data-notification-filter="unread"
-              type="button"
-            >
-              غير المقروءة
-            </button>
-
-          </div>
-
-
-          <div
-            id="notificationsList"
-            class="notifications-list"
-          >
-
-            <div class="empty-state">
-
-              <div class="empty-icon large">
-                ♧
-              </div>
-
-              <h2>
-                لا توجد إشعارات
-              </h2>
-
-              <p>
-                ستظهر إشعارات الحساب الحقيقية هنا.
-              </p>
-
-            </div>
-
-          </div>
-
-        </div>
-
-      </section>
-
-
-      <!-- =====================================================
-           PROFILE
-      ====================================================== -->
-
-      <section
-        id="section-profile"
-        class="app-section"
-        data-page="profile"
-      >
-
-        <div class="section-shell">
-
-          <div class="profile-cover">
-
-            <div class="profile-cover-pattern"></div>
-            <div class="profile-cover-glow"></div>
-
-          </div>
-
-
-          <div class="profile-header-card">
-
-            <div class="profile-avatar-large">
-
-              <div
-                id="profileAvatar"
-                class="avatar-placeholder huge"
-              >
-                👤
-              </div>
-
-              <span
-                id="profileOnlineDot"
-                class="profile-online-dot hidden"
-              ></span>
-
-            </div>
-
-
-            <div class="profile-main-info">
-
-              <span class="section-label">
-                MY PROFILE
-              </span>
-
-              <h1 id="profileName">
-                زائر الجوكر
-              </h1>
-
-              <p id="profileBio">
-                أكمل ملفك الشخصي بعد تسجيل الدخول.
-              </p>
-
-
-              <div class="profile-tags">
-
-                <span>
-                  JOKER MEMBER
-                </span>
-
-              </div>
-
-            </div>
-
-
-            <div class="profile-actions">
-
-              <button
-                id="editProfileBtn"
-                class="primary-button"
-                type="button"
-              >
-                تعديل الملف
-              </button>
-
-              <button
-                id="profileShareBtn"
-                class="ghost-button"
-                type="button"
-              >
-                مشاركة
-              </button>
-
-            </div>
-
-          </div>
-
-
-          <div class="profile-stats">
-
-            <div class="profile-stat">
-
-              <strong id="profileFriendsCount">
-                0
-              </strong>
-
-              <span>
-                أصدقاء
-              </span>
-
-            </div>
-
-
-            <div class="profile-stat">
-
-              <strong id="profileFollowersCount">
-                0
-              </strong>
-
-              <span>
-                متابعون
-              </span>
-
-            </div>
-
-
-            <div class="profile-stat">
-
-              <strong id="profileFollowingCount">
-                0
-              </strong>
-
-              <span>
-                أتابع
-              </span>
-
-            </div>
-
-
-            <div class="profile-stat">
-
-              <strong id="profileLevel">
-                1
-              </strong>
-
-              <span>
-                المستوى
-              </span>
-
-            </div>
-
-          </div>
-
-
-          <!-- PROFILE TABS -->
-
-          <div class="profile-tabs">
-
-            <button
-              class="profile-tab active"
-              data-profile-tab="posts"
-              type="button"
-            >
-              المنشورات
-            </button>
-
-            <button
-              class="profile-tab"
-              data-profile-tab="media"
-              type="button"
-            >
-              الوسائط
-            </button>
-
-            <button
-              class="profile-tab"
-              data-profile-tab="about"
-              type="button"
-            >
-              عني
-            </button>
-
-          </div>
-
-
-          <div
-            id="profileContent"
-            class="profile-content-grid"
-          >
-
-
-            <!-- PROFILE POSTS -->
-
-            <div
-              id="profilePostsPanel"
-              class="content-card profile-panel"
-            >
-
-              <div class="card-heading">
-
-                <div>
-
-                  <span class="section-label">
-                    POSTS
-                  </span>
-
-                  <h2>
-                    منشوراتي
-                  </h2>
-
-                </div>
-
-              </div>
-
-
-              <div
-                id="profilePosts"
-                class="profile-posts"
-              >
-
-                <div class="empty-state compact">
-
-                  <div class="empty-icon">
-                    ✦
-                  </div>
-
-                  <p>
-                    لا توجد منشورات.
-                  </p>
-
-                </div>
-
-              </div>
-
-            </div>
-
-
-            <!-- ABOUT -->
-
-            <div
-              id="profileAboutPanel"
-              class="content-card profile-panel hidden"
-            >
-
-              <div class="card-heading">
-
-                <div>
-
-                  <span class="section-label">
-                    ABOUT
-                  </span>
-
-                  <h2>
-                    عني
-                  </h2>
-
-                </div>
-
-              </div>
-
-
-              <div
-                id="profileAbout"
-                class="profile-about"
-              >
-                لم تتم إضافة معلومات بعد.
-              </div>
-
-            </div>
-
-
-            <!-- MEDIA -->
-
-            <div
-              id="profileMediaPanel"
-              class="content-card profile-panel hidden"
-            >
-
-              <div class="card-heading">
-
-                <div>
-
-                  <span class="section-label">
-                    MEDIA
-                  </span>
-
-                  <h2>
-                    الوسائط
-                  </h2>
-
-                </div>
-
-              </div>
-
-
-              <div
-                id="profileMedia"
-                class="profile-media-grid"
-              >
-
-                <div class="empty-state compact">
-
-                  <div class="empty-icon">
-                    ▧
-                  </div>
-
-                  <p>
-                    لا توجد وسائط.
-                  </p>
-
-                </div>
-
-              </div>
-
-            </div>
-
-          </div>
-
-        </div>
-
-      </section>
-
-
-      <!-- =====================================================
-           COINS
-      ====================================================== -->
-
-      <section
-        id="section-coins"
-        class="app-section"
-        data-page="coins"
-      >
-
-        <div class="section-shell">
-
-          <div class="page-header">
-
-            <div>
-
-              <span class="section-label">
-                WALLET
-              </span>
-
-              <h1>
-                العملات
-              </h1>
-
-              <p>
-                محفظتك ونظام العملات والهدايا.
-              </p>
-
-            </div>
-
-          </div>
-
-
-          <div class="wallet-hero">
-
-            <div class="wallet-coin-art">
-              ◈
-            </div>
-
-
-            <div class="wallet-info">
-
-              <span>
-                رصيدك الحالي
-              </span>
-
-              <strong id="coinBalance">
-                0
-              </strong>
-
-              <small>
-                العملات
-              </small>
-
-            </div>
-
-
-            <div class="wallet-actions">
-
-              <button
-                id="buyCoinsBtn"
-                class="primary-button"
-                type="button"
-              >
-                شراء عملات
-              </button>
-
-              <button
-                id="coinHistoryBtn"
-                class="ghost-button"
-                type="button"
-              >
-                سجل العمليات
-              </button>
-
-            </div>
-
-          </div>
-
-
-          <div class="wallet-stats">
-
-            <div class="wallet-stat">
-
-              <span>
-                الرصيد
-              </span>
-
-              <strong id="walletBalanceSmall">
-                0
-              </strong>
-
-            </div>
-
-
-            <div class="wallet-stat">
-
-              <span>
-                الهدايا المرسلة
-              </span>
-
-              <strong id="sentGiftsCount">
-                0
-              </strong>
-
-            </div>
-
-
-            <div class="wallet-stat">
-
-              <span>
-                الهدايا المستلمة
-              </span>
-
-              <strong id="receivedGiftsCount">
-                0
-              </strong>
-
-            </div>
-
-          </div>
-
-
-          <div class="wallet-grid">
-
-            <div class="content-card">
-
-              <div class="card-heading">
-
-                <div>
-
-                  <span class="section-label">
-                    TRANSACTIONS
-                  </span>
-
-                  <h2>
-                    آخر العمليات
-                  </h2>
-
-                </div>
-
-              </div>
-
-
-              <div
-                id="coinTransactions"
-                class="transactions-list"
-              >
-
-                <div class="empty-state compact">
-
-                  <div class="empty-icon">
-                    ◈
-                  </div>
-
-                  <p>
-                    لا توجد عمليات مسجلة.
-                  </p>
-
-                </div>
-
-              </div>
-
-            </div>
-
-
-            <div class="content-card">
-
-              <div class="card-heading">
-
-                <div>
-
-                  <span class="section-label">
-                    GIFTS
-                  </span>
-
-                  <h2>
-                    الهدايا
-                  </h2>
-
-                </div>
-
-              </div>
-
-
-              <div class="gift-preview">
-
-                <div class="gift-icon">
-                  ✦
-                </div>
-
-                <h3>
-                  الهدايا الرقمية
-                </h3>
-
-                <p>
-                  إرسال واستقبال الهدايا سيكون مرتبطاً
-                  برصيد الحساب الحقيقي.
-                </p>
-
-                <button
-                  id="openGiftStoreBtn"
-                  class="primary-button"
-                  type="button"
-                >
-                  استكشف الهدايا
-                </button>
-
-              </div>
-
-            </div>
-
-          </div>
-
-        </div>
-
-      </section>
-
-
-      <!-- =====================================================
-           STORE
-      ====================================================== -->
-
-      <section
-        id="section-store"
-        class="app-section"
-        data-page="store"
-      >
-
-        <div class="section-shell">
-
-          <div class="page-header">
-
-            <div>
-
-              <span class="section-label">
-                JOKER STORE
-              </span>
-
-              <h1>
-                المتجر
-              </h1>
-
-              <p>
-                تخصيص الحساب والعناصر الرقمية والهدايا.
-              </p>
-
-            </div>
-
-            <div class="store-balance">
-
-              <span>
-                رصيدك
-              </span>
-
-              <strong>
-                ◈
-                <b id="storeCoinBalance">
-                  0
-                </b>
-              </strong>
-
-            </div>
-
-          </div>
-
-
-          <div class="store-tabs">
-
-            <button
-              class="store-tab active"
-              data-store-tab="featured"
-              type="button"
-            >
-              مميز
-            </button>
-
-            <button
-              class="store-tab"
-              data-store-tab="avatars"
-              type="button"
-            >
-              صور
-            </button>
-
-            <button
-              class="store-tab"
-              data-store-tab="frames"
-              type="button"
-            >
-              إطارات
-            </button>
-
-            <button
-              class="store-tab"
-              data-store-tab="gifts"
-              type="button"
-            >
-              هدايا
-            </button>
-
-            <button
-              class="store-tab"
-              data-store-tab="badges"
-              type="button"
-            >
-              شارات
-            </button>
-
-          </div>
-
-
-          <div
-            id="storeGrid"
-            class="store-grid"
-          >
-
-            <div class="empty-state">
-
-              <div class="empty-icon large">
-                ▣
-              </div>
-
-              <h2>
-                المتجر قيد التجهيز
-              </h2>
-
-              <p>
-                العناصر القابلة للشراء ستُربط بنظام العملات والحساب.
-              </p>
-
-            </div>
-
-          </div>
-
-        </div>
-
-      </section>
-
-    </main>
-
-
-    <!-- =======================================================
-         MOBILE BOTTOM NAV
-    ======================================================== -->
-
-    <nav class="mobile-bottom-nav">
-
-      <button
-        class="mobile-nav-item active"
-        data-section="home"
-        type="button"
-      >
-
-        <span>
-          ⌂
-        </span>
-
-        <small>
-          الرئيسية
-        </small>
-
-      </button>
-
-
-      <button
-        class="mobile-nav-item"
-        data-section="discover"
-        type="button"
-      >
-
-        <span>
-          ✦
-        </span>
-
-        <small>
-          اكتشف
-        </small>
-
-      </button>
-
-
-      <button
-        class="mobile-nav-item mobile-center-action"
-        id="mobileCreateBtn"
-        type="button"
-      >
-
-        <span>
-          +
-        </span>
-
-      </button>
-
-
-      <button
-        class="mobile-nav-item"
-        data-section="chat"
-        type="button"
-      >
-
-        <span>
-          ▱
-        </span>
-
-        <small>
-          محادثات
-        </small>
-
-      </button>
-
-
-      <button
-        class="mobile-nav-item"
-        data-section="profile"
-        type="button"
-      >
-
-        <span>
-          ◉
-        </span>
-
-        <small>
-          حسابي
-        </small>
-
-      </button>
-
-    </nav>
-
-  </div>
-
-
-  <!-- =========================================================
-       SEARCH MODAL
-  ========================================================== -->
-
-  <div
-    id="searchModal"
-    class="modal-overlay hidden"
-    role="dialog"
-    aria-modal="true"
-  >
-
-    <div class="modal-card search-modal-card">
-
-      <button
-        class="modal-close"
-        data-close-modal="searchModal"
-        type="button"
-      >
-        ×
-      </button>
-
-
-      <div class="modal-header">
-
-        <span class="section-label">
-          SEARCH
-        </span>
-
-        <h2>
-          ابحث في الجوكر
-        </h2>
-
-        <p>
-          أشخاص، غرف، ألعاب، منشورات ومحتوى.
-        </p>
-
-      </div>
-
-
-      <div class="large-search">
-
-        <span>
-          ⌕
-        </span>
-
-        <input
-          id="globalSearchInput"
-          type="search"
-          placeholder="اكتب ما تبحث عنه..."
-          autocomplete="off"
-        >
-
-      </div>
-
-
-      <div class="search-type-tabs">
-
-        <button
-          class="search-type active"
-          data-search-type="all"
-          type="button"
-        >
-          الكل
-        </button>
-
-        <button
-          class="search-type"
-          data-search-type="people"
-          type="button"
-        >
-          أشخاص
-        </button>
-
-        <button
-          class="search-type"
-          data-search-type="rooms"
-          type="button"
-        >
-          غرف
-        </button>
-
-        <button
-          class="search-type"
-          data-search-type="posts"
-          type="button"
-        >
-          منشورات
-        </button>
-
-      </div>
-
-
-      <div
-        id="searchResults"
-        class="search-results"
-      >
-
-        <div class="empty-state compact">
-
-          <div class="empty-icon">
-            ⌕
-          </div>
-
-          <p>
-            ابدأ بالبحث.
-          </p>
-
-        </div>
-
-      </div>
-
-    </div>
-
-  </div>
-
-
-  <!-- =========================================================
-       POST COMPOSER MODAL
-  ========================================================== -->
-
-  <div
-    id="postModal"
-    class="modal-overlay hidden"
-    role="dialog"
-    aria-modal="true"
-  >
-
-    <div class="modal-card post-composer-modal">
-
-      <button
-        class="modal-close"
-        data-close-modal="postModal"
-        type="button"
-      >
-        ×
-      </button>
-
-
-      <div class="modal-header">
-
-        <span class="section-label">
-          CREATE POST
-        </span>
-
-        <h2>
-          إنشاء منشور
-        </h2>
-
-        <p>
-          شارك شيئاً مع عالم الجوكر.
-        </p>
-
-      </div>
-
-
-      <form id="postForm">
-
-        <div class="composer-author">
-
-          <div
-            id="composerAvatar"
-            class="avatar-placeholder"
-          >
-            👤
-          </div>
-
-          <div>
-
-            <strong id="composerAuthorName">
-              حسابك
-            </strong>
-
-            <small>
-              منشور عام
+</body>
+  </html>
