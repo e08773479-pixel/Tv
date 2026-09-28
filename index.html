@@ -3,397 +3,418 @@
 <head>
   <meta charset="UTF-8">
 
-  <meta name="viewport"
-        content="width=device-width, initial-scale=1.0,
-        maximum-scale=1.0, user-scalable=no">
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+  >
 
-  <meta name="theme-color" content="#08090f">
-  <meta name="description" content="الجوكر 👑 — منصة اجتماعية وترفيهية متكاملة">
+  <meta name="theme-color" content="#07080d">
+  <meta
+    name="description"
+    content="الجوكر 👑 — منصة اجتماعية للغرف والمحادثات والألعاب والتواصل"
+  >
 
-  <title>الجوكر 👑</title>
+  <title>الجوكر 👑 | منصة اجتماعية</title>
 
+  <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&family=Orbitron:wght@500;600;700;800&display=swap"
-        rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&family=Orbitron:wght@400;500;600;700;800;900&display=swap"
+    rel="stylesheet"
+  >
 
+  <!-- Main stylesheet -->
   <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-  <!-- =====================================================
-       APP LOADER
-  ====================================================== -->
+  <!-- =========================================================
+       GLOBAL BACKGROUND
+  ========================================================== -->
 
-  <div id="appLoader" class="app-loader">
-
-    <div class="loader-background"></div>
-
-    <div class="loader-content">
-
-      <div class="joker-mark loader-mark">
-        <span>J</span>
-        <i>♠</i>
-      </div>
-
-      <div class="loader-title">
-        الجوكر
-        <span>👑</span>
-      </div>
-
-      <div class="loader-subtitle">
-        مساحة واحدة لكل ما تحب
-      </div>
-
-      <div class="loader-progress">
-        <div id="loaderProgress"></div>
-      </div>
-
-      <div id="loaderStatus" class="loader-status">
-        جاري تجهيز المنصة...
-      </div>
-
-    </div>
+  <div class="app-background">
+    <div class="bg-noise"></div>
+    <div class="bg-grid"></div>
+    <div class="bg-glow glow-one"></div>
+    <div class="bg-glow glow-two"></div>
+    <div class="bg-glow glow-three"></div>
   </div>
 
 
-  <!-- =====================================================
-       AUTH
-  ====================================================== -->
+  <!-- =========================================================
+       SPLASH SCREEN
+  ========================================================== -->
+
+  <section id="splashScreen" class="splash-screen">
+
+    <div class="splash-particles"></div>
+
+    <div class="splash-logo">
+
+      <div class="logo-crown">
+        ♛
+      </div>
+
+      <div class="logo-title">
+        JOKER
+      </div>
+
+      <div class="logo-arabic">
+        الجوكر
+      </div>
+
+      <div class="logo-line"></div>
+
+      <p>
+        CONNECT • PLAY • TALK • CREATE
+      </p>
+
+    </div>
+
+    <div class="splash-loader">
+
+      <div class="loader-track">
+        <div id="splashProgress" class="loader-progress"></div>
+      </div>
+
+      <div class="loader-info">
+        <span id="splashStatus">
+          جاري تجهيز المنصة...
+        </span>
+
+        <span id="splashPercent">
+          0%
+        </span>
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- =========================================================
+       AUTH SCREEN
+  ========================================================== -->
 
   <section id="authScreen" class="auth-screen hidden">
 
-    <div class="auth-visual">
+    <div class="auth-background">
+      <div class="auth-orb auth-orb-one"></div>
+      <div class="auth-orb auth-orb-two"></div>
+      <div class="auth-lines"></div>
+    </div>
 
-      <div class="auth-orb orb-one"></div>
-      <div class="auth-orb orb-two"></div>
-      <div class="auth-orb orb-three"></div>
-
-      <div class="auth-stars"></div>
+    <div class="auth-container">
 
       <div class="auth-brand">
 
-        <div class="joker-mark big">
-          <span>J</span>
-          <i>♠</i>
+        <div class="auth-crown">
+          ♛
         </div>
 
-        <h1>الجوكر <span>👑</span></h1>
+        <div class="auth-brand-name">
+          JOKER
+        </div>
+
+        <div class="auth-brand-ar">
+          الجوكر
+        </div>
 
         <p>
-          عالم اجتماعي وترفيهي يتجمع فيه الناس،
-          الألعاب، الغرف والمحادثات في مكان واحد.
+          عالمك الاجتماعي يبدأ من هنا
         </p>
 
       </div>
 
-      <div class="auth-floating-card card-a">
-        <span>♠</span>
-        <strong>JOKER</strong>
-      </div>
 
-      <div class="auth-floating-card card-b">
-        <span>👑</span>
-        <strong>YOUR WORLD</strong>
-      </div>
+      <div class="auth-card">
 
-    </div>
+        <div class="auth-card-header">
 
+          <span class="auth-eyebrow">
+            WELCOME
+          </span>
 
-    <div class="auth-panel">
+          <h1 id="authTitle">
+            أهلاً بك في الجوكر
+          </h1>
 
-      <div class="auth-panel-inner">
+          <p id="authSubtitle">
+            سجّل دخولك للوصول إلى عالمك
+          </p>
 
-        <div class="auth-mobile-logo">
-          <div class="joker-mark">
-            <span>J</span>
-            <i>♠</i>
-          </div>
-          <strong>الجوكر 👑</strong>
         </div>
 
 
-        <!-- LOGIN -->
+        <!-- LOGIN FORM -->
 
-        <div id="loginView" class="auth-view">
+        <form id="loginForm" class="auth-form">
 
-          <div class="auth-heading">
-            <span class="eyebrow">WELCOME BACK</span>
+          <div class="input-group">
 
-            <h2>
-              أهلاً بعودتك
-            </h2>
+            <label for="loginEmail">
+              البريد الإلكتروني
+            </label>
 
-            <p>
-              ادخل إلى حسابك واستكمل تجربتك.
-            </p>
+            <div class="input-box">
+
+              <span class="input-icon">
+                ✉
+              </span>
+
+              <input
+                id="loginEmail"
+                type="email"
+                placeholder="example@email.com"
+                autocomplete="email"
+              >
+
+            </div>
+
           </div>
 
 
-          <form id="loginForm" class="auth-form">
+          <div class="input-group">
 
-            <label>
-              البريد الإلكتروني
-
-              <div class="input-wrap">
-                <span>✉</span>
-                <input
-                  id="loginEmail"
-                  type="email"
-                  autocomplete="email"
-                  placeholder="example@email.com"
-                  required>
-              </div>
-            </label>
-
-
-            <label>
+            <label for="loginPassword">
               كلمة المرور
-
-              <div class="input-wrap">
-                <span>••</span>
-                <input
-                  id="loginPassword"
-                  type="password"
-                  autocomplete="current-password"
-                  placeholder="كلمة المرور"
-                  required>
-
-                <button
-                  type="button"
-                  class="password-toggle"
-                  data-target="loginPassword">
-                  ◉
-                </button>
-              </div>
             </label>
 
+            <div class="input-box">
 
-            <div class="auth-options">
+              <span class="input-icon">
+                ◉
+              </span>
 
-              <label class="remember">
-                <input id="rememberMe" type="checkbox">
-                <span></span>
-                تذكرني
-              </label>
+              <input
+                id="loginPassword"
+                type="password"
+                placeholder="••••••••"
+                autocomplete="current-password"
+              >
 
               <button
                 type="button"
-                id="forgotPasswordBtn"
-                class="text-button">
-                نسيت كلمة المرور؟
+                class="password-toggle"
+                data-password-toggle="loginPassword"
+                aria-label="إظهار كلمة المرور"
+              >
+                ◌
               </button>
 
             </div>
 
+          </div>
+
+
+          <div class="form-options">
+
+            <label class="remember-option">
+
+              <input
+                id="rememberMe"
+                type="checkbox"
+              >
+
+              <span>
+                تذكرني
+              </span>
+
+            </label>
 
             <button
-              type="submit"
-              class="primary-auth-btn">
-
-              <span>تسجيل الدخول</span>
-              <b>←</b>
-
+              type="button"
+              id="forgotPasswordBtn"
+              class="text-button"
+            >
+              نسيت كلمة المرور؟
             </button>
 
-          </form>
-
-
-          <div class="divider">
-            <span>أو</span>
           </div>
 
 
           <button
-            id="googleLoginBtn"
-            type="button"
-            class="google-btn">
-
-            <span class="google-icon">G</span>
+            type="submit"
+            class="primary-button auth-submit"
+          >
 
             <span>
-              المتابعة باستخدام Google
+              تسجيل الدخول
+            </span>
+
+            <span class="button-arrow">
+              ←
             </span>
 
           </button>
 
+        </form>
 
-          <div class="auth-bottom">
 
-            <span>
-              ليس لديك حساب؟
-            </span>
+        <!-- REGISTER FORM -->
 
-            <button
-              type="button"
-              class="text-button strong"
-              data-auth-switch="register">
-              إنشاء حساب
-            </button>
+        <form id="registerForm" class="auth-form hidden">
+
+          <div class="input-group">
+
+            <label for="registerName">
+              الاسم
+            </label>
+
+            <div class="input-box">
+
+              <span class="input-icon">
+                ◉
+              </span>
+
+              <input
+                id="registerName"
+                type="text"
+                placeholder="اكتب اسمك"
+                autocomplete="name"
+              >
+
+            </div>
 
           </div>
+
+
+          <div class="input-group">
+
+            <label for="registerEmail">
+              البريد الإلكتروني
+            </label>
+
+            <div class="input-box">
+
+              <span class="input-icon">
+                ✉
+              </span>
+
+              <input
+                id="registerEmail"
+                type="email"
+                placeholder="example@email.com"
+                autocomplete="email"
+              >
+
+            </div>
+
+          </div>
+
+
+          <div class="input-group">
+
+            <label for="registerPassword">
+              كلمة المرور
+            </label>
+
+            <div class="input-box">
+
+              <span class="input-icon">
+                ◉
+              </span>
+
+              <input
+                id="registerPassword"
+                type="password"
+                placeholder="أنشئ كلمة مرور"
+                autocomplete="new-password"
+              >
+
+              <button
+                type="button"
+                class="password-toggle"
+                data-password-toggle="registerPassword"
+                aria-label="إظهار كلمة المرور"
+              >
+                ◌
+              </button>
+
+            </div>
+
+          </div>
+
+
+          <button
+            type="submit"
+            class="primary-button auth-submit"
+          >
+
+            <span>
+              إنشاء الحساب
+            </span>
+
+            <span class="button-arrow">
+              ←
+            </span>
+
+          </button>
+
+        </form>
+
+
+        <div class="auth-divider">
+
+          <span></span>
+
+          <b>
+            أو
+          </b>
+
+          <span></span>
 
         </div>
 
 
-        <!-- REGISTER -->
+        <!-- GOOGLE -->
 
-        <div id="registerView" class="auth-view hidden">
+        <button
+          id="googleLoginBtn"
+          type="button"
+          class="google-button"
+        >
 
-          <div class="auth-heading">
+          <span class="google-icon">
+            G
+          </span>
 
-            <span class="eyebrow">CREATE ACCOUNT</span>
+          <span>
+            المتابعة باستخدام Google
+          </span>
 
-            <h2>
-              أنشئ حسابك
-            </h2>
-
-            <p>
-              ابدأ حسابك الحقيقي على الجوكر.
-            </p>
-
-          </div>
-
-
-          <form id="registerForm" class="auth-form">
-
-            <label>
-              الاسم
-
-              <div class="input-wrap">
-                <span>◉</span>
-
-                <input
-                  id="registerName"
-                  type="text"
-                  autocomplete="name"
-                  placeholder="اسمك"
-                  minlength="2"
-                  required>
-              </div>
-            </label>
+        </button>
 
 
-            <label>
-              البريد الإلكتروني
+        <div class="auth-switch">
 
-              <div class="input-wrap">
-                <span>✉</span>
-
-                <input
-                  id="registerEmail"
-                  type="email"
-                  autocomplete="email"
-                  placeholder="example@email.com"
-                  required>
-              </div>
-            </label>
-
-
-            <label>
-              كلمة المرور
-
-              <div class="input-wrap">
-                <span>••</span>
-
-                <input
-                  id="registerPassword"
-                  type="password"
-                  autocomplete="new-password"
-                  placeholder="8 أحرف على الأقل"
-                  minlength="8"
-                  required>
-
-                <button
-                  type="button"
-                  class="password-toggle"
-                  data-target="registerPassword">
-                  ◉
-                </button>
-              </div>
-            </label>
-
-
-            <label>
-              تأكيد كلمة المرور
-
-              <div class="input-wrap">
-                <span>••</span>
-
-                <input
-                  id="registerConfirmPassword"
-                  type="password"
-                  autocomplete="new-password"
-                  placeholder="أعد كتابة كلمة المرور"
-                  minlength="8"
-                  required>
-              </div>
-            </label>
-
-
-            <label class="terms-check">
-
-              <input
-                id="acceptTerms"
-                type="checkbox"
-                required>
-
-              <span></span>
-
-              <small>
-                أوافق على شروط استخدام المنصة وسياسة الخصوصية.
-              </small>
-
-            </label>
-
-
-            <button
-              type="submit"
-              class="primary-auth-btn">
-
-              <span>إنشاء الحساب</span>
-              <b>←</b>
-
-            </button>
-
-          </form>
-
-
-          <div class="divider">
-            <span>أو</span>
-          </div>
-
+          <span id="authSwitchText">
+            ليس لديك حساب؟
+          </span>
 
           <button
-            id="googleRegisterBtn"
             type="button"
-            class="google-btn">
-
-            <span class="google-icon">G</span>
-
-            <span>
-              التسجيل باستخدام Google
-            </span>
-
+            id="authSwitchBtn"
+            class="text-button strong"
+          >
+            إنشاء حساب
           </button>
 
+        </div>
 
-          <div class="auth-bottom">
 
-            <span>
-              لديك حساب بالفعل؟
-            </span>
+        <div class="auth-note">
 
-            <button
-              type="button"
-              class="text-button strong"
-              data-auth-switch="login">
-              تسجيل الدخول
-            </button>
+          <span>
+            🔒
+          </span>
 
-          </div>
+          <p>
+            تسجيل الدخول الحقيقي سيتم ربطه بمزود المصادقة عند تجهيز الـ Backend.
+          </p>
 
         </div>
 
@@ -404,14 +425,16 @@
   </section>
 
 
-  <!-- =====================================================
+  <!-- =========================================================
        MAIN APPLICATION
-  ====================================================== -->
+  ========================================================== -->
 
-  <main id="app" class="app hidden">
+  <div id="mainApp" class="main-app hidden">
 
 
-    <!-- TOP BAR -->
+    <!-- =======================================================
+         TOP BAR
+    ======================================================== -->
 
     <header class="topbar">
 
@@ -419,42 +442,54 @@
 
         <button
           id="mobileMenuBtn"
-          class="icon-btn mobile-only"
-          aria-label="القائمة">
+          class="icon-button mobile-only"
+          type="button"
+          aria-label="القائمة"
+        >
           ☰
         </button>
 
 
         <button
-          class="brand"
-          data-route="home">
+          id="brandHomeBtn"
+          class="brand-mini"
+          type="button"
+        >
 
-          <div class="joker-mark small">
-            <span>J</span>
-            <i>♠</i>
-          </div>
+          <span class="brand-mini-crown">
+            ♛
+          </span>
 
-          <div class="brand-text">
-            <strong>الجوكر</strong>
-            <small>JOKER</small>
-          </div>
+          <span class="brand-mini-text">
+            الجوكر
+          </span>
 
         </button>
 
       </div>
 
 
-      <div class="global-search">
+      <div class="topbar-center">
 
-        <span>⌕</span>
+        <button
+          id="globalSearchBtn"
+          class="global-search"
+          type="button"
+        >
 
-        <input
-          id="globalSearch"
-          type="search"
-          placeholder="ابحث عن ألعاب، غرف، أشخاص..."
-          autocomplete="off">
+          <span>
+            ⌕
+          </span>
 
-        <kbd>⌘ K</kbd>
+          <span class="search-placeholder">
+            ابحث عن أشخاص، غرف، ألعاب...
+          </span>
+
+          <kbd>
+            /
+          </kbd>
+
+        </button>
 
       </div>
 
@@ -462,24 +497,28 @@
       <div class="topbar-left">
 
         <button
-          id="themeToggle"
-          class="icon-btn"
-          title="تغيير المظهر">
-          ◐
+          id="quickCameraBtn"
+          class="icon-button"
+          type="button"
+          aria-label="الكاميرا"
+        >
+          ◉
         </button>
 
 
         <button
           id="notificationsBtn"
-          class="icon-btn notification-btn"
-          data-route="notifications"
-          title="الإشعارات">
+          class="icon-button notification-trigger"
+          type="button"
+          aria-label="الإشعارات"
+        >
 
-          ♢
+          ♧
 
           <span
             id="notificationBadge"
-            class="notification-badge hidden">
+            class="notification-badge hidden"
+          >
             0
           </span>
 
@@ -488,25 +527,15 @@
 
         <button
           id="topProfileBtn"
-          class="user-mini"
-          data-route="profile">
+          class="top-avatar"
+          type="button"
+        >
 
           <div
-            id="topAvatar"
-            class="avatar avatar-sm">
-            ?
-          </div>
-
-          <div class="user-mini-info">
-
-            <strong id="topUserName">
-              حسابك
-            </strong>
-
-            <small id="topUserStatus">
-              الحساب
-            </small>
-
+            id="topAvatarPlaceholder"
+            class="avatar-placeholder"
+          >
+            👤
           </div>
 
         </button>
@@ -516,206 +545,242 @@
     </header>
 
 
-    <!-- SIDEBAR -->
+    <!-- =======================================================
+         SIDE NAVIGATION
+    ======================================================== -->
 
-    <aside id="sidebar" class="sidebar">
+    <aside id="sideNav" class="side-nav">
 
-      <div class="sidebar-scroll">
+      <div class="side-brand">
 
-        <div class="sidebar-section">
+        <div class="side-brand-logo">
+          ♛
+        </div>
 
-          <span class="sidebar-label">
+        <div>
+
+          <strong>
+            JOKER
+          </strong>
+
+          <small>
+            SOCIAL WORLD
+          </small>
+
+        </div>
+
+      </div>
+
+
+      <nav class="main-navigation">
+
+        <button
+          class="nav-item active"
+          data-section="home"
+          type="button"
+        >
+
+          <span class="nav-icon">
+            ⌂
+          </span>
+
+          <span>
             الرئيسية
           </span>
 
-
-          <button
-            class="nav-item active"
-            data-route="home">
-
-            <i>⌂</i>
-            <span>الرئيسية</span>
-
-          </button>
+        </button>
 
 
-          <button
-            class="nav-item"
-            data-route="discover">
+        <button
+          class="nav-item"
+          data-section="discover"
+          type="button"
+        >
 
-            <i>✦</i>
-            <span>اكتشف</span>
-
-          </button>
-
-
-          <button
-            class="nav-item"
-            data-route="search">
-
-            <i>⌕</i>
-            <span>البحث</span>
-
-          </button>
-
-        </div>
-
-
-        <div class="sidebar-section">
-
-          <span class="sidebar-label">
-            تواصل
+          <span class="nav-icon">
+            ✦
           </span>
 
-
-          <button
-            class="nav-item"
-            data-route="rooms">
-
-            <i>◉</i>
-            <span>الغرف</span>
-
-            <em id="roomsNavCount"></em>
-
-          </button>
-
-
-          <button
-            class="nav-item"
-            data-route="chat">
-
-            <i>▱</i>
-            <span>المحادثات</span>
-
-          </button>
-
-
-          <button
-            class="nav-item"
-            data-route="friends">
-
-            <i>♧</i>
-            <span>الأصدقاء</span>
-
-          </button>
-
-
-          <button
-            class="nav-item"
-            data-route="notifications">
-
-            <i>♢</i>
-            <span>الإشعارات</span>
-
-            <em
-              id="sideNotificationCount"
-              class="nav-counter hidden">
-              0
-            </em>
-
-          </button>
-
-        </div>
-
-
-        <div class="sidebar-section">
-
-          <span class="sidebar-label">
-            الترفيه
+          <span>
+            اكتشف
           </span>
 
-
-          <button
-            class="nav-item"
-            data-route="games">
-
-            <i>♠</i>
-            <span>الألعاب</span>
-
-          </button>
+        </button>
 
 
-          <button
-            class="nav-item"
-            data-route="wallet">
+        <button
+          class="nav-item"
+          data-section="rooms"
+          type="button"
+        >
 
-            <i>◇</i>
-            <span>المحفظة</span>
-
-          </button>
-
-
-          <button
-            class="nav-item"
-            data-route="store">
-
-            <i>✧</i>
-            <span>المتجر</span>
-
-          </button>
-
-        </div>
-
-
-        <div class="sidebar-section">
-
-          <span class="sidebar-label">
-            حسابك
+          <span class="nav-icon">
+            ◉
           </span>
 
+          <span>
+            الغرف
+          </span>
 
-          <button
-            class="nav-item"
-            data-route="profile">
+          <em class="nav-live">
+            LIVE
+          </em>
 
-            <i>◎</i>
-            <span>الملف الشخصي</span>
-
-          </button>
-
-
-          <button
-            class="nav-item"
-            data-route="settings">
-
-            <i>⚙</i>
-            <span>الإعدادات</span>
-
-          </button>
-
-        </div>
+        </button>
 
 
-        <div class="sidebar-footer">
+        <button
+          class="nav-item"
+          data-section="games"
+          type="button"
+        >
 
-          <div class="sidebar-joker-card">
+          <span class="nav-icon">
+            ♠
+          </span>
 
-            <div class="joker-card-glow"></div>
+          <span>
+            الألعاب
+          </span>
 
-            <div class="joker-mark tiny">
-              <span>J</span>
-              <i>♠</i>
-            </div>
+        </button>
+
+
+        <button
+          class="nav-item"
+          data-section="chat"
+          type="button"
+        >
+
+          <span class="nav-icon">
+            ▱
+          </span>
+
+          <span>
+            المحادثات
+          </span>
+
+          <em
+            id="chatNavBadge"
+            class="nav-badge hidden"
+          >
+            0
+          </em>
+
+        </button>
+
+
+        <button
+          class="nav-item"
+          data-section="friends"
+          type="button"
+        >
+
+          <span class="nav-icon">
+            ◎
+          </span>
+
+          <span>
+            الأصدقاء
+          </span>
+
+        </button>
+
+
+        <button
+          class="nav-item"
+          data-section="notifications"
+          type="button"
+        >
+
+          <span class="nav-icon">
+            ♧
+          </span>
+
+          <span>
+            الإشعارات
+          </span>
+
+        </button>
+
+      </nav>
+
+
+      <div class="nav-separator"></div>
+
+
+      <div class="nav-secondary">
+
+        <button
+          class="nav-item"
+          data-section="profile"
+          type="button"
+        >
+
+          <span class="nav-icon">
+            ◉
+          </span>
+
+          <span>
+            ملفي الشخصي
+          </span>
+
+        </button>
+
+
+        <button
+          class="nav-item"
+          data-section="coins"
+          type="button"
+        >
+
+          <span class="nav-icon">
+            ◈
+          </span>
+
+          <span>
+            العملات
+          </span>
+
+        </button>
+
+
+        <button
+          class="nav-item"
+          data-section="store"
+          type="button"
+        >
+
+          <span class="nav-icon">
+            ▣
+          </span>
+
+          <span>
+            المتجر
+          </span>
+
+        </button>
+
+      </div>
+
+
+      <div class="side-footer">
+
+        <div class="connection-status">
+
+          <span class="status-dot"></span>
+
+          <div>
 
             <strong>
-              عالمك يبدأ هنا
+              النظام جاهز
             </strong>
 
             <small>
-              الجوكر 👑
+              JOKER WORLD
             </small>
 
           </div>
-
-
-          <button
-            id="logoutBtn"
-            class="logout-btn">
-
-            <span>↪</span>
-            تسجيل الخروج
-
-          </button>
 
         </div>
 
@@ -724,360 +789,114 @@
     </aside>
 
 
-    <!-- CONTENT -->
+    <!-- =======================================================
+         MAIN CONTENT
+    ======================================================== -->
 
-    <section id="content" class="content">
-
-
-      <!-- HOME -->
-
-      <div
-        id="page-home"
-        class="page active-page">
+    <main id="appContent" class="app-content">
 
 
-        <section class="hero">
+      <!-- =====================================================
+           HOME
+      ====================================================== -->
 
-          <div class="hero-image"></div>
-          <div class="hero-overlay"></div>
-          <div class="hero-grid"></div>
+      <section
+        id="section-home"
+        class="app-section active-section"
+        data-page="home"
+      >
 
-          <div class="hero-content">
-
-            <span class="hero-kicker">
-              JOKER WORLD
-            </span>
-
-            <h1>
-              عالمك...
-              <span>بطريقتك.</span>
-            </h1>
-
-            <p>
-              مكان واحد للتواصل، اكتشاف الناس،
-              دخول الغرف، والاستمتاع بالألعاب.
-            </p>
+        <div class="section-shell">
 
 
-            <div class="hero-actions">
+          <!-- HERO -->
 
-              <button
-                class="hero-primary"
-                data-route="discover">
+          <div class="hero-banner">
 
-                <span>ابدأ الاكتشاف</span>
-                <b>←</b>
+            <div class="hero-background-art">
 
-              </button>
+              <div class="hero-circle hero-circle-one"></div>
+              <div class="hero-circle hero-circle-two"></div>
 
-
-              <button
-                class="hero-secondary"
-                data-route="rooms">
-
-                ◉
-                استكشف الغرف
-
-              </button>
+              <div class="hero-particles"></div>
 
             </div>
 
-          </div>
 
+            <div class="hero-content">
 
-          <div class="hero-badge">
-
-            <span class="live-dot"></span>
-
-            <div>
-              <strong>JOKER</strong>
-              <small>YOUR SPACE</small>
-            </div>
-
-          </div>
-
-        </section>
-
-
-        <!-- ACCOUNT STRIP -->
-
-        <section
-          id="accountStrip"
-          class="account-strip">
-
-          <div class="account-main">
-
-            <div
-              id="homeAvatar"
-              class="avatar avatar-lg">
-              ?
-            </div>
-
-            <div>
-
-              <span class="muted">
-                مرحباً
+              <span class="hero-kicker">
+                JOKER WORLD
               </span>
 
-              <h2 id="homeUserName">
-                بك 👑
-              </h2>
-
-            </div>
-
-          </div>
-
-
-          <div class="account-stats">
-
-            <div>
-              <span>المستوى</span>
-              <strong id="userLevel">—</strong>
-            </div>
-
-            <div>
-              <span>XP</span>
-              <strong id="userXp">—</strong>
-            </div>
-
-            <div>
-              <span>العملات</span>
-              <strong id="userCoins">—</strong>
-            </div>
-
-          </div>
-
-
-          <button
-            class="account-profile-btn"
-            data-route="profile">
-
-            الملف الشخصي
-            <span>←</span>
-
-          </button>
-
-        </section>
-
-
-        <!-- DISCOVERY GRID -->
-
-        <section class="section-block">
-
-          <div class="section-heading">
-
-            <div>
-
-              <span class="section-kicker">
-                EXPLORE
-              </span>
-
-              <h2>
-                ماذا تريد أن تفعل؟
-              </h2>
-
-            </div>
-
-          </div>
-
-
-          <div class="discovery-grid">
-
-
-            <button
-              class="discovery-card discovery-large"
-              data-route="games">
-
-              <div class="discovery-bg games-bg"></div>
-
-              <div class="discovery-content">
-
-                <span class="discovery-icon">
-                  ♠
-                </span>
-
-                <strong>
-                  الألعاب
-                </strong>
-
-                <small>
-                  ادخل عالم الألعاب والتحديات
-                </small>
-
-                <b>
-                  استكشف ←
-                </b>
-
-              </div>
-
-            </button>
-
-
-            <button
-              class="discovery-card"
-              data-route="rooms">
-
-              <div class="discovery-bg rooms-bg"></div>
-
-              <div class="discovery-content">
-
-                <span class="discovery-icon">
-                  ◉
-                </span>
-
-                <strong>
-                  الغرف
-                </strong>
-
-                <small>
-                  أماكن اجتماعية مباشرة
-                </small>
-
-                <b>
-                  دخول ←
-                </b>
-
-              </div>
-
-            </button>
-
-
-            <button
-              class="discovery-card"
-              data-route="friends">
-
-              <div class="discovery-bg people-bg"></div>
-
-              <div class="discovery-content">
-
-                <span class="discovery-icon">
-                  ♧
-                </span>
-
-                <strong>
-                  الأصدقاء
-                </strong>
-
-                <small>
-                  تواصل مع دائرتك
-                </small>
-
-                <b>
-                  عرض ←
-                </b>
-
-              </div>
-
-            </button>
-
-          </div>
-
-        </section>
-
-
-        <!-- FEATURED VISUALS -->
-
-        <section class="section-block">
-
-          <div class="section-heading">
-
-            <div>
-
-              <span class="section-kicker">
-                JOKER SPACE
-              </span>
-
-              <h2>
-                المنصة بتكبر معاك
-              </h2>
-
-            </div>
-
-            <button
-              class="section-link"
-              data-route="discover">
-              اكتشف المزيد ←
-            </button>
-
-          </div>
-
-
-          <div class="visual-showcase">
-
-            <div class="showcase-main">
-
-              <div class="showcase-image"></div>
-
-              <div class="showcase-overlay"></div>
-
-              <div class="showcase-content">
-
+              <h1>
+                عالمك...
                 <span>
-                  SOCIAL • GAMES • ROOMS
+                  بطريقتك.
                 </span>
+              </h1>
 
-                <h3>
-                  كل عالمك في مكان واحد.
-                </h3>
+              <p>
+                تواصل، اكتشف، العب، وادخل عالم الغرف والمجتمعات
+                في تجربة اجتماعية واحدة.
+              </p>
 
-                <p>
-                  الواجهة مصممة لتتوسع مع الحساب الحقيقي
-                  من غير ما نعيد بناء المنصة.
-                </p>
+
+              <div class="hero-actions">
+
+                <button
+                  class="primary-button"
+                  data-action="discover"
+                  type="button"
+                >
+                  <span>
+                    ابدأ الاستكشاف
+                  </span>
+
+                  <span>
+                    ←
+                  </span>
+                </button>
+
+
+                <button
+                  class="ghost-button"
+                  data-action="create-room"
+                  type="button"
+                >
+                  إنشاء غرفة
+                </button>
 
               </div>
 
             </div>
 
 
-            <div class="showcase-side">
+            <div class="hero-visual">
 
-              <div class="mini-showcase purple">
+              <div class="hero-orbit orbit-one"></div>
+              <div class="hero-orbit orbit-two"></div>
 
-                <span>♠</span>
+              <div class="hero-card-stack">
 
-                <div>
-                  <strong>
-                    ألعاب
-                  </strong>
-
-                  <small>
-                    Multiplayer
-                  </small>
+                <div class="floating-card floating-card-back">
+                  ♠
                 </div>
 
-              </div>
+                <div class="floating-card floating-card-main">
 
+                  <span class="card-crown">
+                    ♛
+                  </span>
 
-              <div class="mini-showcase blue">
-
-                <span>◉</span>
-
-                <div>
                   <strong>
-                    غرف
+                    JOKER
                   </strong>
 
                   <small>
-                    Social Rooms
+                    SOCIAL WORLD
                   </small>
-                </div>
 
-              </div>
-
-
-              <div class="mini-showcase pink">
-
-                <span>♧</span>
-
-                <div>
-                  <strong>
-                    مجتمع
-                  </strong>
-
-                  <small>
-                    Connect
-                  </small>
                 </div>
 
               </div>
@@ -1086,314 +905,785 @@
 
           </div>
 
-        </section>
+
+          <!-- QUICK ACTIONS -->
+
+          <div class="quick-actions">
+
+            <button
+              class="quick-action"
+              data-section="rooms"
+              type="button"
+            >
+
+              <span class="quick-icon room-icon">
+                ◉
+              </span>
+
+              <span>
+                الغرف
+              </span>
+
+              <small>
+                صوت وفيديو
+              </small>
+
+            </button>
 
 
-        <!-- REAL DATA AREA -->
+            <button
+              class="quick-action"
+              data-section="games"
+              type="button"
+            >
 
-        <section class="section-block">
+              <span class="quick-icon game-icon">
+                ♠
+              </span>
 
-          <div class="section-heading">
+              <span>
+                الألعاب
+              </span>
+
+              <small>
+                العب مع الآخرين
+              </small>
+
+            </button>
+
+
+            <button
+              class="quick-action"
+              data-section="chat"
+              type="button"
+            >
+
+              <span class="quick-icon chat-icon">
+                ▱
+              </span>
+
+              <span>
+                المحادثات
+              </span>
+
+              <small>
+                تواصل مباشرة
+              </small>
+
+            </button>
+
+
+            <button
+              class="quick-action"
+              data-section="discover"
+              type="button"
+            >
+
+              <span class="quick-icon discover-icon">
+                ✦
+              </span>
+
+              <span>
+                اكتشف
+              </span>
+
+              <small>
+                أشخاص ومجتمعات
+              </small>
+
+            </button>
+
+          </div>
+
+
+          <!-- CONTENT GRID -->
+
+          <div class="home-grid">
+
+
+            <!-- FEATURED -->
+
+            <div class="content-card featured-section">
+
+              <div class="card-heading">
+
+                <div>
+
+                  <span class="section-label">
+                    EXPLORE
+                  </span>
+
+                  <h2>
+                    اكتشف عالم الجوكر
+                  </h2>
+
+                </div>
+
+                <button
+                  class="link-button"
+                  data-section="discover"
+                  type="button"
+                >
+                  عرض الكل ←
+                </button>
+
+              </div>
+
+
+              <div
+                id="featuredContent"
+                class="featured-grid"
+              >
+
+                <div class="empty-state compact">
+
+                  <div class="empty-icon">
+                    ✦
+                  </div>
+
+                  <h3>
+                    ابدأ الاستكشاف
+                  </h3>
+
+                  <p>
+                    عندما تتصل المنصة بالبيانات ستظهر هنا
+                    الغرف والأشخاص والمحتوى الحقيقي.
+                  </p>
+
+                </div>
+
+              </div>
+
+            </div>
+
+
+            <!-- ONLINE -->
+
+            <div class="content-card online-section">
+
+              <div class="card-heading">
+
+                <div>
+
+                  <span class="section-label">
+                    ONLINE
+                  </span>
+
+                  <h2>
+                    المتصلون الآن
+                  </h2>
+
+                </div>
+
+                <span class="live-pill">
+                  ● مباشر
+                </span>
+
+              </div>
+
+
+              <div
+                id="onlineUsers"
+                class="online-list"
+              >
+
+                <div class="empty-state compact">
+
+                  <div class="empty-icon">
+                    ◎
+                  </div>
+
+                  <p>
+                    لا توجد بيانات مستخدمين متصلة حالياً.
+                  </p>
+
+                </div>
+
+              </div>
+
+            </div>
+
+
+            <!-- TRENDING ROOMS -->
+
+            <div class="content-card rooms-preview">
+
+              <div class="card-heading">
+
+                <div>
+
+                  <span class="section-label">
+                    LIVE ROOMS
+                  </span>
+
+                  <h2>
+                    الغرف النشطة
+                  </h2>
+
+                </div>
+
+                <button
+                  class="link-button"
+                  data-section="rooms"
+                  type="button"
+                >
+                  كل الغرف ←
+                </button>
+
+              </div>
+
+
+              <div
+                id="homeRooms"
+                class="rooms-horizontal"
+              >
+
+                <div class="empty-state compact">
+
+                  <div class="empty-icon">
+                    ◉
+                  </div>
+
+                  <p>
+                    الغرف ستظهر هنا عند توفر بيانات حقيقية.
+                  </p>
+
+                </div>
+
+              </div>
+
+            </div>
+
+
+            <!-- GAMES -->
+
+            <div class="content-card games-preview">
+
+              <div class="card-heading">
+
+                <div>
+
+                  <span class="section-label">
+                    PLAY
+                  </span>
+
+                  <h2>
+                    الألعاب
+                  </h2>
+
+                </div>
+
+                <button
+                  class="link-button"
+                  data-section="games"
+                  type="button"
+                >
+                  كل الألعاب ←
+                </button>
+
+              </div>
+
+
+              <div
+                id="homeGames"
+                class="games-grid"
+              >
+
+                <div class="empty-state compact">
+
+                  <div class="empty-icon">
+                    ♠
+                  </div>
+
+                  <p>
+                    الألعاب ستظهر هنا عند تجهيز نظام الألعاب.
+                  </p>
+
+                </div>
+
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </section>
+
+
+      <!-- =====================================================
+           DISCOVER
+      ====================================================== -->
+
+      <section
+        id="section-discover"
+        class="app-section"
+        data-page="discover"
+      >
+
+        <div class="section-shell">
+
+          <div class="page-header">
 
             <div>
 
-              <span class="section-kicker">
-                YOUR DATA
+              <span class="section-label">
+                DISCOVER
               </span>
 
-              <h2>
-                نشاط حسابك
-              </h2>
+              <h1>
+                اكتشف
+              </h1>
+
+              <p>
+                ابحث واكتشف الأشخاص والغرف والمجتمعات.
+              </p>
 
             </div>
+
+
+            <button
+              class="primary-button"
+              id="discoverSearchBtn"
+              type="button"
+            >
+              ⌕ بحث
+            </button>
+
+          </div>
+
+
+          <div class="discover-tabs">
+
+            <button
+              class="discover-tab active"
+              data-discover-tab="all"
+              type="button"
+            >
+              الكل
+            </button>
+
+            <button
+              class="discover-tab"
+              data-discover-tab="people"
+              type="button"
+            >
+              أشخاص
+            </button>
+
+            <button
+              class="discover-tab"
+              data-discover-tab="rooms"
+              type="button"
+            >
+              غرف
+            </button>
+
+            <button
+              class="discover-tab"
+              data-discover-tab="games"
+              type="button"
+            >
+              ألعاب
+            </button>
 
           </div>
 
 
           <div
-            id="homeDataState"
-            class="data-state">
+            id="discoverGrid"
+            class="discover-grid"
+          >
 
-            <div class="data-state-icon">
-              ◌
+            <div class="empty-state">
+
+              <div class="empty-icon large">
+                ✦
+              </div>
+
+              <h2>
+                لا توجد نتائج بعد
+              </h2>
+
+              <p>
+                نتائج الاكتشاف ستأتي من قاعدة البيانات الحقيقية
+                بعد ربط الـ Backend.
+              </p>
+
             </div>
-
-            <h3>
-              لسه مفيش نشاط
-            </h3>
-
-            <p>
-              بمجرد ما حسابك يبدأ يستخدم المنصة،
-              بياناتك الحقيقية هتظهر هنا.
-            </p>
 
           </div>
 
-        </section>
-
-      </div>
-
-
-      <!-- DISCOVER -->
-
-      <div
-        id="page-discover"
-        class="page">
-
-        <div class="page-header">
-
-          <span class="section-kicker">
-            DISCOVER
-          </span>
-
-          <h1>
-            اكتشف الجوكر
-          </h1>
-
-          <p>
-            اكتشف محتوى المنصة والحاجات المتاحة لحسابك.
-          </p>
-
         </div>
 
+      </section>
 
-        <div class="discover-hero">
 
-          <div class="discover-hero-bg"></div>
+      <!-- =====================================================
+           ROOMS
+      ====================================================== -->
 
-          <div class="discover-hero-content">
+      <section
+        id="section-rooms"
+        class="app-section"
+        data-page="rooms"
+      >
 
-            <span>
-              JOKER DISCOVERY
-            </span>
+        <div class="section-shell">
 
-            <h2>
-              عالم كبير...
-              <br>
-              ولسه بيبدأ.
-            </h2>
+          <div class="page-header room-page-header">
+
+            <div>
+
+              <span class="section-label">
+                VOICE & VIDEO
+              </span>
+
+              <h1>
+                الغرف
+              </h1>
+
+              <p>
+                ادخل غرفة، تحدث، استمع، العب، وشارك اللحظة.
+              </p>
+
+            </div>
+
 
             <button
-              data-route="rooms"
-              class="hero-primary">
-              استكشف الغرف ←
+              id="createRoomBtn"
+              class="primary-button"
+              type="button"
+            >
+
+              <span>
+                +
+              </span>
+
+              إنشاء غرفة
+
             </button>
 
           </div>
 
-        </div>
 
+          <div class="room-feature">
 
-        <div class="empty-grid">
+            <div class="room-feature-art">
 
-          <div class="info-card">
-            <span>♠</span>
-            <strong>الألعاب</strong>
-            <p>
-              الألعاب ستظهر هنا عند تفعيلها وربط بياناتها الحقيقية.
-            </p>
-          </div>
+              <div class="room-neon-circle"></div>
 
-          <div class="info-card">
-            <span>◉</span>
-            <strong>الغرف</strong>
-            <p>
-              الغرف الحقيقية ستُجلب من قاعدة البيانات.
-            </p>
-          </div>
+              <div class="room-mic">
+                🎙
+              </div>
 
-          <div class="info-card">
-            <span>♧</span>
-            <strong>المجتمع</strong>
-            <p>
-              الأشخاص الحقيقيون سيظهرون من الحسابات المسجلة.
-            </p>
-          </div>
-
-        </div>
-
-      </div>
-
-
-      <!-- GAMES -->
-
-      <div
-        id="page-games"
-        class="page">
-
-        <div class="page-header">
-
-          <span class="section-kicker">
-            GAMES
-          </span>
-
-          <h1>
-            الألعاب
-          </h1>
-
-          <p>
-            منطقة الألعاب جاهزة للربط بنظام الألعاب الحقيقي.
-          </p>
-
-        </div>
-
-
-        <div class="games-cover">
-
-          <div class="games-cover-bg"></div>
-
-          <div class="games-cover-content">
-
-            <span>
-              JOKER GAME ZONE
-            </span>
-
-            <h2>
-              العب.
-              نافس.
-              اكسب.
-            </h2>
-
-            <p>
-              نظام الألعاب والنتائج والـXP والجوائز
-              هيتم ربطه في الدفعة الرابعة.
-            </p>
-
-          </div>
-
-        </div>
-
-
-        <div class="locked-content">
-
-          <div class="lock-icon">
-            ♠
-          </div>
-
-          <h3>
-            Game Engine
-          </h3>
-
-          <p>
-            الواجهة جاهزة، لكن مش هنعرض لاعبين أو نتائج
-            وهمية على إنها حقيقية.
-          </p>
-
-        </div>
-
-      </div>
-
-
-      <!-- ROOMS -->
-
-      <div
-        id="page-rooms"
-        class="page">
-
-        <div class="page-header">
-
-          <span class="section-kicker">
-            LIVE ROOMS
-          </span>
-
-          <h1>
-            الغرف
-          </h1>
-
-          <p>
-            الغرف الحقيقية ستظهر بمجرد اتصال حسابك بخدمة الغرف.
-          </p>
-
-        </div>
-
-
-        <div class="rooms-feature">
-
-          <div class="rooms-feature-bg"></div>
-
-          <div class="rooms-feature-content">
-
-            <span>
-              SOCIAL SPACE
-            </span>
-
-            <h2>
-              ادخل، اتكلم، شارك.
-            </h2>
-
-            <p>
-              تصميم الغرفة جاهز لاستقبال المستخدمين الحقيقيين
-              والصوت والمحادثة والهدايا.
-            </p>
-
-          </div>
-
-        </div>
-
-
-        <div
-          id="roomsEmpty"
-          class="data-state large">
-
-          <div class="data-state-icon">
-            ◉
-          </div>
-
-          <h3>
-            لا توجد غرف متاحة حالياً
-          </h3>
-
-          <p>
-            لن نضع غرفاً وهمية. عند وجود غرف حقيقية
-            ستظهر هنا تلقائياً.
-          </p>
-
-        </div>
-
-      </div>
-
-
-      <!-- CHAT -->
-
-      <div
-        id="page-chat"
-        class="page">
-
-        <div class="page-header">
-
-          <span class="section-kicker">
-            MESSAGES
-          </span>
-
-          <h1>
-            المحادثات
-          </h1>
-
-          <p>
-            محادثاتك الحقيقية ستظهر هنا.
-          </p>
-
-        </div>
-
-
-        <div class="chat-shell">
-
-          <aside class="chat-list">
-
-            <div class="chat-list-head">
-              <strong>المحادثات</strong>
-              <button>＋</button>
             </div>
 
-            <div
-              id="chatList"
-              class="chat-list-body">
 
-              <div class="chat-empty">
-                <span>▱</span>
-                <p>
-                  لا توجد محادثات بعد.
-                </p>
+            <div class="room-feature-content">
+
+              <span class="live-pill">
+                LIVE ROOMS
+              </span>
+
+              <h2>
+                صوتك له مكان هنا
+              </h2>
+
+              <p>
+                نظام الغرف مصمم ليجمع المحادثة الصوتية والفيديو
+                والدردشة والألعاب والهدايا في مساحة واحدة.
+              </p>
+
+
+              <div class="room-feature-actions">
+
+                <button
+                  class="primary-button"
+                  id="openRoomViewBtn"
+                  type="button"
+                >
+                  استكشف الغرف
+                </button>
+
+                <button
+                  class="ghost-button"
+                  id="roomRulesBtn"
+                  type="button"
+                >
+                  قواعد الغرف
+                </button>
+
+              </div>
+
+            </div>
+
+          </div>
+
+
+          <div class="subsection-header">
+
+            <h2>
+              الغرف الحالية
+            </h2>
+
+            <span id="roomCountLabel">
+              0 غرفة
+            </span>
+
+          </div>
+
+
+          <div
+            id="roomsGrid"
+            class="rooms-grid"
+          >
+
+            <div class="empty-state">
+
+              <div class="empty-icon large">
+                ◉
+              </div>
+
+              <h2>
+                لا توجد غرف معروضة
+              </h2>
+
+              <p>
+                لن يتم عرض أشخاص أو غرف وهمية.
+                عند ربط النظام ستظهر البيانات الحقيقية هنا.
+              </p>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </section>
+
+
+      <!-- =====================================================
+           GAMES
+      ====================================================== -->
+
+      <section
+        id="section-games"
+        class="app-section"
+        data-page="games"
+      >
+
+        <div class="section-shell">
+
+          <div class="page-header">
+
+            <div>
+
+              <span class="section-label">
+                JOKER ARCADE
+              </span>
+
+              <h1>
+                الألعاب
+              </h1>
+
+              <p>
+                ألعاب اجتماعية تنافسية داخل وخارج الغرف.
+              </p>
+
+            </div>
+
+          </div>
+
+
+          <div class="games-hero">
+
+            <div class="games-hero-art">
+
+              <div class="game-symbol game-symbol-one">
+                ♠
+              </div>
+
+              <div class="game-symbol game-symbol-two">
+                ♦
+              </div>
+
+              <div class="game-symbol game-symbol-three">
+                ♣
+              </div>
+
+              <div class="game-symbol game-symbol-four">
+                ♥
+              </div>
+
+            </div>
+
+
+            <div class="games-hero-content">
+
+              <span class="section-label">
+                PLAY TOGETHER
+              </span>
+
+              <h2>
+                العب مع أصحابك
+              </h2>
+
+              <p>
+                الألعاب هنا جزء من التجربة الاجتماعية،
+                مش صفحة منفصلة عن عالم الجوكر.
+              </p>
+
+            </div>
+
+          </div>
+
+
+          <div class="games-category-bar">
+
+            <button
+              class="game-category active"
+              data-game-category="all"
+              type="button"
+            >
+              الكل
+            </button>
+
+            <button
+              class="game-category"
+              data-game-category="cards"
+              type="button"
+            >
+              ورق
+            </button>
+
+            <button
+              class="game-category"
+              data-game-category="board"
+              type="button"
+            >
+              لوحية
+            </button>
+
+            <button
+              class="game-category"
+              data-game-category="party"
+              type="button"
+            >
+              جماعية
+            </button>
+
+          </div>
+
+
+          <div
+            id="gamesGrid"
+            class="games-main-grid"
+          >
+
+            <div class="empty-state">
+
+              <div class="empty-icon large">
+                ♠
+              </div>
+
+              <h2>
+                الألعاب قيد التجهيز
+              </h2>
+
+              <p>
+                سيتم ربط الألعاب بالحساب والغرف والنتائج
+                في مراحل التطوير التالية.
+              </p>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </section>
+
+
+      <!-- =====================================================
+           CHAT
+      ====================================================== -->
+
+      <section
+        id="section-chat"
+        class="app-section chat-section"
+        data-page="chat"
+      >
+
+        <div class="chat-layout">
+
+
+          <!-- CONVERSATIONS -->
+
+          <aside class="conversation-sidebar">
+
+            <div class="conversation-header">
+
+              <div>
+
+                <span class="section-label">
+                  MESSAGES
+                </span>
+
+                <h2>
+                  المحادثات
+                </h2>
+
+              </div>
+
+
+              <button
+                id="newChatBtn"
+                class="icon-button"
+                type="button"
+                aria-label="محادثة جديدة"
+              >
+                +
+              </button>
+
+            </div>
+
+
+            <div class="conversation-search">
+
+              <span>
+                ⌕
+              </span>
+
+              <input
+                id="conversationSearch"
+                type="search"
+                placeholder="ابحث في المحادثات"
+              >
+
+            </div>
+
+
+            <div
+              id="conversationList"
+              class="conversation-list"
+            >
+
+              <div class="empty-chat-state">
+
+                <div>
+                  ▱
+                </div>
+
+                <strong>
+                  لا توجد محادثات
+                </strong>
+
+                <span>
+                  المحادثات الحقيقية ستظهر بعد تسجيل الدخول وربط البيانات.
+                </span>
+
               </div>
 
             </div>
@@ -1401,586 +1691,1563 @@
           </aside>
 
 
-          <section class="chat-window">
+          <!-- CHAT WINDOW -->
 
-            <div class="chat-empty big">
+          <div class="chat-window">
 
-              <div>
+            <div
+              id="chatEmpty"
+              class="chat-empty"
+            >
+
+              <div class="chat-empty-icon">
                 ▱
               </div>
 
-              <h3>
-                لا توجد محادثة محددة
-              </h3>
+              <h2>
+                اختر محادثة
+              </h2>
 
               <p>
-                عندما تبدأ محادثة حقيقية ستظهر هنا.
+                اختر محادثة من القائمة لبدء التواصل.
               </p>
 
             </div>
 
-          </section>
-
-        </div>
-
-      </div>
-
-
-      <!-- FRIENDS -->
-
-      <div
-        id="page-friends"
-        class="page">
-
-        <div class="page-header">
-
-          <span class="section-kicker">
-            CONNECTIONS
-          </span>
-
-          <h1>
-            الأصدقاء
-          </h1>
-
-          <p>
-            قائمة أصدقائك الحقيقية هتظهر هنا.
-          </p>
-
-        </div>
-
-
-        <div
-          id="friendsEmpty"
-          class="data-state large">
-
-          <div class="data-state-icon">
-            ♧
-          </div>
-
-          <h3>
-            لسه مفيش أصدقاء
-          </h3>
-
-          <p>
-            مش هنعرض أشخاص وهميين.
-            أضف أصدقاء حقيقيين وسيظهروا هنا.
-          </p>
-
-          <button
-            class="hero-primary"
-            data-route="discover">
-            ابدأ الاكتشاف ←
-          </button>
-
-        </div>
-
-      </div>
-
-
-      <!-- NOTIFICATIONS -->
-
-      <div
-        id="page-notifications"
-        class="page">
-
-        <div class="page-header">
-
-          <span class="section-kicker">
-            NOTIFICATIONS
-          </span>
-
-          <h1>
-            الإشعارات
-          </h1>
-
-          <p>
-            الإشعارات الناتجة عن نشاط حسابك الحقيقي.
-          </p>
-
-        </div>
-
-
-        <div
-          id="notificationsList"
-          class="notifications-list">
-
-          <div class="data-state large">
-
-            <div class="data-state-icon">
-              ♢
-            </div>
-
-            <h3>
-              لا توجد إشعارات
-            </h3>
-
-            <p>
-              عند وصول إشعار حقيقي سيظهر هنا.
-            </p>
-
-          </div>
-
-        </div>
-
-      </div>
-
-
-      <!-- PROFILE -->
-
-      <div
-        id="page-profile"
-        class="page">
-
-        <div class="profile-cover">
-
-          <div class="profile-cover-image"></div>
-          <div class="profile-cover-overlay"></div>
-
-          <div class="profile-cover-content">
 
             <div
-              id="profileAvatar"
-              class="avatar avatar-xl">
-              ?
+              id="chatActive"
+              class="chat-active hidden"
+            >
+
+              <header class="chat-header">
+
+                <div class="chat-person">
+
+                  <div
+                    id="chatPersonAvatar"
+                    class="avatar-placeholder"
+                  >
+                    👤
+                  </div>
+
+                  <div>
+
+                    <strong id="chatPersonName">
+                      —
+                    </strong>
+
+                    <span id="chatPersonStatus">
+                      —
+                    </span>
+
+                  </div>
+
+                </div>
+
+
+                <div class="chat-header-actions">
+
+                  <button
+                    id="chatVoiceBtn"
+                    class="icon-button"
+                    type="button"
+                    title="مكالمة صوتية"
+                  >
+                    ☎
+                  </button>
+
+                  <button
+                    id="chatVideoBtn"
+                    class="icon-button"
+                    type="button"
+                    title="مكالمة فيديو"
+                  >
+                    ◉
+                  </button>
+
+                  <button
+                    id="chatMoreBtn"
+                    class="icon-button"
+                    type="button"
+                    title="المزيد"
+                  >
+                    ⋮
+                  </button>
+
+                </div>
+
+              </header>
+
+
+              <div
+                id="messagesContainer"
+                class="messages-container"
+              >
+              </div>
+
+
+              <form
+                id="messageForm"
+                class="message-composer"
+              >
+
+                <button
+                  id="attachFileBtn"
+                  type="button"
+                  class="composer-button"
+                  title="إرفاق"
+                >
+                  +
+                </button>
+
+
+                <input
+                  id="messageInput"
+                  type="text"
+                  autocomplete="off"
+                  placeholder="اكتب رسالة..."
+                >
+
+
+                <button
+                  id="emojiBtn"
+                  type="button"
+                  class="composer-button"
+                  title="رموز"
+                >
+                  ☺
+                </button>
+
+
+                <button
+                  type="submit"
+                  class="send-button"
+                  aria-label="إرسال"
+                >
+                  ←
+                </button>
+
+              </form>
+
             </div>
+
+          </div>
+
+        </div>
+
+      </section>
+
+
+      <!-- =====================================================
+           FRIENDS
+      ====================================================== -->
+
+      <section
+        id="section-friends"
+        class="app-section"
+        data-page="friends"
+      >
+
+        <div class="section-shell">
+
+          <div class="page-header">
 
             <div>
 
+              <span class="section-label">
+                SOCIAL
+              </span>
+
+              <h1>
+                الأصدقاء
+              </h1>
+
+              <p>
+                إدارة الأصدقاء والطلبات والتواصل.
+              </p>
+
+            </div>
+
+
+            <button
+              id="findFriendsBtn"
+              class="primary-button"
+              type="button"
+            >
+              اكتشف أشخاصاً
+            </button>
+
+          </div>
+
+
+          <div class="friends-tabs">
+
+            <button
+              class="friend-tab active"
+              data-friend-tab="friends"
+              type="button"
+            >
+              أصدقائي
+            </button>
+
+            <button
+              class="friend-tab"
+              data-friend-tab="requests"
+              type="button"
+            >
+              الطلبات
+            </button>
+
+            <button
+              class="friend-tab"
+              data-friend-tab="following"
+              type="button"
+            >
+              أتابعهم
+            </button>
+
+          </div>
+
+
+          <div
+            id="friendsContent"
+            class="friends-content"
+          >
+
+            <div class="empty-state">
+
+              <div class="empty-icon large">
+                ◎
+              </div>
+
+              <h2>
+                لا يوجد أصدقاء بعد
+              </h2>
+
+              <p>
+                لن يتم اختراع حسابات هنا.
+                البيانات ستأتي من نظام المستخدمين الحقيقي.
+              </p>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </section>
+
+
+      <!-- =====================================================
+           NOTIFICATIONS
+      ====================================================== -->
+
+      <section
+        id="section-notifications"
+        class="app-section"
+        data-page="notifications"
+      >
+
+        <div class="section-shell narrow-shell">
+
+          <div class="page-header">
+
+            <div>
+
+              <span class="section-label">
+                ACTIVITY
+              </span>
+
+              <h1>
+                الإشعارات
+              </h1>
+
+              <p>
+                تابع آخر النشاطات المتعلقة بحسابك.
+              </p>
+
+            </div>
+
+
+            <button
+              id="markNotificationsReadBtn"
+              class="ghost-button"
+              type="button"
+            >
+              تحديد الكل كمقروء
+            </button>
+
+          </div>
+
+
+          <div
+            id="notificationsList"
+            class="notifications-list"
+          >
+
+            <div class="empty-state">
+
+              <div class="empty-icon large">
+                ♧
+              </div>
+
+              <h2>
+                لا توجد إشعارات
+              </h2>
+
+              <p>
+                ستظهر إشعارات الحساب الحقيقية هنا.
+              </p>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </section>
+
+
+      <!-- =====================================================
+           PROFILE
+      ====================================================== -->
+
+      <section
+        id="section-profile"
+        class="app-section"
+        data-page="profile"
+      >
+
+        <div class="section-shell">
+
+          <div class="profile-cover">
+
+            <div class="profile-cover-pattern"></div>
+
+            <div class="profile-cover-glow"></div>
+
+          </div>
+
+
+          <div class="profile-header-card">
+
+            <div class="profile-avatar-large">
+
+              <div
+                id="profileAvatar"
+                class="avatar-placeholder huge"
+              >
+                👤
+              </div>
+
               <span
-                id="profileHandle"
-                class="profile-handle">
-                @account
+                id="profileOnlineDot"
+                class="profile-online-dot hidden"
+              ></span>
+
+            </div>
+
+
+            <div class="profile-main-info">
+
+              <span class="section-label">
+                MY PROFILE
               </span>
 
               <h1 id="profileName">
-                حسابك
+                زائر الجوكر
               </h1>
 
               <p id="profileBio">
-                أهلاً بك في الجوكر.
+                أكمل ملفك الشخصي بعد تسجيل الدخول.
+              </p>
+
+
+              <div class="profile-tags">
+
+                <span>
+                  JOKER MEMBER
+                </span>
+
+              </div>
+
+            </div>
+
+
+            <div class="profile-actions">
+
+              <button
+                id="editProfileBtn"
+                class="primary-button"
+                type="button"
+              >
+                تعديل الملف
+              </button>
+
+              <button
+                id="profileShareBtn"
+                class="ghost-button"
+                type="button"
+              >
+                مشاركة
+              </button>
+
+            </div>
+
+          </div>
+
+
+          <div class="profile-stats">
+
+            <div class="profile-stat">
+
+              <strong id="profileFriendsCount">
+                0
+              </strong>
+
+              <span>
+                أصدقاء
+              </span>
+
+            </div>
+
+
+            <div class="profile-stat">
+
+              <strong id="profileFollowersCount">
+                0
+              </strong>
+
+              <span>
+                متابعون
+              </span>
+
+            </div>
+
+
+            <div class="profile-stat">
+
+              <strong id="profileFollowingCount">
+                0
+              </strong>
+
+              <span>
+                أتابع
+              </span>
+
+            </div>
+
+
+            <div class="profile-stat">
+
+              <strong id="profileLevel">
+                1
+              </strong>
+
+              <span>
+                المستوى
+              </span>
+
+            </div>
+
+          </div>
+
+
+          <div class="profile-content-grid">
+
+
+            <div class="content-card">
+
+              <div class="card-heading">
+
+                <div>
+
+                  <span class="section-label">
+                    ABOUT
+                  </span>
+
+                  <h2>
+                    عني
+                  </h2>
+
+                </div>
+
+              </div>
+
+
+              <div
+                id="profileAbout"
+                class="profile-about"
+              >
+
+                لم تتم إضافة معلومات بعد.
+
+              </div>
+
+            </div>
+
+
+            <div class="content-card">
+
+              <div class="card-heading">
+
+                <div>
+
+                  <span class="section-label">
+                    ACTIVITY
+                  </span>
+
+                  <h2>
+                    النشاط
+                  </h2>
+
+                </div>
+
+              </div>
+
+
+              <div class="empty-state compact">
+
+                <div class="empty-icon">
+                  ◌
+                </div>
+
+                <p>
+                  لا يوجد نشاط لعرضه.
+                </p>
+
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </section>
+
+
+      <!-- =====================================================
+           COINS
+      ====================================================== -->
+
+      <section
+        id="section-coins"
+        class="app-section"
+        data-page="coins"
+      >
+
+        <div class="section-shell">
+
+          <div class="page-header">
+
+            <div>
+
+              <span class="section-label">
+                WALLET
+              </span>
+
+              <h1>
+                العملات
+              </h1>
+
+              <p>
+                محفظتك ونظام العملات والهدايا.
               </p>
 
             </div>
 
           </div>
 
-          <button
-            class="profile-edit-btn"
-            data-route="settings">
-            تعديل الحساب
-          </button>
+
+          <div class="wallet-hero">
+
+            <div class="wallet-coin-art">
+              ◈
+            </div>
+
+
+            <div class="wallet-info">
+
+              <span>
+                رصيدك الحالي
+              </span>
+
+              <strong id="coinBalance">
+                0
+              </strong>
+
+              <small>
+                العملات
+              </small>
+
+            </div>
+
+
+            <div class="wallet-actions">
+
+              <button
+                id="buyCoinsBtn"
+                class="primary-button"
+                type="button"
+              >
+                شراء عملات
+              </button>
+
+              <button
+                id="coinHistoryBtn"
+                class="ghost-button"
+                type="button"
+              >
+                سجل العمليات
+              </button>
+
+            </div>
+
+          </div>
+
+
+          <div class="wallet-grid">
+
+            <div class="content-card">
+
+              <div class="card-heading">
+
+                <div>
+
+                  <span class="section-label">
+                    TRANSACTIONS
+                  </span>
+
+                  <h2>
+                    آخر العمليات
+                  </h2>
+
+                </div>
+
+              </div>
+
+
+              <div
+                id="coinTransactions"
+                class="transactions-list"
+              >
+
+                <div class="empty-state compact">
+
+                  <div class="empty-icon">
+                    ◈
+                  </div>
+
+                  <p>
+                    لا توجد عمليات مسجلة.
+                  </p>
+
+                </div>
+
+              </div>
+
+            </div>
+
+
+            <div class="content-card">
+
+              <div class="card-heading">
+
+                <div>
+
+                  <span class="section-label">
+                    GIFTS
+                  </span>
+
+                  <h2>
+                    الهدايا
+                  </h2>
+
+                </div>
+
+              </div>
+
+
+              <div class="gift-preview">
+
+                <div class="gift-icon">
+                  ✦
+                </div>
+
+                <h3>
+                  الهدايا الرقمية
+                </h3>
+
+                <p>
+                  إرسال واستقبال الهدايا سيكون مرتبطاً
+                  برصيد الحساب الحقيقي.
+                </p>
+
+              </div>
+
+            </div>
+
+          </div>
 
         </div>
 
+      </section>
 
-        <div class="profile-grid">
 
-          <div class="profile-stat-card">
+      <!-- =====================================================
+           STORE
+      ====================================================== -->
 
-            <span>المستوى</span>
-            <strong id="profileLevel">—</strong>
+      <section
+        id="section-store"
+        class="app-section"
+        data-page="store"
+      >
+
+        <div class="section-shell">
+
+          <div class="page-header">
+
+            <div>
+
+              <span class="section-label">
+                JOKER STORE
+              </span>
+
+              <h1>
+                المتجر
+              </h1>
+
+              <p>
+                تخصيص الحساب والعناصر الرقمية والهدايا.
+              </p>
+
+            </div>
 
           </div>
 
-          <div class="profile-stat-card">
 
-            <span>XP</span>
-            <strong id="profileXp">—</strong>
+          <div class="store-tabs">
+
+            <button
+              class="store-tab active"
+              data-store-tab="featured"
+              type="button"
+            >
+              مميز
+            </button>
+
+            <button
+              class="store-tab"
+              data-store-tab="avatars"
+              type="button"
+            >
+              صور
+            </button>
+
+            <button
+              class="store-tab"
+              data-store-tab="frames"
+              type="button"
+            >
+              إطارات
+            </button>
+
+            <button
+              class="store-tab"
+              data-store-tab="gifts"
+              type="button"
+            >
+              هدايا
+            </button>
 
           </div>
 
-          <div class="profile-stat-card">
-
-            <span>العملات</span>
-            <strong id="profileCoins">—</strong>
-
-          </div>
-
-        </div>
-
-
-        <div class="profile-content-card">
-
-          <span class="section-kicker">
-            ACTIVITY
-          </span>
-
-          <h2>
-            نشاط الحساب
-          </h2>
 
           <div
-            id="profileActivity"
-            class="data-state">
+            id="storeGrid"
+            class="store-grid"
+          >
 
-            <p>
-              لا يوجد نشاط مسجل بعد.
-            </p>
+            <div class="empty-state">
 
-          </div>
+              <div class="empty-icon large">
+                ▣
+              </div>
 
-        </div>
+              <h2>
+                المتجر قيد التجهيز
+              </h2>
 
-      </div>
+              <p>
+                العناصر القابلة للشراء ستُربط لاحقاً
+                بنظام العملات والحساب.
+              </p>
 
-
-      <!-- WALLET -->
-
-      <div
-        id="page-wallet"
-        class="page">
-
-        <div class="page-header">
-
-          <span class="section-kicker">
-            WALLET
-          </span>
-
-          <h1>
-            المحفظة
-          </h1>
-
-          <p>
-            أرصدة الحساب الحقيقية فقط.
-          </p>
-
-        </div>
-
-
-        <div class="wallet-card">
-
-          <div class="wallet-card-glow"></div>
-
-          <span>
-            JOKER COINS
-          </span>
-
-          <strong id="walletCoins">
-            —
-          </strong>
-
-          <small>
-            رصيد الحساب
-          </small>
-
-        </div>
-
-
-        <div class="data-state">
-
-          <h3>
-            لا توجد معاملات بعد
-          </h3>
-
-          <p>
-            المعاملات ستظهر هنا عندما يتم ربط نظام المحفظة الحقيقي.
-          </p>
-
-        </div>
-
-      </div>
-
-
-      <!-- STORE -->
-
-      <div
-        id="page-store"
-        class="page">
-
-        <div class="page-header">
-
-          <span class="section-kicker">
-            JOKER STORE
-          </span>
-
-          <h1>
-            المتجر
-          </h1>
-
-          <p>
-            متجر الجوكر سيتم ربطه بالاقتصاد الحقيقي للمنصة.
-          </p>
-
-        </div>
-
-
-        <div class="store-hero">
-
-          <div class="store-hero-bg"></div>
-
-          <div>
-
-            <span>
-              COMING WITH THE ECONOMY
-            </span>
-
-            <h2>
-              عالم من العناصر والهدايا.
-            </h2>
-
-            <p>
-              بدون منتجات وهمية أو عمليات شراء وهمية.
-            </p>
-
-          </div>
-
-        </div>
-
-      </div>
-
-
-      <!-- SEARCH -->
-
-      <div
-        id="page-search"
-        class="page">
-
-        <div class="page-header">
-
-          <span class="section-kicker">
-            SEARCH
-          </span>
-
-          <h1>
-            البحث
-          </h1>
-
-          <p>
-            ابحث داخل البيانات المتاحة لحسابك.
-          </p>
-
-        </div>
-
-
-        <div class="big-search">
-
-          <span>⌕</span>
-
-          <input
-            id="pageSearchInput"
-            type="search"
-            placeholder="اكتب ما تبحث عنه...">
-
-        </div>
-
-
-        <div
-          id="searchResults"
-          class="search-results">
-
-          <div class="data-state large">
-
-            <div class="data-state-icon">
-              ⌕
             </div>
 
-            <h3>
-              ابدأ البحث
-            </h3>
-
-            <p>
-              النتائج ستأتي من البيانات الحقيقية للمنصة.
-            </p>
-
           </div>
 
         </div>
 
-      </div>
+      </section>
+
+    </main>
 
 
-      <!-- SETTINGS -->
+    <!-- =======================================================
+         MOBILE BOTTOM NAV
+    ======================================================== -->
 
-      <div
-        id="page-settings"
-        class="page">
-
-        <div class="page-header">
-
-          <span class="section-kicker">
-            SETTINGS
-          </span>
-
-          <h1>
-            الإعدادات
-          </h1>
-
-          <p>
-            إعدادات حسابك وتجربة المنصة.
-          </p>
-
-        </div>
-
-
-        <div class="settings-card">
-
-          <div class="setting-row">
-
-            <div>
-              <strong>
-                المظهر
-              </strong>
-
-              <small>
-                تغيير المظهر بين الوضعين
-              </small>
-            </div>
-
-            <button
-              id="settingsThemeBtn"
-              class="setting-action">
-              تغيير
-            </button>
-
-          </div>
-
-
-          <div class="setting-row">
-
-            <div>
-              <strong>
-                الحساب
-              </strong>
-
-              <small>
-                إدارة بيانات حسابك
-              </small>
-            </div>
-
-            <button
-              class="setting-action"
-              id="settingsAccountBtn">
-              الحساب
-            </button>
-
-          </div>
-
-
-          <div class="setting-row">
-
-            <div>
-              <strong>
-                تسجيل الخروج
-              </strong>
-
-              <small>
-                إنهاء الجلسة الحالية
-              </small>
-            </div>
-
-            <button
-              class="setting-action danger"
-              id="settingsLogoutBtn">
-              خروج
-            </button>
-
-          </div>
-
-        </div>
-
-      </div>
-
-    </section>
-
-
-    <!-- MOBILE NAV -->
-
-    <nav class="mobile-nav">
+    <nav class="mobile-bottom-nav">
 
       <button
         class="mobile-nav-item active"
-        data-route="home">
+        data-section="home"
+        type="button"
+      >
 
-        <i>⌂</i>
-        <span>الرئيسية</span>
+        <span>
+          ⌂
+        </span>
 
-      </button>
-
-
-      <button
-        class="mobile-nav-item"
-        data-route="discover">
-
-        <i>✦</i>
-        <span>اكتشف</span>
-
-      </button>
-
-
-      <button
-        class="mobile-nav-item joker-center"
-        data-route="games">
-
-        <div class="mobile-joker-button">
-          J
-        </div>
-
-        <span>الجوكر</span>
+        <small>
+          الرئيسية
+        </small>
 
       </button>
 
 
       <button
         class="mobile-nav-item"
-        data-route="rooms">
+        data-section="discover"
+        type="button"
+      >
 
-        <i>◉</i>
-        <span>الغرف</span>
+        <span>
+          ✦
+        </span>
+
+        <small>
+          اكتشف
+        </small>
+
+      </button>
+
+
+      <button
+        class="mobile-nav-item mobile-center-action"
+        id="mobileCreateBtn"
+        type="button"
+      >
+
+        <span>
+          +
+        </span>
 
       </button>
 
 
       <button
         class="mobile-nav-item"
-        data-route="profile">
+        data-section="chat"
+        type="button"
+      >
 
-        <i>◎</i>
-        <span>حسابي</span>
+        <span>
+          ▱
+        </span>
+
+        <small>
+          محادثات
+        </small>
+
+      </button>
+
+
+      <button
+        class="mobile-nav-item"
+        data-section="profile"
+        type="button"
+      >
+
+        <span>
+          ◉
+        </span>
+
+        <small>
+          حسابي
+        </small>
 
       </button>
 
     </nav>
 
-  </main>
+  </div>
 
 
-  <!-- =====================================================
-       GLOBAL MODAL
-  ====================================================== -->
+  <!-- =========================================================
+       SEARCH MODAL
+  ========================================================== -->
 
   <div
-    id="globalModal"
-    class="modal hidden">
+    id="searchModal"
+    class="modal-overlay hidden"
+    role="dialog"
+    aria-modal="true"
+  >
 
-    <div
-      class="modal-backdrop"
-      data-modal-close></div>
-
-    <div class="modal-box">
+    <div class="modal-card search-modal-card">
 
       <button
         class="modal-close"
-        data-modal-close>
+        data-close-modal="searchModal"
+        type="button"
+      >
         ×
       </button>
 
-      <div id="modalContent"></div>
+
+      <div class="modal-header">
+
+        <span class="section-label">
+          SEARCH
+        </span>
+
+        <h2>
+          ابحث في الجوكر
+        </h2>
+
+        <p>
+          أشخاص، غرف، ألعاب، ومحتوى.
+        </p>
+
+      </div>
+
+
+      <div class="large-search">
+
+        <span>
+          ⌕
+        </span>
+
+        <input
+          id="globalSearchInput"
+          type="search"
+          placeholder="اكتب ما تبحث عنه..."
+          autocomplete="off"
+        >
+
+      </div>
+
+
+      <div
+        id="searchResults"
+        class="search-results"
+      >
+
+        <div class="empty-state compact">
+
+          <div class="empty-icon">
+            ⌕
+          </div>
+
+          <p>
+            ابدأ بالبحث.
+          </p>
+
+        </div>
+
+      </div>
 
     </div>
 
   </div>
 
 
-  <!-- TOAST -->
+  <!-- =========================================================
+       ROOM MODAL
+  ========================================================== -->
+
+  <div
+    id="roomModal"
+    class="modal-overlay hidden"
+    role="dialog"
+    aria-modal="true"
+  >
+
+    <div class="modal-card room-modal-card">
+
+      <button
+        class="modal-close"
+        data-close-modal="roomModal"
+        type="button"
+      >
+        ×
+      </button>
+
+
+      <div class="modal-header">
+
+        <span class="section-label">
+          CREATE ROOM
+        </span>
+
+        <h2>
+          إنشاء غرفة
+        </h2>
+
+        <p>
+          تجهيز واجهة الغرفة الآن، وربطها بالخادم لاحقاً.
+        </p>
+
+      </div>
+
+
+      <form id="createRoomForm">
+
+        <div class="input-group">
+
+          <label for="roomNameInput">
+            اسم الغرفة
+          </label>
+
+          <div class="input-box">
+
+            <input
+              id="roomNameInput"
+              type="text"
+              placeholder="مثلاً: سهرة الجوكر"
+              maxlength="60"
+            >
+
+          </div>
+
+        </div>
+
+
+        <div class="input-group">
+
+          <label for="roomTypeInput">
+            نوع الغرفة
+          </label>
+
+          <div class="select-box">
+
+            <select id="roomTypeInput">
+
+              <option value="voice">
+                صوتية
+              </option>
+
+              <option value="video">
+                فيديو
+              </option>
+
+              <option value="game">
+                ألعاب
+              </option>
+
+            </select>
+
+          </div>
+
+        </div>
+
+
+        <div class="input-group">
+
+          <label for="roomDescriptionInput">
+            وصف الغرفة
+          </label>
+
+          <div class="input-box textarea-box">
+
+            <textarea
+              id="roomDescriptionInput"
+              placeholder="اكتب وصفاً مختصراً..."
+              maxlength="180"
+            ></textarea>
+
+          </div>
+
+        </div>
+
+
+        <button
+          type="submit"
+          class="primary-button full-button"
+        >
+          تجهيز الغرفة
+        </button>
+
+      </form>
+
+    </div>
+
+  </div>
+
+
+  <!-- =========================================================
+       PROFILE EDIT MODAL
+  ========================================================== -->
+
+  <div
+    id="profileModal"
+    class="modal-overlay hidden"
+    role="dialog"
+    aria-modal="true"
+  >
+
+    <div class="modal-card">
+
+      <button
+        class="modal-close"
+        data-close-modal="profileModal"
+        type="button"
+      >
+        ×
+      </button>
+
+
+      <div class="modal-header">
+
+        <span class="section-label">
+          PROFILE
+        </span>
+
+        <h2>
+          تعديل الملف الشخصي
+        </h2>
+
+      </div>
+
+
+      <form id="profileForm">
+
+        <div class="input-group">
+
+          <label for="editProfileName">
+            الاسم
+          </label>
+
+          <div class="input-box">
+
+            <input
+              id="editProfileName"
+              type="text"
+              maxlength="50"
+            >
+
+          </div>
+
+        </div>
+
+
+        <div class="input-group">
+
+          <label for="editProfileBio">
+            النبذة
+          </label>
+
+          <div class="input-box textarea-box">
+
+            <textarea
+              id="editProfileBio"
+              maxlength="180"
+              placeholder="اكتب نبذة عنك..."
+            ></textarea>
+
+          </div>
+
+        </div>
+
+
+        <button
+          type="submit"
+          class="primary-button full-button"
+        >
+          حفظ التغييرات
+        </button>
+
+      </form>
+
+    </div>
+
+  </div>
+
+
+  <!-- =========================================================
+       VIDEO / CAMERA MODAL
+  ========================================================== -->
+
+  <div
+    id="cameraModal"
+    class="modal-overlay hidden"
+    role="dialog"
+    aria-modal="true"
+  >
+
+    <div class="modal-card camera-modal-card">
+
+      <button
+        class="modal-close"
+        data-close-modal="cameraModal"
+        type="button"
+      >
+        ×
+      </button>
+
+
+      <div class="camera-stage">
+
+        <video
+          id="cameraPreview"
+          autoplay
+          muted
+          playsinline
+        ></video>
+
+
+        <div
+          id="cameraPlaceholder"
+          class="camera-placeholder"
+        >
+
+          <div class="camera-placeholder-icon">
+            ◉
+          </div>
+
+          <h2>
+            الكاميرا
+          </h2>
+
+          <p>
+            سيتم طلب صلاحية الكاميرا من الجهاز عند تشغيلها.
+          </p>
+
+        </div>
+
+
+        <div class="camera-overlay-top">
+
+          <span class="camera-status">
+            CAMERA
+          </span>
+
+          <span
+            id="cameraStatusDot"
+            class="camera-status-dot"
+          ></span>
+
+        </div>
+
+
+        <div class="camera-controls">
+
+          <button
+            id="toggleCameraBtn"
+            class="camera-control"
+            type="button"
+          >
+            ◉
+          </button>
+
+          <button
+            id="toggleMicBtn"
+            class="camera-control"
+            type="button"
+          >
+            🎙
+          </button>
+
+          <button
+            id="closeCameraBtn"
+            class="camera-control danger"
+            type="button"
+          >
+            ×
+          </button>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- =========================================================
+       ROOM VIEW MODAL
+  ========================================================== -->
+
+  <div
+    id="roomViewModal"
+    class="modal-overlay hidden"
+    role="dialog"
+    aria-modal="true"
+  >
+
+    <div class="room-view">
+
+      <header class="room-view-header">
+
+        <div class="room-view-title">
+
+          <span class="live-pill">
+            LIVE
+          </span>
+
+          <div>
+
+            <strong id="activeRoomTitle">
+              غرفة الجوكر
+            </strong>
+
+            <small id="activeRoomMeta">
+              0 مستمع
+            </small>
+
+          </div>
+
+        </div>
+
+
+        <button
+          class="modal-close"
+          data-close-modal="roomViewModal"
+          type="button"
+        >
+          ×
+        </button>
+
+      </header>
+
+
+      <div class="room-view-body">
+
+
+        <div class="room-stage">
+
+          <div class="room-stage-bg"></div>
+
+          <div class="room-center-art">
+
+            <div class="room-big-mic">
+              🎙
+            </div>
+
+            <span>
+              غرفة اجتماعية
+            </span>
+
+          </div>
+
+
+          <div
+            id="roomSeats"
+            class="room-seats"
+          >
+
+          </div>
+
+        </div>
+
+
+        <aside class="room-chat">
+
+          <div class="room-chat-header">
+
+            <strong>
+              دردشة الغرفة
+            </strong>
+
+            <span>
+              💬
+            </span>
+
+          </div>
+
+
+          <div
+            id="roomMessages"
+            class="room-messages"
+          >
+
+            <div class="room-empty-message">
+              لا توجد رسائل.
+            </div>
+
+          </div>
+
+
+          <form
+            id="roomMessageForm"
+            class="room-message-form"
+          >
+
+            <input
+              id="roomMessageInput"
+              type="text"
+              placeholder="اكتب في الغرفة..."
+            >
+
+            <button
+              type="submit"
+              class="send-button"
+            >
+              ←
+            </button>
+
+          </form>
+
+        </aside>
+
+      </div>
+
+
+      <footer class="room-view-footer">
+
+        <button
+          id="roomMicBtn"
+          class="room-control"
+          type="button"
+        >
+          🎙
+          <span>
+            الميكروفون
+          </span>
+        </button>
+
+
+        <button
+          id="roomSpeakerBtn"
+          class="room-control"
+          type="button"
+        >
+          🔊
+          <span>
+            الصوت
+          </span>
+        </button>
+
+
+        <button
+          id="roomGiftBtn"
+          class="room-control"
+          type="button"
+        >
+          ✦
+          <span>
+            هدية
+          </span>
+        </button>
+
+
+        <button
+          id="leaveRoomBtn"
+          class="room-control danger"
+          type="button"
+        >
+          ×
+          <span>
+            مغادرة
+          </span>
+        </button>
+
+      </footer>
+
+    </div>
+
+  </div>
+
+
+  <!-- =========================================================
+       GENERIC CONFIRM MODAL
+  ========================================================== -->
+
+  <div
+    id="confirmModal"
+    class="modal-overlay hidden"
+    role="dialog"
+    aria-modal="true"
+  >
+
+    <div class="modal-card small-modal">
+
+      <button
+        class="modal-close"
+        data-close-modal="confirmModal"
+        type="button"
+      >
+        ×
+      </button>
+
+
+      <div class="confirm-icon">
+        ?
+      </div>
+
+      <h2 id="confirmTitle">
+        تأكيد
+      </h2>
+
+      <p id="confirmMessage">
+        هل تريد المتابعة؟
+      </p>
+
+
+      <div class="confirm-actions">
+
+        <button
+          id="confirmCancelBtn"
+          class="ghost-button"
+          type="button"
+        >
+          إلغاء
+        </button>
+
+        <button
+          id="confirmOkBtn"
+          class="primary-button"
+          type="button"
+        >
+          تأكيد
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- =========================================================
+       TOAST
+  ========================================================== -->
 
   <div
     id="toastContainer"
-    class="toast-container">
-  </div>
+    class="toast-container"
+    aria-live="polite"
+  ></div>
 
+
+  <!-- =========================================================
+       FILES
+  ========================================================== -->
+
+  <!--
+    ترتيب الملفات مهم:
+    data.js
+    ثم app.js
+  -->
 
   <script src="data.js"></script>
   <script src="app.js"></script>
 
 </body>
-  </html>
+              </html>
