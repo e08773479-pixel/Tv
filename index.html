@@ -3110,4 +3110,68 @@
 
                     <div class="joker-empty__desc">
                       نظام المحادثة مصمم ليتصل لاحقًا بالـAPI
-                      والـRealtime دون تغيير ال
+                      والـRealtime.
+                    </div>
+
+                  </div>
+
+                </div>
+
+              </div>
+
+            </div>
+
+          </section>
+
+        </div>
+
+      </main>
+
+    </div>
+
+  </div>
+
+  <!-- =========================================================
+       SPLASH LOGIC (العد الخمس ثواني وإدارة البث)
+       ========================================================= -->
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      var splash = document.getElementById("jokerSplash");
+      var progressBar = document.getElementById("splashProgressBar");
+      var percentText = document.getElementById("splashPercent");
+      var statusText = document.getElementById("jokerSplashStatus");
+
+      var duration = 5000; // 5 ثوانٍ
+      var intervalTime = 50; // تحديث كل 50 ملي ثانية
+      var elapsedTime = 0;
+
+      var messages = [
+        "جاري تجهيز المنصة...",
+        "تحميل البيانات الأساسية...",
+        "إعداد الألعاب والغرف...",
+        "تقريباً انتهينا..."
+      ];
+
+      var timer = setInterval(function () {
+        elapsedTime += intervalTime;
+        var progress = Math.min((elapsedTime / duration) * 100, 100);
+
+        if (progressBar) progressBar.style.width = progress + "%";
+        if (percentText) percentText.innerText = Math.floor(progress) + "%";
+
+        if (statusText) {
+          if (progress < 25) statusText.innerText = messages[0];
+          else if (progress < 55) statusText.innerText = messages[1];
+          else if (progress < 85) statusText.innerText = messages[2];
+          else statusText.innerText = messages[3];
+        }
+
+        if (elapsedTime >= duration) {
+          clearInterval(timer);
+          if (splash) splash.classList.add("is-hidden");
+        }
+      }, intervalTime);
+    });
+  </script>
+</body>
+</html>
