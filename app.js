@@ -1,291 +1,113 @@
 "use strict";
 
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", function () {
 
   const DATA = window.MALAK_CONTENT || {};
   const MEDIA = window.MALAK_MEDIA || {};
 
+  const $ = (id) => document.getElementById(id);
+
   const body = document.body;
 
-  const gate = document.getElementById("gate");
-  const app = document.getElementById("app");
+  const app = $("app");
 
-  const passwordForm = document.getElementById("passwordForm");
-  const passwordInput = document.getElementById("passwordInput");
-  const passwordEye = document.getElementById("passwordEye");
-  const passwordError = document.getElementById("passwordError");
+  const menu = $("menu");
+  const menuButton = $("menuButton");
+  const closeMenu = $("closeMenu");
+  const menuOverlay = $("menuOverlay");
 
-  const menu = document.getElementById("menu");
-  const menuButton = document.getElementById("menuButton");
-  const closeMenu = document.getElementById("closeMenu");
-  const menuOverlay = document.getElementById("menuOverlay");
+  const letterBody = $("letterBody");
 
-  const letterBody = document.getElementById("letterBody");
+  const poem = $("poem");
+  const poemCounter = $("poemCounter");
+  const prevPoem = $("prevPoem");
+  const nextPoem = $("nextPoem");
 
-  const poem = document.getElementById("poem");
-  const poemCounter = document.getElementById("poemCounter");
-  const prevPoem = document.getElementById("prevPoem");
-  const nextPoem = document.getElementById("nextPoem");
+  const diwanList = $("diwanList");
 
-  const diwanList = document.getElementById("diwanList");
+  const detailsGrid = $("detailsGrid");
 
-  const detailsGrid = document.getElementById("detailsGrid");
+  const memoryImage = $("memoryImage");
+  const memoryPhoto = $("memoryPhoto");
+  const memoryDate = $("memoryDate");
+  const memoryTitle = $("memoryTitle");
+  const memoryDescription = $("memoryDescription");
+  const memoryCounter = $("memoryCounter");
+  const prevMemory = $("prevMemory");
+  const nextMemory = $("nextMemory");
 
-  const memoryImage = document.getElementById("memoryImage");
-  const memoryPhoto = document.getElementById("memoryPhoto");
-  const memoryDate = document.getElementById("memoryDate");
-  const memoryTitle = document.getElementById("memoryTitle");
-  const memoryDescription = document.getElementById("memoryDescription");
-  const memoryCounter = document.getElementById("memoryCounter");
+  const playMusic = $("playMusic");
+  const musicStatus = $("musicStatus");
 
-  const prevMemory = document.getElementById("prevMemory");
-  const nextMemory = document.getElementById("nextMemory");
+  const soundButton = $("soundButton");
+  const soundText = $("soundText");
 
-  const playMusic = document.getElementById("playMusic");
-  const musicStatus = document.getElementById("musicStatus");
-
-  const soundButton = document.getElementById("soundButton");
-  const soundText = document.getElementById("soundText");
-
-  const revealFinal = document.getElementById("revealFinal");
-  const finalMessage = document.getElementById("finalMessage");
-  const finalMessageText = document.getElementById("finalMessageText");
+  const revealFinal = $("revealFinal");
+  const finalMessage = $("finalMessage");
+  const finalMessageText = $("finalMessageText");
 
 
-  /*
-  ==========================================================
-  SAFETY
-  ==========================================================
-  */
-
-  if (!window.MALAK_CONTENT) {
-    console.error("MALAK_CONTENT غير موجود. تأكد أن content.js يعمل قبل app.js.");
-    return;
-  }
-
-
-  /*
-  ==========================================================
-  STARS
-  ==========================================================
-  */
+  /* =====================================================
+     STARS
+     ===================================================== */
 
   function createStars() {
 
-    const container = document.getElementById("stars");
+    const stars = $("stars");
 
-    if (!container) return;
+    if (!stars) return;
 
-    const count =
-      window.innerWidth < 600
-        ? 35
-        : window.innerWidth < 1000
-          ? 55
-          : 80;
+    stars.innerHTML = "";
 
-    const fragment = document.createDocumentFragment();
+    for (let i = 0; i < 70; i++) {
 
-    for (let i = 0; i < count; i++) {
-
-      const star = document.createElement("span");
+      const star =
+        document.createElement("span");
 
       star.className = "star";
 
-      star.style.left = `${Math.random() * 100}%`;
-      star.style.top = `${Math.random() * 100}%`;
+      star.style.left =
+        Math.random() * 100 + "%";
+
+      star.style.top =
+        Math.random() * 100 + "%";
 
       star.style.setProperty(
         "--time",
-        `${2 + Math.random() * 5}s`
+        (2 + Math.random() * 4) + "s"
       );
 
       star.style.animationDelay =
-        `${Math.random() * 5}s`;
+        (Math.random() * 4) + "s";
 
-      fragment.appendChild(star);
+      stars.appendChild(star);
+
     }
 
-    container.appendChild(fragment);
   }
 
   createStars();
 
 
-  /*
-  ==========================================================
-  PASSWORD
-  ==========================================================
-  */
+  /* =====================================================
+     ESCAPE HTML
+     ===================================================== */
 
-  function showPasswordError() {
+  function escapeHTML(value) {
 
-    if (passwordError) {
-      passwordError.classList.add("show");
-      passwordError.textContent =
-        "كلمة السر غير صحيحة.";
-    }
-
-    if (passwordInput) {
-
-      passwordInput.animate(
-        [
-          { transform: "translateX(0)" },
-          { transform: "translateX(-8px)" },
-          { transform: "translateX(8px)" },
-          { transform: "translateX(-5px)" },
-          { transform: "translateX(0)" }
-        ],
-        {
-          duration: 350
-        }
-      );
-
-      passwordInput.focus();
-      passwordInput.select();
-    }
-  }
-
-
-  function hidePasswordError() {
-
-    if (passwordError) {
-      passwordError.classList.remove("show");
-    }
+    return String(value ?? "")
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#039;");
 
   }
 
 
-  function unlock() {
-
-    if (body) {
-      body.classList.remove("locked");
-    }
-
-    if (gate) {
-      gate.classList.add("hide");
-    }
-
-    if (app) {
-      app.classList.add("ready");
-    }
-
-    /*
-      نخلي الصفحة تتحرك للأعلى بعد فتحها
-      عشان ما تفضلش واقفة في مكان شاشة الدخول.
-    */
-
-    window.scrollTo({
-      top: 0,
-      behavior: "instant"
-    });
-
-    setTimeout(() => {
-
-      if (gate && gate.parentNode) {
-        gate.remove();
-      }
-
-      revealLetter();
-
-    }, 900);
-  }
-
-
-  function checkPassword() {
-
-    if (!passwordInput) {
-      console.error(
-        "passwordInput غير موجود في index.html."
-      );
-      return;
-    }
-
-    const entered =
-      passwordInput.value.trim();
-
-    const correctPassword =
-      String(DATA.password || "malak").trim();
-
-    /*
-      كلمة السر الأساسية:
-      malak
-    */
-
-    if (entered.toLowerCase() === correctPassword.toLowerCase()) {
-
-      hidePasswordError();
-
-      unlock();
-
-      return true;
-    }
-
-    showPasswordError();
-
-    return false;
-  }
-
-
-  if (passwordForm) {
-
-    passwordForm.addEventListener(
-      "submit",
-      event => {
-
-        event.preventDefault();
-
-        checkPassword();
-
-      }
-    );
-
-  } else {
-
-    console.warn(
-      "passwordForm غير موجود. تأكد من id=\"passwordForm\"."
-    );
-
-  }
-
-
-  /*
-  ==========================================================
-  PASSWORD EYE
-  ==========================================================
-  */
-
-  if (passwordEye && passwordInput) {
-
-    passwordEye.addEventListener(
-      "click",
-      event => {
-
-        event.preventDefault();
-
-        const isPassword =
-          passwordInput.type === "password";
-
-        passwordInput.type =
-          isPassword
-            ? "text"
-            : "password";
-
-        passwordEye.textContent =
-          isPassword
-            ? "◌"
-            : "◉";
-
-      }
-    );
-
-  }
-
-
-  /*
-  ==========================================================
-  NAVIGATION
-  ==========================================================
-  */
+  /* =====================================================
+     MENU
+     ===================================================== */
 
   function openMenu() {
 
@@ -314,50 +136,56 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
   if (menuButton) {
+
     menuButton.addEventListener(
       "click",
       openMenu
     );
+
   }
 
 
   if (closeMenu) {
+
     closeMenu.addEventListener(
       "click",
       closeMenuPanel
     );
+
   }
 
 
   if (menuOverlay) {
+
     menuOverlay.addEventListener(
       "click",
       closeMenuPanel
     );
+
   }
 
 
   document
     .querySelectorAll("[data-go]")
-    .forEach(button => {
+    .forEach(function(button){
 
       button.addEventListener(
         "click",
-        () => {
-
-          const id =
-            button.dataset.go;
+        function(){
 
           const target =
-            document.getElementById(id);
+            button.getAttribute("data-go");
+
+          const section =
+            document.getElementById(target);
+
+          if (!section) return;
 
           closeMenuPanel();
 
-          if (!target) return;
-
-          target.scrollIntoView({
-            behavior: "smooth",
-            block: "start"
+          section.scrollIntoView({
+            behavior:"smooth",
+            block:"start"
           });
 
         }
@@ -366,86 +194,59 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
 
-  /*
-  ==========================================================
-  LETTER
-  ==========================================================
-  */
+  /* =====================================================
+     LETTER
+     ===================================================== */
 
   function renderLetter() {
 
     if (!letterBody) return;
-
-    letterBody.innerHTML = "";
 
     const letter =
       Array.isArray(DATA.letter)
         ? DATA.letter
         : [];
 
-    letter.forEach(
-      (text, index) => {
+    letterBody.innerHTML = "";
 
-        const paragraph =
-          document.createElement("p");
+    letter.forEach(function(text, index){
 
-        paragraph.className =
-          "letter__paragraph";
+      const p =
+        document.createElement("p");
 
-        paragraph.textContent =
-          text;
+      p.className =
+        "letter__paragraph";
 
-        paragraph.dataset.index =
-          index;
+      p.textContent =
+        text;
 
-        letterBody.appendChild(
-          paragraph
-        );
+      letterBody.appendChild(p);
 
-      }
-    );
-
-  }
-
-
-  function revealLetter() {
-
-    if (!letterBody) return;
-
-    const paragraphs =
-      letterBody.querySelectorAll(
-        ".letter__paragraph"
+      setTimeout(
+        function(){
+          p.classList.add("visible");
+        },
+        150 + index * 220
       );
 
-    paragraphs.forEach(
-      (paragraph, index) => {
-
-        setTimeout(
-          () => {
-
-            paragraph.classList.add(
-              "visible"
-            );
-
-          },
-          index * 180
-        );
-
-      }
-    );
+    });
 
   }
 
   renderLetter();
 
 
-  /*
-  ==========================================================
-  POETRY
-  ==========================================================
-  */
+  /* =====================================================
+     POEMS
+     ===================================================== */
+
+  const poems =
+    Array.isArray(DATA.poems)
+      ? DATA.poems
+      : [];
 
   let currentPoem = 0;
+
 
   function getPoemLines(item) {
 
@@ -468,29 +269,40 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (!poem) return;
 
-    const poems =
-      Array.isArray(DATA.poems)
-        ? DATA.poems
-        : [];
-
     if (!poems.length) {
 
       poem.innerHTML =
         "<p>الديوان لسه بيتكتب.</p>";
 
       return;
+
     }
+
+
+    if (currentPoem < 0) {
+      currentPoem = poems.length - 1;
+    }
+
+    if (currentPoem >= poems.length) {
+      currentPoem = 0;
+    }
+
 
     const item =
       poems[currentPoem];
 
+    const lines =
+      getPoemLines(item);
+
+
     poem.classList.add("fade");
 
-    setTimeout(() => {
 
-      const lines =
-        getPoemLines(item)
-          .map(line => {
+    setTimeout(
+      function(){
+
+        const renderedLines =
+          lines.map(function(line){
 
             if (!line) {
               return "<br>";
@@ -502,72 +314,41 @@ document.addEventListener("DOMContentLoaded", () => {
               </span>
             `;
 
-          })
-          .join("");
+          }).join("");
 
-      poem.innerHTML = `
 
-        <div>
+        poem.innerHTML = `
 
-          <div class="poem__title">
-            ${escapeHTML(item.title || "")}
+          <div>
+
+            <div class="poem__title">
+              ${escapeHTML(
+                item.title || "قصيدة"
+              )}
+            </div>
+
+            <div class="poem__lines">
+              ${renderedLines}
+            </div>
+
           </div>
 
-          ${
-            item.subtitle
-              ? `
-                <div class="poem__subtitle">
-                  ${escapeHTML(item.subtitle)}
-                </div>
-              `
-              : ""
-          }
-
-          <div class="poem__lines">
-            ${lines}
-          </div>
-
-        </div>
-
-      `;
-
-      if (poemCounter) {
-
-        poemCounter.textContent =
-          `${String(currentPoem + 1).padStart(2, "0")}
-           /
-           ${String(poems.length).padStart(2, "0")}`;
-
-      }
-
-      poem.classList.remove("fade");
-
-    }, 180);
-
-  }
+        `;
 
 
-  function changePoem(direction) {
+        if (poemCounter) {
 
-    const poems =
-      Array.isArray(DATA.poems)
-        ? DATA.poems
-        : [];
+          poemCounter.textContent =
+            `${String(currentPoem + 1).padStart(2,"0")} / ${String(poems.length).padStart(2,"0")}`;
 
-    if (!poems.length) return;
+        }
 
-    currentPoem += direction;
 
-    if (currentPoem < 0) {
-      currentPoem =
-        poems.length - 1;
-    }
+        poem.classList.remove("fade");
 
-    if (currentPoem >= poems.length) {
-      currentPoem = 0;
-    }
-
-    renderPoem();
+      },
+      180
+    );
 
   }
 
@@ -576,7 +357,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
     prevPoem.addEventListener(
       "click",
-      () => changePoem(-1)
+      function(){
+
+        currentPoem--;
+
+        renderPoem();
+
+      }
     );
 
   }
@@ -586,7 +373,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
     nextPoem.addEventListener(
       "click",
-      () => changePoem(1)
+      function(){
+
+        currentPoem++;
+
+        renderPoem();
+
+      }
     );
 
   }
@@ -595,25 +388,24 @@ document.addEventListener("DOMContentLoaded", () => {
   renderPoem();
 
 
-  /*
-  ==========================================================
-  DIWAN
-  ==========================================================
-  */
+  /* =====================================================
+     DIWAN
+     ===================================================== */
 
   function renderDiwan() {
 
     if (!diwanList) return;
 
-    diwanList.innerHTML = "";
-
-    const diwan =
+    const source =
       Array.isArray(DATA.diwan)
         ? DATA.diwan
-        : [];
+        : poems;
 
-    diwan.forEach(
-      item => {
+    diwanList.innerHTML = "";
+
+
+    source.forEach(
+      function(item,index){
 
         const button =
           document.createElement("button");
@@ -621,62 +413,58 @@ document.addEventListener("DOMContentLoaded", () => {
         button.className =
           "diwan-item";
 
+
         button.innerHTML = `
 
-          <div>
+          <span>
 
-            <div class="diwan-item__meta">
-              ${escapeHTML(item.number || "")}
-            </div>
+            <span class="diwan-item__meta">
+              ${String(index + 1).padStart(2,"0")}
+            </span>
 
-            <div class="diwan-item__name">
-              ${escapeHTML(item.title || "")}
-            </div>
+            <br>
 
-          </div>
+            <span class="diwan-item__name">
+              ${escapeHTML(
+                item.title || "قصيدة"
+              )}
+            </span>
 
-          <div class="diwan-item__meta">
-            ${escapeHTML(item.description || "")}
-          </div>
+          </span>
+
+          <span>
+            ↗
+          </span>
 
         `;
 
+
         button.addEventListener(
           "click",
-          () => {
+          function(){
 
-            const index =
-              DATA.poems.findIndex(
-                poemItem =>
-                  poemItem.id === item.id ||
-                  poemItem.title === item.title
+            currentPoem = index;
+
+            renderPoem();
+
+            const poetry =
+              document.getElementById(
+                "poetry"
               );
 
-            if (index >= 0) {
+            if (poetry) {
 
-              currentPoem = index;
-
-              renderPoem();
-
-              const poetrySection =
-                document.getElementById("poetry");
-
-              if (poetrySection) {
-
-                poetrySection.scrollIntoView({
-                  behavior: "smooth"
-                });
-
-              }
+              poetry.scrollIntoView({
+                behavior:"smooth"
+              });
 
             }
 
           }
         );
 
-        diwanList.appendChild(
-          button
-        );
+
+        diwanList.appendChild(button);
 
       }
     );
@@ -686,25 +474,24 @@ document.addEventListener("DOMContentLoaded", () => {
   renderDiwan();
 
 
-  /*
-  ==========================================================
-  DETAILS
-  ==========================================================
-  */
+  /* =====================================================
+     DETAILS
+     ===================================================== */
 
   function renderDetails() {
 
     if (!detailsGrid) return;
-
-    detailsGrid.innerHTML = "";
 
     const details =
       Array.isArray(DATA.details)
         ? DATA.details
         : [];
 
+    detailsGrid.innerHTML = "";
+
+
     details.forEach(
-      (item, index) => {
+      function(item,index){
 
         const article =
           document.createElement("article");
@@ -712,32 +499,35 @@ document.addEventListener("DOMContentLoaded", () => {
         article.className =
           "detail";
 
+
         article.innerHTML = `
 
           <span class="detail__number">
-            ${escapeHTML(
-              item.number ||
-              String(index + 1).padStart(2, "0")
-            )}
+            ${String(index + 1).padStart(2,"0")}
           </span>
 
           <div>
 
             <h3>
-              ${escapeHTML(item.title || "")}
+              ${escapeHTML(
+                item.title || ""
+              )}
             </h3>
 
             <p>
-              ${escapeHTML(item.text || "")}
+              ${escapeHTML(
+                item.text ||
+                item.description ||
+                ""
+              )}
             </p>
 
           </div>
 
         `;
 
-        detailsGrid.appendChild(
-          article
-        );
+
+        detailsGrid.appendChild(article);
 
       }
     );
@@ -747,102 +537,36 @@ document.addEventListener("DOMContentLoaded", () => {
   renderDetails();
 
 
-  /*
-  ==========================================================
-  MEMORY
-  ==========================================================
-  */
+  /* =====================================================
+     MEMORY
+     ===================================================== */
+
+  const memories =
+    Array.isArray(DATA.memories)
+      ? DATA.memories
+      : [];
 
   let currentMemory = 0;
 
+
   function renderMemory() {
 
-    const memories =
-      Array.isArray(DATA.memories)
-        ? DATA.memories
-        : [];
+    if (!memories.length) {
 
-    if (!memories.length) return;
+      if (memoryTitle) {
+        memoryTitle.textContent =
+          "حاجات لسه هتتكتب";
+      }
 
-    if (!memoryPhoto) return;
+      if (memoryDescription) {
+        memoryDescription.textContent =
+          "كل حاجة جميلة ليها وقتها.";
+      }
 
-    const item =
-      memories[currentMemory];
+      return;
 
-    if (memoryImage) {
-      memoryImage.classList.add(
-        "changing"
-      );
     }
 
-    setTimeout(
-      () => {
-
-        if (item.image) {
-          memoryPhoto.src =
-            item.image;
-        }
-
-        if (memoryDate) {
-          memoryDate.textContent =
-            item.date || "";
-        }
-
-        if (memoryTitle) {
-          memoryTitle.textContent =
-            item.title || "";
-        }
-
-        if (memoryDescription) {
-          memoryDescription.textContent =
-            item.description || item.text || "";
-        }
-
-        if (memoryCounter) {
-          memoryCounter.textContent =
-            String(currentMemory + 1)
-              .padStart(2, "0");
-        }
-
-        memoryPhoto.onload = () => {
-
-          if (memoryImage) {
-            memoryImage.classList.remove(
-              "changing"
-            );
-          }
-
-        };
-
-        /*
-          لو مفيش صورة أصلًا، ما نستناش onload.
-        */
-
-        if (!item.image && memoryImage) {
-
-          memoryImage.classList.remove(
-            "changing"
-          );
-
-        }
-
-      },
-      180
-    );
-
-  }
-
-
-  function changeMemory(direction) {
-
-    const memories =
-      Array.isArray(DATA.memories)
-        ? DATA.memories
-        : [];
-
-    if (!memories.length) return;
-
-    currentMemory += direction;
 
     if (currentMemory < 0) {
       currentMemory =
@@ -853,7 +577,78 @@ document.addEventListener("DOMContentLoaded", () => {
       currentMemory = 0;
     }
 
-    renderMemory();
+
+    const item =
+      memories[currentMemory];
+
+
+    if (memoryImage) {
+      memoryImage.classList.add("changing");
+    }
+
+
+    setTimeout(
+      function(){
+
+        if (memoryPhoto) {
+
+          memoryPhoto.src =
+            item.image ||
+            item.background ||
+            "https://images.unsplash.com/photo-1518199266791-5375a83190b7?auto=format&fit=crop&w=1600&q=85";
+
+        }
+
+
+        if (memoryDate) {
+
+          memoryDate.textContent =
+            item.date ||
+            String(
+              currentMemory + 1
+            ).padStart(2,"0");
+
+        }
+
+
+        if (memoryTitle) {
+
+          memoryTitle.textContent =
+            item.title ||
+            "ذكرى";
+
+        }
+
+
+        if (memoryDescription) {
+
+          memoryDescription.textContent =
+            item.description ||
+            item.text ||
+            "";
+
+        }
+
+
+        if (memoryCounter) {
+
+          memoryCounter.textContent =
+            String(
+              currentMemory + 1
+            ).padStart(2,"0");
+
+        }
+
+
+        if (memoryImage) {
+          memoryImage.classList.remove(
+            "changing"
+          );
+        }
+
+      },
+      220
+    );
 
   }
 
@@ -862,7 +657,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
     prevMemory.addEventListener(
       "click",
-      () => changeMemory(-1)
+      function(){
+
+        currentMemory--;
+
+        renderMemory();
+
+      }
     );
 
   }
@@ -872,7 +673,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
     nextMemory.addEventListener(
       "click",
-      () => changeMemory(1)
+      function(){
+
+        currentMemory++;
+
+        renderMemory();
+
+      }
     );
 
   }
@@ -881,101 +688,115 @@ document.addEventListener("DOMContentLoaded", () => {
   renderMemory();
 
 
-  /*
-  ==========================================================
-  MUSIC
-  ==========================================================
-  */
+  /* =====================================================
+     MUSIC
+     ===================================================== */
 
   let audio = null;
-  let musicPlaying = false;
+  let playing = false;
 
-  if (MEDIA && MEDIA.music) {
+
+  if (
+    MEDIA &&
+    MEDIA.music &&
+    MEDIA.music.url
+  ) {
 
     audio =
-      new Audio(MEDIA.music);
+      new Audio(
+        MEDIA.music.url
+      );
 
-    audio.loop = true;
-    audio.preload = "none";
+    audio.loop =
+      MEDIA.music.loop !== false;
 
   }
 
 
-  function toggleMusic() {
+  function updateSoundUI() {
+
+    if (soundButton) {
+
+      soundButton.classList.toggle(
+        "active",
+        playing
+      );
+
+    }
+
+
+    if (soundText) {
+
+      soundText.textContent =
+        playing
+          ? "يعمل"
+          : "صامت";
+
+    }
+
+
+    if (musicStatus) {
+
+      musicStatus.textContent =
+        playing
+          ? "الموسيقى تعمل"
+          : "تشغيل";
+
+    }
+
+
+    if (playMusic) {
+
+      playMusic.textContent =
+        playing
+          ? "Ⅱ"
+          : "▶";
+
+    }
+
+  }
+
+
+  async function toggleMusic() {
 
     if (!audio) {
 
       if (musicStatus) {
+
         musicStatus.textContent =
-          "الموسيقى غير مضافة حاليًا.";
+          "أضيفي الموسيقى من media.js";
+
       }
 
       return;
 
     }
 
-    if (!musicPlaying) {
 
-      audio.play()
-        .then(() => {
+    try {
 
-          musicPlaying = true;
+      if (audio.paused) {
 
-          if (playMusic) {
-            playMusic.textContent = "Ⅱ";
-          }
+        await audio.play();
 
-          if (musicStatus) {
-            musicStatus.textContent =
-              "يعمل الآن";
-          }
+        playing = true;
 
-          if (soundButton) {
-            soundButton.classList.add(
-              "active"
-            );
-          }
+      } else {
 
-          if (soundText) {
-            soundText.textContent =
-              "يعمل";
-          }
+        audio.pause();
 
-        })
-        .catch(() => {
+        playing = false;
 
-          if (musicStatus) {
-            musicStatus.textContent =
-              "اضغطي مرة أخرى للتشغيل";
-          }
-
-        });
-
-    } else {
-
-      audio.pause();
-
-      musicPlaying = false;
-
-      if (playMusic) {
-        playMusic.textContent = "▶";
       }
 
-      if (musicStatus) {
-        musicStatus.textContent =
-          "متوقف";
-      }
+      updateSoundUI();
 
-      if (soundButton) {
-        soundButton.classList.remove(
-          "active"
-        );
-      }
+    } catch(error) {
 
-      if (soundText) {
-        soundText.textContent =
-          "صامت";
-      }
+      console.warn(
+        "تعذر تشغيل الموسيقى:",
+        error
+      );
 
     }
 
@@ -1002,85 +823,66 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
 
-  /*
-  ==========================================================
-  FINAL MESSAGE
-  ==========================================================
-  */
+  /* =====================================================
+     FINAL MESSAGE
+     ===================================================== */
 
-  function renderFinalMessage() {
+  function renderFinal() {
 
     if (!finalMessageText) return;
 
-    const message =
+    const final =
       DATA.finalMessage;
 
-    /*
-      النسخة الجديدة من content.js
-      تستخدم:
-      finalMessage: {
-        title,
-        text: [...]
-      }
-    */
 
-    if (
-      message &&
-      typeof message === "object" &&
-      !Array.isArray(message)
-    ) {
+    if (!final) {
 
-      if (finalMessage) {
-
-        const titleElement =
-          finalMessage.querySelector(
-            "[data-final-title]"
-          );
-
-        if (titleElement && message.title) {
-          titleElement.textContent =
-            message.title;
-        }
-
-      }
-
-      if (Array.isArray(message.text)) {
-
-        finalMessageText.innerHTML =
-          message.text
-            .map(
-              line =>
-                `<p>${escapeHTML(line)}</p>`
-            )
-            .join("");
-
-      } else {
-
-        finalMessageText.textContent =
-          message.text || "";
-
-      }
+      finalMessageText.textContent =
+        "لسه في كلام كتير.";
 
       return;
+
     }
 
+
+    if (
+      typeof final === "object" &&
+      !Array.isArray(final)
+    ) {
+
+      finalMessageText.textContent =
+        Array.isArray(final.text)
+          ? final.text.join("\n\n")
+          : String(final.text || "");
+
+      return;
+
+    }
+
+
+    if (Array.isArray(final)) {
+
+      finalMessageText.textContent =
+        final.join("\n\n");
+
+      return;
+
+    }
+
+
     finalMessageText.textContent =
-      message || "";
+      String(final);
 
   }
-
-
-  renderFinalMessage();
 
 
   if (revealFinal) {
 
     revealFinal.addEventListener(
       "click",
-      () => {
+      function(){
 
-        revealFinal.style.display =
-          "none";
+        renderFinal();
 
         if (finalMessage) {
 
@@ -1090,95 +892,46 @@ document.addEventListener("DOMContentLoaded", () => {
 
         }
 
+        revealFinal.style.display =
+          "none";
+
       }
     );
 
   }
 
 
-  /*
-  ==========================================================
-  OBSERVER
-  ==========================================================
-  */
-
-  if ("IntersectionObserver" in window) {
-
-    const observer =
-      new IntersectionObserver(
-        entries => {
-
-          entries.forEach(
-            entry => {
-
-              if (!entry.isIntersecting) {
-                return;
-              }
-
-              if (
-                entry.target.id ===
-                "letter"
-              ) {
-
-                revealLetter();
-
-              }
-
-            }
-          );
-
-        },
-        {
-          threshold: 0.18
-        }
-      );
-
-
-    document
-      .querySelectorAll(".section")
-      .forEach(section => {
-
-        observer.observe(section);
-
-      });
-
-  }
-
-
-  /*
-  ==========================================================
-  KEYBOARD
-  ==========================================================
-  */
+  /* =====================================================
+     KEYBOARD
+     ===================================================== */
 
   document.addEventListener(
     "keydown",
-    event => {
+    function(event){
 
-      /*
-        Enter في خانة كلمة السر
-        يتعامل معه الفورم أصلًا.
-      */
-
-      if (event.key === "Escape") {
+      if(event.key === "Escape") {
         closeMenuPanel();
       }
 
-      if (
+      if(
         event.key === "ArrowRight" &&
-        document.activeElement === document.body
-      ) {
+        document.activeElement?.tagName !== "INPUT"
+      ){
 
-        changePoem(1);
+        currentPoem++;
+
+        renderPoem();
 
       }
 
-      if (
+      if(
         event.key === "ArrowLeft" &&
-        document.activeElement === document.body
-      ) {
+        document.activeElement?.tagName !== "INPUT"
+      ){
 
-        changePoem(-1);
+        currentPoem--;
+
+        renderPoem();
 
       }
 
@@ -1186,44 +939,71 @@ document.addEventListener("DOMContentLoaded", () => {
   );
 
 
-  /*
-  ==========================================================
-  ESCAPE HTML
-  ==========================================================
-  */
+  /* =====================================================
+     OBSERVER
+     ===================================================== */
 
-  function escapeHTML(value) {
+  const observer =
+    new IntersectionObserver(
+      function(entries){
 
-    return String(value ?? "")
-      .replaceAll("&", "&amp;")
-      .replaceAll("<", "&lt;")
-      .replaceAll(">", "&gt;")
-      .replaceAll('"', "&quot;")
-      .replaceAll("'", "&#039;");
+        entries.forEach(
+          function(entry){
 
-  }
+            if(
+              entry.isIntersecting
+            ){
+
+              entry.target
+                .querySelectorAll(
+                  ".letter__paragraph"
+                )
+                .forEach(
+                  function(item,index){
+
+                    setTimeout(
+                      function(){
+                        item.classList.add(
+                          "visible"
+                        );
+                      },
+                      index * 180
+                    );
+
+                  }
+                );
+
+            }
+
+          }
+        );
+
+      },
+      {
+        threshold:.15
+      }
+    );
 
 
-  /*
-  ==========================================================
-  MEDIA PRELOAD
-  ==========================================================
-  */
+  document
+    .querySelectorAll(".letter")
+    .forEach(
+      function(section){
+        observer.observe(section);
+      }
+    );
 
-  if (
-    MEDIA &&
-    typeof MEDIA.preload === "function"
-  ) {
 
-    try {
-      MEDIA.preload();
-    } catch (error) {
-      console.warn(
-        "تعذر تحميل الوسائط:",
-        error
-      );
-    }
+  /* =====================================================
+     SAFETY
+     ===================================================== */
 
-  }
+  window.MALAK_APP = {
+    openMenu,
+    closeMenuPanel,
+    renderPoem,
+    renderMemory,
+    toggleMusic
+  };
 
 });
