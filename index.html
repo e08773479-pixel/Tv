@@ -1,2502 +1,1855 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover">
-
-<meta name="theme-color" content="#080507">
-<meta name="description" content="مَلَك — مساحة كتبها يوسف أشرف الجرف.">
-
-<title>مَلَك — يوسف أشرف الجرف</title>
-
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
-<link
-  href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cairo:wght@300;400;500;600;700&display=swap"
-  rel="stylesheet"
->
-
-<style>
-
-:root{
-  --black:#070506;
-  --black2:#0d080b;
-  --wine:#421322;
-  --wine2:#681c31;
-  --wine3:#8e3452;
-  --rose:#c16d88;
-  --ivory:#f5e9e9;
-  --soft:#d9cbce;
-  --muted:#95858a;
-  --line:rgba(255,255,255,.10);
-  --ui:"Cairo",sans-serif;
-  --poetry:"Amiri",serif;
-  --ease:cubic-bezier(.22,.61,.36,1);
-}
-
-*{
-  box-sizing:border-box;
-  margin:0;
-  padding:0;
-}
-
-html{
-  background:var(--black);
-  scroll-behavior:smooth;
-}
-
-body{
-  min-height:100vh;
-  overflow-x:hidden;
-  background:var(--black);
-  color:var(--ivory);
-  font-family:var(--ui);
-  -webkit-font-smoothing:antialiased;
-}
-
-body.locked{
-  overflow:hidden;
-}
-
-button,input{
-  font:inherit;
-}
-
-button{
-  border:0;
-  cursor:pointer;
-}
-
-img{
-  display:block;
-  max-width:100%;
-}
-
-::selection{
-  background:var(--wine3);
-  color:#fff;
-}
-
-
-/* =========================================================
-   GLOBAL
-   ========================================================= */
-
-.world{
-  position:fixed;
-  inset:0;
-  z-index:-20;
-  overflow:hidden;
-  background:
-    radial-gradient(
-      circle at 75% 10%,
-      rgba(142,52,82,.14),
-      transparent 35%
-    ),
-    #070506;
-}
-
-.world__grain{
-  position:absolute;
-  inset:-50%;
-  opacity:.025;
-  pointer-events:none;
-  background-image:url("https://grainy-gradients.vercel.app/noise.svg");
-  animation:grain 8s steps(8) infinite;
-}
-
-.world__light{
-  position:absolute;
-  width:55vw;
-  height:55vw;
-  border-radius:50%;
-  filter:blur(120px);
-  opacity:.12;
-}
-
-.world__light.one{
-  top:-30%;
-  right:-25%;
-  background:#8d294c;
-}
-
-.world__light.two{
-  bottom:-30%;
-  left:-25%;
-  background:#5d1732;
-}
-
-.stars{
-  position:absolute;
-  inset:0;
-  pointer-events:none;
-}
-
-.star{
-  position:absolute;
-  width:2px;
-  height:2px;
-  border-radius:50%;
-  background:rgba(255,255,255,.7);
-  animation:twinkle var(--time) ease-in-out infinite;
-}
-
-
-/* =========================================================
-   LOGIN / WELCOME
-   ========================================================= */
-
-.gate{
-  position:fixed;
-  inset:0;
-  z-index:99999;
-  overflow:hidden;
-
-  display:grid;
-  place-items:center;
-
-  background:#030203;
-
-  transition:
-    opacity .9s var(--ease),
-    visibility .9s;
-}
-
-.gate.hide{
-  opacity:0;
-  visibility:hidden;
-  pointer-events:none;
-}
-
-.gate__background{
-  position:absolute;
-  inset:-5%;
-
-  background:
-    linear-gradient(
-      180deg,
-      rgba(7,2,5,.15),
-      rgba(7,2,5,.50),
-      rgba(3,2,3,.94)
-    ),
-    url("https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?auto=format&fit=crop&w=2200&q=90");
-
-  background-size:cover;
-  background-position:center;
-
-  animation:romanticZoom 22s ease-in-out infinite alternate;
-}
-
-.gate__background::after{
-  content:"";
-  position:absolute;
-  inset:0;
-
-  background:
-    radial-gradient(
-      circle at 50% 42%,
-      rgba(177,62,95,.16),
-      transparent 42%
-    );
-}
-
-.gate__orb{
-  position:absolute;
-  width:300px;
-  height:300px;
-  border-radius:50%;
-  filter:blur(90px);
-  opacity:.18;
-  pointer-events:none;
-}
-
-.gate__orb.one{
-  top:-100px;
-  right:-100px;
-  background:#a02e51;
-}
-
-.gate__orb.two{
-  bottom:-130px;
-  left:-100px;
-  background:#6d1b38;
-}
-
-.gate__veil{
-  position:absolute;
-  inset:0;
-
-  background:
-    radial-gradient(
-      ellipse at center,
-      rgba(0,0,0,.02),
-      rgba(0,0,0,.35) 50%,
-      rgba(0,0,0,.92) 100%
-    );
-}
-
-.gate__content{
-  position:relative;
-  z-index:3;
-
-  width:min(89%,440px);
-
-  text-align:center;
-
-  animation:welcomeIn 1.2s var(--ease) both;
-}
-
-.gate__mini{
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  gap:12px;
-
-  color:#c5b5ba;
-  font-size:9px;
-  letter-spacing:.18em;
-}
-
-.gate__mini::before,
-.gate__mini::after{
-  content:"";
-  width:28px;
-  height:1px;
-  background:rgba(255,255,255,.28);
-}
-
-.gate__welcome{
-  margin-top:25px;
-
-  color:#ddd0d3;
-  font-size:12px;
-}
-
-.gate__name{
-  margin-top:13px;
-
-  font-family:var(--poetry);
-  font-size:clamp(105px,26vw,175px);
-  font-weight:400;
-  line-height:.70;
-  letter-spacing:-.07em;
-
-  text-shadow:
-    0 25px 90px rgba(0,0,0,.9);
-}
-
-.gate__subtitle{
-  margin-top:38px;
-
-  color:#e2d7d9;
-  font-family:var(--poetry);
-  font-size:21px;
-  line-height:1.9;
-}
-
-.gate__author{
-  margin-top:8px;
-  color:#9c898f;
-  font-size:10px;
-}
-
-.gate__form{
-  width:min(100%,350px);
-  margin:42px auto 0;
-}
-
-.gate__label{
-  display:block;
-  margin-bottom:9px;
-
-  color:#c0b0b4;
-  font-size:10px;
-  text-align:right;
-}
-
-.password{
-  height:57px;
-
-  display:flex;
-
-  overflow:hidden;
-
-  border:1px solid rgba(255,255,255,.15);
-
-  background:rgba(7,3,6,.72);
-
-  backdrop-filter:blur(20px);
-
-  transition:.3s ease;
-}
-
-.password:focus-within{
-  border-color:rgba(193,109,136,.75);
-
-  box-shadow:
-    0 0 0 3px rgba(193,109,136,.07),
-    0 20px 60px rgba(0,0,0,.35);
-}
-
-.password input{
-  flex:1;
-  min-width:0;
-
-  padding:0 17px;
-
-  border:0;
-  outline:0;
-
-  color:#fff;
-
-  background:transparent;
-
-  direction:ltr;
-  text-align:left;
-
-  font-size:15px;
-}
-
-.password input::placeholder{
-  color:rgba(255,255,255,.38);
-}
-
-.password__eye{
-  width:52px;
-
-  color:#bdaab0;
-  background:transparent;
-}
-
-.gate__enter{
-  width:100%;
-  height:57px;
-
-  margin-top:9px;
-
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-
-  padding:0 21px;
-
-  color:#fff;
-
-  background:
-    linear-gradient(
-      105deg,
-      #41101d,
-      #6b1c32
-    );
-
-  box-shadow:
-    0 18px 50px rgba(62,11,29,.25);
-
-  transition:.3s var(--ease);
-}
-
-.gate__enter:hover{
-  transform:translateY(-2px);
-  filter:brightness(1.12);
-}
-
-.gate__enter-arrow{
-  font-size:20px;
-  font-weight:300;
-}
-
-.gate__error{
-  height:0;
-  overflow:hidden;
-
-  opacity:0;
-
-  color:#e18b96;
-  font-size:10px;
-
-  transition:.3s ease;
-}
-
-.gate__error.show{
-  height:31px;
-  padding-top:10px;
-  opacity:1;
-}
-
-.gate__footer{
-  position:fixed;
-  left:0;
-  right:0;
-  bottom:max(25px,env(safe-area-inset-bottom));
-
-  color:rgba(255,255,255,.25);
-
-  font-size:8px;
-  letter-spacing:.15em;
-
-  text-align:center;
-}
-
-
-/* =========================================================
-   APP
-   ========================================================= */
-
-#app{
-  opacity:0;
-  visibility:hidden;
-
-  transition:
-    opacity 1s ease,
-    visibility 1s;
-}
-
-#app.ready{
-  opacity:1;
-  visibility:visible;
-}
-
-
-/* =========================================================
-   HEADER
-   ========================================================= */
-
-.header{
-  position:fixed;
-  z-index:500;
-
-  top:0;
-  left:0;
-  right:0;
-
-  height:76px;
-
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-
-  padding:
-    0
-    max(20px,env(safe-area-inset-right))
-    0
-    max(20px,env(safe-area-inset-left));
-
-  background:
-    linear-gradient(
-      to bottom,
-      rgba(5,4,5,.88),
-      transparent
-    );
-
-  pointer-events:none;
-}
-
-.header>*{
-  pointer-events:auto;
-}
-
-.menu-btn{
-  width:42px;
-  height:42px;
-
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
-  align-items:center;
-  gap:6px;
-
-  border:1px solid rgba(255,255,255,.11);
-  border-radius:50%;
-
-  background:rgba(0,0,0,.22);
-
-  backdrop-filter:blur(15px);
-}
-
-.menu-btn span{
-  width:15px;
-  height:1px;
-  background:#fff;
-}
-
-.header__logo{
-  font-family:var(--poetry);
-  font-size:24px;
-
-  border-bottom:1px solid rgba(255,255,255,.30);
-}
-
-.sound-btn{
-  height:34px;
-
-  display:flex;
-  align-items:center;
-  gap:7px;
-
-  color:#a99b9d;
-
-  background:transparent;
-
-  font-size:9px;
-}
-
-.sound-dot{
-  width:6px;
-  height:6px;
-  border-radius:50%;
-  background:#7d6c6e;
-}
-
-.sound-btn.active .sound-dot{
-  background:var(--rose);
-
-  box-shadow:
-    0 0 12px rgba(193,109,136,.75);
-}
-
-
-/* =========================================================
-   MENU
-   ========================================================= */
-
-.menu{
-  position:fixed;
-  z-index:800;
-
-  top:0;
-  right:0;
-  bottom:0;
-
-  width:min(86vw,390px);
-
-  padding:
-    90px 32px
-    max(30px,env(safe-area-inset-bottom));
-
-  background:
-    linear-gradient(
-      150deg,
-      rgba(63,16,29,.99),
-      rgba(7,5,7,.99) 75%
-    );
-
-  box-shadow:-30px 0 100px rgba(0,0,0,.55);
-
-  transform:translateX(105%);
-
-  transition:
-    transform .65s var(--ease);
-}
-
-.menu.open{
-  transform:translateX(0);
-}
-
-.menu__close{
-  position:absolute;
-  top:23px;
-  left:23px;
-
-  width:40px;
-  height:40px;
-
-  color:#ddd;
-
-  background:transparent;
-
-  font-size:27px;
-}
-
-.menu__small{
-  color:#857678;
-  font-size:10px;
-}
-
-.menu__title{
-  margin-top:2px;
-
-  font-family:var(--poetry);
-  font-size:58px;
-  font-weight:400;
-}
-
-.menu__nav{
-  margin-top:50px;
-}
-
-.menu__nav button{
-  width:100%;
-
-  display:flex;
-  justify-content:space-between;
-
-  padding:16px 0;
-
-  color:#bdb1b2;
-  background:transparent;
-
-  border-bottom:1px solid rgba(255,255,255,.06);
-
-  text-align:right;
-  font-size:12px;
-
-  transition:.25s ease;
-}
-
-.menu__nav button::after{
-  content:"↗";
-  color:#64575a;
-}
-
-.menu__nav button:hover{
-  color:#fff;
-  padding-right:8px;
-}
-
-.menu__signature{
-  position:absolute;
-  bottom:max(28px,env(safe-area-inset-bottom));
-
-  color:#625659;
-  font-size:9px;
-}
-
-.menu-overlay{
-  position:fixed;
-  z-index:700;
-  inset:0;
-
-  background:rgba(0,0,0,.65);
-  backdrop-filter:blur(5px);
-
-  opacity:0;
-  visibility:hidden;
-
-  transition:.35s ease;
-}
-
-.menu-overlay.open{
-  opacity:1;
-  visibility:visible;
-}
-
-
-/* =========================================================
-   SECTIONS
-   ========================================================= */
-
-.section{
-  position:relative;
-  min-height:100svh;
-  overflow:hidden;
-}
-
-.section__inner{
-  position:relative;
-  z-index:2;
-
-  width:min(90%,1000px);
-  margin:auto;
-
-  padding:
-    120px 0
-    max(70px,env(safe-area-inset-bottom));
-}
-
-.section-number{
-  color:rgba(255,255,255,.30);
-  font-size:9px;
-  letter-spacing:.14em;
-
-  direction:ltr;
-  text-align:right;
-}
-
-
-/* =========================================================
-   HERO
-   ========================================================= */
-
-.hero{
-  min-height:100svh;
-
-  display:flex;
-  align-items:center;
-  justify-content:center;
-}
-
-.hero__bg{
-  position:absolute;
-  inset:0;
-
-  background:
-    linear-gradient(
-      180deg,
-      rgba(3,2,3,.20),
-      rgba(3,2,3,.90)
-    ),
-    url("https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?auto=format&fit=crop&w=2200&q=90");
-
-  background-size:cover;
-  background-position:center;
-
-  transform:scale(1.03);
-
-  animation:romanticZoom 24s ease-in-out infinite alternate;
-}
-
-.hero__veil{
-  position:absolute;
-  inset:0;
-
-  background:
-    radial-gradient(
-      circle at 50% 40%,
-      rgba(150,40,75,.11),
-      transparent 45%
-    ),
-    linear-gradient(
-      to bottom,
-      transparent,
-      rgba(0,0,0,.82)
-    );
-}
-
-.hero__content{
-  position:relative;
-  z-index:2;
-
-  width:min(90%,750px);
-
-  text-align:center;
-}
-
-.hero__small{
-  color:#c0b2b5;
-  font-size:10px;
-}
-
-.hero__name{
-  margin-top:15px;
-
-  font-family:var(--poetry);
-  font-size:clamp(100px,26vw,205px);
-  line-height:.76;
-  font-weight:400;
-
-  letter-spacing:-.07em;
-
-  text-shadow:
-    0 35px 110px rgba(0,0,0,.9);
-}
-
-.hero__description{
-  margin-top:38px;
-
-  color:#d9cecc;
-
-  font-family:var(--poetry);
-  font-size:19px;
-  line-height:2;
-}
-
-.hero__start{
-  margin-top:42px;
-
-  display:inline-flex;
-  align-items:center;
-  gap:22px;
-
-  padding:14px 22px;
-
-  color:#fff;
-
-  background:rgba(255,255,255,.06);
-
-  border:1px solid rgba(255,255,255,.13);
-
-  backdrop-filter:blur(16px);
-
-  transition:.3s var(--ease);
-}
-
-.hero__start:hover{
-  transform:translateY(-3px);
-  background:rgba(255,255,255,.11);
-}
-
-.hero__start span{
-  color:var(--rose);
-}
-
-.hero__bottom{
-  position:absolute;
-  z-index:3;
-
-  left:6%;
-  right:6%;
-  bottom:max(24px,env(safe-area-inset-bottom));
-
-  display:flex;
-  justify-content:space-between;
-
-  color:rgba(255,255,255,.30);
-  font-size:8px;
-}
-
-
-/* =========================================================
-   LETTER
-   ========================================================= */
-
-.letter{
-  background:
-    radial-gradient(
-      circle at 85% 10%,
-      rgba(105,29,48,.14),
-      transparent 30%
-    ),
-    var(--black2);
-}
-
-.heading{
-  display:flex;
-  align-items:flex-start;
-  gap:17px;
-
-  margin-top:45px;
-}
-
-.heading__number{
-  padding-top:10px;
-
-  color:var(--copper);
-  font-size:9px;
-}
-
-.heading h2{
-  font-family:var(--poetry);
-  font-size:clamp(43px,11vw,88px);
-  line-height:1.15;
-  font-weight:400;
-}
-
-.letter__body{
-  margin-top:65px;
-  max-width:820px;
-}
-
-.letter__paragraph{
-  margin-top:34px;
-
-  color:#e4dbd8;
-
-  font-family:var(--poetry);
-  font-size:clamp(25px,5.8vw,43px);
-  line-height:2.05;
-
-  opacity:0;
-  transform:translateY(24px);
-
-  transition:
-    opacity .9s var(--ease),
-    transform .9s var(--ease);
-}
-
-.letter__paragraph:first-child{
-  margin-top:0;
-}
-
-.letter__paragraph.visible{
-  opacity:1;
-  transform:translateY(0);
-}
-
-.letter__signature{
-  margin-top:65px;
-  color:#8e7d7f;
-  font-size:11px;
-}
-
-
-/* =========================================================
-   POETRY
-   ========================================================= */
-
-.poetry{
-  display:flex;
-  align-items:center;
-}
-
-.poetry__bg{
-  position:absolute;
-  inset:0;
-
-  background:
-    linear-gradient(
-      90deg,
-      rgba(4,3,4,.96),
-      rgba(45,10,21,.70),
-      rgba(4,3,4,.94)
-    ),
-    url("https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=2200&q=88");
-
-  background-size:cover;
-  background-position:center;
-}
-
-.poetry__glow{
-  position:absolute;
-  inset:0;
-
-  background:
-    radial-gradient(
-      circle at 50% 50%,
-      rgba(160,51,82,.18),
-      transparent 55%
-    );
-}
-
-.poetry__label{
-  margin-top:45px;
-  color:var(--rose);
-  font-size:9px;
-}
-
-.poetry__title{
-  margin-top:5px;
-
-  font-family:var(--poetry);
-  font-size:clamp(52px,13vw,105px);
-  font-weight:400;
-}
-
-.poem{
-  min-height:290px;
-
-  display:flex;
-  align-items:center;
-
-  margin-top:40px;
-  padding-right:20px;
-
-  border-right:1px solid rgba(189,141,121,.38);
-
-  transition:opacity .3s ease;
-}
-
-.poem.fade{
-  opacity:0;
-}
-
-.poem__title{
-  color:#98888a;
-  font-size:10px;
-  margin-bottom:25px;
-}
-
-.poem__lines{
-  color:#f0e7e4;
-
-  font-family:var(--poetry);
-  font-size:clamp(25px,6vw,44px);
-  line-height:2;
-}
-
-.poem__line{
-  display:block;
-}
-
-.poem-controls{
-  display:flex;
-  align-items:center;
-  gap:15px;
-
-  margin-top:35px;
-}
-
-.poem-controls button{
-  width:43px;
-  height:43px;
-
-  color:#ddd;
-
-  background:rgba(255,255,255,.05);
-
-  border:1px solid rgba(255,255,255,.10);
-
-  transition:.25s ease;
-}
-
-.poem-controls button:hover{
-  background:rgba(255,255,255,.12);
-}
-
-.poem-counter{
-  color:#817275;
-  font-size:9px;
-  direction:ltr;
-}
-
-
-/* =========================================================
-   DIWAN
-   ========================================================= */
-
-.diwan{
-  background:#080607;
-}
-
-.diwan__intro{
-  max-width:700px;
-  margin-top:30px;
-
-  color:#988b8c;
-  font-size:12px;
-  line-height:2;
-}
-
-.diwan-list{
-  margin-top:55px;
-  border-top:1px solid var(--line);
-}
-
-.diwan-item{
-  width:100%;
-
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-
-  padding:22px 0;
-
-  color:#d6ccca;
-  background:transparent;
-
-  border-bottom:1px solid var(--line);
-
-  text-align:right;
-
-  transition:.3s var(--ease);
-}
-
-.diwan-item:hover{
-  color:#fff;
-  padding-right:10px;
-}
-
-.diwan-item__meta{
-  color:#6f6264;
-  font-size:9px;
-}
-
-.diwan-item__name{
-  font-family:var(--poetry);
-  font-size:25px;
-  font-weight:400;
-}
-
-
-/* =========================================================
-   DETAILS
-   ========================================================= */
-
-.details{
-  background:
-    radial-gradient(
-      circle at 10% 90%,
-      rgba(95,26,46,.13),
-      transparent 30%
-    ),
-    #080607;
-}
-
-.details__grid{
-  margin-top:55px;
-
-  display:grid;
-  grid-template-columns:1fr;
-
-  gap:1px;
-
-  background:var(--line);
-  border:1px solid var(--line);
-}
-
-.detail{
-  min-height:220px;
-
-  display:flex;
-  flex-direction:column;
-  justify-content:space-between;
-
-  padding:25px;
-
-  background:#0a0709;
-}
-
-.detail__number{
-  color:var(--copper);
-  font-size:9px;
-}
-
-.detail h3{
-  font-family:var(--poetry);
-  font-size:31px;
-  font-weight:400;
-}
-
-.detail p{
-  margin-top:8px;
-
-  color:#8e8284;
-  font-size:11px;
-  line-height:1.9;
-}
-
-
-/* =========================================================
-   MEMORY
-   ========================================================= */
-
-.memory{
-  background:#080607;
-}
-
-.memory-stage{
-  margin-top:55px;
-}
-
-.memory-image{
-  position:relative;
-
-  width:100%;
-  aspect-ratio:4/5;
-
-  overflow:hidden;
-
-  background:#100a0d;
-}
-
-.memory-image img{
-  width:100%;
-  height:100%;
-
-  object-fit:cover;
-
-  transition:
-    opacity .45s ease,
-    transform 1s var(--ease);
-}
-
-.memory-image::after{
-  content:"";
-
-  position:absolute;
-  inset:0;
-
-  box-shadow:
-    inset 0 0 100px rgba(0,0,0,.45);
-}
-
-.memory-image.changing img{
-  opacity:0;
-  transform:scale(1.05);
-}
-
-.memory__caption{
-  padding:22px 0;
-}
-
-.memory__date{
-  color:var(--copper);
-  font-size:9px;
-}
-
-.memory__title{
-  margin-top:6px;
-
-  font-family:var(--poetry);
-  font-size:35px;
-  font-weight:400;
-}
-
-.memory__description{
-  margin-top:8px;
-
-  max-width:650px;
-
-  color:#95898a;
-  font-size:11px;
-  line-height:2;
-}
-
-.memory-controls{
-  display:flex;
-  align-items:center;
-  gap:20px;
-  margin-top:8px;
-}
-
-.memory-controls button{
-  color:#c4b7b8;
-  background:transparent;
-  font-size:10px;
-}
-
-.memory-counter{
-  color:var(--copper);
-  font-size:9px;
-}
-
-
-/* =========================================================
-   SOUND
-   ========================================================= */
-
-.sound-section{
-  background:
-    linear-gradient(
-      rgba(5,4,5,.72),
-      rgba(5,4,5,.96)
-    ),
-    url("https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?auto=format&fit=crop&w=2200&q=90");
-
-  background-size:cover;
-  background-position:center;
-}
-
-.sound-box{
-  margin-top:60px;
-
-  padding:30px;
-
-  background:rgba(5,4,5,.55);
-
-  border:1px solid var(--line);
-
-  backdrop-filter:blur(18px);
-}
-
-.sound-box__label{
-  color:var(--rose);
-  font-size:9px;
-}
-
-.sound-box__title{
-  margin-top:15px;
-
-  font-family:var(--poetry);
-  font-size:39px;
-  font-weight:400;
-}
-
-.sound-box__text{
-  margin-top:12px;
-
-  color:#95898b;
-  font-size:11px;
-  line-height:2;
-}
-
-.music-controls{
-  margin-top:30px;
-
-  display:flex;
-  align-items:center;
-  gap:18px;
-}
-
-.play-button{
-  width:52px;
-  height:52px;
-
-  display:grid;
-  place-items:center;
-
-  color:#fff;
-
-  background:var(--wine2);
-
-  border-radius:50%;
-}
-
-.music-status{
-  color:#95888a;
-  font-size:10px;
-}
-
-
-/* =========================================================
-   FINAL
-   ========================================================= */
-
-.final{
-  min-height:100svh;
-
-  display:flex;
-  align-items:center;
-  justify-content:center;
-}
-
-.final__bg{
-  position:absolute;
-  inset:0;
-
-  background:
-    linear-gradient(
-      rgba(4,3,4,.42),
-      rgba(4,3,4,.95)
-    ),
-    url("https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?auto=format&fit=crop&w=2200&q=90");
-
-  background-size:cover;
-  background-position:center;
-}
-
-.final__veil{
-  position:absolute;
-  inset:0;
-
-  background:
-    radial-gradient(
-      circle,
-      transparent,
-      rgba(0,0,0,.88)
-    );
-}
-
-.final__content{
-  position:relative;
-  z-index:2;
-
-  width:min(90%,750px);
-
-  text-align:center;
-}
-
-.final__small{
-  color:#95878a;
-  font-size:10px;
-}
-
-.final__title{
-  margin-top:17px;
-
-  font-family:var(--poetry);
-  font-size:clamp(45px,11vw,95px);
-  font-weight:400;
-}
-
-.final__button{
-  margin-top:40px;
-
-  padding:15px 30px;
-
-  color:#fff;
-
-  background:#481421;
-
-  transition:.3s ease;
-}
-
-.final__button:hover{
-  transform:translateY(-2px);
-  background:#641c2e;
-}
-
-.final__message{
-  display:none;
-
-  margin-top:55px;
-
-  animation:finalReveal 1.2s var(--ease);
-}
-
-.final__message.show{
-  display:block;
-}
-
-.final__message-text{
-  white-space:pre-line;
-
-  font-family:var(--poetry);
-  font-size:clamp(27px,6vw,47px);
-  line-height:2;
-}
-
-.final__signature{
-  margin-top:45px;
-
-  color:#938386;
-  font-size:10px;
-}
-
-
-/* =========================================================
-   FOOTER
-   ========================================================= */
-
-.footer{
-  min-height:90px;
-
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-
-  padding:
-    0
-    max(23px,env(safe-area-inset-right))
-    max(23px,env(safe-area-inset-bottom))
-    max(23px,env(safe-area-inset-left));
-
-  color:#625759;
-
-  background:#040304;
-
-  font-size:8px;
-}
-
-
-/* =========================================================
-   RESPONSIVE
-   ========================================================= */
-
-@media(min-width:600px){
-
-  .section__inner{
-    width:min(86%,950px);
-  }
-
-  .memory-image{
-    aspect-ratio:16/9;
-  }
-
-  .details__grid{
-    grid-template-columns:repeat(2,1fr);
-  }
-
-  .detail{
-    min-height:280px;
-  }
-
-}
-
-@media(min-width:1000px){
-
-  .section__inner{
-    width:min(82%,1150px);
-  }
-
-  .hero__name{
-    font-size:205px;
-  }
-
-  .memory-stage{
-    display:grid;
-
-    grid-template-columns:1.55fr .75fr;
-
-    gap:55px;
-
-    align-items:end;
-  }
-
-  .memory-image{
-    aspect-ratio:16/10;
-  }
-
-  .details__grid{
-    grid-template-columns:repeat(3,1fr);
-  }
-
-  .letter__body{
-    padding-right:80px;
-  }
-
-}
-
-
-/* =========================================================
-   ANIMATIONS
-   ========================================================= */
-
-@keyframes romanticZoom{
-
-  from{
-    transform:scale(1.03);
-  }
-
-  to{
-    transform:scale(1.09);
-  }
-
-}
-
-@keyframes welcomeIn{
-
-  from{
-    opacity:0;
-
-    transform:
-      translateY(25px)
-      scale(.985);
-
-    filter:blur(8px);
-  }
-
-  to{
-    opacity:1;
-
-    transform:
-      translateY(0)
-      scale(1);
-
-    filter:blur(0);
-  }
-
-}
-
-@keyframes twinkle{
-
-  0%,100%{
-    opacity:.10;
-  }
-
-  50%{
-    opacity:.80;
-  }
-
-}
-
-@keyframes grain{
-
-  0%{
-    transform:translate(0,0);
-  }
-
-  25%{
-    transform:translate(3%,-2%);
-  }
-
-  50%{
-    transform:translate(-2%,3%);
-  }
-
-  75%{
-    transform:translate(2%,2%);
-  }
-
-  100%{
-    transform:translate(0,0);
-  }
-
-}
-
-@keyframes finalReveal{
-
-  from{
-    opacity:0;
-    transform:translateY(25px);
-    filter:blur(7px);
-  }
-
-  to{
-    opacity:1;
-    transform:translateY(0);
-    filter:blur(0);
-  }
-
-}
-
-@media(prefers-reduced-motion:reduce){
-
-  *,
-  *::before,
-  *::after{
-    animation-duration:.01ms!important;
-    animation-iteration-count:1!important;
-    scroll-behavior:auto!important;
-    transition-duration:.01ms!important;
-  }
-
-}
-
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover">
+
+  <title>أحببتُ الملك 👑❤️</title>
+
+  <meta name="description" content="أحببتُ الملك — رحلة من الكلمات والمشاهد والقصائد إلى قلبٍ واحد.">
+  <meta name="theme-color" content="#080507">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cairo:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    /* =========================================================
+       ROOT
+    ========================================================= */
+
+    :root {
+      --bg: #070506;
+      --bg-2: #0d080b;
+      --surface: rgba(20, 11, 15, .78);
+      --surface-2: rgba(29, 15, 20, .68);
+
+      --wine: #6f2038;
+      --wine-light: #9e405c;
+      --wine-dark: #3b101d;
+
+      --ivory: #f4eee7;
+      --muted: #b8aaa7;
+      --muted-2: #837477;
+
+      --copper: #b98568;
+      --copper-light: #d9b197;
+
+      --border: rgba(255, 230, 220, .12);
+      --border-strong: rgba(255, 230, 220, .2);
+
+      --shadow: 0 30px 90px rgba(0, 0, 0, .55);
+
+      --radius-xl: 34px;
+      --radius-lg: 24px;
+      --radius-md: 18px;
+
+      --header-height: 78px;
+      --transition: 550ms cubic-bezier(.22, .8, .22, 1);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      background: var(--bg);
+    }
+
+    body {
+      min-height: 100vh;
+      background: var(--bg);
+      color: var(--ivory);
+      font-family: "Cairo", sans-serif;
+      overflow-x: hidden;
+    }
+
+    body.locked {
+      overflow: hidden;
+    }
+
+    button,
+    input {
+      font: inherit;
+    }
+
+    button {
+      border: 0;
+      cursor: pointer;
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    ::selection {
+      background: var(--wine-light);
+      color: white;
+    }
+
+    /* =========================================================
+       GLOBAL BACKGROUND
+    ========================================================= */
+
+    .background-layer {
+      position: fixed;
+      inset: 0;
+      z-index: -20;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at 15% 20%, rgba(111,32,56,.2), transparent 32%),
+        radial-gradient(circle at 85% 70%, rgba(185,133,104,.08), transparent 28%),
+        #070506;
+    }
+
+    .background-image {
+      position: absolute;
+      inset: 0;
+      background-size: cover;
+      background-position: center;
+      opacity: .12;
+      transform: scale(1.05);
+      transition:
+        background-image 1s ease,
+        opacity 1s ease,
+        transform 8s ease;
+    }
+
+    .background-image.active {
+      opacity: .16;
+      transform: scale(1);
+    }
+
+    .background-overlay {
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(
+          180deg,
+          rgba(7,5,6,.8) 0%,
+          rgba(7,5,6,.55) 35%,
+          rgba(7,5,6,.92) 100%
+        );
+    }
+
+    .grain {
+      position: fixed;
+      inset: 0;
+      z-index: 999;
+      pointer-events: none;
+      opacity: .055;
+      background-image: url("https://grainy-gradients.vercel.app/noise.svg");
+      mix-blend-mode: overlay;
+    }
+
+    /* =========================================================
+       LOADER
+    ========================================================= */
+
+    .loader {
+      position: fixed;
+      inset: 0;
+      z-index: 5000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background:
+        radial-gradient(circle at center, rgba(111,32,56,.18), transparent 38%),
+        #070506;
+      transition: opacity 800ms ease, visibility 800ms ease;
+    }
+
+    .loader.hidden {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+    .loader-inner {
+      width: min(420px, 86vw);
+      text-align: center;
+    }
+
+    .loader-crown {
+      font-size: 54px;
+      margin-bottom: 18px;
+      animation: crownPulse 1.8s ease-in-out infinite;
+    }
+
+    .loader-title {
+      font-family: "Amiri", serif;
+      font-size: clamp(32px, 8vw, 56px);
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    .loader-text {
+      color: var(--muted);
+      font-size: 13px;
+      margin-bottom: 26px;
+    }
+
+    .loader-line {
+      height: 2px;
+      overflow: hidden;
+      background: rgba(255,255,255,.08);
+      border-radius: 999px;
+    }
+
+    .loader-progress {
+      width: 0;
+      height: 100%;
+      background: linear-gradient(90deg, var(--wine), var(--copper));
+      animation: loading 1.5s ease forwards;
+    }
+
+    @keyframes loading {
+      from { width: 0; }
+      to { width: 100%; }
+    }
+
+    @keyframes crownPulse {
+      0%,100% { transform: translateY(0) scale(1); opacity: .75; }
+      50% { transform: translateY(-6px) scale(1.08); opacity: 1; }
+    }
+
+    /* =========================================================
+       PASSWORD GATE
+    ========================================================= */
+
+    .gate {
+      position: fixed;
+      inset: 0;
+      z-index: 4000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      background:
+        linear-gradient(rgba(6,3,5,.42), rgba(6,3,5,.88)),
+        url("https://images.unsplash.com/photo-1518199266791-5375a83190b7?auto=format&fit=crop&w=2200&q=90")
+        center / cover;
+      transition:
+        opacity 700ms ease,
+        visibility 700ms ease,
+        transform 700ms ease;
+    }
+
+    .gate::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at center, transparent 10%, rgba(5,3,4,.68) 85%);
+    }
+
+    .gate.hide {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      transform: scale(1.03);
+    }
+
+    .gate-panel {
+      position: relative;
+      width: min(520px, 100%);
+      padding: clamp(30px, 7vw, 58px);
+      border: 1px solid rgba(255,255,255,.14);
+      border-radius: 34px;
+      background: rgba(10,6,8,.72);
+      backdrop-filter: blur(24px);
+      box-shadow: 0 40px 120px rgba(0,0,0,.7);
+      text-align: center;
+      animation: gateIn 1s ease both;
+    }
+
+    @keyframes gateIn {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .gate-crown {
+      font-size: 50px;
+      margin-bottom: 14px;
+    }
+
+    .gate-kicker {
+      color: var(--copper-light);
+      font-size: 11px;
+      letter-spacing: 3px;
+      margin-bottom: 12px;
+    }
+
+    .gate-title {
+      font-family: "Amiri", serif;
+      font-size: clamp(42px, 10vw, 72px);
+      line-height: 1;
+      margin-bottom: 18px;
+    }
+
+    .gate-description {
+      color: #cbbfbd;
+      line-height: 2;
+      font-size: 14px;
+      margin-bottom: 30px;
+    }
+
+    .password-wrap {
+      position: relative;
+      margin-bottom: 13px;
+    }
+
+    .password-input {
+      width: 100%;
+      height: 58px;
+      padding: 0 20px 0 58px;
+      border: 1px solid rgba(255,255,255,.13);
+      border-radius: 18px;
+      background: rgba(255,255,255,.055);
+      color: white;
+      outline: none;
+      text-align: center;
+      letter-spacing: 4px;
+      transition: .3s ease;
+    }
+
+    .password-input:focus {
+      border-color: rgba(185,133,104,.65);
+      box-shadow: 0 0 0 4px rgba(185,133,104,.08);
+    }
+
+    .password-eye {
+      position: absolute;
+      left: 9px;
+      top: 9px;
+      width: 40px;
+      height: 40px;
+      border-radius: 13px;
+      background: rgba(255,255,255,.07);
+      color: var(--muted);
+    }
+
+    .gate-button {
+      width: 100%;
+      min-height: 58px;
+      border-radius: 18px;
+      background: linear-gradient(135deg, #7e2944, #4b1425);
+      color: white;
+      font-weight: 700;
+      box-shadow: 0 16px 45px rgba(111,32,56,.28);
+      transition: transform .25s ease, box-shadow .25s ease;
+    }
+
+    .gate-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 20px 55px rgba(111,32,56,.4);
+    }
+
+    .gate-error {
+      min-height: 22px;
+      color: #d88a9e;
+      font-size: 12px;
+      margin-top: 12px;
+      opacity: 0;
+      transform: translateY(-5px);
+      transition: .25s ease;
+    }
+
+    .gate-error.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .gate-hint {
+      margin-top: 22px;
+      color: #75676b;
+      font-size: 10px;
+    }
+
+    /* =========================================================
+       APP
+    ========================================================= */
+
+    #app {
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 900ms ease;
+    }
+
+    #app.ready {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    /* =========================================================
+       HEADER
+    ========================================================= */
+
+    .topbar {
+      position: fixed;
+      top: 0;
+      right: 0;
+      left: 0;
+      z-index: 1000;
+      height: var(--header-height);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 24px;
+      border-bottom: 1px solid rgba(255,255,255,.07);
+      background: rgba(7,5,6,.64);
+      backdrop-filter: blur(22px);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 11px;
+      cursor: pointer;
+    }
+
+    .brand-icon {
+      width: 42px;
+      height: 42px;
+      display: grid;
+      place-items: center;
+      border: 1px solid rgba(255,255,255,.12);
+      border-radius: 14px;
+      background: rgba(255,255,255,.05);
+    }
+
+    .brand-name {
+      font-family: "Amiri", serif;
+      font-size: 23px;
+      font-weight: 700;
+    }
+
+    .brand-small {
+      color: var(--muted-2);
+      font-size: 8px;
+      letter-spacing: 2px;
+      display: block;
+      margin-top: -4px;
+    }
+
+    .menu-button {
+      width: 46px;
+      height: 46px;
+      border-radius: 15px;
+      background: rgba(255,255,255,.06);
+      color: white;
+      border: 1px solid rgba(255,255,255,.08);
+      font-size: 20px;
+    }
+
+    /* =========================================================
+       SIDE MENU
+    ========================================================= */
+
+    .menu-backdrop {
+      position: fixed;
+      inset: 0;
+      z-index: 1500;
+      background: rgba(0,0,0,.6);
+      opacity: 0;
+      visibility: hidden;
+      transition: .35s ease;
+    }
+
+    .menu-backdrop.open {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .side-menu {
+      position: fixed;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 1600;
+      width: min(390px, 88vw);
+      padding: 25px;
+      background:
+        linear-gradient(180deg, rgba(25,12,17,.98), rgba(7,5,6,.99));
+      border-left: 1px solid rgba(255,255,255,.09);
+      box-shadow: -30px 0 90px rgba(0,0,0,.5);
+      transform: translateX(105%);
+      transition: transform 600ms cubic-bezier(.22,.8,.22,1);
+      overflow-y: auto;
+    }
+
+    .side-menu.open {
+      transform: translateX(0);
+    }
+
+    .menu-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-bottom: 25px;
+      border-bottom: 1px solid rgba(255,255,255,.08);
+      margin-bottom: 22px;
+    }
+
+    .menu-close {
+      width: 42px;
+      height: 42px;
+      border-radius: 13px;
+      background: rgba(255,255,255,.06);
+      color: white;
+    }
+
+    .menu-links {
+      display: grid;
+      gap: 8px;
+    }
+
+    .menu-link {
+      width: 100%;
+      padding: 15px 17px;
+      border-radius: 15px;
+      display: flex;
+      align-items: center;
+      gap: 13px;
+      color: #d4c9c7;
+      background: transparent;
+      text-align: right;
+      transition: .25s ease;
+    }
+
+    .menu-link:hover,
+    .menu-link.active {
+      background: rgba(111,32,56,.2);
+      color: white;
+      transform: translateX(-4px);
+    }
+
+    .menu-number {
+      width: 30px;
+      height: 30px;
+      display: grid;
+      place-items: center;
+      border-radius: 10px;
+      background: rgba(255,255,255,.06);
+      color: var(--copper-light);
+      font-size: 10px;
+    }
+
+    /* =========================================================
+       MAIN
+    ========================================================= */
+
+    main {
+      position: relative;
+    }
+
+    section {
+      position: relative;
+      min-height: 100vh;
+      padding: 120px 20px 80px;
+      display: flex;
+      align-items: center;
+    }
+
+    .container {
+      width: min(1180px, 100%);
+      margin-inline: auto;
+    }
+
+    /* =========================================================
+       HERO
+    ========================================================= */
+
+    .hero {
+      min-height: 100svh;
+      background:
+        linear-gradient(180deg, rgba(7,5,6,.28), rgba(7,5,6,.95)),
+        url("https://images.unsplash.com/photo-1497250681960-ef046c08a56e?auto=format&fit=crop&w=2200&q=90")
+        center / cover;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 50% 38%, rgba(111,32,56,.24), transparent 30%),
+        linear-gradient(90deg, rgba(0,0,0,.25), transparent, rgba(0,0,0,.25));
+    }
+
+    .hero-content {
+      position: relative;
+      width: min(850px, 100%);
+      padding-top: 50px;
+    }
+
+    .eyebrow {
+      color: var(--copper-light);
+      font-size: 11px;
+      letter-spacing: 4px;
+      margin-bottom: 18px;
+    }
+
+    .hero-title {
+      font-family: "Amiri", serif;
+      font-size: clamp(65px, 14vw, 150px);
+      line-height: .82;
+      font-weight: 700;
+      letter-spacing: -4px;
+      margin-bottom: 30px;
+    }
+
+    .hero-title span {
+      display: block;
+      color: transparent;
+      -webkit-text-stroke: 1px rgba(244,238,231,.38);
+    }
+
+    .hero-description {
+      width: min(620px, 100%);
+      color: #d2c6c3;
+      font-size: clamp(15px, 2vw, 19px);
+      line-height: 2.1;
+      margin-bottom: 34px;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .primary-btn,
+    .secondary-btn {
+      min-height: 54px;
+      padding: 0 25px;
+      border-radius: 17px;
+      transition: .3s ease;
+    }
+
+    .primary-btn {
+      color: white;
+      background: linear-gradient(135deg, #7c2945, #491322);
+      box-shadow: 0 15px 45px rgba(111,32,56,.3);
+    }
+
+    .secondary-btn {
+      color: #e3d9d6;
+      background: rgba(255,255,255,.055);
+      border: 1px solid rgba(255,255,255,.1);
+      backdrop-filter: blur(12px);
+    }
+
+    .primary-btn:hover,
+    .secondary-btn:hover {
+      transform: translateY(-3px);
+    }
+
+    .hero-scroll {
+      position: absolute;
+      bottom: 35px;
+      right: 50%;
+      transform: translateX(50%);
+      color: #9c8e8e;
+      font-size: 10px;
+      letter-spacing: 2px;
+    }
+
+    /* =========================================================
+       SECTION COMMON
+    ========================================================= */
+
+    .section-kicker {
+      color: var(--copper-light);
+      font-size: 10px;
+      letter-spacing: 4px;
+      margin-bottom: 12px;
+    }
+
+    .section-title {
+      font-family: "Amiri", serif;
+      font-size: clamp(42px, 8vw, 82px);
+      line-height: 1;
+      margin-bottom: 20px;
+    }
+
+    .section-description {
+      max-width: 700px;
+      color: var(--muted);
+      line-height: 2;
+      font-size: 14px;
+    }
+
+    /* =========================================================
+       LETTER
+    ========================================================= */
+
+    .letter {
+      background:
+        linear-gradient(180deg, rgba(7,5,6,.94), rgba(12,7,9,.97)),
+        url("https://images.unsplash.com/photo-1499209974431-9dddcece7f88?auto=format&fit=crop&w=2200&q=85")
+        center / cover;
+    }
+
+    .letter-layout {
+      display: grid;
+      grid-template-columns: .7fr 1.3fr;
+      gap: 70px;
+      align-items: start;
+    }
+
+    .letter-side {
+      position: sticky;
+      top: 130px;
+    }
+
+    .letter-mark {
+      font-family: "Amiri", serif;
+      font-size: 130px;
+      line-height: .7;
+      color: rgba(185,133,104,.14);
+    }
+
+    .letter-content {
+      padding: 40px;
+      border-right: 1px solid rgba(255,255,255,.1);
+    }
+
+    .letter-paragraph {
+      color: #ddd2cf;
+      font-family: "Amiri", serif;
+      font-size: clamp(21px, 3vw, 29px);
+      line-height: 2.15;
+      margin-bottom: 35px;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: 900ms ease;
+    }
+
+    .letter-paragraph.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* =========================================================
+       POETRY INTRO
+    ========================================================= */
+
+    .poetry-intro {
+      min-height: 65vh;
+      background:
+        linear-gradient(rgba(7,5,6,.64), rgba(7,5,6,.94)),
+        url("https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=2200&q=90")
+        center / cover;
+    }
+
+    .poetry-intro .container {
+      text-align: center;
+    }
+
+    .poetry-intro .section-description {
+      margin: auto;
+    }
+
+    /* =========================================================
+       DIWAN
+    ========================================================= */
+
+    .diwan {
+      background: #090607;
+    }
+
+    .diwan-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 30px;
+      align-items: end;
+      margin-bottom: 45px;
+    }
+
+    .poem-list {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0,1fr));
+      gap: 12px;
+    }
+
+    .poem-card {
+      position: relative;
+      min-height: 220px;
+      padding: 28px;
+      border: 1px solid var(--border);
+      border-radius: 25px;
+      background:
+        linear-gradient(145deg, rgba(255,255,255,.045), rgba(255,255,255,.015));
+      overflow: hidden;
+      cursor: pointer;
+      transition: transform .4s ease, border-color .4s ease, background .4s ease;
+    }
+
+    .poem-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 85% 15%, rgba(111,32,56,.25), transparent 35%);
+      pointer-events: none;
+    }
+
+    .poem-card:hover {
+      transform: translateY(-6px);
+      border-color: rgba(185,133,104,.3);
+      background: rgba(255,255,255,.055);
+    }
+
+    .poem-number {
+      position: relative;
+      color: var(--copper-light);
+      font-size: 11px;
+      margin-bottom: 30px;
+    }
+
+    .poem-card-title {
+      position: relative;
+      font-family: "Amiri", serif;
+      font-size: 37px;
+      margin-bottom: 8px;
+    }
+
+    .poem-card-subtitle {
+      position: relative;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.8;
+    }
+
+    /* =========================================================
+       POEM READER
+    ========================================================= */
+
+    .poem-reader {
+      display: none;
+      min-height: 100vh;
+      padding-top: 130px;
+      background: #080506;
+    }
+
+    .poem-reader.active {
+      display: block;
+    }
+
+    .poem-scene {
+      position: relative;
+      min-height: 430px;
+      display: flex;
+      align-items: end;
+      padding: 55px;
+      border-radius: 35px;
+      overflow: hidden;
+      background-size: cover;
+      background-position: center;
+      box-shadow: var(--shadow);
+    }
+
+    .poem-scene::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(0deg, rgba(4,2,3,.95), rgba(4,2,3,.2)),
+        radial-gradient(circle at center, transparent 20%, rgba(0,0,0,.35));
+    }
+
+    .poem-scene-content {
+      position: relative;
+      z-index: 1;
+      max-width: 750px;
+    }
+
+    .poem-scene-title {
+      font-family: "Amiri", serif;
+      font-size: clamp(50px, 9vw, 100px);
+      line-height: .95;
+      margin-bottom: 15px;
+    }
+
+    .poem-scene-text {
+      color: #d2c5c2;
+      line-height: 2;
+      max-width: 650px;
+    }
+
+    .poem-reader-body {
+      width: min(900px, 100%);
+      margin: 70px auto;
+    }
+
+    .poem-description {
+      color: var(--muted);
+      line-height: 2;
+      margin-bottom: 50px;
+      text-align: center;
+    }
+
+    .poem-lines {
+      position: relative;
+    }
+
+    .poem-line {
+      position: relative;
+      padding: 22px 25px;
+      margin-bottom: 3px;
+      border-bottom: 1px solid rgba(255,255,255,.055);
+      color: #e7ddda;
+      font-family: "Amiri", serif;
+      font-size: clamp(20px, 3vw, 28px);
+      line-height: 1.9;
+      opacity: 0;
+      transform: translateY(12px);
+      animation: lineIn .65s ease forwards;
+    }
+
+    .poem-line::before {
+      content: attr(data-number);
+      position: absolute;
+      right: -35px;
+      top: 30px;
+      color: rgba(185,133,104,.35);
+      font-family: "Cairo", sans-serif;
+      font-size: 9px;
+    }
+
+    @keyframes lineIn {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .poem-controls {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      margin-top: 50px;
+    }
+
+    .reader-btn {
+      min-height: 52px;
+      padding: 0 22px;
+      border-radius: 15px;
+      background: rgba(255,255,255,.055);
+      border: 1px solid rgba(255,255,255,.09);
+      color: #ddd3d0;
+    }
+
+    .reader-btn.primary {
+      background: linear-gradient(135deg, #76263f, #461322);
+      color: white;
+    }
+
+    /* =========================================================
+       DETAILS
+    ========================================================= */
+
+    .details {
+      background:
+        linear-gradient(rgba(8,5,6,.8), rgba(8,5,6,.96)),
+        url("https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=2200&q=90")
+        center / cover;
+    }
+
+    .details-list {
+      margin-top: 50px;
+      display: grid;
+      gap: 0;
+    }
+
+    .detail-row {
+      display: grid;
+      grid-template-columns: 100px 1fr;
+      gap: 30px;
+      padding: 35px 0;
+      border-top: 1px solid rgba(255,255,255,.09);
+    }
+
+    .detail-number {
+      color: var(--copper-light);
+      font-size: 11px;
+    }
+
+    .detail-title {
+      font-family: "Amiri", serif;
+      font-size: 33px;
+      margin-bottom: 8px;
+    }
+
+    .detail-text {
+      color: var(--muted);
+      line-height: 2;
+      max-width: 750px;
+    }
+
+    /* =========================================================
+       MEMORY / SCENES
+    ========================================================= */
+
+    .memory {
+      background:
+        linear-gradient(rgba(7,5,6,.55), rgba(7,5,6,.94)),
+        url("https://images.unsplash.com/photo-1470252649378-9c29740c9fa8?auto=format&fit=crop&w=2200&q=90")
+        center / cover;
+    }
+
+    .memory-stage {
+      margin-top: 45px;
+      position: relative;
+      min-height: 500px;
+      padding: 50px;
+      border: 1px solid rgba(255,255,255,.12);
+      border-radius: 35px;
+      background:
+        linear-gradient(135deg, rgba(20,10,14,.76), rgba(7,5,6,.62));
+      backdrop-filter: blur(15px);
+      overflow: hidden;
+    }
+
+    .memory-stage::before {
+      content: "";
+      position: absolute;
+      width: 300px;
+      height: 300px;
+      border-radius: 50%;
+      background: rgba(111,32,56,.18);
+      filter: blur(80px);
+      top: -100px;
+      left: -80px;
+    }
+
+    .memory-number {
+      position: relative;
+      color: var(--copper-light);
+      font-size: 11px;
+      margin-bottom: 35px;
+    }
+
+    .memory-title {
+      position: relative;
+      font-family: "Amiri", serif;
+      font-size: clamp(42px, 7vw, 75px);
+      margin-bottom: 15px;
+    }
+
+    .memory-description {
+      position: relative;
+      max-width: 720px;
+      color: #cfc2bf;
+      line-height: 2.1;
+      font-size: 16px;
+    }
+
+    .memory-controls {
+      position: relative;
+      display: flex;
+      gap: 10px;
+      margin-top: 45px;
+    }
+
+    .memory-controls button {
+      width: 50px;
+      height: 50px;
+      border-radius: 15px;
+      background: rgba(255,255,255,.07);
+      color: white;
+      border: 1px solid rgba(255,255,255,.08);
+    }
+
+    /* =========================================================
+       SOUND
+    ========================================================= */
+
+    .sound {
+      min-height: 80vh;
+      background:
+        linear-gradient(rgba(6,4,5,.72), rgba(6,4,5,.95)),
+        url("https://images.unsplash.com/photo-1511379938547-c1f69419868d?auto=format&fit=crop&w=2200&q=90")
+        center / cover;
+    }
+
+    .sound-box {
+      max-width: 800px;
+      padding: 45px;
+      border: 1px solid rgba(255,255,255,.1);
+      border-radius: 32px;
+      background: rgba(15,8,11,.68);
+      backdrop-filter: blur(22px);
+    }
+
+    .sound-status {
+      color: var(--muted);
+      line-height: 2;
+      margin: 20px 0 30px;
+    }
+
+    .sound-controls {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .sound-toggle {
+      width: 62px;
+      height: 62px;
+      border-radius: 20px;
+      background: linear-gradient(135deg, #792741, #471322);
+      color: white;
+      font-size: 20px;
+    }
+
+    .sound-progress {
+      flex: 1;
+      height: 4px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.1);
+      overflow: hidden;
+    }
+
+    .sound-progress-bar {
+      width: 0;
+      height: 100%;
+      background: var(--copper);
+      transition: width .2s linear;
+    }
+
+    /* =========================================================
+       FINAL
+    ========================================================= */
+
+    .final {
+      min-height: 100svh;
+      text-align: center;
+      background:
+        linear-gradient(rgba(7,5,6,.48), rgba(7,5,6,.96)),
+        url("https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?auto=format&fit=crop&w=2200&q=90")
+        center / cover;
+    }
+
+    .final .container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .final-crown {
+      font-size: 45px;
+      margin-bottom: 20px;
+    }
+
+    .final-title {
+      font-family: "Amiri", serif;
+      font-size: clamp(55px, 12vw, 120px);
+      line-height: .95;
+      margin-bottom: 30px;
+    }
+
+    .final-text {
+      width: min(750px, 100%);
+      color: #d7cbc8;
+      font-family: "Amiri", serif;
+      font-size: clamp(20px, 3vw, 27px);
+      line-height: 2.2;
+    }
+
+    .final-signature {
+      margin-top: 50px;
+      color: var(--copper-light);
+      font-family: "Amiri", serif;
+      font-size: 27px;
+    }
+
+    .restart-btn {
+      margin-top: 35px;
+    }
+
+    /* =========================================================
+       REVEAL
+    ========================================================= */
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(35px);
+      transition: opacity 900ms ease, transform 900ms ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* =========================================================
+       RESPONSIVE
+    ========================================================= */
+
+    @media (max-width: 800px) {
+      :root {
+        --header-height: 68px;
+      }
+
+      .topbar {
+        padding: 0 14px;
+      }
+
+      .brand-name {
+        font-size: 19px;
+      }
+
+      .brand-small {
+        display: none;
+      }
+
+      section {
+        padding: 100px 15px 65px;
+      }
+
+      .hero {
+        padding-top: 130px;
+      }
+
+      .hero-title {
+        font-size: clamp(62px, 20vw, 110px);
+        letter-spacing: -3px;
+      }
+
+      .hero-description {
+        font-size: 14px;
+      }
+
+      .hero-actions {
+        flex-direction: column;
+      }
+
+      .hero-actions button {
+        width: 100%;
+      }
+
+      .letter-layout {
+        grid-template-columns: 1fr;
+        gap: 20px;
+      }
+
+      .letter-side {
+        position: static;
+      }
+
+      .letter-mark {
+        font-size: 80px;
+      }
+
+      .letter-content {
+        padding: 25px 0;
+        border-right: 0;
+      }
+
+      .poem-list {
+        grid-template-columns: 1fr;
+      }
+
+      .poem-card {
+        min-height: 190px;
+      }
+
+      .poem-scene {
+        min-height: 430px;
+        padding: 30px 23px;
+        border-radius: 25px;
+      }
+
+      .poem-line {
+        padding: 18px 4px;
+        font-size: 21px;
+      }
+
+      .poem-line::before {
+        display: none;
+      }
+
+      .poem-controls {
+        flex-direction: column;
+      }
+
+      .poem-controls button {
+        width: 100%;
+      }
+
+      .detail-row {
+        grid-template-columns: 1fr;
+        gap: 8px;
+      }
+
+      .memory-stage,
+      .sound-box {
+        padding: 30px 23px;
+      }
+
+      .memory-controls {
+        justify-content: center;
+      }
+    }
+
+    @media (min-width: 801px) {
+      .menu-button {
+        margin-left: 0;
+      }
+    }
+  </style>
 </head>
-
 
 <body class="locked">
 
+  <!-- GLOBAL BACKGROUND -->
+  <div class="background-layer">
+    <div id="backgroundImage" class="background-image"></div>
+    <div class="background-overlay"></div>
+  </div>
 
-<!-- =====================================================
-     GLOBAL BACKGROUND
-     ===================================================== -->
+  <div class="grain"></div>
 
-<div class="world">
-  <div class="world__grain"></div>
-  <div class="world__light one"></div>
-  <div class="world__light two"></div>
-  <div id="stars" class="stars"></div>
-</div>
+  <!-- LOADER -->
+  <div id="loader" class="loader">
+    <div class="loader-inner">
+      <div class="loader-crown">👑</div>
+      <div class="loader-title">أحببتُ الملك</div>
+      <div class="loader-text">بنبني الحكاية واحدة واحدة...</div>
 
-
-<!-- =====================================================
-     PASSWORD SCREEN
-     ===================================================== -->
-
-<section id="gate" class="gate">
-
-  <div class="gate__background"></div>
-
-  <div class="gate__veil"></div>
-
-  <div class="gate__orb one"></div>
-  <div class="gate__orb two"></div>
-
-
-  <div class="gate__content">
-
-    <div class="gate__mini">
-      مساحة خاصة
-    </div>
-
-    <div class="gate__welcome">
-      أهلاً بيكي في المكان اللي اتكتب مخصوص ليكي
-    </div>
-
-    <h1 class="gate__name">
-      ملك
-    </h1>
-
-    <p class="gate__subtitle">
-      في كلام مينفعش يتقال عادي...
-      <br>
-      فخلّيته مكان.
-    </p>
-
-    <p class="gate__author">
-      من يوسف أشرف الجرف
-    </p>
-
-
-    <form
-      id="passwordForm"
-      class="gate__form"
-      autocomplete="off"
-    >
-
-      <label
-        class="gate__label"
-        for="passwordInput"
-      >
-        كلمة السر
-      </label>
-
-      <div class="password">
-
-        <input
-          id="passwordInput"
-          type="password"
-          autocomplete="off"
-          spellcheck="false"
-          placeholder="اكتب love"
-        >
-
-        <button
-          id="passwordEye"
-          class="password__eye"
-          type="button"
-        >
-          ◉
-        </button>
-
+      <div class="loader-line">
+        <div class="loader-progress"></div>
       </div>
-
-
-      <button
-        class="gate__enter"
-        type="submit"
-      >
-
-        <span>
-          ادخلي
-        </span>
-
-        <b class="gate__enter-arrow">
-          ←
-        </b>
-
-      </button>
-
-
-      <div
-        id="passwordError"
-        class="gate__error"
-      >
-        كلمة السر غير صحيحة.
-      </div>
-
-    </form>
-
+    </div>
   </div>
 
+  <!-- PASSWORD -->
+  <section id="gate" class="gate">
+    <div class="gate-panel">
 
-  <div class="gate__footer">
-    01 — M A L A K
-  </div>
+      <div class="gate-crown">👑</div>
 
-</section>
+      <div class="gate-kicker">PRIVATE JOURNEY</div>
 
+      <h1 class="gate-title">أحببتُ الملك</h1>
 
-<!-- =====================================================
-     APPLICATION
-     ===================================================== -->
-
-<div id="app">
-
-
-<header class="header">
-
-  <button
-    id="menuButton"
-    class="menu-btn"
-    aria-label="فتح القائمة"
-  >
-    <span></span>
-    <span></span>
-  </button>
-
-  <div class="header__logo">
-    م
-  </div>
-
-  <button
-    id="soundButton"
-    class="sound-btn"
-  >
-    <span class="sound-dot"></span>
-    <span id="soundText">صامت</span>
-  </button>
-
-</header>
-
-
-<aside id="menu" class="menu">
-
-  <button
-    id="closeMenu"
-    class="menu__close"
-  >
-    ×
-  </button>
-
-  <div class="menu__small">
-    إلى
-  </div>
-
-  <div class="menu__title">
-    ملك
-  </div>
-
-  <nav class="menu__nav">
-
-    <button data-go="home">البداية</button>
-
-    <button data-go="letter">الكلام اللي جوايا</button>
-
-    <button data-go="poetry">الديوان</button>
-
-    <button data-go="diwan">القصائد</button>
-
-    <button data-go="details">تفاصيل صغيرة</button>
-
-    <button data-go="memory">الذكريات</button>
-
-    <button data-go="sound">صوت الحكاية</button>
-
-    <button data-go="final">الرسالة الأخيرة</button>
-
-  </nav>
-
-  <div class="menu__signature">
-    يوسف أشرف الجرف
-  </div>
-
-</aside>
-
-<div
-  id="menuOverlay"
-  class="menu-overlay"
-></div>
-
-
-<!-- =====================================================
-     HOME
-     ===================================================== -->
-
-<section
-  id="home"
-  class="section hero"
->
-
-  <div class="hero__bg"></div>
-
-  <div class="hero__veil"></div>
-
-  <div class="hero__content">
-
-    <div class="section-number">
-      01 / 08
-    </div>
-
-    <p class="hero__small">
-      مش كل الكلام بيتقال...
-    </p>
-
-    <h2 class="hero__name">
-      ملك
-    </h2>
-
-    <p class="hero__description">
-      عملت المكان ده عشان يبقى فيه
-      <br>
-      كلام يشبهني... ويشبه اللي جوايا.
-    </p>
-
-    <button
-      class="hero__start"
-      data-go="letter"
-    >
-      <span>01</span>
-      ابدئي من هنا
-    </button>
-
-  </div>
-
-  <div class="hero__bottom">
-    <span>يوسف أشرف الجرف</span>
-    <span>2026</span>
-  </div>
-
-</section>
-
-
-<!-- =====================================================
-     LETTER
-     ===================================================== -->
-
-<section
-  id="letter"
-  class="section letter"
->
-
-  <div class="section__inner">
-
-    <div class="section-number">
-      02 / 08
-    </div>
-
-    <div class="heading">
-
-      <span class="heading__number">
-        01
-      </span>
-
-      <h2>
-        الكلام اللي جوايا
-      </h2>
-
-    </div>
-
-    <div
-      id="letterBody"
-      class="letter__body"
-    ></div>
-
-    <div class="letter__signature">
-      — يوسف
-    </div>
-
-  </div>
-
-</section>
-
-
-<!-- =====================================================
-     POETRY
-     ===================================================== -->
-
-<section
-  id="poetry"
-  class="section poetry"
->
-
-  <div class="poetry__bg"></div>
-
-  <div class="poetry__glow"></div>
-
-  <div class="section__inner">
-
-    <div class="section-number">
-      03 / 08
-    </div>
-
-    <div class="poetry__label">
-      من الديوان
-    </div>
-
-    <h2 class="poetry__title">
-      الشعر
-    </h2>
-
-    <div
-      id="poem"
-      class="poem"
-    ></div>
-
-    <div class="poem-controls">
-
-      <button
-        id="prevPoem"
-        aria-label="السابق"
-      >
-        ←
-      </button>
-
-      <span
-        id="poemCounter"
-        class="poem-counter"
-      >
-        01 / 10
-      </span>
-
-      <button
-        id="nextPoem"
-        aria-label="التالي"
-      >
-        →
-      </button>
-
-    </div>
-
-  </div>
-
-</section>
-
-
-<!-- =====================================================
-     DIWAN
-     ===================================================== -->
-
-<section
-  id="diwan"
-  class="section diwan"
->
-
-  <div class="section__inner">
-
-    <div class="section-number">
-      04 / 08
-    </div>
-
-    <div class="heading">
-
-      <span class="heading__number">
-        02
-      </span>
-
-      <h2>
-        الديوان
-      </h2>
-
-    </div>
-
-    <p class="diwan__intro">
-      مش مجرد قصايد...
-      دي حكايات ومشاعر وأيام،
-      وكل قصيدة فيها حتة من الحكاية.
-    </p>
-
-    <div
-      id="diwanList"
-      class="diwan-list"
-    ></div>
-
-  </div>
-
-</section>
-
-
-<!-- =====================================================
-     DETAILS
-     ===================================================== -->
-
-<section
-  id="details"
-  class="section details"
->
-
-  <div class="section__inner">
-
-    <div class="section-number">
-      05 / 08
-    </div>
-
-    <div class="heading">
-
-      <span class="heading__number">
-        03
-      </span>
-
-      <h2>
-        تفاصيل صغيرة
-      </h2>
-
-    </div>
-
-    <div
-      id="detailsGrid"
-      class="details__grid"
-    ></div>
-
-  </div>
-
-</section>
-
-
-<!-- =====================================================
-     MEMORY
-     ===================================================== -->
-
-<section
-  id="memory"
-  class="section memory"
->
-
-  <div class="section__inner">
-
-    <div class="section-number">
-      06 / 08
-    </div>
-
-    <div class="heading">
-
-      <span class="heading__number">
-        04
-      </span>
-
-      <h2>
-        حاجات بتفضل
-      </h2>
-
-    </div>
-
-    <div class="memory-stage">
-
-      <div
-        id="memoryImage"
-        class="memory-image"
-      >
-
-        <img
-          id="memoryPhoto"
-          src=""
-          alt="ذكرى"
-        >
-
-      </div>
-
-      <div class="memory__caption">
-
-        <span
-          id="memoryDate"
-          class="memory__date"
-        ></span>
-
-        <h3
-          id="memoryTitle"
-          class="memory__title"
-        ></h3>
-
-        <p
-          id="memoryDescription"
-          class="memory__description"
-        ></p>
-
-      </div>
-
-    </div>
-
-    <div class="memory-controls">
-
-      <button id="prevMemory">
-        السابق
-      </button>
-
-      <span
-        id="memoryCounter"
-        class="memory-counter"
-      >
-        01
-      </span>
-
-      <button id="nextMemory">
-        التالي
-      </button>
-
-    </div>
-
-  </div>
-
-</section>
-
-
-<!-- =====================================================
-     SOUND
-     ===================================================== -->
-
-<section
-  id="sound"
-  class="section sound-section"
->
-
-  <div class="section__inner">
-
-    <div class="section-number">
-      07 / 08
-    </div>
-
-    <div class="heading">
-
-      <span class="heading__number">
-        05
-      </span>
-
-      <h2>
-        صوت الحكاية
-      </h2>
-
-    </div>
-
-    <div class="sound-box">
-
-      <div class="sound-box__label">
-        TRACK 01
-      </div>
-
-      <div class="sound-box__title">
-        حاجة تسمعيها بهدوء
-      </div>
-
-      <p class="sound-box__text">
-        الصوت هنا جزء من التجربة،
-        مش مجرد موسيقى في الخلفية.
+      <p class="gate-description">
+        في حاجات مش معمولة عشان تتشاف بسرعة...
+        <br>
+        الحكاية دي معمول لها باب، ومفتاحها كلمة واحدة.
       </p>
 
-      <div class="music-controls">
+      <form id="passwordForm">
 
-        <button
-          id="playMusic"
-          class="play-button"
-        >
-          ▶
+        <div class="password-wrap">
+          <input
+            id="passwordInput"
+            class="password-input"
+            type="password"
+            autocomplete="off"
+            placeholder="••••"
+            aria-label="كلمة المرور"
+          >
+
+          <button
+            id="passwordEye"
+            class="password-eye"
+            type="button"
+            aria-label="إظهار كلمة المرور"
+          >
+            ◉
+          </button>
+        </div>
+
+        <button class="gate-button" type="submit">
+          افتح الحكاية
         </button>
 
-        <span
-          id="musicStatus"
-          class="music-status"
-        >
-          تشغيل
-        </span>
+        <div id="passwordError" class="gate-error">
+          الكلمة دي مش هي المفتاح...
+        </div>
+      </form>
 
+      <div class="gate-hint">
+        بعض الحكايات تستحق مفتاحًا خاصًا.
       </div>
 
     </div>
+  </section>
 
-  </div>
+  <!-- APP -->
+  <div id="app">
 
-</section>
+    <!-- TOPBAR -->
+    <header class="topbar">
 
+      <div class="brand" data-go="home">
+        <div class="brand-icon">👑</div>
 
-<!-- =====================================================
-     FINAL
-     ===================================================== -->
-
-<section
-  id="final"
-  class="section final"
->
-
-  <div class="final__bg"></div>
-
-  <div class="final__veil"></div>
-
-  <div class="final__content">
-
-    <div class="section-number">
-      08 / 08
-    </div>
-
-    <span class="final__small">
-      آخر حاجة
-    </span>
-
-    <h2 class="final__title">
-      لسه في كلمة.
-    </h2>
-
-    <button
-      id="revealFinal"
-      class="final__button"
-    >
-      افتحيها
-    </button>
-
-    <div
-      id="finalMessage"
-      class="final__message"
-    >
-
-      <p
-        id="finalMessageText"
-        class="final__message-text"
-      ></p>
-
-      <div class="final__signature">
-        يوسف أشرف الجرف
+        <div>
+          <div class="brand-name">أحببتُ الملك</div>
+          <span class="brand-small">A PRIVATE STORY</span>
+        </div>
       </div>
 
-    </div>
+      <button id="menuButton" class="menu-button" type="button">
+        ☰
+      </button>
+
+    </header>
+
+    <!-- MENU -->
+    <div id="menuBackdrop" class="menu-backdrop"></div>
+
+    <aside id="sideMenu" class="side-menu">
+
+      <div class="menu-head">
+
+        <div>
+          <div class="section-kicker">THE JOURNEY</div>
+          <strong>أبواب الحكاية</strong>
+        </div>
+
+        <button id="menuClose" class="menu-close" type="button">
+          ×
+        </button>
+
+      </div>
+
+      <nav id="menuLinks" class="menu-links">
+
+        <button class="menu-link active" data-go="home">
+          <span class="menu-number">01</span>
+          <span>البداية</span>
+        </button>
+
+        <button class="menu-link" data-go="letter">
+          <span class="menu-number">02</span>
+          <span>الرسالة</span>
+        </button>
+
+        <button class="menu-link" data-go="poetryIntro">
+          <span class="menu-number">03</span>
+          <span>الديوان</span>
+        </button>
+
+        <button class="menu-link" data-go="diwan">
+          <span class="menu-number">04</span>
+          <span>القصائد</span>
+        </button>
+
+        <button class="menu-link" data-go="details">
+          <span class="menu-number">05</span>
+          <span>تفاصيل صغيرة</span>
+        </button>
+
+        <button class="menu-link" data-go="memory">
+          <span class="menu-number">06</span>
+          <span>المشاهد</span>
+        </button>
+
+        <button class="menu-link" data-go="sound">
+          <span class="menu-number">07</span>
+          <span>الصوت</span>
+        </button>
+
+        <button class="menu-link" data-go="final">
+          <span class="menu-number">08</span>
+          <span>النهاية</span>
+        </button>
+
+      </nav>
+
+    </aside>
+
+    <main>
+
+      <!-- HOME -->
+      <section id="home" class="hero">
+
+        <div class="container">
+
+          <div class="hero-content reveal">
+
+            <div class="eyebrow">
+              A STORY WRITTEN FOR ONE PERSON
+            </div>
+
+            <h1 class="hero-title">
+              أحببتُ
+              <span>الملك</span>
+            </h1>
+
+            <p class="hero-description">
+              مش كل الكلام بيتقال في رسالة،
+              ومش كل الإحساس يعرف ياخد شكل جملة.
+              عشان كده اتعملت الحكاية دي...
+              عشان كل حاجة كان صعب تتقال،
+              تلاقي لها مكان هنا.
+            </p>
+
+            <div class="hero-actions">
+
+              <button
+                class="primary-btn"
+                data-go="letter"
+                type="button"
+              >
+                ابدأ الحكاية
+              </button>
+
+              <button
+                class="secondary-btn"
+                data-go="diwan"
+                type="button"
+              >
+                ادخل الديوان
+              </button>
+
+            </div>
+
+          </div>
+
+        </div>
+
+        <div class="hero-scroll">
+          اسحب لتحت
+        </div>
+
+      </section>
+
+      <!-- LETTER -->
+      <section id="letter" class="letter">
+
+        <div class="container">
+
+          <div class="letter-layout">
+
+            <div class="letter-side reveal">
+
+              <div class="section-kicker">
+                A LETTER
+              </div>
+
+              <h2 class="section-title">
+                كلام كان لازم يتقال.
+              </h2>
+
+              <div class="letter-mark">
+                م
+              </div>
+
+            </div>
+
+            <div id="letterContent" class="letter-content"></div>
+
+          </div>
+
+        </div>
+
+      </section>
+
+      <!-- POETRY INTRO -->
+      <section id="poetryIntro" class="poetry-intro">
+
+        <div class="container reveal">
+
+          <div class="section-kicker">
+            THE DIWAN
+          </div>
+
+          <h2 id="diwanTitle" class="section-title">
+            ديوان الحكاية
+          </h2>
+
+          <p id="diwanDescription" class="section-description">
+            هنا الكلام بياخد شكل قصيدة.
+          </p>
+
+        </div>
+
+      </section>
+
+      <!-- DIWAN -->
+      <section id="diwan" class="diwan">
+
+        <div class="container">
+
+          <div class="diwan-head reveal">
+
+            <div>
+              <div class="section-kicker">
+                10 CHAPTERS
+              </div>
+
+              <h2 class="section-title">
+                القصائد
+              </h2>
+            </div>
+
+            <p class="section-description">
+              كل قصيدة فصل مستقل،
+              وكل فصل له مزاجه ومشهده وكلامه.
+            </p>
+
+          </div>
+
+          <div id="poemList" class="poem-list"></div>
+
+        </div>
+
+      </section>
+
+      <!-- POEM READER -->
+      <section id="poemReader" class="poem-reader">
+
+        <div class="container">
+
+          <div id="poemScene" class="poem-scene">
+
+            <div class="poem-scene-content">
+
+              <div id="poemNumber" class="section-kicker">
+                القصيدة 01
+              </div>
+
+              <h2 id="poemSceneTitle" class="poem-scene-title">
+                مَلَك
+              </h2>
+
+              <p id="poemSceneText" class="poem-scene-text">
+                ...
+              </p>
+
+            </div>
+
+          </div>
+
+          <div class="poem-reader-body">
+
+            <p id="poemDescription" class="poem-description"></p>
+
+            <div id="poemLines" class="poem-lines"></div>
+
+            <div class="poem-controls">
+
+              <button
+                id="previousPoem"
+                class="reader-btn"
+                type="button"
+              >
+                ← القصيدة السابقة
+              </button>
+
+              <button
+                class="reader-btn primary"
+                data-go="diwan"
+                type="button"
+              >
+                العودة للديوان
+              </button>
+
+              <button
+                id="nextPoem"
+                class="reader-btn"
+                type="button"
+              >
+                القصيدة التالية →
+              </button>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </section>
+
+      <!-- DETAILS -->
+      <section id="details" class="details">
+
+        <div class="container">
+
+          <div class="reveal">
+
+            <div class="section-kicker">
+              LITTLE THINGS
+            </div>
+
+            <h2 class="section-title">
+              تفاصيل صغيرة...
+            </h2>
+
+            <p class="section-description">
+              لأن أحيانًا الحاجات الصغيرة هي اللي بتفضل أكبر من أي كلام.
+            </p>
+
+          </div>
+
+          <div id="detailsList" class="details-list"></div>
+
+        </div>
+
+      </section>
+
+      <!-- MEMORY -->
+      <section id="memory" class="memory">
+
+        <div class="container">
+
+          <div class="reveal">
+
+            <div class="section-kicker">
+              SCENES
+            </div>
+
+            <h2 class="section-title">
+              مشاهد من الحكاية
+            </h2>
+
+            <p class="section-description">
+              مش ذكريات بنفترض إنها حصلت،
+              دي مشاهد وإحساسات اتكتبت مخصوص للمكان ده.
+            </p>
+
+          </div>
+
+          <div class="memory-stage reveal">
+
+            <div id="memoryNumber" class="memory-number">
+              المشهد 01
+            </div>
+
+            <h3 id="memoryTitle" class="memory-title">
+              أول مشهد
+            </h3>
+
+            <p id="memoryDescription" class="memory-description">
+              ...
+            </p>
+
+            <div class="memory-controls">
+
+              <button id="memoryPrev" type="button">
+                ←
+              </button>
+
+              <button id="memoryNext" type="button">
+                →
+              </button>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </section>
+
+      <!-- SOUND -->
+      <section id="sound" class="sound">
+
+        <div class="container">
+
+          <div class="sound-box reveal">
+
+            <div class="section-kicker">
+              SOUNDTRACK
+            </div>
+
+            <h2 class="section-title">
+              سيب الكلام يمشي مع الصوت.
+            </h2>
+
+            <p id="soundStatus" class="sound-status">
+              اضغط تشغيل لو حابب تضيف موسيقى للحظة.
+            </p>
+
+            <div class="sound-controls">
+
+              <button
+                id="soundToggle"
+                class="sound-toggle"
+                type="button"
+              >
+                ▶
+              </button>
+
+              <div class="sound-progress">
+                <div
+                  id="soundProgress"
+                  class="sound-progress-bar"
+                ></div>
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </section>
+
+      <!-- FINAL -->
+      <section id="final" class="final">
+
+        <div class="container reveal">
+
+          <div class="final-crown">
+            👑
+          </div>
+
+          <div class="section-kicker">
+            THE LAST PAGE
+          </div>
+
+          <h2 id="finalTitle" class="final-title">
+            إلى ملك
+          </h2>
+
+          <div id="finalText" class="final-text"></div>
+
+          <div class="final-signature">
+            يوسف أشرف الجرف
+          </div>
+
+          <button
+            id="restartJourney"
+            class="primary-btn restart-btn"
+            type="button"
+          >
+            أبدأ الحكاية من الأول
+          </button>
+
+        </div>
+
+      </section>
+
+    </main>
 
   </div>
 
-</section>
-
-
-<footer class="footer">
-
-  <span>
-    مَلَك
-  </span>
-
-  <span>
-    من يوسف أشرف الجرف
-  </span>
-
-</footer>
-
-</div>
-
-
-<!-- =====================================================
-     DATA
-     ===================================================== -->
-
-<script src="content.js"></script>
-<script src="media.js"></script>
-
-
-<!-- =====================================================
-     APP
-     ===================================================== -->
-
-<script src="app.js"></script>
-
-
-<!-- =====================================================
-     HARD ENTRY FIX
-     ===================================================== -->
-
-<script>
-
-(function(){
-
-  "use strict";
-
-  const PASSWORD = "love";
-
-  const gate =
-    document.getElementById("gate");
-
-  const app =
-    document.getElementById("app");
-
-  const form =
-    document.getElementById("passwordForm");
-
-  const input =
-    document.getElementById("passwordInput");
-
-  const eye =
-    document.getElementById("passwordEye");
-
-  const error =
-    document.getElementById("passwordError");
-
-
-  if(!gate || !app || !form || !input){
-
-    console.error(
-      "MALAK ENTRY ERROR: عناصر الدخول ناقصة."
-    );
-
-    return;
-
-  }
-
-
-  /* نجعل البيانات تستخدم love */
-  if(window.MALAK_CONTENT){
-
-    window.MALAK_CONTENT.password =
-      PASSWORD;
-
-  }
-
-
-  /* إظهار كلمة السر */
-
-  if(eye){
-
-    eye.addEventListener(
-      "click",
-      function(){
-
-        if(input.type === "password"){
-
-          input.type = "text";
-          eye.textContent = "◌";
-
-        }else{
-
-          input.type = "password";
-          eye.textContent = "◉";
-
-        }
-
-      }
-    );
-
-  }
-
-
-  /* الدخول */
-
-  form.addEventListener(
-    "submit",
-    function(event){
-
-      event.preventDefault();
-      event.stopImmediatePropagation();
-
-
-      const value =
-        String(input.value || "")
-          .trim()
-          .toLowerCase();
-
-
-      if(value === PASSWORD){
-
-        if(error){
-          error.classList.remove("show");
-        }
-
-
-        document.body.classList.remove(
-          "locked"
-        );
-
-
-        gate.classList.add("hide");
-
-        app.classList.add("ready");
-
-
-        window.scrollTo({
-          top:0,
-          behavior:"auto"
-        });
-
-
-        setTimeout(
-          function(){
-
-            gate.style.display = "none";
-
-          },
-          950
-        );
-
-
-      }else{
-
-        if(error){
-
-          error.textContent =
-            "كلمة السر هي love";
-
-          error.classList.add("show");
-
-        }
-
-
-        input.focus();
-
-
-        input.animate(
-          [
-            {transform:"translateX(0)"},
-            {transform:"translateX(-7px)"},
-            {transform:"translateX(7px)"},
-            {transform:"translateX(-5px)"},
-            {transform:"translateX(5px)"},
-            {transform:"translateX(0)"}
-          ],
-          {
-            duration:360,
-            easing:"ease-out"
-          }
-        );
-
-      }
-
-    },
-    true
-  );
-
-
-  /* Enter */
-
-  input.addEventListener(
-    "keydown",
-    function(event){
-
-      if(event.key === "Enter"){
-
-        event.preventDefault();
-
-        form.dispatchEvent(
-          new Event(
-            "submit",
-            {
-              bubbles:true,
-              cancelable:true
-            }
-          )
-        );
-
-      }
-
-    }
-  );
-
-
-})();
-
-</script>
+  <script src="content.js"></script>
+  <script src="media.js"></script>
+  <script src="app.js"></script>
 
 </body>
-        </html>
+              </html>
