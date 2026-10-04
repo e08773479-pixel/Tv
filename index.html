@@ -1,588 +1,2136 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WhatsApp Web</title>
-    <!-- استدعاء أيقونات FontAwesome للمظهر الاحترافي -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        :root {
-            --wa-bg: #111b21;
-            --wa-header-bg: #202c33;
-            --wa-side-bg: #111b21;
-            --wa-chat-bg: #0b141a;
-            --wa-active-chat: #2a3942;
-            --wa-hover-chat: #202c33;
-            --wa-primary: #00a884;
-            --wa-text-primary: #e9edef;
-            --wa-text-secondary: #8696a0;
-            --wa-outgoing-bubble: #005c4b;
-            --wa-incoming-bubble: #202c33;
-            --wa-border: #222d34;
-            --wa-input-bg: #2a3942;
-        }
+  <meta charset="UTF-8">
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-        }
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+  >
 
-        body {
-            background-color: #090e11;
-            color: var(--wa-text-primary);
-            height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
-        }
+  <meta name="theme-color" content="#050405">
+  <meta
+    name="description"
+    content="مَلَك — مساحة كتبها يوسف أشرف الجرف."
+  >
 
-        /* Container الرئيسي للتطبيق */
-        .app-wrapper {
-            width: 100vw;
-            height: 100vh;
-            display: flex;
-            background-color: var(--wa-bg);
-            box-shadow: 0 6px 18px rgba(0,0,0,0.5);
-            overflow: hidden;
-        }
+  <title>مَلَك — يوسف أشرف الجرف</title>
 
-        /* ==================== الشريط الجانبي (Sidebar) ==================== */
-        .sidebar {
-            width: 30%;
-            min-width: 320px;
-            max-width: 450px;
-            background-color: var(--wa-side-bg);
-            border-left: 1px solid var(--wa-border);
-            display: flex;
-            flex-direction: column;
-        }
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-        .sidebar-header {
-            height: 60px;
-            background-color: var(--wa-header-bg);
-            padding: 10px 16px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
+  <link
+    href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cairo:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet"
+  >
 
-        .user-avatar {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background-color: #6a7f8a;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            font-weight: bold;
-        }
+  <style>
 
-        .header-actions {
-            display: flex;
-            gap: 20px;
-            color: var(--wa-text-secondary);
-            font-size: 18px;
-        }
+    /* =========================================================
+       MALAK — COMPLETE DESIGN SYSTEM
+       Everything visual lives here.
+       ========================================================= */
 
-        .header-actions i {
-            cursor: pointer;
-            transition: color 0.2s;
-        }
+    :root {
+      --black: #050405;
+      --black-2: #090709;
+      --black-3: #100a0d;
 
-        .header-actions i:hover {
-            color: var(--wa-text-primary);
-        }
+      --wine: #351018;
+      --wine-2: #511825;
+      --wine-3: #76263b;
 
-        /* صندوق البحث والفلترة */
-        .search-container {
-            padding: 8px 12px;
-            background-color: var(--wa-bg);
-            border-bottom: 1px solid var(--wa-border);
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
+      --rosewood: #8c4658;
 
-        .search-wrapper {
-            background-color: var(--wa-header-bg);
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            padding: 0 12px;
-            flex: 1;
-            height: 35px;
-        }
+      --ivory: #f1e9e5;
+      --ivory-soft: #d7ccca;
+      --muted: #958789;
+      --muted-2: #665c5e;
 
-        .search-wrapper i {
-            color: var(--wa-text-secondary);
-            font-size: 14px;
-        }
+      --copper: #bd8d79;
 
-        .search-wrapper input {
-            background: transparent;
-            border: none;
-            outline: none;
-            color: var(--wa-text-primary);
-            padding: 8px;
-            width: 100%;
-            font-size: 14px;
-        }
+      --line: rgba(255,255,255,.10);
+      --line-soft: rgba(255,255,255,.055);
 
-        /* تصنيفات المحادثات */
-        .filter-tabs {
-            display: flex;
-            gap: 8px;
-            padding: 8px 12px;
-            border-bottom: 1px solid var(--wa-border);
-        }
+      --shadow: rgba(0,0,0,.60);
 
-        .tab-btn {
-            background-color: var(--wa-header-bg);
-            color: var(--wa-text-secondary);
-            border: none;
-            padding: 6px 12px;
-            border-radius: 16px;
-            font-size: 13px;
-            cursor: pointer;
-        }
+      --ui: "Cairo", sans-serif;
+      --poetry: "Amiri", serif;
 
-        .tab-btn.active {
-            background-color: #0a332c;
-            color: var(--wa-primary);
-            font-weight: bold;
-        }
+      --ease: cubic-bezier(.22,.61,.36,1);
+    }
 
-        /* قائمة المحادثات */
-        .chats-list {
-            flex: 1;
-            overflow-y: auto;
-        }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
-        .chat-item {
-            display: flex;
-            align-items: center;
-            padding: 12px 16px;
-            cursor: pointer;
-            border-bottom: 1px solid var(--wa-border);
-            transition: background 0.2s;
-        }
+    html {
+      background: var(--black);
+      scroll-behavior: smooth;
+    }
 
-        .chat-item:hover {
-            background-color: var(--wa-hover-chat);
-        }
+    body {
+      min-height: 100vh;
+      overflow-x: hidden;
+      background: var(--black);
+      color: var(--ivory);
+      font-family: var(--ui);
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
 
-        .chat-item.active {
-            background-color: var(--wa-active-chat);
-        }
+    body.locked {
+      overflow: hidden;
+    }
 
-        .chat-avatar {
-            width: 49px;
-            height: 49px;
-            border-radius: 50%;
-            background-color: var(--wa-primary);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 20px;
-            font-weight: bold;
-            margin-left: 15px;
-            flex-shrink: 0;
-        }
+    button,
+    input {
+      font: inherit;
+    }
 
-        .chat-details {
-            flex: 1;
-            overflow: hidden;
-        }
+    button {
+      border: 0;
+      cursor: pointer;
+    }
 
-        .chat-title-row {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 4px;
-        }
+    img {
+      display: block;
+      max-width: 100%;
+    }
 
-        .chat-name {
-            font-size: 16px;
-            font-weight: 500;
-            color: var(--wa-text-primary);
-        }
+    ::selection {
+      background: var(--wine-3);
+      color: #fff;
+    }
 
-        .chat-time {
-            font-size: 12px;
-            color: var(--wa-text-secondary);
-        }
+    /* =========================================================
+       GLOBAL AMBIENCE
+       ========================================================= */
 
-        .chat-last-msg {
-            font-size: 14px;
-            color: var(--wa-text-secondary);
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
+    .world {
+      position: fixed;
+      inset: 0;
+      z-index: -50;
+      overflow: hidden;
+      background:
+        radial-gradient(
+          circle at 75% 10%,
+          rgba(118,38,59,.12),
+          transparent 30%
+        ),
+        #050405;
+    }
 
-        /* ==================== منطقة المحادثة (Main Chat) ==================== */
-        .chat-window {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            background-color: var(--wa-chat-bg);
-            position: relative;
-        }
+    .world__grain {
+      position: absolute;
+      inset: -50%;
+      opacity: .035;
+      pointer-events: none;
+      background-image:
+        url("https://grainy-gradients.vercel.app/noise.svg");
+      animation: grain 8s steps(8) infinite;
+    }
 
-        /* الخلفية المائلة النمطية للواتساب */
-        .chat-window::before {
-            content: "";
-            position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
-            opacity: 0.04;
-            background-image: url('https://user-images.githubusercontent.com/15075759/28719144-86dc0f70-73b1-11e7-911d-60d70fcded21.png');
-            pointer-events: none;
-        }
+    .world__light {
+      position: absolute;
+      width: 55vw;
+      height: 55vw;
+      border-radius: 50%;
+      filter: blur(110px);
+      opacity: .10;
+      pointer-events: none;
+    }
 
-        .chat-header {
-            height: 60px;
-            background-color: var(--wa-header-bg);
-            padding: 10px 16px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            z-index: 10;
-            border-bottom: 1px solid var(--wa-border);
-        }
+    .world__light.one {
+      top: -30%;
+      right: -25%;
+      background: #7c233c;
+    }
 
-        .current-chat-info {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            cursor: pointer;
-        }
+    .world__light.two {
+      bottom: -30%;
+      left: -25%;
+      background: #4d1829;
+    }
 
-        .messages-viewport {
-            flex: 1;
-            padding: 20px 5%;
-            overflow-y: auto;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            z-index: 1;
-        }
+    .stars {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+    }
 
-        /* الفقاعات (Bubbles) */
-        .msg-bubble {
-            max-width: 65%;
-            padding: 8px 12px;
-            border-radius: 8px;
-            font-size: 14.2px;
-            line-height: 19px;
-            position: relative;
-            word-wrap: break-word;
-        }
+    .star {
+      position: absolute;
+      width: 2px;
+      height: 2px;
+      border-radius: 50%;
+      background: rgba(255,255,255,.7);
+      animation: twinkle var(--time) ease-in-out infinite;
+    }
 
-        .msg-incoming {
-            background-color: var(--wa-incoming-bubble);
-            align-self: flex-start;
-            border-top-right-radius: 0;
-        }
+    /* =========================================================
+       INTRO / PASSWORD
+       ========================================================= */
 
-        .msg-outgoing {
-            background-color: var(--wa-outgoing-bubble);
-            align-self: flex-end;
-            border-top-left-radius: 0;
-        }
+    .gate {
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      overflow: hidden;
 
-        .msg-time {
-            font-size: 11px;
-            color: var(--wa-text-secondary);
-            float: left;
-            margin-top: 4px;
-            margin-right: 8px;
-        }
+      display: grid;
+      place-items: center;
 
-        .msg-outgoing .msg-time {
-            color: #8fa0a8;
-        }
+      background: #040304;
 
-        /* منطقة الكتابة والإرسال */
-        .chat-footer {
-            min-height: 62px;
-            background-color: var(--wa-header-bg);
-            padding: 10px 16px;
-            display: flex;
-            align-items: center;
-            gap: 16px;
-            z-index: 10;
-        }
+      transition:
+        opacity 1s var(--ease),
+        visibility 1s;
+    }
 
-        .chat-footer i {
-            color: var(--wa-text-secondary);
-            font-size: 22px;
-            cursor: pointer;
-        }
+    .gate.hide {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
 
-        .input-box-wrapper {
-            flex: 1;
-            background-color: var(--wa-input-bg);
-            border-radius: 8px;
-            padding: 10px 14px;
-        }
+    .gate__image {
+      position: absolute;
+      inset: 0;
 
-        .input-box-wrapper input {
-            width: 100%;
-            background: transparent;
-            border: none;
-            outline: none;
-            color: var(--wa-text-primary);
-            font-size: 15px;
-        }
+      background:
+        linear-gradient(
+          180deg,
+          rgba(3,2,3,.35),
+          rgba(3,2,3,.88)
+        ),
+        url("https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=2200&q=88");
 
-        /* شاشة تسجل الدخول التراكبية Modal */
-        .login-overlay {
-            position: fixed;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background-color: rgba(11, 20, 26, 0.95);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 1000;
-        }
+      background-size: cover;
+      background-position: center;
 
-        .login-card {
-            background-color: var(--wa-header-bg);
-            padding: 40px;
-            border-radius: 12px;
-            width: 100%;
-            max-width: 420px;
-            text-align: center;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
-            border: 1px solid var(--wa-border);
-        }
+      transform: scale(1.04);
+      animation: cinematicZoom 18s ease-in-out infinite alternate;
+    }
 
-        .login-card i.main-icon {
-            font-size: 60px;
-            color: var(--wa-primary);
-            margin-bottom: 20px;
-        }
+    .gate__veil {
+      position: absolute;
+      inset: 0;
 
-        .login-card h2 {
-            margin-bottom: 24px;
-        }
+      background:
+        radial-gradient(
+          circle at center,
+          transparent 0%,
+          rgba(0,0,0,.30) 42%,
+          rgba(0,0,0,.90) 100%
+        );
+    }
 
-        .login-card input {
-            width: 100%;
-            padding: 14px;
-            margin-bottom: 16px;
-            background-color: var(--wa-input-bg);
-            border: 1px solid var(--wa-border);
-            border-radius: 8px;
-            color: var(--wa-text-primary);
-            font-size: 15px;
-            outline: none;
-        }
+    .gate__content {
+      position: relative;
+      z-index: 2;
 
-        .login-card button {
-            width: 100%;
-            padding: 14px;
-            background-color: var(--wa-primary);
-            color: #fff;
-            border: none;
-            border-radius: 8px;
-            font-size: 16px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: background 0.3s;
-        }
+      width: min(88%, 430px);
+      text-align: center;
+    }
 
-        .login-card button:hover {
-            background-color: #008f70;
-        }
-    </style>
+    .gate__mini {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+
+      color: #a99b9d;
+      font-size: 9px;
+      letter-spacing: .15em;
+    }
+
+    .gate__mini::before,
+    .gate__mini::after {
+      content: "";
+      width: 25px;
+      height: 1px;
+      background: rgba(255,255,255,.28);
+    }
+
+    .gate__name {
+      margin-top: 30px;
+
+      font-family: var(--poetry);
+      font-size: clamp(90px, 25vw, 170px);
+      line-height: .75;
+      font-weight: 400;
+      letter-spacing: -.06em;
+
+      text-shadow:
+        0 30px 100px rgba(0,0,0,.8);
+    }
+
+    .gate__subtitle {
+      margin-top: 38px;
+
+      color: #d4c9c8;
+      font-size: 13px;
+      line-height: 2.1;
+    }
+
+    .gate__author {
+      margin-top: 10px;
+
+      color: #8d7d7f;
+      font-size: 10px;
+    }
+
+    .gate__form {
+      margin: 45px auto 0;
+      width: min(100%, 330px);
+    }
+
+    .gate__label {
+      display: block;
+      margin-bottom: 8px;
+
+      color: #a99a9c;
+      font-size: 10px;
+      text-align: right;
+    }
+
+    .password {
+      display: flex;
+      height: 54px;
+
+      border: 1px solid rgba(255,255,255,.14);
+      background: rgba(8,5,7,.60);
+      backdrop-filter: blur(18px);
+
+      transition: border-color .3s ease;
+    }
+
+    .password:focus-within {
+      border-color: rgba(189,141,121,.70);
+    }
+
+    .password input {
+      flex: 1;
+      min-width: 0;
+
+      border: 0;
+      outline: 0;
+
+      color: #fff;
+      background: transparent;
+
+      padding: 0 16px;
+
+      direction: ltr;
+      text-align: left;
+    }
+
+    .password input::placeholder {
+      color: rgba(255,255,255,.22);
+    }
+
+    .password__eye {
+      width: 48px;
+
+      color: #a28f91;
+      background: transparent;
+    }
+
+    .gate__enter {
+      width: 100%;
+      height: 54px;
+
+      margin-top: 9px;
+
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      padding: 0 20px;
+
+      color: #fff;
+      background: linear-gradient(
+        100deg,
+        #3b111b,
+        #541827
+      );
+
+      transition:
+        transform .3s var(--ease),
+        filter .3s ease;
+    }
+
+    .gate__enter:hover {
+      transform: translateY(-2px);
+      filter: brightness(1.12);
+    }
+
+    .gate__enter-arrow {
+      font-size: 20px;
+      font-weight: 300;
+    }
+
+    .gate__error {
+      height: 0;
+      overflow: hidden;
+
+      color: #d68b8b;
+      font-size: 10px;
+
+      opacity: 0;
+      transition: .3s ease;
+    }
+
+    .gate__error.show {
+      height: 28px;
+      padding-top: 9px;
+      opacity: 1;
+    }
+
+    .gate__footer {
+      position: fixed;
+      left: 0;
+      right: 0;
+      bottom: max(25px, env(safe-area-inset-bottom));
+
+      text-align: center;
+
+      color: rgba(255,255,255,.25);
+      font-size: 8px;
+      letter-spacing: .13em;
+    }
+
+    /* =========================================================
+       APP
+       ========================================================= */
+
+    #app {
+      opacity: 0;
+      visibility: hidden;
+
+      transition:
+        opacity 1s ease,
+        visibility 1s;
+    }
+
+    #app.ready {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    /* =========================================================
+       HEADER
+       ========================================================= */
+
+    .header {
+      position: fixed;
+      z-index: 500;
+
+      top: 0;
+      left: 0;
+      right: 0;
+
+      height: 76px;
+
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      padding:
+        0
+        max(20px, env(safe-area-inset-right))
+        0
+        max(20px, env(safe-area-inset-left));
+
+      background:
+        linear-gradient(
+          to bottom,
+          rgba(5,4,5,.82),
+          transparent
+        );
+
+      pointer-events: none;
+    }
+
+    .header > * {
+      pointer-events: auto;
+    }
+
+    .menu-btn {
+      width: 42px;
+      height: 42px;
+
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 6px;
+
+      border: 1px solid rgba(255,255,255,.10);
+      border-radius: 50%;
+
+      background: rgba(0,0,0,.18);
+      backdrop-filter: blur(15px);
+    }
+
+    .menu-btn span {
+      display: block;
+      width: 15px;
+      height: 1px;
+      background: #fff;
+    }
+
+    .header__logo {
+      font-family: var(--poetry);
+      font-size: 24px;
+      font-weight: 400;
+
+      border-bottom: 1px solid rgba(255,255,255,.30);
+    }
+
+    .sound-btn {
+      height: 34px;
+
+      display: flex;
+      align-items: center;
+      gap: 7px;
+
+      color: #a99b9d;
+      background: transparent;
+
+      font-size: 9px;
+    }
+
+    .sound-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #7d6c6e;
+
+      transition: .3s ease;
+    }
+
+    .sound-btn.active .sound-dot {
+      background: var(--copper);
+      box-shadow: 0 0 12px rgba(189,141,121,.7);
+    }
+
+    /* =========================================================
+       MENU
+       ========================================================= */
+
+    .menu {
+      position: fixed;
+      z-index: 800;
+
+      top: 0;
+      right: 0;
+      bottom: 0;
+
+      width: min(86vw, 390px);
+
+      padding:
+        90px 32px
+        max(30px, env(safe-area-inset-bottom));
+
+      background:
+        linear-gradient(
+          150deg,
+          rgba(54,16,25,.98),
+          rgba(7,5,7,.99) 75%
+        );
+
+      box-shadow: -30px 0 100px rgba(0,0,0,.5);
+
+      transform: translateX(105%);
+      transition: transform .65s var(--ease);
+    }
+
+    .menu.open {
+      transform: translateX(0);
+    }
+
+    .menu__close {
+      position: absolute;
+      top: 23px;
+      left: 23px;
+
+      width: 40px;
+      height: 40px;
+
+      color: #ddd;
+      background: transparent;
+
+      font-size: 27px;
+      font-weight: 300;
+    }
+
+    .menu__small {
+      color: #857678;
+      font-size: 10px;
+    }
+
+    .menu__title {
+      margin-top: 2px;
+
+      font-family: var(--poetry);
+      font-size: 58px;
+      font-weight: 400;
+    }
+
+    .menu__nav {
+      margin-top: 50px;
+    }
+
+    .menu__nav button {
+      width: 100%;
+
+      display: flex;
+      justify-content: space-between;
+
+      padding: 16px 0;
+
+      color: #bdb1b2;
+      background: transparent;
+
+      border-bottom: 1px solid rgba(255,255,255,.06);
+
+      text-align: right;
+      font-size: 12px;
+
+      transition: .25s ease;
+    }
+
+    .menu__nav button::after {
+      content: "↗";
+      color: #64575a;
+    }
+
+    .menu__nav button:hover {
+      color: white;
+      padding-right: 8px;
+    }
+
+    .menu__signature {
+      position: absolute;
+      bottom: max(28px, env(safe-area-inset-bottom));
+
+      color: #625659;
+      font-size: 9px;
+    }
+
+    .menu-overlay {
+      position: fixed;
+      z-index: 700;
+      inset: 0;
+
+      background: rgba(0,0,0,.65);
+      backdrop-filter: blur(5px);
+
+      opacity: 0;
+      visibility: hidden;
+
+      transition: .35s ease;
+    }
+
+    .menu-overlay.open {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    /* =========================================================
+       GENERAL SECTIONS
+       ========================================================= */
+
+    .section {
+      position: relative;
+      min-height: 100svh;
+      overflow: hidden;
+    }
+
+    .section__inner {
+      position: relative;
+      z-index: 2;
+
+      width: min(90%, 1000px);
+      margin: auto;
+
+      padding:
+        120px 0
+        max(70px, env(safe-area-inset-bottom));
+    }
+
+    .section-number {
+      color: rgba(255,255,255,.30);
+      font-size: 9px;
+      letter-spacing: .14em;
+      direction: ltr;
+      text-align: right;
+    }
+
+    /* =========================================================
+       HERO
+       ========================================================= */
+
+    .hero {
+      min-height: 100svh;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .hero__bg {
+      position: absolute;
+      inset: 0;
+
+      background:
+        linear-gradient(
+          180deg,
+          rgba(3,2,3,.20),
+          rgba(3,2,3,.90)
+        ),
+        url("https://images.unsplash.com/photo-1470770841072-f978cf4d019e?auto=format&fit=crop&w=2200&q=88");
+
+      background-size: cover;
+      background-position: center;
+
+      transform: scale(1.03);
+      animation: cinematicZoom 20s ease-in-out infinite alternate;
+    }
+
+    .hero__veil {
+      position: absolute;
+      inset: 0;
+
+      background:
+        radial-gradient(
+          circle at 50% 45%,
+          transparent 0%,
+          rgba(0,0,0,.72) 80%
+        );
+    }
+
+    .hero__content {
+      position: relative;
+      z-index: 2;
+
+      width: min(90%, 750px);
+
+      text-align: center;
+    }
+
+    .hero__small {
+      color: #b5a8aa;
+      font-size: 10px;
+    }
+
+    .hero__name {
+      margin-top: 15px;
+
+      font-family: var(--poetry);
+      font-size: clamp(100px, 26vw, 205px);
+      line-height: .76;
+      font-weight: 400;
+
+      letter-spacing: -.07em;
+
+      text-shadow:
+        0 35px 110px rgba(0,0,0,.85);
+    }
+
+    .hero__description {
+      margin-top: 38px;
+
+      color: #d6ccca;
+      font-size: 13px;
+      line-height: 2.15;
+    }
+
+    .hero__start {
+      margin-top: 42px;
+
+      display: inline-flex;
+      align-items: center;
+      gap: 22px;
+
+      padding: 14px 22px;
+
+      color: #fff;
+      background: rgba(255,255,255,.06);
+      border: 1px solid rgba(255,255,255,.13);
+
+      backdrop-filter: blur(16px);
+
+      transition:
+        transform .3s var(--ease),
+        background .3s ease;
+    }
+
+    .hero__start:hover {
+      transform: translateY(-3px);
+      background: rgba(255,255,255,.11);
+    }
+
+    .hero__start span {
+      color: var(--copper);
+    }
+
+    .hero__bottom {
+      position: absolute;
+      z-index: 3;
+
+      left: 6%;
+      right: 6%;
+      bottom: max(24px, env(safe-area-inset-bottom));
+
+      display: flex;
+      justify-content: space-between;
+
+      color: rgba(255,255,255,.30);
+      font-size: 8px;
+    }
+
+    /* =========================================================
+       LETTER
+       ========================================================= */
+
+    .letter {
+      background:
+        radial-gradient(
+          circle at 85% 10%,
+          rgba(105,29,48,.14),
+          transparent 30%
+        ),
+        var(--black-2);
+    }
+
+    .heading {
+      display: flex;
+      align-items: flex-start;
+      gap: 17px;
+
+      margin-top: 45px;
+    }
+
+    .heading__number {
+      padding-top: 10px;
+
+      color: var(--copper);
+      font-size: 9px;
+    }
+
+    .heading h2 {
+      font-family: var(--poetry);
+      font-size: clamp(43px, 11vw, 88px);
+      line-height: 1.15;
+      font-weight: 400;
+    }
+
+    .letter__body {
+      margin-top: 65px;
+      max-width: 820px;
+    }
+
+    .letter__paragraph {
+      margin-top: 34px;
+
+      color: #e4dbd8;
+      font-family: var(--poetry);
+      font-size: clamp(25px, 5.8vw, 43px);
+      line-height: 2.05;
+
+      opacity: 0;
+      transform: translateY(24px);
+
+      transition:
+        opacity .9s var(--ease),
+        transform .9s var(--ease);
+    }
+
+    .letter__paragraph:first-child {
+      margin-top: 0;
+    }
+
+    .letter__paragraph.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .letter__signature {
+      margin-top: 65px;
+
+      color: #8e7d7f;
+      font-size: 11px;
+    }
+
+    /* =========================================================
+       POETRY
+       ========================================================= */
+
+    .poetry {
+      display: flex;
+      align-items: center;
+    }
+
+    .poetry__bg {
+      position: absolute;
+      inset: 0;
+
+      background:
+        linear-gradient(
+          90deg,
+          rgba(4,3,4,.95),
+          rgba(30,9,16,.72),
+          rgba(4,3,4,.94)
+        ),
+        url("https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=2200&q=88");
+
+      background-size: cover;
+      background-position: center;
+    }
+
+    .poetry__glow {
+      position: absolute;
+      inset: 0;
+
+      background:
+        radial-gradient(
+          circle at 50% 50%,
+          rgba(120,35,60,.20),
+          transparent 55%
+        );
+    }
+
+    .poetry__label {
+      margin-top: 45px;
+
+      color: var(--copper);
+      font-size: 9px;
+    }
+
+    .poetry__title {
+      margin-top: 5px;
+
+      font-family: var(--poetry);
+      font-size: clamp(52px, 13vw, 105px);
+      font-weight: 400;
+    }
+
+    .poem {
+      min-height: 290px;
+
+      display: flex;
+      align-items: center;
+
+      margin-top: 40px;
+
+      padding-right: 20px;
+
+      border-right: 1px solid rgba(189,141,121,.38);
+
+      transition: opacity .3s ease;
+    }
+
+    .poem.fade {
+      opacity: 0;
+    }
+
+    .poem__title {
+      color: #98888a;
+      font-size: 10px;
+      margin-bottom: 25px;
+    }
+
+    .poem__lines {
+      color: #f0e7e4;
+
+      font-family: var(--poetry);
+      font-size: clamp(25px, 6vw, 44px);
+      line-height: 2;
+    }
+
+    .poem__line {
+      display: block;
+    }
+
+    .poem-controls {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+
+      margin-top: 35px;
+    }
+
+    .poem-controls button {
+      width: 43px;
+      height: 43px;
+
+      color: #ddd;
+      background: rgba(255,255,255,.05);
+      border: 1px solid rgba(255,255,255,.10);
+
+      transition: .25s ease;
+    }
+
+    .poem-controls button:hover {
+      background: rgba(255,255,255,.12);
+    }
+
+    .poem-counter {
+      color: #817275;
+      font-size: 9px;
+      direction: ltr;
+    }
+
+    /* =========================================================
+       COLLECTION / Dيوان
+       ========================================================= */
+
+    .diwan {
+      background: #080607;
+    }
+
+    .diwan__intro {
+      max-width: 700px;
+      margin-top: 30px;
+
+      color: #988b8c;
+      font-size: 12px;
+      line-height: 2;
+    }
+
+    .diwan-list {
+      margin-top: 55px;
+
+      border-top: 1px solid var(--line);
+    }
+
+    .diwan-item {
+      width: 100%;
+
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      padding: 22px 0;
+
+      color: #d6ccca;
+      background: transparent;
+
+      border-bottom: 1px solid var(--line);
+
+      text-align: right;
+
+      transition:
+        color .25s ease,
+        padding .3s var(--ease);
+    }
+
+    .diwan-item:hover {
+      color: #fff;
+      padding-right: 10px;
+    }
+
+    .diwan-item__meta {
+      color: #6f6264;
+      font-size: 9px;
+    }
+
+    .diwan-item__name {
+      font-family: var(--poetry);
+      font-size: 25px;
+      font-weight: 400;
+    }
+
+    /* =========================================================
+       DETAILS
+       ========================================================= */
+
+    .details {
+      background:
+        radial-gradient(
+          circle at 10% 90%,
+          rgba(95,26,46,.13),
+          transparent 30%
+        ),
+        #080607;
+    }
+
+    .details__grid {
+      margin-top: 55px;
+
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1px;
+
+      background: var(--line);
+      border: 1px solid var(--line);
+    }
+
+    .detail {
+      min-height: 220px;
+
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+
+      padding: 25px;
+
+      background: #0a0709;
+    }
+
+    .detail__number {
+      color: var(--copper);
+      font-size: 9px;
+    }
+
+    .detail h3 {
+      font-family: var(--poetry);
+      font-size: 31px;
+      font-weight: 400;
+    }
+
+    .detail p {
+      margin-top: 8px;
+
+      color: #8e8284;
+      font-size: 11px;
+      line-height: 1.9;
+    }
+
+    /* =========================================================
+       MEMORY
+       ========================================================= */
+
+    .memory {
+      background: #080607;
+    }
+
+    .memory-stage {
+      margin-top: 55px;
+    }
+
+    .memory-image {
+      position: relative;
+
+      width: 100%;
+      aspect-ratio: 4 / 5;
+
+      overflow: hidden;
+
+      background: #100a0d;
+    }
+
+    .memory-image img {
+      width: 100%;
+      height: 100%;
+
+      object-fit: cover;
+
+      transition:
+        opacity .45s ease,
+        transform 1s var(--ease);
+    }
+
+    .memory-image::after {
+      content: "";
+
+      position: absolute;
+      inset: 0;
+
+      box-shadow:
+        inset 0 0 100px rgba(0,0,0,.45);
+    }
+
+    .memory-image.changing img {
+      opacity: 0;
+      transform: scale(1.05);
+    }
+
+    .memory__caption {
+      padding: 22px 0;
+    }
+
+    .memory__date {
+      color: var(--copper);
+      font-size: 9px;
+    }
+
+    .memory__title {
+      margin-top: 6px;
+
+      font-family: var(--poetry);
+      font-size: 35px;
+      font-weight: 400;
+    }
+
+    .memory__description {
+      margin-top: 8px;
+
+      max-width: 650px;
+
+      color: #95898a;
+      font-size: 11px;
+      line-height: 2;
+    }
+
+    .memory-controls {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+
+      margin-top: 8px;
+    }
+
+    .memory-controls button {
+      color: #c4b7b8;
+      background: transparent;
+      font-size: 10px;
+    }
+
+    .memory-counter {
+      color: var(--copper);
+      font-size: 9px;
+    }
+
+    /* =========================================================
+       VOICE / MUSIC
+       ========================================================= */
+
+    .sound-section {
+      background:
+        linear-gradient(
+          rgba(5,4,5,.70),
+          rgba(5,4,5,.95)
+        ),
+        url("https://images.unsplash.com/photo-1511379938547-c1f69419868d?auto=format&fit=crop&w=2200&q=88");
+
+      background-size: cover;
+      background-position: center;
+    }
+
+    .sound-box {
+      margin-top: 60px;
+
+      padding: 30px;
+
+      background: rgba(5,4,5,.55);
+      border: 1px solid var(--line);
+
+      backdrop-filter: blur(18px);
+    }
+
+    .sound-box__label {
+      color: var(--copper);
+      font-size: 9px;
+    }
+
+    .sound-box__title {
+      margin-top: 15px;
+
+      font-family: var(--poetry);
+      font-size: 39px;
+      font-weight: 400;
+    }
+
+    .sound-box__text {
+      margin-top: 12px;
+
+      color: #95898b;
+      font-size: 11px;
+      line-height: 2;
+    }
+
+    .music-controls {
+      margin-top: 30px;
+
+      display: flex;
+      align-items: center;
+      gap: 18px;
+    }
+
+    .play-button {
+      width: 52px;
+      height: 52px;
+
+      display: grid;
+      place-items: center;
+
+      color: #fff;
+      background: var(--wine-2);
+      border-radius: 50%;
+    }
+
+    .music-status {
+      color: #95888a;
+      font-size: 10px;
+    }
+
+    /* =========================================================
+       FINAL
+       ========================================================= */
+
+    .final {
+      min-height: 100svh;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .final__bg {
+      position: absolute;
+      inset: 0;
+
+      background:
+        linear-gradient(
+          rgba(4,3,4,.45),
+          rgba(4,3,4,.94)
+        ),
+        url("https://images.unsplash.com/photo-1499346030926-9a72daac6c63?auto=format&fit=crop&w=2200&q=88");
+
+      background-size: cover;
+      background-position: center;
+    }
+
+    .final__veil {
+      position: absolute;
+      inset: 0;
+
+      background:
+        radial-gradient(
+          circle,
+          transparent,
+          rgba(0,0,0,.85)
+        );
+    }
+
+    .final__content {
+      position: relative;
+      z-index: 2;
+
+      width: min(90%, 750px);
+
+      text-align: center;
+    }
+
+    .final__small {
+      color: #95878a;
+      font-size: 10px;
+    }
+
+    .final__title {
+      margin-top: 17px;
+
+      font-family: var(--poetry);
+      font-size: clamp(45px, 11vw, 95px);
+      font-weight: 400;
+    }
+
+    .final__button {
+      margin-top: 40px;
+
+      padding: 15px 30px;
+
+      color: #fff;
+      background: #481421;
+
+      transition: .3s ease;
+    }
+
+    .final__button:hover {
+      transform: translateY(-2px);
+      background: #5d1b2b;
+    }
+
+    .final__message {
+      display: none;
+
+      margin-top: 55px;
+
+      animation: finalReveal 1.2s var(--ease);
+    }
+
+    .final__message.show {
+      display: block;
+    }
+
+    .final__message-text {
+      white-space: pre-line;
+
+      font-family: var(--poetry);
+      font-size: clamp(27px, 6vw, 47px);
+      line-height: 2;
+    }
+
+    .final__signature {
+      margin-top: 45px;
+
+      color: #938386;
+      font-size: 10px;
+    }
+
+    /* =========================================================
+       FOOTER
+       ========================================================= */
+
+    .footer {
+      min-height: 90px;
+
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      padding:
+        0
+        max(23px, env(safe-area-inset-right))
+        max(23px, env(safe-area-inset-bottom))
+        max(23px, env(safe-area-inset-left));
+
+      color: #625759;
+      background: #040304;
+
+      font-size: 8px;
+    }
+
+    /* =========================================================
+       TABLET
+       ========================================================= */
+
+    @media (min-width: 600px) {
+
+      .section__inner {
+        width: min(86%, 950px);
+      }
+
+      .memory-image {
+        aspect-ratio: 16 / 9;
+      }
+
+      .details__grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .detail {
+        min-height: 280px;
+      }
+
+    }
+
+    /* =========================================================
+       DESKTOP
+       ========================================================= */
+
+    @media (min-width: 1000px) {
+
+      .section__inner {
+        width: min(82%, 1150px);
+      }
+
+      .hero__name {
+        font-size: 205px;
+      }
+
+      .memory-stage {
+        display: grid;
+        grid-template-columns: 1.55fr .75fr;
+        gap: 55px;
+        align-items: end;
+      }
+
+      .memory-image {
+        aspect-ratio: 16 / 10;
+      }
+
+      .details__grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+
+      .letter__body {
+        padding-right: 80px;
+      }
+
+    }
+
+    /* =========================================================
+       ANIMATIONS
+       ========================================================= */
+
+    @keyframes cinematicZoom {
+      from {
+        transform: scale(1.03);
+      }
+
+      to {
+        transform: scale(1.09);
+      }
+    }
+
+    @keyframes twinkle {
+
+      0%,
+      100% {
+        opacity: .10;
+      }
+
+      50% {
+        opacity: .80;
+      }
+
+    }
+
+    @keyframes grain {
+
+      0% {
+        transform: translate(0,0);
+      }
+
+      25% {
+        transform: translate(3%,-2%);
+      }
+
+      50% {
+        transform: translate(-2%,3%);
+      }
+
+      75% {
+        transform: translate(2%,2%);
+      }
+
+      100% {
+        transform: translate(0,0);
+      }
+
+    }
+
+    @keyframes finalReveal {
+
+      from {
+        opacity: 0;
+        transform: translateY(25px);
+        filter: blur(7px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+        filter: blur(0);
+      }
+
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+
+      *,
+      *::before,
+      *::after {
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+        scroll-behavior: auto !important;
+        transition-duration: .01ms !important;
+      }
+
+    }
+
+  </style>
 </head>
-<body>
 
-    <!-- شاشة تسجيل الدخول بأسلوب واتساب -->
-    <div class="login-overlay" id="loginOverlay">
-        <div class="login-card">
-            <i class="fa-brands fa-whatsapp main-icon"></i>
-            <h2>تسجيل الدخول إلى واتساب</h2>
-            <input type="text" id="phoneInput" placeholder="رقم الهاتف (مثال: 01012345678)">
-            <input type="password" id="passInput" placeholder="كلمة المرور">
-            <button onclick="handleLogin()">متابعة</button>
+<body class="locked">
+
+  <!-- =======================================================
+       WORLD BACKGROUND
+       ======================================================= -->
+
+  <div class="world">
+    <div class="world__grain"></div>
+    <div class="world__light one"></div>
+    <div class="world__light two"></div>
+    <div id="stars" class="stars"></div>
+  </div>
+
+
+  <!-- =======================================================
+       PASSWORD GATE
+       ======================================================= -->
+
+  <section id="gate" class="gate">
+
+    <div class="gate__image"></div>
+    <div class="gate__veil"></div>
+
+    <div class="gate__content">
+
+      <div class="gate__mini">
+        مساحة خاصة
+      </div>
+
+      <h1 class="gate__name">
+        ملك
+      </h1>
+
+      <p class="gate__subtitle">
+        في حاجات كتير ممكن تتقال...
+        <br>
+        بس أنا اخترت أكتبها هنا.
+      </p>
+
+      <p class="gate__author">
+        من يوسف أشرف الجرف
+      </p>
+
+      <form id="passwordForm" class="gate__form">
+
+        <label class="gate__label">
+          كلمة السر
+        </label>
+
+        <div class="password">
+
+          <input
+            id="passwordInput"
+            type="password"
+            autocomplete="off"
+            placeholder="••••••••"
+          >
+
+          <button
+            id="passwordEye"
+            class="password__eye"
+            type="button"
+          >
+            ◉
+          </button>
+
         </div>
+
+        <button
+          class="gate__enter"
+          type="submit"
+        >
+          <span>ادخلي</span>
+          <b class="gate__enter-arrow">←</b>
+        </button>
+
+        <div id="passwordError" class="gate__error">
+          الكلمة دي مش هي...
+        </div>
+
+      </form>
+
     </div>
 
-    <!-- التطبيق الرئيسي -->
-    <div class="app-wrapper">
-        <!-- القائمة الجانبية -->
-        <div class="sidebar">
-            <div class="sidebar-header">
-                <div class="user-avatar" id="myAvatar">أ</div>
-                <div class="header-actions">
-                    <i class="fa-solid fa-users" title="المجتمعات"></i>
-                    <i class="fa-solid fa-circle-notch" title="الحالة"></i>
-                    <i class="fa-solid fa-message" title="محادثة جديدة"></i>
-                    <i class="fa-solid fa-ellipsis-vertical" title="القائمة"></i>
-                </div>
-            </div>
-
-            <div class="search-container">
-                <div class="search-wrapper">
-                    <i class="fa-solid fa-magnifying-glass"></i>
-                    <input type="text" id="searchInput" placeholder="بحث أو بدء محادثة جديدة" onkeyup="searchChats()">
-                </div>
-            </div>
-
-            <div class="filter-tabs">
-                <button class="tab-btn active" onclick="filterCategory(this, 'all')">الكل</button>
-                <button class="tab-btn" onclick="filterCategory(this, 'unread')">غير قراء</button>
-                <button class="tab-btn" onclick="filterCategory(this, 'work')">العمل</button>
-                <button class="tab-btn" onclick="filterCategory(this, 'family')">العائلة</button>
-            </div>
-
-            <div class="chats-list" id="chatsList">
-                <!-- شات 1 -->
-                <div class="chat-item active" onclick="selectChat(this, 'فريق التطوير', '01000000001')">
-                    <div class="chat-avatar">ف</div>
-                    <div class="chat-details">
-                        <div class="chat-title-row">
-                            <span class="chat-name">فريق التطوير</span>
-                            <span class="chat-time">10:45 ص</span>
-                        </div>
-                        <div class="chat-last-msg">تم رفع ملفات المشروع على GitHub بنجاح 👍</div>
-                    </div>
-                </div>
-                <!-- شات 2 -->
-                <div class="chat-item" onclick="selectChat(this, 'أحمد محمود', '01122334455')">
-                    <div class="chat-avatar" style="background-color: #6b34bc;">أ</div>
-                    <div class="chat-details">
-                        <div class="chat-title-row">
-                            <span class="chat-name">أحمد محمود</span>
-                            <span class="chat-time">أمس</span>
-                        </div>
-                        <div class="chat-last-msg">نتقابل الساعة 8 بالمكتب؟</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- منطقة الشات المفتوح -->
-        <div class="chat-window">
-            <div class="chat-header">
-                <div class="current-chat-info">
-                    <div class="user-avatar" id="activeAvatar">ف</div>
-                    <div>
-                        <div id="activeChatName" style="font-weight: 500;">فريق التطوير</div>
-                        <div style="font-size: 12px; color: var(--wa-text-secondary);">متصل الآن</div>
-                    </div>
-                </div>
-                <div class="header-actions">
-                    <i class="fa-solid fa-video" title="مكالمة فيديو"></i>
-                    <i class="fa-solid fa-phone" title="مكالمة صوتية"></i>
-                    <i class="fa-solid fa-magnifying-glass" title="بحث"></i>
-                    <i class="fa-solid fa-ellipsis-vertical" title="خيارات"></i>
-                </div>
-            </div>
-
-            <!-- عرض الرسائل -->
-            <div class="messages-viewport" id="messagesViewport">
-                <div class="msg-bubble msg-incoming">
-                    أهلاً بك في منصتك الجديدة المبتكرة!
-                    <div class="msg-time">10:40 ص</div>
-                </div>
-                <div class="msg-bubble msg-outgoing">
-                    مرحباً، الواجهة أصبحت مطابقة للواتساب تماماً وجاهزة للربط.
-                    <div class="msg-time">10:45 ص</div>
-                </div>
-            </div>
-
-            <!-- إدخال الرسائل -->
-            <div class="chat-footer">
-                <i class="fa-regular fa-face-smile" title="إيموجي"></i>
-                <i class="fa-solid fa-paperclip" title="إرفاق ملف"></i>
-                <div class="input-box-wrapper">
-                    <input type="text" id="messageInput" placeholder="اكتب رسالة" onkeypress="handleKeyPress(event)">
-                </div>
-                <i class="fa-solid fa-paper-plane" id="sendBtn" onclick="sendMessage()" title="إرسال"></i>
-            </div>
-        </div>
+    <div class="gate__footer">
+      01 — M A L A K
     </div>
 
-    <script>
-        // تسجيل الدخول
-        function handleLogin() {
-            const phone = document.getElementById('phoneInput').value.trim();
-            if (!phone) {
-                alert('يرجى إدخال رقم الهاتف');
-                return;
-            }
-            document.getElementById('loginOverlay').style.display = 'none';
-            document.getElementById('myAvatar').innerText = phone.charAt(0).toUpperCase();
-        }
+  </section>
 
-        // اختيار محادثة
-        function selectChat(element, name, phone) {
-            document.querySelectorAll('.chat-item').forEach(item => item.classList.remove('active'));
-            element.classList.add('active');
-            
-            document.getElementById('activeChatName').innerText = name;
-            document.getElementById('activeAvatar').innerText = name.charAt(0);
-            
-            // إعادة ضبط نافذة الرسائل للمحادثة المحددة
-            const viewport = document.getElementById('messagesViewport');
-            viewport.innerHTML = `
-                <div class="msg-bubble msg-incoming">
-                    بدء محادثة مشفرة مع ${name} (${phone})
-                    <div class="msg-time">الآن</div>
-                </div>
-            `;
-        }
 
-        // إرسال رسالة جديدة
-        function sendMessage() {
-            const input = document.getElementById('messageInput');
-            const text = input.value.trim();
-            if (!text) return;
+  <!-- =======================================================
+       APPLICATION
+       ======================================================= -->
 
-            const viewport = document.getElementById('messagesViewport');
-            const now = new Date();
-            const timeStr = now.getHours() + ':' + (now.getMinutes()<10?'0':'') + now.getMinutes();
+  <div id="app">
 
-            const msgHtml = `
-                <div class="msg-bubble msg-outgoing">
-                    ${text}
-                    <div class="msg-time">${timeStr}</div>
-                </div>
-            `;
-            
-            viewport.insertAdjacentHTML('beforeend', msgHtml);
-            input.value = '';
-            viewport.scrollTop = viewport.scrollHeight;
-        }
+    <!-- HEADER -->
 
-        function handleKeyPress(e) {
-            if (e.key === 'Enter') {
-                sendMessage();
-            }
-        }
+    <header class="header">
 
-        // بحث في المحادثات
-        function searchChats() {
-            const query = document.getElementById('searchInput').value.toLowerCase();
-            const items = document.querySelectorAll('.chat-item');
-            items.forEach(item => {
-                const name = item.querySelector('.chat-name').innerText.toLowerCase();
-                item.style.display = name.includes(query) ? 'flex' : 'none';
-            });
-        }
+      <button id="menuButton" class="menu-btn">
+        <span></span>
+        <span></span>
+      </button>
 
-        // فلترة الفئات
-        function filterCategory(btn, category) {
-            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-        }
-    </script>
+      <div class="header__logo">
+        م
+      </div>
+
+      <button id="soundButton" class="sound-btn">
+        <span class="sound-dot"></span>
+        <span id="soundText">صامت</span>
+      </button>
+
+    </header>
+
+
+    <!-- MENU -->
+
+    <aside id="menu" class="menu">
+
+      <button id="closeMenu" class="menu__close">
+        ×
+      </button>
+
+      <div class="menu__small">
+        إلى
+      </div>
+
+      <div class="menu__title">
+        ملك
+      </div>
+
+      <nav class="menu__nav">
+
+        <button data-go="home">
+          البداية
+        </button>
+
+        <button data-go="letter">
+          الكلام اللي جوايا
+        </button>
+
+        <button data-go="poetry">
+          الديوان
+        </button>
+
+        <button data-go="diwan">
+          القصائد
+        </button>
+
+        <button data-go="details">
+          تفاصيل صغيرة
+        </button>
+
+        <button data-go="memory">
+          الذكريات
+        </button>
+
+        <button data-go="sound">
+          صوت الحكاية
+        </button>
+
+        <button data-go="final">
+          الرسالة الأخيرة
+        </button>
+
+      </nav>
+
+      <div class="menu__signature">
+        يوسف أشرف الجرف
+      </div>
+
+    </aside>
+
+    <div id="menuOverlay" class="menu-overlay"></div>
+
+
+    <!-- =====================================================
+         HERO
+         ===================================================== -->
+
+    <section id="home" class="section hero">
+
+      <div class="hero__bg"></div>
+      <div class="hero__veil"></div>
+
+      <div class="hero__content">
+
+        <div class="section-number">
+          01 / 08
+        </div>
+
+        <p class="hero__small">
+          مش كل الكلام بيتقال...
+        </p>
+
+        <h2 class="hero__name">
+          ملك
+        </h2>
+
+        <p class="hero__description">
+          عملت المكان ده عشان يبقى فيه
+          <br>
+          كلام يشبهني... ويشبه اللي جوايا.
+        </p>
+
+        <button
+          class="hero__start"
+          data-go="letter"
+        >
+          <span>01</span>
+          ابدئي من هنا
+        </button>
+
+      </div>
+
+      <div class="hero__bottom">
+        <span>يوسف أشرف الجرف</span>
+        <span>2026</span>
+      </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         LETTER
+         ===================================================== -->
+
+    <section id="letter" class="section letter">
+
+      <div class="section__inner">
+
+        <div class="section-number">
+          02 / 08
+        </div>
+
+        <div class="heading">
+
+          <span class="heading__number">
+            01
+          </span>
+
+          <h2>
+            الكلام اللي جوايا
+          </h2>
+
+        </div>
+
+        <div id="letterBody" class="letter__body"></div>
+
+        <div class="letter__signature">
+          — يوسف
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         POETRY FEATURE
+         ===================================================== -->
+
+    <section id="poetry" class="section poetry">
+
+      <div class="poetry__bg"></div>
+      <div class="poetry__glow"></div>
+
+      <div class="section__inner">
+
+        <div class="section-number">
+          03 / 08
+        </div>
+
+        <div class="poetry__label">
+          من الديوان
+        </div>
+
+        <h2 class="poetry__title">
+          الشعر
+        </h2>
+
+        <div id="poem" class="poem"></div>
+
+        <div class="poem-controls">
+
+          <button id="prevPoem">
+            ←
+          </button>
+
+          <span id="poemCounter" class="poem-counter">
+            01 / 01
+          </span>
+
+          <button id="nextPoem">
+            →
+          </button>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         DIWAN
+         ===================================================== -->
+
+    <section id="diwan" class="section diwan">
+
+      <div class="section__inner">
+
+        <div class="section-number">
+          04 / 08
+        </div>
+
+        <div class="heading">
+
+          <span class="heading__number">
+            02
+          </span>
+
+          <h2>
+            الديوان
+          </h2>
+
+        </div>
+
+        <p class="diwan__intro">
+          مش مجرد قصايد...
+          دي حاجات اتكتبت في أوقات مختلفة،
+          وكل واحدة فيهم ليها حكاية.
+        </p>
+
+        <div id="diwanList" class="diwan-list"></div>
+
+      </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         DETAILS
+         ===================================================== -->
+
+    <section id="details" class="section details">
+
+      <div class="section__inner">
+
+        <div class="section-number">
+          05 / 08
+        </div>
+
+        <div class="heading">
+
+          <span class="heading__number">
+            03
+          </span>
+
+          <h2>
+            تفاصيل صغيرة
+          </h2>
+
+        </div>
+
+        <div id="detailsGrid" class="details__grid"></div>
+
+      </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         MEMORY
+         ===================================================== -->
+
+    <section id="memory" class="section memory">
+
+      <div class="section__inner">
+
+        <div class="section-number">
+          06 / 08
+        </div>
+
+        <div class="heading">
+
+          <span class="heading__number">
+            04
+          </span>
+
+          <h2>
+            حاجات بتفضل
+          </h2>
+
+        </div>
+
+        <div class="memory-stage">
+
+          <div id="memoryImage" class="memory-image">
+
+            <img
+              id="memoryPhoto"
+              src=""
+              alt="ذكرى"
+            >
+
+          </div>
+
+          <div class="memory__caption">
+
+            <span
+              id="memoryDate"
+              class="memory__date"
+            ></span>
+
+            <h3
+              id="memoryTitle"
+              class="memory__title"
+            ></h3>
+
+            <p
+              id="memoryDescription"
+              class="memory__description"
+            ></p>
+
+          </div>
+
+        </div>
+
+        <div class="memory-controls">
+
+          <button id="prevMemory">
+            السابق
+          </button>
+
+          <span
+            id="memoryCounter"
+            class="memory-counter"
+          >
+            01
+          </span>
+
+          <button id="nextMemory">
+            التالي
+          </button>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         MUSIC
+         ===================================================== -->
+
+    <section id="sound" class="section sound-section">
+
+      <div class="section__inner">
+
+        <div class="section-number">
+          07 / 08
+        </div>
+
+        <div class="heading">
+
+          <span class="heading__number">
+            05
+          </span>
+
+          <h2>
+            صوت الحكاية
+          </h2>
+
+        </div>
+
+        <div class="sound-box">
+
+          <div class="sound-box__label">
+            TRACK 01
+          </div>
+
+          <div class="sound-box__title">
+            حاجة تسمعيها بهدوء
+          </div>
+
+          <p class="sound-box__text">
+            الصوت هنا جزء من التجربة،
+            مش مجرد موسيقى في الخلفية.
+          </p>
+
+          <div class="music-controls">
+
+            <button
+              id="playMusic"
+              class="play-button"
+            >
+              ▶
+            </button>
+
+            <span
+              id="musicStatus"
+              class="music-status"
+            >
+              تشغيل
+            </span>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         FINAL
+         ===================================================== -->
+
+    <section id="final" class="section final">
+
+      <div class="final__bg"></div>
+      <div class="final__veil"></div>
+
+      <div class="final__content">
+
+        <div class="section-number">
+          08 / 08
+        </div>
+
+        <span class="final__small">
+          آخر حاجة
+        </span>
+
+        <h2 class="final__title">
+          لسه في كلمة.
+        </h2>
+
+        <button
+          id="revealFinal"
+          class="final__button"
+        >
+          افتحيها
+        </button>
+
+        <div
+          id="finalMessage"
+          class="final__message"
+        >
+
+          <p
+            id="finalMessageText"
+            class="final__message-text"
+          ></p>
+
+          <div class="final__signature">
+            يوسف أشرف الجرف
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- FOOTER -->
+
+    <footer class="footer">
+
+      <span>
+        مَلَك
+      </span>
+
+      <span>
+        من يوسف أشرف الجرف
+      </span>
+
+    </footer>
+
+  </div>
+
+
+  <script src="content.js"></script>
+  <script src="media.js"></script>
+  <script src="app.js"></script>
+
 </body>
-</html>
+    </html>
