@@ -1,233 +1,407 @@
 "use strict";
 
-document.addEventListener("DOMContentLoaded", function () {
+/*
+  ============================================================
+  APP ENGINE
+  هنا كل الحركة والتفاعل والتنقل.
+  ============================================================
+*/
 
-  const DATA = window.MALAK_CONTENT || {};
-  const MEDIA = window.MALAK_MEDIA || {};
+(() => {
 
-  const $ = (id) => document.getElementById(id);
+  const DATA = window.MALAK_CONTENT;
+  const MEDIA = window.MALAK_MEDIA;
+
+  /* ---------------------------------------------------------
+     SAFETY
+  --------------------------------------------------------- */
+
+  if (!DATA) {
+    document.body.innerHTML = `
+      <div style="
+        min-height:100vh;
+        display:grid;
+        place-items:center;
+        background:#070506;
+        color:white;
+        font-family:Cairo,Arial,sans-serif;
+        padding:30px;
+        text-align:center;
+      ">
+        <div>
+          <h1 style="font-size:32px;margin-bottom:15px;">
+            حصلت مشكلة في تحميل المحتوى
+          </h1>
+          <p style="color:#aaa;line-height:2;">
+            تأكد إن ملف content.js موجود بجانب index.html
+            وإن اسمه مكتوب بالضبط content.js
+          </p>
+        </div>
+      </div>
+    `;
+    return;
+  }
+
+  /* ---------------------------------------------------------
+     DOM
+  --------------------------------------------------------- */
+
+  const $ = (selector, parent = document) =>
+    parent.querySelector(selector);
+
+  const $$ = (selector, parent = document) =>
+    [...parent.querySelectorAll(selector)];
 
   const body = document.body;
 
-  const app = $("app");
+  const loader = $("#loader");
+  const gate = $("#gate");
+  const app = $("#app");
 
-  const menu = $("menu");
-  const menuButton = $("menuButton");
-  const closeMenu = $("closeMenu");
-  const menuOverlay = $("menuOverlay");
+  const passwordForm = $("#passwordForm");
+  const passwordInput = $("#passwordInput");
+  const passwordEye = $("#passwordEye");
+  const passwordError = $("#passwordError");
 
-  const letterBody = $("letterBody");
+  const menuButton = $("#menuButton");
+  const menuClose = $("#menuClose");
+  const menuBackdrop = $("#menuBackdrop");
+  const sideMenu = $("#sideMenu");
 
-  const poem = $("poem");
-  const poemCounter = $("poemCounter");
-  const prevPoem = $("prevPoem");
-  const nextPoem = $("nextPoem");
+  const letterContent = $("#letterContent");
 
-  const diwanList = $("diwanList");
+  const poemList = $("#poemList");
+  const poemReader = $("#poemReader");
 
-  const detailsGrid = $("detailsGrid");
+  const poemScene = $("#poemScene");
+  const poemNumber = $("#poemNumber");
+  const poemSceneTitle = $("#poemSceneTitle");
+  const poemSceneText = $("#poemSceneText");
+  const poemDescription = $("#poemDescription");
+  const poemLines = $("#poemLines");
 
-  const memoryImage = $("memoryImage");
-  const memoryPhoto = $("memoryPhoto");
-  const memoryDate = $("memoryDate");
-  const memoryTitle = $("memoryTitle");
-  const memoryDescription = $("memoryDescription");
-  const memoryCounter = $("memoryCounter");
-  const prevMemory = $("prevMemory");
-  const nextMemory = $("nextMemory");
+  const previousPoem = $("#previousPoem");
+  const nextPoem = $("#nextPoem");
 
-  const playMusic = $("playMusic");
-  const musicStatus = $("musicStatus");
+  const detailsList = $("#detailsList");
 
-  const soundButton = $("soundButton");
-  const soundText = $("soundText");
+  const memoryNumber = $("#memoryNumber");
+  const memoryTitle = $("#memoryTitle");
+  const memoryDescription = $("#memoryDescription");
 
-  const revealFinal = $("revealFinal");
-  const finalMessage = $("finalMessage");
-  const finalMessageText = $("finalMessageText");
+  const memoryPrev = $("#memoryPrev");
+  const memoryNext = $("#memoryNext");
 
+  const soundToggle = $("#soundToggle");
+  const soundStatus = $("#soundStatus");
+  const soundProgress = $("#soundProgress");
 
-  /* =====================================================
-     STARS
-     ===================================================== */
+  const finalTitle = $("#finalTitle");
+  const finalText = $("#finalText");
 
-  function createStars() {
+  const restartJourney = $("#restartJourney");
 
-    const stars = $("stars");
+  const backgroundImage = $("#backgroundImage");
 
-    if (!stars) return;
+  let currentPoem = 0;
+  let currentMemory = 0;
+  let unlocked = false;
 
-    stars.innerHTML = "";
+  let audio = null;
+  let audioReady = false;
 
-    for (let i = 0; i < 70; i++) {
+  /* ---------------------------------------------------------
+     LOADER
+  --------------------------------------------------------- */
 
-      const star =
-        document.createElement("span");
+  window.addEventListener("load", () => {
 
-      star.className = "star";
+    setTimeout(() => {
 
-      star.style.left =
-        Math.random() * 100 + "%";
+      if (loader) {
+        loader.classList.add("hidden");
+      }
 
-      star.style.top =
-        Math.random() * 100 + "%";
+      if (passwordInput) {
+        setTimeout(() => {
+          passwordInput.focus();
+        }, 350);
+      }
 
-      star.style.setProperty(
-        "--time",
-        (2 + Math.random() * 4) + "s"
+    }, 1550);
+
+  });
+
+  /* ---------------------------------------------------------
+     BACKGROUND
+  --------------------------------------------------------- */
+
+  function setBackground(url) {
+
+    if (!backgroundImage || !url) {
+      return;
+    }
+
+    backgroundImage.classList.remove("active");
+
+    setTimeout(() => {
+
+      backgroundImage.style.backgroundImage =
+        `url("${url}")`;
+
+      backgroundImage.classList.add("active");
+
+    }, 100);
+
+  }
+
+  /* ---------------------------------------------------------
+     PASSWORD
+  --------------------------------------------------------- */
+
+  function showError(message = "الكلمة دي مش هي المفتاح...") {
+
+    if (!passwordError) return;
+
+    passwordError.textContent = message;
+    passwordError.classList.add("show");
+
+    if (passwordInput) {
+      passwordInput.animate(
+        [
+          { transform: "translateX(0)" },
+          { transform: "translateX(-7px)" },
+          { transform: "translateX(7px)" },
+          { transform: "translateX(0)" }
+        ],
+        {
+          duration: 350
+        }
       );
-
-      star.style.animationDelay =
-        (Math.random() * 4) + "s";
-
-      stars.appendChild(star);
-
     }
 
   }
 
-  createStars();
+  function hideError() {
 
+    if (!passwordError) return;
 
-  /* =====================================================
-     ESCAPE HTML
-     ===================================================== */
-
-  function escapeHTML(value) {
-
-    return String(value ?? "")
-      .replace(/&/g, "&amp;")
-      .replace(/</g, "&lt;")
-      .replace(/>/g, "&gt;")
-      .replace(/"/g, "&quot;")
-      .replace(/'/g, "&#039;");
+    passwordError.classList.remove("show");
 
   }
 
+  function unlock() {
 
-  /* =====================================================
+    if (unlocked) return;
+
+    unlocked = true;
+
+    body.classList.remove("locked");
+
+    if (app) {
+      app.classList.add("ready");
+    }
+
+    if (gate) {
+      gate.classList.add("hide");
+    }
+
+    setBackground(
+      MEDIA?.backgrounds?.home ||
+      "https://images.unsplash.com/photo-1497250681960-ef046c08a56e?auto=format&fit=crop&w=2200&q=90"
+    );
+
+    setTimeout(() => {
+
+      if (gate) {
+        gate.style.display = "none";
+      }
+
+      window.scrollTo({
+        top: 0,
+        behavior: "instant"
+      });
+
+    }, 750);
+
+  }
+
+  if (passwordForm) {
+
+    passwordForm.addEventListener("submit", (event) => {
+
+      event.preventDefault();
+
+      const entered =
+        String(passwordInput?.value || "")
+          .trim()
+          .toLowerCase();
+
+      /*
+        كلمة السر ثابتة هنا + موجودة في content.js
+        عشان مايحصلش تعارض بين الملفات.
+      */
+
+      const password =
+        String(DATA.password || "love")
+          .trim()
+          .toLowerCase();
+
+      if (entered === password) {
+
+        hideError();
+        unlock();
+
+      } else {
+
+        showError();
+
+        if (passwordInput) {
+          passwordInput.select();
+        }
+
+      }
+
+    });
+
+  }
+
+  /* ---------------------------------------------------------
+     PASSWORD EYE
+  --------------------------------------------------------- */
+
+  if (passwordEye && passwordInput) {
+
+    passwordEye.addEventListener("click", () => {
+
+      const isPassword =
+        passwordInput.type === "password";
+
+      passwordInput.type =
+        isPassword ? "text" : "password";
+
+      passwordEye.textContent =
+        isPassword ? "◉" : "◎";
+
+    });
+
+  }
+
+  /* ---------------------------------------------------------
      MENU
-     ===================================================== */
+  --------------------------------------------------------- */
 
   function openMenu() {
 
-    if (menu) {
-      menu.classList.add("open");
+    sideMenu?.classList.add("open");
+    menuBackdrop?.classList.add("open");
+
+  }
+
+  function closeMenu() {
+
+    sideMenu?.classList.remove("open");
+    menuBackdrop?.classList.remove("open");
+
+  }
+
+  menuButton?.addEventListener("click", openMenu);
+  menuClose?.addEventListener("click", closeMenu);
+  menuBackdrop?.addEventListener("click", closeMenu);
+
+  /* ---------------------------------------------------------
+     NAVIGATION
+  --------------------------------------------------------- */
+
+  function getElement(id) {
+
+    return document.getElementById(id);
+
+  }
+
+  function goTo(id) {
+
+    const element = getElement(id);
+
+    if (!element) {
+      return;
     }
 
-    if (menuOverlay) {
-      menuOverlay.classList.add("open");
+    closeMenu();
+
+    if (id === "poemReader") {
+      poemReader?.classList.add("active");
     }
 
-  }
+    const headerOffset = 68;
 
+    const top =
+      element.getBoundingClientRect().top +
+      window.scrollY -
+      headerOffset;
 
-  function closeMenuPanel() {
+    window.scrollTo({
+      top,
+      behavior: "smooth"
+    });
 
-    if (menu) {
-      menu.classList.remove("open");
-    }
-
-    if (menuOverlay) {
-      menuOverlay.classList.remove("open");
-    }
-
-  }
-
-
-  if (menuButton) {
-
-    menuButton.addEventListener(
-      "click",
-      openMenu
-    );
+    setActiveMenu(id);
 
   }
 
+  function setActiveMenu(id) {
 
-  if (closeMenu) {
+    $$(".menu-link").forEach(button => {
 
-    closeMenu.addEventListener(
-      "click",
-      closeMenuPanel
-    );
+      const target = button.dataset.go;
 
-  }
-
-
-  if (menuOverlay) {
-
-    menuOverlay.addEventListener(
-      "click",
-      closeMenuPanel
-    );
-
-  }
-
-
-  document
-    .querySelectorAll("[data-go]")
-    .forEach(function(button){
-
-      button.addEventListener(
-        "click",
-        function(){
-
-          const target =
-            button.getAttribute("data-go");
-
-          const section =
-            document.getElementById(target);
-
-          if (!section) return;
-
-          closeMenuPanel();
-
-          section.scrollIntoView({
-            behavior:"smooth",
-            block:"start"
-          });
-
-        }
+      button.classList.toggle(
+        "active",
+        target === id
       );
 
     });
 
+  }
 
-  /* =====================================================
+  $$("[data-go]").forEach(button => {
+
+    button.addEventListener("click", () => {
+
+      const target = button.dataset.go;
+
+      if (target) {
+        goTo(target);
+      }
+
+    });
+
+  });
+
+  /* ---------------------------------------------------------
      LETTER
-     ===================================================== */
+  --------------------------------------------------------- */
 
   function renderLetter() {
 
-    if (!letterBody) return;
+    if (!letterContent) return;
 
-    const letter =
-      Array.isArray(DATA.letter)
-        ? DATA.letter
-        : [];
+    letterContent.innerHTML = "";
 
-    letterBody.innerHTML = "";
+    const paragraphs = Array.isArray(DATA.letter)
+      ? DATA.letter
+      : [];
 
-    letter.forEach(function(text, index){
+    paragraphs.forEach((paragraph, index) => {
 
-      const p =
-        document.createElement("p");
+      const p = document.createElement("p");
 
-      p.className =
-        "letter__paragraph";
+      p.className = "letter-paragraph";
+      p.textContent = paragraph;
 
-      p.textContent =
-        text;
+      p.dataset.index = index;
 
-      letterBody.appendChild(p);
-
-      setTimeout(
-        function(){
-          p.classList.add("visible");
-        },
-        150 + index * 220
-      );
+      letterContent.appendChild(p);
 
     });
 
@@ -235,543 +409,471 @@ document.addEventListener("DOMContentLoaded", function () {
 
   renderLetter();
 
-
-  /* =====================================================
+  /* ---------------------------------------------------------
      POEMS
-     ===================================================== */
+  --------------------------------------------------------- */
 
-  const poems =
-    Array.isArray(DATA.poems)
-      ? DATA.poems
-      : [];
+  function renderPoemList() {
 
-  let currentPoem = 0;
+    if (!poemList) return;
 
+    poemList.innerHTML = "";
 
-  function getPoemLines(item) {
+    const poems =
+      Array.isArray(DATA.poems)
+        ? DATA.poems
+        : [];
 
-    if (!item) return [];
+    poems.forEach((poem, index) => {
 
-    if (Array.isArray(item.lines)) {
-      return item.lines;
-    }
+      const card = document.createElement("article");
 
-    if (Array.isArray(item.verses)) {
-      return item.verses;
-    }
+      card.className = "poem-card reveal";
 
-    return [];
+      card.innerHTML = `
+        <div class="poem-number">
+          ${escapeHTML(poem.number || String(index + 1).padStart(2, "0"))}
+        </div>
+
+        <h3 class="poem-card-title">
+          ${escapeHTML(poem.title || "قصيدة")}
+        </h3>
+
+        <p class="poem-card-subtitle">
+          ${escapeHTML(poem.subtitle || "")}
+        </p>
+      `;
+
+      card.addEventListener("click", () => {
+
+        currentPoem = index;
+
+        renderPoem();
+
+        poemReader?.classList.add("active");
+
+        setTimeout(() => {
+          goTo("poemReader");
+        }, 20);
+
+      });
+
+      poemList.appendChild(card);
+
+    });
 
   }
-
 
   function renderPoem() {
 
+    const poems = DATA.poems || [];
+
+    if (!poems.length) return;
+
+    const poem = poems[currentPoem];
+
     if (!poem) return;
 
-    if (!poems.length) {
+    if (poemNumber) {
+      poemNumber.textContent =
+        `القصيدة ${poem.number || String(currentPoem + 1).padStart(2, "0")}`;
+    }
 
-      poem.innerHTML =
-        "<p>الديوان لسه بيتكتب.</p>";
+    if (poemSceneTitle) {
+      poemSceneTitle.textContent =
+        poem.sceneTitle || poem.title || "";
+    }
 
-      return;
+    if (poemSceneText) {
+      poemSceneText.textContent =
+        poem.sceneText || "";
+    }
+
+    if (poemDescription) {
+      poemDescription.textContent =
+        poem.description || "";
+    }
+
+    if (poemScene && poem.background) {
+
+      poemScene.style.backgroundImage =
+        `url("${poem.background}")`;
 
     }
 
+    if (poemLines) {
 
-    if (currentPoem < 0) {
-      currentPoem = poems.length - 1;
+      poemLines.innerHTML = "";
+
+      const lines =
+        Array.isArray(poem.lines)
+          ? poem.lines
+          : Array.isArray(poem.verses)
+            ? poem.verses
+            : [];
+
+      lines.forEach((line, index) => {
+
+        const p = document.createElement("p");
+
+        p.className = "poem-line";
+
+        p.dataset.number =
+          String(index + 1).padStart(2, "0");
+
+        p.style.animationDelay =
+          `${Math.min(index * 25, 700)}ms`;
+
+        p.textContent = line;
+
+        poemLines.appendChild(p);
+
+      });
+
     }
 
-    if (currentPoem >= poems.length) {
-      currentPoem = 0;
+    if (previousPoem) {
+      previousPoem.disabled =
+        currentPoem === 0;
+
+      previousPoem.style.opacity =
+        currentPoem === 0 ? ".45" : "1";
     }
 
+    if (nextPoem) {
+      nextPoem.disabled =
+        currentPoem === poems.length - 1;
 
-    const item =
-      poems[currentPoem];
+      nextPoem.style.opacity =
+        currentPoem === poems.length - 1 ? ".45" : "1";
+    }
 
-    const lines =
-      getPoemLines(item);
-
-
-    poem.classList.add("fade");
-
-
-    setTimeout(
-      function(){
-
-        const renderedLines =
-          lines.map(function(line){
-
-            if (!line) {
-              return "<br>";
-            }
-
-            return `
-              <span class="poem__line">
-                ${escapeHTML(line)}
-              </span>
-            `;
-
-          }).join("");
-
-
-        poem.innerHTML = `
-
-          <div>
-
-            <div class="poem__title">
-              ${escapeHTML(
-                item.title || "قصيدة"
-              )}
-            </div>
-
-            <div class="poem__lines">
-              ${renderedLines}
-            </div>
-
-          </div>
-
-        `;
-
-
-        if (poemCounter) {
-
-          poemCounter.textContent =
-            `${String(currentPoem + 1).padStart(2,"0")} / ${String(poems.length).padStart(2,"0")}`;
-
-        }
-
-
-        poem.classList.remove("fade");
-
-      },
-      180
+    setBackground(
+      poem.background ||
+      MEDIA?.backgrounds?.poetry
     );
 
   }
 
+  renderPoemList();
 
-  if (prevPoem) {
+  if (previousPoem) {
 
-    prevPoem.addEventListener(
-      "click",
-      function(){
+    previousPoem.addEventListener("click", () => {
 
-        currentPoem--;
+      if (currentPoem <= 0) return;
 
-        renderPoem();
+      currentPoem--;
 
-      }
-    );
+      renderPoem();
+
+      window.scrollTo({
+        top:
+          poemReader.offsetTop - 60,
+        behavior: "smooth"
+      });
+
+    });
 
   }
-
 
   if (nextPoem) {
 
-    nextPoem.addEventListener(
-      "click",
-      function(){
+    nextPoem.addEventListener("click", () => {
 
-        currentPoem++;
+      const poems = DATA.poems || [];
 
-        renderPoem();
+      if (currentPoem >= poems.length - 1) return;
 
-      }
-    );
+      currentPoem++;
 
-  }
+      renderPoem();
 
+      window.scrollTo({
+        top:
+          poemReader.offsetTop - 60,
+        behavior: "smooth"
+      });
 
-  renderPoem();
-
-
-  /* =====================================================
-     DIWAN
-     ===================================================== */
-
-  function renderDiwan() {
-
-    if (!diwanList) return;
-
-    const source =
-      Array.isArray(DATA.diwan)
-        ? DATA.diwan
-        : poems;
-
-    diwanList.innerHTML = "";
-
-
-    source.forEach(
-      function(item,index){
-
-        const button =
-          document.createElement("button");
-
-        button.className =
-          "diwan-item";
-
-
-        button.innerHTML = `
-
-          <span>
-
-            <span class="diwan-item__meta">
-              ${String(index + 1).padStart(2,"0")}
-            </span>
-
-            <br>
-
-            <span class="diwan-item__name">
-              ${escapeHTML(
-                item.title || "قصيدة"
-              )}
-            </span>
-
-          </span>
-
-          <span>
-            ↗
-          </span>
-
-        `;
-
-
-        button.addEventListener(
-          "click",
-          function(){
-
-            currentPoem = index;
-
-            renderPoem();
-
-            const poetry =
-              document.getElementById(
-                "poetry"
-              );
-
-            if (poetry) {
-
-              poetry.scrollIntoView({
-                behavior:"smooth"
-              });
-
-            }
-
-          }
-        );
-
-
-        diwanList.appendChild(button);
-
-      }
-    );
+    });
 
   }
 
-  renderDiwan();
-
-
-  /* =====================================================
+  /* ---------------------------------------------------------
      DETAILS
-     ===================================================== */
+  --------------------------------------------------------- */
 
   function renderDetails() {
 
-    if (!detailsGrid) return;
+    if (!detailsList) return;
+
+    detailsList.innerHTML = "";
 
     const details =
       Array.isArray(DATA.details)
         ? DATA.details
         : [];
 
-    detailsGrid.innerHTML = "";
+    details.forEach((item, index) => {
 
+      const row = document.createElement("article");
 
-    details.forEach(
-      function(item,index){
+      row.className = "detail-row reveal";
 
-        const article =
-          document.createElement("article");
+      row.innerHTML = `
+        <div class="detail-number">
+          ${escapeHTML(item.number || String(index + 1).padStart(2, "0"))}
+        </div>
 
-        article.className =
-          "detail";
+        <div>
+          <h3 class="detail-title">
+            ${escapeHTML(item.title || "")}
+          </h3>
 
+          <p class="detail-text">
+            ${escapeHTML(item.text || "")}
+          </p>
+        </div>
+      `;
 
-        article.innerHTML = `
+      detailsList.appendChild(row);
 
-          <span class="detail__number">
-            ${String(index + 1).padStart(2,"0")}
-          </span>
-
-          <div>
-
-            <h3>
-              ${escapeHTML(
-                item.title || ""
-              )}
-            </h3>
-
-            <p>
-              ${escapeHTML(
-                item.text ||
-                item.description ||
-                ""
-              )}
-            </p>
-
-          </div>
-
-        `;
-
-
-        detailsGrid.appendChild(article);
-
-      }
-    );
+    });
 
   }
 
   renderDetails();
 
-
-  /* =====================================================
-     MEMORY
-     ===================================================== */
-
-  const memories =
-    Array.isArray(DATA.memories)
-      ? DATA.memories
-      : [];
-
-  let currentMemory = 0;
-
+  /* ---------------------------------------------------------
+     MEMORY / SCENES
+  --------------------------------------------------------- */
 
   function renderMemory() {
 
-    if (!memories.length) {
+    const memories =
+      Array.isArray(DATA.memories)
+        ? DATA.memories
+        : [];
 
-      if (memoryTitle) {
-        memoryTitle.textContent =
-          "حاجات لسه هتتكتب";
-      }
+    if (!memories.length) return;
 
-      if (memoryDescription) {
-        memoryDescription.textContent =
-          "كل حاجة جميلة ليها وقتها.";
-      }
-
-      return;
-
-    }
-
-
-    if (currentMemory < 0) {
-      currentMemory =
-        memories.length - 1;
-    }
-
-    if (currentMemory >= memories.length) {
-      currentMemory = 0;
-    }
-
-
-    const item =
+    const memory =
       memories[currentMemory];
 
+    if (!memory) return;
 
-    if (memoryImage) {
-      memoryImage.classList.add("changing");
+    if (memoryNumber) {
+
+      memoryNumber.textContent =
+        `المشهد ${memory.number || String(currentMemory + 1).padStart(2, "0")}`;
+
     }
 
+    if (memoryTitle) {
 
-    setTimeout(
-      function(){
+      memoryTitle.textContent =
+        memory.title || "";
 
-        if (memoryPhoto) {
+    }
 
-          memoryPhoto.src =
-            item.image ||
-            item.background ||
-            "https://images.unsplash.com/photo-1518199266791-5375a83190b7?auto=format&fit=crop&w=1600&q=85";
+    if (memoryDescription) {
 
-        }
+      memoryDescription.textContent =
+        memory.text ||
+        memory.description ||
+        "";
 
+    }
 
-        if (memoryDate) {
+    if (memory.background) {
 
-          memoryDate.textContent =
-            item.date ||
-            String(
-              currentMemory + 1
-            ).padStart(2,"0");
+      setBackground(memory.background);
 
-        }
+    } else {
 
+      setBackground(
+        MEDIA?.backgrounds?.memory
+      );
 
-        if (memoryTitle) {
-
-          memoryTitle.textContent =
-            item.title ||
-            "ذكرى";
-
-        }
-
-
-        if (memoryDescription) {
-
-          memoryDescription.textContent =
-            item.description ||
-            item.text ||
-            "";
-
-        }
-
-
-        if (memoryCounter) {
-
-          memoryCounter.textContent =
-            String(
-              currentMemory + 1
-            ).padStart(2,"0");
-
-        }
-
-
-        if (memoryImage) {
-          memoryImage.classList.remove(
-            "changing"
-          );
-        }
-
-      },
-      220
-    );
+    }
 
   }
-
-
-  if (prevMemory) {
-
-    prevMemory.addEventListener(
-      "click",
-      function(){
-
-        currentMemory--;
-
-        renderMemory();
-
-      }
-    );
-
-  }
-
-
-  if (nextMemory) {
-
-    nextMemory.addEventListener(
-      "click",
-      function(){
-
-        currentMemory++;
-
-        renderMemory();
-
-      }
-    );
-
-  }
-
 
   renderMemory();
 
+  memoryPrev?.addEventListener("click", () => {
 
-  /* =====================================================
-     MUSIC
-     ===================================================== */
+    const memories = DATA.memories || [];
 
-  let audio = null;
-  let playing = false;
+    if (!memories.length) return;
 
+    currentMemory =
+      (currentMemory - 1 + memories.length) %
+      memories.length;
 
-  if (
-    MEDIA &&
-    MEDIA.music &&
-    MEDIA.music.url
-  ) {
+    renderMemory();
 
-    audio =
-      new Audio(
-        MEDIA.music.url
-      );
+  });
 
-    audio.loop =
-      MEDIA.music.loop !== false;
+  memoryNext?.addEventListener("click", () => {
+
+    const memories = DATA.memories || [];
+
+    if (!memories.length) return;
+
+    currentMemory =
+      (currentMemory + 1) %
+      memories.length;
+
+    renderMemory();
+
+  });
+
+  /* ---------------------------------------------------------
+     FINAL
+  --------------------------------------------------------- */
+
+  function renderFinal() {
+
+    const final = DATA.finalMessage;
+
+    if (!final) return;
+
+    if (finalTitle) {
+
+      if (typeof final === "object") {
+
+        finalTitle.textContent =
+          final.title || "إلى مَلَك";
+
+      } else {
+
+        finalTitle.textContent =
+          "إلى مَلَك";
+
+      }
+
+    }
+
+    if (finalText) {
+
+      finalText.innerHTML = "";
+
+      const paragraphs =
+        typeof final === "object" &&
+        Array.isArray(final.text)
+          ? final.text
+          : typeof final === "string"
+            ? [final]
+            : [];
+
+      paragraphs.forEach(text => {
+
+        const p = document.createElement("p");
+
+        p.style.marginBottom = "18px";
+        p.textContent = text;
+
+        finalText.appendChild(p);
+
+      });
+
+    }
 
   }
 
+  renderFinal();
 
-  function updateSoundUI() {
+  /* ---------------------------------------------------------
+     AUDIO
+  --------------------------------------------------------- */
 
-    if (soundButton) {
+  function setupAudio() {
 
-      soundButton.classList.toggle(
-        "active",
-        playing
-      );
+    const url =
+      MEDIA?.audio?.url;
 
-    }
+    if (!soundToggle || !url) {
 
-
-    if (soundText) {
-
-      soundText.textContent =
-        playing
-          ? "يعمل"
-          : "صامت";
-
-    }
-
-
-    if (musicStatus) {
-
-      musicStatus.textContent =
-        playing
-          ? "الموسيقى تعمل"
-          : "تشغيل";
-
-    }
-
-
-    if (playMusic) {
-
-      playMusic.textContent =
-        playing
-          ? "Ⅱ"
-          : "▶";
-
-    }
-
-  }
-
-
-  async function toggleMusic() {
-
-    if (!audio) {
-
-      if (musicStatus) {
-
-        musicStatus.textContent =
-          "أضيفي الموسيقى من media.js";
-
+      if (soundStatus) {
+        soundStatus.textContent =
+          "الصوت غير متوفر حاليًا.";
       }
 
       return;
 
     }
 
+    audio = new Audio(url);
+
+    audio.preload = "metadata";
+    audio.loop = true;
+    audio.volume = .38;
+
+    audio.addEventListener("loadedmetadata", () => {
+
+      audioReady = true;
+
+    });
+
+    audio.addEventListener("timeupdate", () => {
+
+      if (!audio || !soundProgress) return;
+
+      if (!audio.duration) return;
+
+      const percentage =
+        (audio.currentTime / audio.duration) * 100;
+
+      soundProgress.style.width =
+        `${percentage}%`;
+
+    });
+
+    audio.addEventListener("play", () => {
+
+      if (soundToggle) {
+        soundToggle.textContent = "Ⅱ";
+      }
+
+      if (soundStatus) {
+        soundStatus.textContent =
+          "الموسيقى شغالة... خليك مع الحكاية.";
+      }
+
+    });
+
+    audio.addEventListener("pause", () => {
+
+      if (soundToggle) {
+        soundToggle.textContent = "▶";
+      }
+
+      if (soundStatus) {
+        soundStatus.textContent =
+          "الموسيقى متوقفة.";
+      }
+
+    });
+
+    audio.addEventListener("error", () => {
+
+      audioReady = false;
+
+      if (soundStatus) {
+        soundStatus.textContent =
+          "تعذر تحميل الموسيقى الخارجية. باقي الموقع يعمل بشكل طبيعي.";
+      }
+
+    });
+
+  }
+
+  setupAudio();
+
+  soundToggle?.addEventListener("click", async () => {
+
+    if (!audio) return;
 
     try {
 
@@ -779,231 +881,316 @@ document.addEventListener("DOMContentLoaded", function () {
 
         await audio.play();
 
-        playing = true;
-
       } else {
 
         audio.pause();
 
-        playing = false;
-
       }
 
-      updateSoundUI();
+    } catch (error) {
 
-    } catch(error) {
-
-      console.warn(
-        "تعذر تشغيل الموسيقى:",
-        error
-      );
+      if (soundStatus) {
+        soundStatus.textContent =
+          "اضغط الزر مرة أخرى لتشغيل الصوت.";
+      }
 
     }
 
-  }
+  });
 
+  /* ---------------------------------------------------------
+     RESTART
+  --------------------------------------------------------- */
 
-  if (playMusic) {
+  restartJourney?.addEventListener("click", () => {
 
-    playMusic.addEventListener(
-      "click",
-      toggleMusic
-    );
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth"
+    });
 
-  }
+    currentPoem = 0;
+    currentMemory = 0;
 
+    renderPoem();
+    renderMemory();
 
-  if (soundButton) {
+  });
 
-    soundButton.addEventListener(
-      "click",
-      toggleMusic
-    );
+  /* ---------------------------------------------------------
+     REVEAL ANIMATIONS
+  --------------------------------------------------------- */
 
-  }
+  function setupRevealObserver() {
 
+    const items =
+      $$(".reveal");
 
-  /* =====================================================
-     FINAL MESSAGE
-     ===================================================== */
+    if (!("IntersectionObserver" in window)) {
 
-  function renderFinal() {
-
-    if (!finalMessageText) return;
-
-    const final =
-      DATA.finalMessage;
-
-
-    if (!final) {
-
-      finalMessageText.textContent =
-        "لسه في كلام كتير.";
+      items.forEach(item => {
+        item.classList.add("visible");
+      });
 
       return;
 
     }
 
+    const observer =
+      new IntersectionObserver(
+        entries => {
 
-    if (
-      typeof final === "object" &&
-      !Array.isArray(final)
-    ) {
+          entries.forEach(entry => {
 
-      finalMessageText.textContent =
-        Array.isArray(final.text)
-          ? final.text.join("\n\n")
-          : String(final.text || "");
+            if (entry.isIntersecting) {
 
-      return;
+              entry.target.classList.add("visible");
 
-    }
-
-
-    if (Array.isArray(final)) {
-
-      finalMessageText.textContent =
-        final.join("\n\n");
-
-      return;
-
-    }
-
-
-    finalMessageText.textContent =
-      String(final);
-
-  }
-
-
-  if (revealFinal) {
-
-    revealFinal.addEventListener(
-      "click",
-      function(){
-
-        renderFinal();
-
-        if (finalMessage) {
-
-          finalMessage.classList.add(
-            "show"
-          );
-
-        }
-
-        revealFinal.style.display =
-          "none";
-
-      }
-    );
-
-  }
-
-
-  /* =====================================================
-     KEYBOARD
-     ===================================================== */
-
-  document.addEventListener(
-    "keydown",
-    function(event){
-
-      if(event.key === "Escape") {
-        closeMenuPanel();
-      }
-
-      if(
-        event.key === "ArrowRight" &&
-        document.activeElement?.tagName !== "INPUT"
-      ){
-
-        currentPoem++;
-
-        renderPoem();
-
-      }
-
-      if(
-        event.key === "ArrowLeft" &&
-        document.activeElement?.tagName !== "INPUT"
-      ){
-
-        currentPoem--;
-
-        renderPoem();
-
-      }
-
-    }
-  );
-
-
-  /* =====================================================
-     OBSERVER
-     ===================================================== */
-
-  const observer =
-    new IntersectionObserver(
-      function(entries){
-
-        entries.forEach(
-          function(entry){
-
-            if(
-              entry.isIntersecting
-            ){
-
-              entry.target
-                .querySelectorAll(
-                  ".letter__paragraph"
-                )
-                .forEach(
-                  function(item,index){
-
-                    setTimeout(
-                      function(){
-                        item.classList.add(
-                          "visible"
-                        );
-                      },
-                      index * 180
-                    );
-
-                  }
-                );
+              observer.unobserve(entry.target);
 
             }
 
-          }
-        );
+          });
 
-      },
-      {
-        threshold:.15
-      }
-    );
+        },
+        {
+          threshold: .12
+        }
+      );
 
+    items.forEach(item => {
+      observer.observe(item);
+    });
 
-  document
-    .querySelectorAll(".letter")
-    .forEach(
-      function(section){
-        observer.observe(section);
-      }
-    );
+  }
 
+  setupRevealObserver();
 
-  /* =====================================================
-     SAFETY
-     ===================================================== */
+  /* ---------------------------------------------------------
+     LETTER REVEAL
+  --------------------------------------------------------- */
 
-  window.MALAK_APP = {
-    openMenu,
-    closeMenuPanel,
-    renderPoem,
-    renderMemory,
-    toggleMusic
-  };
+  function setupLetterObserver() {
 
-});
+    const paragraphs =
+      $$(".letter-paragraph");
+
+    if (!paragraphs.length) return;
+
+    if (!("IntersectionObserver" in window)) {
+
+      paragraphs.forEach(p => {
+        p.classList.add("visible");
+      });
+
+      return;
+
+    }
+
+    const observer =
+      new IntersectionObserver(
+        entries => {
+
+          entries.forEach(entry => {
+
+            if (entry.isIntersecting) {
+
+              entry.target.classList.add("visible");
+
+              observer.unobserve(entry.target);
+
+            }
+
+          });
+
+        },
+        {
+          threshold: .15
+        }
+      );
+
+    paragraphs.forEach(p => {
+      observer.observe(p);
+    });
+
+  }
+
+  setupLetterObserver();
+
+  /* ---------------------------------------------------------
+     ACTIVE SECTION TRACKING
+  --------------------------------------------------------- */
+
+  function setupSectionTracking() {
+
+    const ids = [
+      "home",
+      "letter",
+      "poetryIntro",
+      "diwan",
+      "details",
+      "memory",
+      "sound",
+      "final"
+    ];
+
+    const sections =
+      ids
+        .map(id => document.getElementById(id))
+        .filter(Boolean);
+
+    if (!("IntersectionObserver" in window)) {
+      return;
+    }
+
+    const observer =
+      new IntersectionObserver(
+        entries => {
+
+          entries.forEach(entry => {
+
+            if (entry.isIntersecting) {
+
+              setActiveMenu(entry.target.id);
+
+              if (entry.target.id === "home") {
+
+                setBackground(
+                  MEDIA?.backgrounds?.home
+                );
+
+              }
+
+              if (entry.target.id === "letter") {
+
+                setBackground(
+                  MEDIA?.backgrounds?.letter
+                );
+
+              }
+
+              if (entry.target.id === "poetryIntro") {
+
+                setBackground(
+                  MEDIA?.backgrounds?.poetry
+                );
+
+              }
+
+              if (entry.target.id === "details") {
+
+                setBackground(
+                  MEDIA?.backgrounds?.details
+                );
+
+              }
+
+              if (entry.target.id === "memory") {
+
+                renderMemory();
+
+              }
+
+              if (entry.target.id === "sound") {
+
+                setBackground(
+                  MEDIA?.backgrounds?.sound
+                );
+
+              }
+
+              if (entry.target.id === "final") {
+
+                setBackground(
+                  MEDIA?.backgrounds?.final
+                );
+
+              }
+
+            }
+
+          });
+
+        },
+        {
+          threshold: .35
+        }
+      );
+
+    sections.forEach(section => {
+      observer.observe(section);
+    });
+
+  }
+
+  setupSectionTracking();
+
+  /* ---------------------------------------------------------
+     ESC KEY
+  --------------------------------------------------------- */
+
+  document.addEventListener("keydown", event => {
+
+    if (event.key === "Escape") {
+
+      closeMenu();
+
+    }
+
+  });
+
+  /* ---------------------------------------------------------
+     KEYBOARD POEM NAVIGATION
+  --------------------------------------------------------- */
+
+  document.addEventListener("keydown", event => {
+
+    if (!poemReader?.classList.contains("active")) {
+      return;
+    }
+
+    if (event.key === "ArrowRight") {
+
+      nextPoem?.click();
+
+    }
+
+    if (event.key === "ArrowLeft") {
+
+      previousPoem?.click();
+
+    }
+
+  });
+
+  /* ---------------------------------------------------------
+     UTILITY
+  --------------------------------------------------------- */
+
+  function escapeHTML(value) {
+
+    return String(value ?? "")
+      .replaceAll("&", "&amp;")
+      .replaceAll("<", "&lt;")
+      .replaceAll(">", "&gt;")
+      .replaceAll('"', "&quot;")
+      .replaceAll("'", "&#039;");
+
+  }
+
+  /* ---------------------------------------------------------
+     INITIAL BACKGROUND
+  --------------------------------------------------------- */
+
+  setBackground(
+    MEDIA?.backgrounds?.home
+  );
+
+  /*
+    نعرض أول قصيدة جاهزة من البداية
+    عشان لو المستخدم دخل الديوان كل شيء يكون حاضر.
+  */
+
+  renderPoem();
+
+})();
