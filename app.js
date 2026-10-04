@@ -1,191 +1,316 @@
-/* =========================================================
-   JOKER
-   app.js
-   Application controller
-========================================================= */
+"use strict";
 
-(() => {
+document.addEventListener("DOMContentLoaded", () => {
 
-  "use strict";
+  const DATA = window.MALAK_CONTENT;
+  const MEDIA = window.MALAK_MEDIA;
 
-
-  /* =======================================================
-     DOM
-  ======================================================= */
-
-  const $ = selector =>
-    document.querySelector(selector);
-
-  const $$ = selector =>
-    [...document.querySelectorAll(selector)];
-
-
-  /* =======================================================
-     ELEMENTS
-  ======================================================= */
-
-  const splash =
-    $("#splash");
-
-  const authScreen =
-    $("#authScreen");
-
-  const app =
-    $("#app");
-
-  const sidebar =
-    $("#sidebar");
-
-  const sidebarBackdrop =
-    $("#sidebarBackdrop");
-
-  const toast =
-    $("#toast");
-
-  const searchModal =
-    $("#searchModal");
-
-  const roomModal =
-    $("#roomModal");
-
-  const cameraModal =
-    $("#cameraModal");
-
-  const profileModal =
-    $("#profileModal");
-
-
-  /* =======================================================
-     APP INIT
-  ======================================================= */
-
-  function init() {
-
-    setupSplash();
-
-    setupAuth();
-
-    setupNavigation();
-
-    setupSidebar();
-
-    setupSearch();
-
-    setupModals();
-
-    setupProfile();
-
-    setupCamera();
-
-    setupTheme();
-
-    setupGames();
-
-    setupRoom();
-
-    setupMisc();
-
-    restoreInterface();
-
-    JOKER.state.initialized = true;
-
-    persist();
-
+  if (!DATA) {
+    console.error("MALAK_CONTENT غير موجود.");
+    return;
   }
 
+  /*
+  ==========================================================
+  ELEMENTS
+  ==========================================================
+  */
 
-  /* =======================================================
-     SPLASH
-  ======================================================= */
+  const body =
+    document.body;
 
-  function setupSplash() {
+  const gate =
+    document.getElementById("gate");
 
-    setTimeout(() => {
+  const app =
+    document.getElementById("app");
 
-      splash.classList.add("hide");
+  const passwordForm =
+    document.getElementById("passwordForm");
 
-      const authenticated =
-        JOKER.state.authenticated;
+  const passwordInput =
+    document.getElementById("passwordInput");
 
-      if (authenticated) {
+  const passwordEye =
+    document.getElementById("passwordEye");
 
-        showApp();
+  const passwordError =
+    document.getElementById("passwordError");
+
+  const menu =
+    document.getElementById("menu");
+
+  const menuButton =
+    document.getElementById("menuButton");
+
+  const closeMenu =
+    document.getElementById("closeMenu");
+
+  const menuOverlay =
+    document.getElementById("menuOverlay");
+
+  const letterBody =
+    document.getElementById("letterBody");
+
+  const poem =
+    document.getElementById("poem");
+
+  const poemCounter =
+    document.getElementById("poemCounter");
+
+  const prevPoem =
+    document.getElementById("prevPoem");
+
+  const nextPoem =
+    document.getElementById("nextPoem");
+
+  const diwanList =
+    document.getElementById("diwanList");
+
+  const detailsGrid =
+    document.getElementById("detailsGrid");
+
+  const memoryImage =
+    document.getElementById("memoryImage");
+
+  const memoryPhoto =
+    document.getElementById("memoryPhoto");
+
+  const memoryDate =
+    document.getElementById("memoryDate");
+
+  const memoryTitle =
+    document.getElementById("memoryTitle");
+
+  const memoryDescription =
+    document.getElementById("memoryDescription");
+
+  const memoryCounter =
+    document.getElementById("memoryCounter");
+
+  const prevMemory =
+    document.getElementById("prevMemory");
+
+  const nextMemory =
+    document.getElementById("nextMemory");
+
+  const playMusic =
+    document.getElementById("playMusic");
+
+  const musicStatus =
+    document.getElementById("musicStatus");
+
+  const soundButton =
+    document.getElementById("soundButton");
+
+  const soundText =
+    document.getElementById("soundText");
+
+  const revealFinal =
+    document.getElementById("revealFinal");
+
+  const finalMessage =
+    document.getElementById("finalMessage");
+
+  const finalMessageText =
+    document.getElementById("finalMessageText");
+
+
+  /*
+  ==========================================================
+  STARS
+  ==========================================================
+  */
+
+  function createStars() {
+
+    const container =
+      document.getElementById("stars");
+
+    if (!container) return;
+
+    const count =
+      window.innerWidth < 600
+        ? 35
+        : window.innerWidth < 1000
+          ? 55
+          : 80;
+
+    const fragment =
+      document.createDocumentFragment();
+
+    for (let i = 0; i < count; i++) {
+
+      const star =
+        document.createElement("span");
+
+      star.className = "star";
+
+      star.style.left =
+        `${Math.random() * 100}%`;
+
+      star.style.top =
+        `${Math.random() * 100}%`;
+
+      star.style.setProperty(
+        "--time",
+        `${2 + Math.random() * 5}s`
+      );
+
+      star.style.animationDelay =
+        `${Math.random() * 5}s`;
+
+      fragment.appendChild(star);
+    }
+
+    container.appendChild(fragment);
+  }
+
+  createStars();
+
+
+  /*
+  ==========================================================
+  PASSWORD
+  ==========================================================
+  */
+
+  passwordEye.addEventListener(
+    "click",
+    () => {
+
+      const isPassword =
+        passwordInput.type === "password";
+
+      passwordInput.type =
+        isPassword
+          ? "text"
+          : "password";
+
+      passwordEye.textContent =
+        isPassword
+          ? "◌"
+          : "◉";
+
+    }
+  );
+
+
+  passwordForm.addEventListener(
+    "submit",
+    event => {
+
+      event.preventDefault();
+
+      const entered =
+        passwordInput.value.trim();
+
+      if (entered === DATA.password) {
+
+        passwordError.classList.remove("show");
+
+        unlock();
 
       } else {
 
-        showAuth();
+        passwordError.classList.add("show");
+
+        passwordInput.animate(
+          [
+            { transform: "translateX(0)" },
+            { transform: "translateX(-8px)" },
+            { transform: "translateX(8px)" },
+            { transform: "translateX(-5px)" },
+            { transform: "translateX(0)" }
+          ],
+          {
+            duration: 350
+          }
+        );
 
       }
 
-    }, 1500);
+    }
+  );
+
+
+  function unlock() {
+
+    body.classList.remove("locked");
+
+    gate.classList.add("hide");
+
+    app.classList.add("ready");
+
+    setTimeout(() => {
+
+      gate.remove();
+
+      revealLetter();
+
+    }, 1100);
 
   }
 
 
-  function showAuth() {
+  /*
+  ==========================================================
+  NAVIGATION
+  ==========================================================
+  */
 
-    authScreen.classList.remove("hidden");
+  function openMenu() {
 
-    app.classList.add("hidden");
-
-  }
-
-
-  function showApp() {
-
-    authScreen.classList.add("hidden");
-
-    app.classList.remove("hidden");
-
-    updateUserUI();
-
-    navigate(
-      JOKER.state.currentPage || "home",
-      false
-    );
+    menu.classList.add("open");
+    menuOverlay.classList.add("open");
 
   }
 
+  function closeMenuPanel() {
 
-  /* =======================================================
-     AUTH
-  ======================================================= */
+    menu.classList.remove("open");
+    menuOverlay.classList.remove("open");
 
-  function setupAuth() {
+  }
 
-    $$(".auth-tab").forEach(tab => {
+  menuButton.addEventListener(
+    "click",
+    openMenu
+  );
 
-      tab.addEventListener(
+  closeMenu.addEventListener(
+    "click",
+    closeMenuPanel
+  );
+
+  menuOverlay.addEventListener(
+    "click",
+    closeMenuPanel
+  );
+
+
+  document
+    .querySelectorAll("[data-go]")
+    .forEach(button => {
+
+      button.addEventListener(
         "click",
         () => {
 
-          $$(".auth-tab")
-            .forEach(item =>
-              item.classList.remove("active")
-            );
+          const id =
+            button.dataset.go;
 
-          tab.classList.add("active");
+          const target =
+            document.getElementById(id);
 
-          const type =
-            tab.dataset.auth;
+          closeMenuPanel();
 
-          if (type === "register") {
+          if (!target) return;
 
-            $("#loginForm")
-              .classList.add("hidden");
-
-            $("#registerForm")
-              .classList.remove("hidden");
-
-          } else {
-
-            $("#registerForm")
-              .classList.add("hidden");
-
-            $("#loginForm")
-              .classList.remove("hidden");
-
-          }
+          target.scrollIntoView({
+            behavior: "smooth",
+            block: "start"
+          });
 
         }
       );
@@ -193,1172 +318,619 @@
     });
 
 
-    $("#loginForm")
-      .addEventListener(
-        "submit",
-        handleLogin
-      );
+  /*
+  ==========================================================
+  LETTER
+  ==========================================================
+  */
 
+  function renderLetter() {
 
-    $("#registerForm")
-      .addEventListener(
-        "submit",
-        handleRegister
-      );
+    letterBody.innerHTML = "";
 
+    DATA.letter.forEach(
+      (text, index) => {
 
-    $("#googleLoginBtn")
-      .addEventListener(
-        "click",
-        () => {
+        const paragraph =
+          document.createElement("p");
 
-          if (!JOKER.config.features.googleAuth) {
+        paragraph.className =
+          "letter__paragraph";
 
-            showToast(
-              "Google",
-              "تسجيل Google الحقيقي يحتاج إعداد OAuth وBackend.",
-              "!"
-            );
+        paragraph.textContent =
+          text;
 
-            return;
+        paragraph.dataset.index =
+          index;
 
-          }
+        letterBody.appendChild(
+          paragraph
+        );
 
-        }
-      );
-
-
-    $("#logoutBtn")
-      .addEventListener(
-        "click",
-        logout
-      );
+      }
+    );
 
   }
 
 
-  function handleLogin(event) {
+  function revealLetter() {
 
-    event.preventDefault();
-
-    const email =
-      $("#loginEmail").value.trim();
-
-    const password =
-      $("#loginPassword").value;
-
-    if (!email || !password) {
-
-      showToast(
-        "تسجيل الدخول",
-        "أكمل البيانات المطلوبة.",
-        "!"
+    const paragraphs =
+      letterBody.querySelectorAll(
+        ".letter__paragraph"
       );
+
+    paragraphs.forEach(
+      (paragraph, index) => {
+
+        setTimeout(
+          () => {
+
+            paragraph.classList.add(
+              "visible"
+            );
+
+          },
+          index * 220
+        );
+
+      }
+    );
+
+  }
+
+  renderLetter();
+
+
+  /*
+  ==========================================================
+  POETRY
+  ==========================================================
+  */
+
+  let currentPoem = 0;
+
+  function renderPoem() {
+
+    if (!DATA.poems.length) {
+
+      poem.innerHTML =
+        "<p>الديوان لسه بيتكتب.</p>";
 
       return;
 
     }
 
-    /*
-      مهم:
-      هذه الدفعة لا تدعي أن الدخول تم على سيرفر حقيقي.
-      يتم إنشاء جلسة محلية فقط لتجربة واجهة التطبيق.
-    */
+    const item =
+      DATA.poems[currentPoem];
 
-    JOKER.state.authenticated = true;
+    poem.classList.add("fade");
 
-    JOKER.state.user = {
+    setTimeout(() => {
 
-      ...JOKER.state.user,
+      const lines =
+        item.lines
+          .map(line => {
 
-      name:
-        JOKER.state.user.name ||
-        email.split("@")[0],
+            if (!line) {
+              return "<br>";
+            }
 
-      email,
+            return `
+              <span class="poem__line">
+                ${escapeHTML(line)}
+              </span>
+            `;
 
-      online: true
+          })
+          .join("");
 
-    };
+      poem.innerHTML = `
 
-    persist();
+        <div>
 
-    showApp();
+          <div class="poem__title">
+            ${escapeHTML(item.title)}
+          </div>
 
-    showToast(
-      "أهلًا بك",
-      "تم فتح واجهة حسابك المحلية.",
-      "✓"
-    );
+          <div class="poem__lines">
+            ${lines}
+          </div>
 
-  }
-
-
-  function handleRegister(event) {
-
-    event.preventDefault();
-
-    const name =
-      $("#registerName").value.trim();
-
-    const email =
-      $("#registerEmail").value.trim();
-
-    const password =
-      $("#registerPassword").value;
-
-    if (
-      !name ||
-      !email ||
-      password.length < 8
-    ) {
-
-      showToast(
-        "إنشاء الحساب",
-        "أدخل اسمًا وبريدًا وكلمة مرور لا تقل عن 8 أحرف.",
-        "!"
-      );
-
-      return;
-
-    }
-
-    JOKER.state.authenticated = true;
-
-    JOKER.state.user = {
-
-      ...JOKER.state.user,
-
-      id:
-        `local-${Date.now()}`,
-
-      name,
-
-      email,
-
-      bio: "",
-
-      level: 1,
-
-      coins: 0,
-
-      friendsCount: 0,
-
-      followersCount: 0,
-
-      roomsCount: 0,
-
-      online: true
-
-    };
-
-    persist();
-
-    showApp();
-
-    showToast(
-      "تم إنشاء الحساب",
-      "تم تجهيز حسابك المحلي. الربط الحقيقي سيأتي مع Backend.",
-      "✓"
-    );
-
-  }
-
-
-  function logout() {
-
-    JOKER.state.authenticated = false;
-
-    JOKER.state.user = {
-      ...JOKER.defaultUser
-    };
-
-    JOKER.storage.clear();
-
-    stopCamera();
-
-    closeAllModals();
-
-    showAuth();
-
-    showToast(
-      "تم تسجيل الخروج",
-      "تم إنهاء الجلسة المحلية.",
-      "✓"
-    );
-
-  }
-
-
-  /* =======================================================
-     NAVIGATION
-  ======================================================= */
-
-  function setupNavigation() {
-
-    document.addEventListener(
-      "click",
-      event => {
-
-        const trigger =
-          event.target.closest("[data-page]");
-
-        if (!trigger) return;
-
-        const page =
-          trigger.dataset.page;
-
-        if (!page) return;
-
-        navigate(page);
-
-      }
-    );
-
-  }
-
-
-  function navigate(
-    page,
-    save = true
-  ) {
-
-    if (!JOKER.ui.pages.includes(page)) {
-
-      page = "home";
-
-    }
-
-    $$(".page").forEach(section => {
-
-      section.classList.toggle(
-        "active",
-        section.id === `page-${page}`
-      );
-
-    });
-
-
-    $$(".nav-item").forEach(item => {
-
-      item.classList.toggle(
-        "active",
-        item.dataset.page === page
-      );
-
-    });
-
-
-    $$(".bottom-item").forEach(item => {
-
-      item.classList.toggle(
-        "active",
-        item.dataset.page === page
-      );
-
-    });
-
-
-    JOKER.state.currentPage = page;
-
-
-    closeSidebar();
-
-
-    if (save) {
-
-      persist();
-
-    }
-
-
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth"
-    });
-
-
-    JOKER.events.emit(
-      "pageChanged",
-      page
-    );
-
-  }
-
-
-  /* =======================================================
-     SIDEBAR
-  ======================================================= */
-
-  function setupSidebar() {
-
-    $("#openSidebar")
-      ?.addEventListener(
-        "click",
-        openSidebar
-      );
-
-    $("#closeSidebar")
-      ?.addEventListener(
-        "click",
-        closeSidebar
-      );
-
-    sidebarBackdrop
-      ?.addEventListener(
-        "click",
-        closeSidebar
-      );
-
-  }
-
-
-  function openSidebar() {
-
-    sidebar.classList.add("open");
-
-    sidebarBackdrop.classList.add("show");
-
-    JOKER.state.sidebarOpen = true;
-
-  }
-
-
-  function closeSidebar() {
-
-    sidebar.classList.remove("open");
-
-    sidebarBackdrop.classList.remove("show");
-
-    JOKER.state.sidebarOpen = false;
-
-  }
-
-
-  /* =======================================================
-     SEARCH
-  ======================================================= */
-
-  function setupSearch() {
-
-    $("#globalSearchBtn")
-      .addEventListener(
-        "click",
-        openSearch
-      );
-
-
-    $("#globalSearchInput")
-      .addEventListener(
-        "input",
-        event => {
-
-          renderSearch(
-            event.target.value
-          );
-
-        }
-      );
-
-
-    document.addEventListener(
-      "keydown",
-      event => {
-
-        if (
-          (event.ctrlKey || event.metaKey) &&
-          event.key.toLowerCase() === "k"
-        ) {
-
-          event.preventDefault();
-
-          openSearch();
-
-        }
-
-
-        if (
-          event.key === "Escape"
-        ) {
-
-          closeAllModals();
-
-        }
-
-      }
-    );
-
-  }
-
-
-  function openSearch() {
-
-    searchModal.classList.remove(
-      "hidden"
-    );
-
-    $("#globalSearchInput")
-      .value = "";
-
-    $("#searchResults").innerHTML = `
-
-      <div class="search-empty">
-
-        ابدأ بكتابة كلمة للبحث.
-
-      </div>
-
-    `;
-
-    setTimeout(
-      () =>
-        $("#globalSearchInput").focus(),
-      50
-    );
-
-  }
-
-
-  function renderSearch(query) {
-
-    const clean =
-      String(query || "").trim();
-
-    if (!clean) {
-
-      $("#searchResults").innerHTML = `
-
-        <div class="search-empty">
-          ابدأ بكتابة كلمة للبحث.
         </div>
 
       `;
 
-      return;
+      poemCounter.textContent =
+        `${String(currentPoem + 1).padStart(2,"0")}
+         / 
+         ${String(DATA.poems.length).padStart(2,"0")}`;
 
-    }
+      poem.classList.remove("fade");
 
-
-    /*
-      لا توجد بيانات مستخدمين حقيقية بعد.
-      لذلك لا نعرض نتائج وهمية.
-    */
-
-    $("#searchResults").innerHTML = `
-
-      <div class="search-empty">
-
-        <div style="font-size:30px;margin-bottom:10px;">
-          ⌕
-        </div>
-
-        <strong style="display:block;color:#fff;margin-bottom:5px;">
-          لا توجد بيانات متصلة
-        </strong>
-
-        <span>
-          البحث عن «${escapeHTML(clean)}»
-          سيعمل عند ربط قاعدة البيانات.
-        </span>
-
-      </div>
-
-    `;
+    }, 180);
 
   }
 
 
-  /* =======================================================
-     MODALS
-  ======================================================= */
+  function changePoem(direction) {
 
-  function setupModals() {
+    currentPoem += direction;
 
-    document.addEventListener(
-      "click",
-      event => {
+    if (currentPoem < 0) {
+      currentPoem =
+        DATA.poems.length - 1;
+    }
 
-        const close =
-          event.target.closest(
-            "[data-close-modal]"
-          );
+    if (currentPoem >= DATA.poems.length) {
+      currentPoem = 0;
+    }
 
-        if (!close) return;
+    renderPoem();
 
-        closeAllModals();
+  }
+
+
+  prevPoem.addEventListener(
+    "click",
+    () => changePoem(-1)
+  );
+
+  nextPoem.addEventListener(
+    "click",
+    () => changePoem(1)
+  );
+
+  renderPoem();
+
+
+  /*
+  ==========================================================
+  DIWAN
+  ==========================================================
+  */
+
+  function renderDiwan() {
+
+    diwanList.innerHTML = "";
+
+    DATA.diwan.forEach(
+      item => {
+
+        const button =
+          document.createElement("button");
+
+        button.className =
+          "diwan-item";
+
+        button.innerHTML = `
+
+          <div>
+
+            <div class="diwan-item__meta">
+              ${escapeHTML(item.number)}
+            </div>
+
+            <div class="diwan-item__name">
+              ${escapeHTML(item.title)}
+            </div>
+
+          </div>
+
+          <div class="diwan-item__meta">
+            ${escapeHTML(item.description)}
+          </div>
+
+        `;
+
+        button.addEventListener(
+          "click",
+          () => {
+
+            const index =
+              DATA.poems.findIndex(
+                poemItem =>
+                  poemItem.title
+                    .includes(item.title)
+              );
+
+            if (index >= 0) {
+
+              currentPoem = index;
+
+              renderPoem();
+
+              document
+                .getElementById("poetry")
+                .scrollIntoView({
+                  behavior: "smooth"
+                });
+
+            }
+
+          }
+        );
+
+        diwanList.appendChild(
+          button
+        );
 
       }
     );
 
   }
 
-
-  function closeAllModals() {
-
-    [
-      searchModal,
-      roomModal,
-      cameraModal,
-      profileModal
-    ].forEach(modal => {
-
-      modal?.classList.add("hidden");
-
-    });
+  renderDiwan();
 
 
-    stopCamera();
+  /*
+  ==========================================================
+  DETAILS
+  ==========================================================
+  */
 
-    JOKER.state.currentModal = null;
+  function renderDetails() {
 
-  }
+    detailsGrid.innerHTML = "";
 
+    DATA.details.forEach(
+      item => {
 
-  /* =======================================================
-     PROFILE
-  ======================================================= */
+        const article =
+          document.createElement("article");
 
-  function setupProfile() {
+        article.className =
+          "detail";
 
-    $("#editProfileBtn")
-      .addEventListener(
-        "click",
-        openProfileEditor
-      );
+        article.innerHTML = `
 
+          <span class="detail__number">
+            ${escapeHTML(item.number)}
+          </span>
 
-    $("#profileForm")
-      .addEventListener(
-        "submit",
-        saveProfile
-      );
+          <div>
 
-  }
+            <h3>
+              ${escapeHTML(item.title)}
+            </h3>
 
+            <p>
+              ${escapeHTML(item.text)}
+            </p>
 
-  function openProfileEditor() {
+          </div>
 
-    const user =
-      JOKER.state.user;
+        `;
 
-    $("#editName").value =
-      user.name || "";
+        detailsGrid.appendChild(
+          article
+        );
 
-    $("#editBio").value =
-      user.bio || "";
-
-    profileModal.classList.remove(
-      "hidden"
+      }
     );
 
-    JOKER.state.currentModal =
-      "profile";
-
   }
 
+  renderDetails();
 
-  function saveProfile(event) {
 
-    event.preventDefault();
+  /*
+  ==========================================================
+  MEMORY
+  ==========================================================
+  */
 
-    const name =
-      $("#editName").value.trim();
+  let currentMemory = 0;
 
-    const bio =
-      $("#editBio").value.trim();
+  function renderMemory() {
 
-    if (!name) {
-
-      showToast(
-        "الملف الشخصي",
-        "الاسم مطلوب.",
-        "!"
-      );
-
+    if (!DATA.memories.length) {
       return;
-
     }
 
-    JOKER.state.user.name =
-      name;
+    const item =
+      DATA.memories[currentMemory];
 
-    JOKER.state.user.bio =
-      bio;
+    memoryImage.classList.add(
+      "changing"
+    );
 
-    persist();
+    setTimeout(
+      () => {
 
-    updateUserUI();
+        memoryPhoto.src =
+          item.image;
 
-    closeAllModals();
+        memoryDate.textContent =
+          item.date;
 
-    showToast(
-      "تم الحفظ",
-      "تم تحديث بيانات الملف المحلي.",
-      "✓"
+        memoryTitle.textContent =
+          item.title;
+
+        memoryDescription.textContent =
+          item.description;
+
+        memoryCounter.textContent =
+          String(currentMemory + 1)
+            .padStart(2,"0");
+
+        memoryPhoto.onload =
+          () => {
+
+            memoryImage.classList.remove(
+              "changing"
+            );
+
+          };
+
+      },
+      250
     );
 
   }
 
 
-  function updateUserUI() {
+  function changeMemory(direction) {
 
-    const user =
-      JOKER.state.user;
+    currentMemory += direction;
 
-    const name =
-      user.name ||
-      "حسابك";
-
-    const email =
-      user.email ||
-      "لم يتم ربط البريد بعد";
-
-    const initial =
-      getInitial(name);
-
-
-    $("#miniName").textContent =
-      name;
-
-    $("#topName").textContent =
-      name;
-
-    $("#profileName").textContent =
-      name;
-
-    $("#profileEmail").textContent =
-      email;
-
-    $("#profileBio").textContent =
-      user.bio ||
-      "أضف نبذة عنك من إعدادات الملف الشخصي.";
-
-
-    $("#miniAvatar").textContent =
-      initial;
-
-    $("#topAvatar").textContent =
-      initial;
-
-    $("#profileAvatar").textContent =
-      initial;
-
-
-    $("#statFriends").textContent =
-      user.friendsCount || 0;
-
-    $("#statFollowers").textContent =
-      user.followersCount || 0;
-
-    $("#statRooms").textContent =
-      user.roomsCount || 0;
-
-    $("#statCoins").textContent =
-      user.coins || 0;
-
-    $("#walletCoins").textContent =
-      user.coins || 0;
-
-  }
-
-
-  function getInitial(name) {
-
-    if (!name) return "ج";
-
-    return name
-      .trim()
-      .charAt(0)
-      .toUpperCase();
-
-  }
-
-
-  /* =======================================================
-     CAMERA
-  ======================================================= */
-
-  function setupCamera() {
-
-    /*
-      زر تشغيل الكاميرا موجود في النظام.
-      يمكن استدعاء نافذة الكاميرا مستقبلًا من أي زر.
-    */
-
-    $("#startCameraBtn")
-      .addEventListener(
-        "click",
-        startCamera
-      );
-
-
-    $("#cameraEndBtn")
-      .addEventListener(
-        "click",
-        closeAllModals
-      );
-
-
-    $("#cameraMuteBtn")
-      .addEventListener(
-        "click",
-        toggleCameraMute
-      );
-
-  }
-
-
-  async function startCamera() {
+    if (currentMemory < 0) {
+      currentMemory =
+        DATA.memories.length - 1;
+    }
 
     if (
-      !navigator.mediaDevices ||
-      !navigator.mediaDevices.getUserMedia
+      currentMemory >=
+      DATA.memories.length
     ) {
+      currentMemory = 0;
+    }
 
-      showToast(
-        "الكاميرا",
-        "المتصفح لا يدعم الوصول إلى الكاميرا.",
-        "!"
-      );
+    renderMemory();
+
+  }
+
+
+  prevMemory.addEventListener(
+    "click",
+    () => changeMemory(-1)
+  );
+
+  nextMemory.addEventListener(
+    "click",
+    () => changeMemory(1)
+  );
+
+  renderMemory();
+
+
+  /*
+  ==========================================================
+  MUSIC
+  ==========================================================
+  */
+
+  let audio = null;
+  let musicPlaying = false;
+
+  if (MEDIA && MEDIA.music) {
+
+    audio =
+      new Audio(MEDIA.music);
+
+    audio.loop = true;
+    audio.preload = "none";
+
+  }
+
+
+  function toggleMusic() {
+
+    if (!audio) {
+
+      musicStatus.textContent =
+        "أضف ملف الموسيقى في media.js";
 
       return;
 
     }
 
+    if (!musicPlaying) {
 
-    try {
+      audio.play()
+        .then(() => {
 
-      const stream =
-        await navigator.mediaDevices.getUserMedia({
+          musicPlaying = true;
 
-          video: true,
+          playMusic.textContent =
+            "Ⅱ";
 
-          audio: true
+          musicStatus.textContent =
+            "يعمل الآن";
+
+          soundButton.classList.add(
+            "active"
+          );
+
+          soundText.textContent =
+            "يعمل";
+
+        })
+        .catch(() => {
+
+          musicStatus.textContent =
+            "اضغطي مرة أخرى للتشغيل";
 
         });
 
+    } else {
 
-      const video =
-        $("#cameraPreview");
+      audio.pause();
 
-      video.srcObject =
-        stream;
+      musicPlaying = false;
 
-      video.style.display =
-        "block";
+      playMusic.textContent =
+        "▶";
 
-      $("#cameraPermissionState")
-        .style.display =
+      musicStatus.textContent =
+        "متوقف";
+
+      soundButton.classList.remove(
+        "active"
+      );
+
+      soundText.textContent =
+        "صامت";
+
+    }
+
+  }
+
+
+  playMusic.addEventListener(
+    "click",
+    toggleMusic
+  );
+
+  soundButton.addEventListener(
+    "click",
+    toggleMusic
+  );
+
+
+  /*
+  ==========================================================
+  FINAL MESSAGE
+  ==========================================================
+  */
+
+  finalMessageText.textContent =
+    DATA.finalMessage;
+
+
+  revealFinal.addEventListener(
+    "click",
+    () => {
+
+      revealFinal.style.display =
         "none";
 
-      $(".camera-controls")
-        .style.display =
-        "flex";
-
-
-      JOKER.state.camera.active =
-        true;
-
-      JOKER.state.camera.stream =
-        stream;
-
-      JOKER.state.camera.muted =
-        false;
-
-
-      showToast(
-        "الكاميرا",
-        "تم تشغيل الكاميرا والمايك بإذن جهازك.",
-        "✓"
-      );
-
-    } catch (error) {
-
-      console.warn(
-        "Camera permission:",
-        error
-      );
-
-      showToast(
-        "الكاميرا",
-        "لم يتم السماح بالوصول إلى الكاميرا أو المايك.",
-        "!"
+      finalMessage.classList.add(
+        "show"
       );
 
     }
-
-  }
-
-
-  function toggleCameraMute() {
-
-    const stream =
-      JOKER.state.camera.stream;
-
-    if (!stream) return;
-
-    const tracks =
-      stream.getAudioTracks();
-
-    const next =
-      !JOKER.state.camera.muted;
-
-    tracks.forEach(track => {
-
-      track.enabled =
-        !next;
-
-    });
-
-    JOKER.state.camera.muted =
-      next;
-
-    $("#cameraMuteBtn")
-      .textContent =
-      next ? "🔇" : "🎙️";
-
-  }
+  );
 
 
-  function stopCamera() {
+  /*
+  ==========================================================
+  LAZY / OBSERVATION
+  ==========================================================
+  */
 
-    const stream =
-      JOKER.state.camera.stream;
+  const observer =
+    new IntersectionObserver(
+      entries => {
 
-    if (stream) {
+        entries.forEach(
+          entry => {
 
-      stream
-        .getTracks()
-        .forEach(track =>
-          track.stop()
-        );
+            if (!entry.isIntersecting) {
+              return;
+            }
 
-    }
+            if (
+              entry.target.id ===
+              "letter"
+            ) {
 
+              revealLetter();
 
-    const video =
-      $("#cameraPreview");
-
-    if (video) {
-
-      video.srcObject = null;
-
-      video.style.display =
-        "none";
-
-    }
-
-
-    if ($("#cameraPermissionState")) {
-
-      $("#cameraPermissionState")
-        .style.display =
-        "flex";
-
-    }
-
-
-    if ($(".camera-controls")) {
-
-      $(".camera-controls")
-        .style.display =
-        "none";
-
-    }
-
-
-    JOKER.state.camera = {
-
-      active: false,
-
-      stream: null,
-
-      muted: false
-
-    };
-
-  }
-
-
-  /* =======================================================
-     ROOM
-  ======================================================= */
-
-  function setupRoom() {
-
-    $("#openRoomDemo")
-      .addEventListener(
-        "click",
-        () => {
-
-          roomModal.classList.remove(
-            "hidden"
-          );
-
-          JOKER.state.currentModal =
-            "room";
-
-        }
-      );
-
-
-    $("#createRoomBtn")
-      .addEventListener(
-        "click",
-        () => {
-
-          showToast(
-            "إنشاء روم",
-            "إنشاء الرومات الحقيقي يحتاج Realtime Backend.",
-            "!"
-          );
-
-        }
-      );
-
-  }
-
-
-  /* =======================================================
-     GAMES
-  ======================================================= */
-
-  function setupGames() {
-
-    $$(".game-card")
-      .forEach(card => {
-
-        card.addEventListener(
-          "click",
-          () => {
-
-            showToast(
-              "Joker Arcade",
-              "نظام الألعاب سيتم ربطه بحسابك في دفعة الألعاب.",
-              "🎮"
-            );
+            }
 
           }
         );
 
-      });
-
-  }
-
-
-  /* =======================================================
-     THEME
-  ======================================================= */
-
-  function setupTheme() {
-
-    $("#themeBtn")
-      .addEventListener(
-        "click",
-        toggleTheme
-      );
-
-  }
-
-
-  function toggleTheme() {
-
-    /*
-      الوضع الداكن هو الهوية الأساسية.
-      التغيير هنا يجهز النظام لتوسعة Light Mode.
-    */
-
-    JOKER.state.theme =
-      JOKER.state.theme === "dark"
-        ? "light"
-        : "dark";
-
-    document.body.dataset.theme =
-      JOKER.state.theme;
-
-    $("#themeBtn").textContent =
-      JOKER.state.theme === "dark"
-        ? "☾"
-        : "☀";
-
-    persist();
-
-    showToast(
-      "المظهر",
-      JOKER.state.theme === "dark"
-        ? "تم تفعيل المظهر الداكن."
-        : "تم تفعيل المظهر الفاتح التجريبي.",
-      "✦"
+      },
+      {
+        threshold: .18
+      }
     );
 
-  }
+
+  document
+    .querySelectorAll(".section")
+    .forEach(section => {
+
+      observer.observe(section);
+
+    });
 
 
-  /* =======================================================
-     MISC
-  ======================================================= */
+  /*
+  ==========================================================
+  KEYBOARD
+  ==========================================================
+  */
 
-  function setupMisc() {
+  document.addEventListener(
+    "keydown",
+    event => {
 
-    $("#giftInfoBtn")
-      ?.addEventListener(
-        "click",
-        () => {
+      if (event.key === "Escape") {
+        closeMenuPanel();
+      }
 
-          showToast(
-            "الهدايا",
-            "نظام الهدايا والعملات الحقيقي سيُربط بالحساب في الدفعات القادمة.",
-            "♢"
-          );
+      if (
+        event.key === "ArrowRight" &&
+        document.activeElement === document.body
+      ) {
+        changePoem(1);
+      }
 
-        }
-      );
-
-  }
-
-
-  /* =======================================================
-     RESTORE
-  ======================================================= */
-
-  function restoreInterface() {
-
-    if (
-      JOKER.state.theme
-    ) {
-
-      document.body.dataset.theme =
-        JOKER.state.theme;
-
-      $("#themeBtn").textContent =
-        JOKER.state.theme === "dark"
-          ? "☾"
-          : "☀";
+      if (
+        event.key === "ArrowLeft" &&
+        document.activeElement === document.body
+      ) {
+        changePoem(-1);
+      }
 
     }
+  );
 
 
-    updateUserUI();
-
-  }
-
-
-  /* =======================================================
-     TOAST
-  ======================================================= */
-
-  let toastTimer = null;
-
-
-  function showToast(
-    title,
-    message,
-    icon = "✦"
-  ) {
-
-    $("#toastTitle")
-      .textContent =
-      title;
-
-    $("#toastMessage")
-      .textContent =
-      message;
-
-    $("#toastIcon")
-      .textContent =
-      icon;
-
-    toast.classList.add("show");
-
-    clearTimeout(toastTimer);
-
-    toastTimer =
-      setTimeout(
-        () => {
-
-          toast.classList.remove(
-            "show"
-          );
-
-        },
-        3500
-      );
-
-  }
-
-
-  /* =======================================================
-     PERSIST
-  ======================================================= */
-
-  function persist() {
-
-    JOKER.storage.save(
-      JOKER.state
-    );
-
-  }
-
-
-  /* =======================================================
-     ESCAPE HTML
-  ======================================================= */
+  /*
+  ==========================================================
+  ESCAPE HTML
+  ==========================================================
+  */
 
   function escapeHTML(value) {
 
     return String(value)
-
       .replaceAll("&", "&amp;")
-
       .replaceAll("<", "&lt;")
-
       .replaceAll(">", "&gt;")
-
       .replaceAll('"', "&quot;")
-
       .replaceAll("'", "&#039;");
 
   }
 
 
-  /* =======================================================
-     PUBLIC API
-  ======================================================= */
+  /*
+  ==========================================================
+  MEDIA PRELOAD
+  ==========================================================
+  */
 
-  window.JokerApp = {
+  if (
+    MEDIA &&
+    typeof MEDIA.preload === "function"
+  ) {
 
-    navigate,
+    MEDIA.preload();
 
-    openSearch,
+  }
 
-    openRoom() {
-
-      roomModal.classList.remove(
-        "hidden"
-      );
-
-    },
-
-    openCamera() {
-
-      cameraModal.classList.remove(
-        "hidden"
-      );
-
-    },
-
-    showToast
-
-  };
-
-
-  /* =======================================================
-     START
-  ======================================================= */
-
-  document.addEventListener(
-    "DOMContentLoaded",
-    init
-  );
-
-})();
+});
