@@ -2,1603 +2,4009 @@
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-<meta name="theme-color" content="#05070a">
-<meta name="description" content="حرب أكتوبر 1973 — تجربة تاريخية تفاعلية توثق الأحداث والشخصيات والمعارك والخرائط والصور.">
-<title>حرب أكتوبر 1973 🇪🇬 | الوثيقة التفاعلية</title>
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,viewport-fit=cover">
+
+<title>مصر أكتوبر | ملحمة العبور</title>
+
+<meta name="description"
+content="مصر أكتوبر | ملحمة العبور — تجربة تاريخية تفاعلية توثق حرب أكتوبر 1973 بالأحداث والقادة والمعارك والخرائط والصور والأرشيف.">
+
+<meta name="theme-color" content="#07090a">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
 
 <style>
+
+/* =========================================================
+   مصر أكتوبر | ملحمة العبور
+   MASTER SINGLE FILE
+========================================================= */
+
 :root{
-  --bg:#05070a;
-  --bg2:#080d13;
-  --surface:#0c1219;
-  --surface2:#111923;
-  --gold:#d6ad5d;
-  --gold2:#f1d38b;
-  --red:#9e302b;
-  --red2:#d34b42;
-  --text:#f3efe6;
-  --muted:#9ca6b1;
-  --line:rgba(214,173,93,.18);
-  --glass:rgba(10,15,21,.78);
-  --shadow:0 25px 80px rgba(0,0,0,.45);
+  --bg:#050708;
+  --bg2:#080b0d;
+  --surface:#0d1113;
+  --surface2:#11171a;
+  --gold:#d6ad52;
+  --gold2:#f0cf79;
+  --gold3:#8b6724;
+  --red:#a72b20;
+  --red2:#d94a37;
+  --green:#1d513d;
+  --green2:#2d7857;
+  --text:#f3eee2;
+  --muted:#a8aaa4;
+  --line:rgba(214,173,82,.18);
+  --white:#fff;
+  --shadow:0 25px 80px rgba(0,0,0,.65);
+  --radius:22px;
+  --nav:82px;
 }
 
-*{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth}
-body{
-  background:
-    radial-gradient(circle at 20% 10%,rgba(158,48,43,.13),transparent 28%),
-    radial-gradient(circle at 80% 20%,rgba(214,173,93,.09),transparent 25%),
-    linear-gradient(135deg,#030506,#081018 55%,#05070a);
-  color:var(--text);
-  font-family:"Cairo","IBM Plex Sans Arabic",sans-serif;
-  overflow-x:hidden;
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
 }
-body::before{
-  content:"";
+
+html{
+  scroll-behavior:smooth;
+  background:#050708;
+}
+
+body{
+  min-height:100vh;
+  overflow-x:hidden;
+  background:
+    radial-gradient(circle at 20% 10%,rgba(117,72,20,.09),transparent 35%),
+    radial-gradient(circle at 80% 40%,rgba(106,20,14,.08),transparent 35%),
+    #050708;
+  color:var(--text);
+  font-family:"Cairo",sans-serif;
+}
+
+body.locked{
+  overflow:hidden;
+}
+
+button,
+input{
+  font:inherit;
+}
+
+button{
+  cursor:pointer;
+}
+
+a{
+  color:inherit;
+  text-decoration:none;
+}
+
+img{
+  max-width:100%;
+}
+
+::selection{
+  background:var(--gold);
+  color:#090a0a;
+}
+
+/* =========================================================
+   GLOBAL CINEMATIC LAYERS
+========================================================= */
+
+.noise{
+  position:fixed;
+  inset:0;
+  z-index:9998;
+  pointer-events:none;
+  opacity:.055;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.5'/%3E%3C/svg%3E");
+}
+
+.scanlines{
   position:fixed;
   inset:0;
   pointer-events:none;
-  opacity:.06;
-  background-image:
-    linear-gradient(rgba(255,255,255,.5) 1px,transparent 1px),
-    linear-gradient(90deg,rgba(255,255,255,.5) 1px,transparent 1px);
-  background-size:70px 70px;
-  mask-image:linear-gradient(to bottom,black,transparent 85%);
-  z-index:0;
+  z-index:9997;
+  opacity:.035;
+  background:repeating-linear-gradient(
+    to bottom,
+    transparent 0,
+    transparent 3px,
+    rgba(255,255,255,.35) 4px
+  );
 }
 
-button,input,textarea{font:inherit}
-button{cursor:pointer}
-a{text-decoration:none;color:inherit}
-
-::-webkit-scrollbar{width:8px}
-::-webkit-scrollbar-track{background:#05070a}
-::-webkit-scrollbar-thumb{background:#3d3424;border-radius:20px}
-::-webkit-scrollbar-thumb:hover{background:var(--gold)}
-
-.loader{
+.vignette{
   position:fixed;
   inset:0;
-  z-index:99999;
-  display:grid;
-  place-items:center;
-  background:
-    radial-gradient(circle,rgba(214,173,93,.1),transparent 35%),
-    #030506;
-  transition:.8s ease;
+  z-index:9996;
+  pointer-events:none;
+  box-shadow:inset 0 0 180px rgba(0,0,0,.9);
 }
-.loader.hide{opacity:0;visibility:hidden;pointer-events:none}
-.loader-box{text-align:center;width:min(500px,90%)}
-.loader-emblem{
-  width:110px;
-  height:110px;
-  margin:auto;
-  border:1px solid rgba(214,173,93,.5);
+
+.cinematic-flash{
+  position:fixed;
+  inset:0;
+  z-index:9995;
+  pointer-events:none;
+  background:#fff;
+  opacity:0;
+}
+
+.cinematic-flash.fire{
+  animation:flash .35s ease-out;
+}
+
+@keyframes flash{
+  0%{opacity:0}
+  15%{opacity:.14}
+  30%{opacity:0}
+  100%{opacity:0}
+}
+
+/* =========================================================
+   LOADER
+========================================================= */
+
+#intro{
+  position:fixed;
+  inset:0;
+  z-index:10000;
+  overflow:hidden;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:#020304;
+  transition:
+    opacity 1.1s ease,
+    visibility 1.1s ease,
+    transform 1.1s ease;
+}
+
+#intro.hide{
+  opacity:0;
+  visibility:hidden;
+  pointer-events:none;
+  transform:scale(1.035);
+}
+
+.intro-bg{
+  position:absolute;
+  inset:-5%;
+  background:
+    linear-gradient(
+      90deg,
+      rgba(0,0,0,.88),
+      rgba(0,0,0,.35),
+      rgba(0,0,0,.92)
+    ),
+    linear-gradient(
+      0deg,
+      rgba(3,6,5,.9),
+      transparent 45%,
+      rgba(0,0,0,.6)
+    ),
+    url("https://commons.wikimedia.org/wiki/Special:FilePath/Egyptians%20Crossing%20Suez%20Canal.jpg");
+  background-size:cover;
+  background-position:center;
+  filter:grayscale(.2) sepia(.22) contrast(1.15);
+  transform:scale(1.08);
+  animation:introZoom 13s ease-in-out infinite alternate;
+}
+
+.intro-bg::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:
+    radial-gradient(circle at center,transparent 0 25%,rgba(0,0,0,.8) 90%),
+    linear-gradient(135deg,rgba(137,30,15,.18),transparent 45%,rgba(20,55,38,.15));
+}
+
+@keyframes introZoom{
+  from{transform:scale(1.08)}
+  to{transform:scale(1.17)}
+}
+
+.intro-light{
+  position:absolute;
+  width:70vw;
+  height:70vw;
+  max-width:900px;
+  max-height:900px;
+  border-radius:50%;
+  background:radial-gradient(circle,rgba(211,166,71,.16),transparent 65%);
+  filter:blur(10px);
+  animation:introLight 5s ease-in-out infinite;
+}
+
+@keyframes introLight{
+  0%,100%{opacity:.5;transform:scale(.9)}
+  50%{opacity:1;transform:scale(1.08)}
+}
+
+.intro-content{
+  position:relative;
+  z-index:2;
+  width:min(900px,92%);
+  text-align:center;
+}
+
+.intro-eagle{
+  width:100px;
+  height:100px;
+  margin:0 auto 25px;
+  border:1px solid rgba(214,173,82,.45);
   border-radius:50%;
   display:grid;
   place-items:center;
-  font-size:45px;
-  box-shadow:0 0 70px rgba(214,173,93,.12);
-  animation:pulse 2s infinite;
-}
-.loader-title{
-  margin-top:24px;
-  font-size:30px;
-  font-weight:900;
-}
-.loader-sub{
-  color:var(--muted);
-  margin-top:8px;
-}
-.loader-line{
-  height:3px;
-  background:#18212b;
-  border-radius:20px;
-  overflow:hidden;
-  margin-top:25px;
-}
-.loader-line span{
-  display:block;
-  height:100%;
-  width:0;
-  background:linear-gradient(90deg,var(--red),var(--gold),var(--gold2));
-  animation:load 2.4s ease forwards;
-}
-@keyframes load{to{width:100%}}
-@keyframes pulse{
-  50%{transform:scale(1.06);box-shadow:0 0 90px rgba(214,173,93,.25)}
+  color:var(--gold2);
+  font-size:43px;
+  box-shadow:
+    0 0 0 10px rgba(214,173,82,.035),
+    0 0 80px rgba(214,173,82,.18);
+  animation:pulseGold 3s ease-in-out infinite;
 }
 
-.topbar{
+@keyframes pulseGold{
+  0%,100%{box-shadow:0 0 0 10px rgba(214,173,82,.035),0 0 40px rgba(214,173,82,.12)}
+  50%{box-shadow:0 0 0 18px rgba(214,173,82,.025),0 0 100px rgba(214,173,82,.3)}
+}
+
+.intro-kicker{
+  color:var(--gold2);
+  letter-spacing:5px;
+  font-size:13px;
+  font-weight:700;
+  margin-bottom:14px;
+}
+
+.intro-title{
+  font-family:"Amiri",serif;
+  font-size:clamp(48px,9vw,105px);
+  line-height:.95;
+  color:#f6f0df;
+  text-shadow:0 10px 45px rgba(0,0,0,.8);
+}
+
+.intro-title span{
+  color:var(--gold2);
+}
+
+.intro-subtitle{
+  margin-top:22px;
+  color:#d0ccc1;
+  font-size:clamp(15px,2vw,21px);
+}
+
+.intro-year{
+  margin:25px auto;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap:15px;
+  color:#fff;
+  font-size:14px;
+}
+
+.intro-year i{
+  display:block;
+  width:55px;
+  height:1px;
+  background:linear-gradient(90deg,transparent,var(--gold));
+}
+
+.intro-progress{
+  width:min(470px,80%);
+  height:2px;
+  background:rgba(255,255,255,.12);
+  margin:30px auto 12px;
+  overflow:hidden;
+}
+
+.intro-progress span{
+  display:block;
+  width:0;
+  height:100%;
+  background:linear-gradient(90deg,var(--gold3),var(--gold2),#fff);
+  box-shadow:0 0 20px var(--gold);
+  transition:width .2s linear;
+}
+
+.intro-status{
+  color:#8f938d;
+  font-size:12px;
+  min-height:20px;
+}
+
+.intro-enter{
+  margin-top:25px;
+  opacity:0;
+  transform:translateY(12px);
+  pointer-events:none;
+  border:1px solid rgba(214,173,82,.55);
+  background:linear-gradient(135deg,rgba(214,173,82,.2),rgba(214,173,82,.04));
+  color:#fff;
+  padding:14px 30px;
+  border-radius:999px;
+  transition:.3s;
+}
+
+.intro-enter.show{
+  opacity:1;
+  transform:none;
+  pointer-events:auto;
+}
+
+.intro-enter:hover{
+  background:rgba(214,173,82,.24);
+  box-shadow:0 0 35px rgba(214,173,82,.16);
+}
+
+/* =========================================================
+   NAVBAR
+========================================================= */
+
+.navbar{
   position:fixed;
   top:0;
-  right:0;
   left:0;
-  z-index:1000;
-  height:74px;
-  padding:0 28px;
+  right:0;
+  height:var(--nav);
+  z-index:900;
+  display:flex;
+  align-items:center;
+  border-bottom:1px solid rgba(214,173,82,.1);
+  background:rgba(4,6,7,.78);
+  backdrop-filter:blur(18px);
+  -webkit-backdrop-filter:blur(18px);
+  transition:.35s;
+}
+
+.navbar.scrolled{
+  background:rgba(4,6,7,.95);
+  box-shadow:0 15px 50px rgba(0,0,0,.45);
+}
+
+.nav-inner{
+  width:min(1450px,94%);
+  margin:auto;
   display:flex;
   align-items:center;
   justify-content:space-between;
-  background:rgba(3,5,7,.74);
-  backdrop-filter:blur(20px);
-  border-bottom:1px solid rgba(255,255,255,.06);
+  gap:20px;
 }
+
 .brand{
   display:flex;
   align-items:center;
-  gap:12px;
+  gap:11px;
+  min-width:max-content;
 }
-.brand-mark{
-  width:43px;height:43px;
-  display:grid;place-items:center;
-  border:1px solid var(--line);
-  border-radius:14px;
-  background:linear-gradient(145deg,#17130c,#0b0f13);
-}
-.brand strong{font-size:16px}
-.brand small{display:block;color:var(--muted);font-size:10px}
 
-.nav{
-  display:flex;
-  gap:5px;
-  align-items:center;
-}
-.nav button{
-  border:0;
-  color:#cbd0d5;
-  background:transparent;
-  padding:9px 13px;
-  border-radius:10px;
-}
-.nav button:hover,.nav button.active{
+.brand-symbol{
+  width:46px;
+  height:46px;
+  border-radius:50%;
+  display:grid;
+  place-items:center;
+  border:1px solid rgba(214,173,82,.45);
+  background:linear-gradient(145deg,#18130b,#090b0c);
   color:var(--gold2);
-  background:rgba(214,173,93,.08);
+  font-size:21px;
+  box-shadow:0 0 30px rgba(214,173,82,.09);
 }
-.menu-btn{
+
+.brand-text strong{
+  display:block;
+  font-family:"Amiri",serif;
+  font-size:20px;
+  line-height:1;
+}
+
+.brand-text small{
+  color:#777c78;
+  font-size:9px;
+  letter-spacing:1.5px;
+}
+
+.nav-links{
+  display:flex;
+  align-items:center;
+  gap:3px;
+  overflow:auto;
+  scrollbar-width:none;
+}
+
+.nav-links::-webkit-scrollbar{
   display:none;
-  width:45px;height:45px;
-  background:#10171e;
-  color:white;
-  border:1px solid var(--line);
-  border-radius:13px;
 }
+
+.nav-links a{
+  white-space:nowrap;
+  padding:10px 11px;
+  color:#999d98;
+  font-size:12px;
+  border-radius:10px;
+  transition:.25s;
+}
+
+.nav-links a:hover,
+.nav-links a.active{
+  color:var(--gold2);
+  background:rgba(214,173,82,.07);
+}
+
+.nav-actions{
+  display:flex;
+  gap:8px;
+}
+
+.nav-icon{
+  width:42px;
+  height:42px;
+  border-radius:50%;
+  border:1px solid rgba(255,255,255,.08);
+  background:rgba(255,255,255,.025);
+  color:#ddd;
+}
+
+/* =========================================================
+   HERO
+========================================================= */
 
 .hero{
   position:relative;
-  min-height:100vh;
+  min-height:100svh;
   display:flex;
   align-items:center;
   overflow:hidden;
   isolation:isolate;
 }
-.hero-bg{
+
+.hero-media{
   position:absolute;
   inset:0;
-  z-index:-3;
+  z-index:-4;
   background:
-    linear-gradient(90deg,rgba(3,5,7,.98) 10%,rgba(3,5,7,.76) 48%,rgba(3,5,7,.35)),
-    linear-gradient(0deg,#05070a,transparent 30%),
-    url("https://upload.wikimedia.org/wikipedia/commons/1/1e/Yom_Kippur_War_-_Sinai_Front_%28October_6%2C_1973%29.svg");
+    linear-gradient(90deg,
+      rgba(2,4,5,.92) 0%,
+      rgba(2,4,5,.6) 38%,
+      rgba(2,4,5,.35) 65%,
+      rgba(2,4,5,.9) 100%),
+    url("https://commons.wikimedia.org/wiki/Special:FilePath/Egyptian%20forces%20crossing%20the%20Suez%20Canal.jpg");
   background-size:cover;
   background-position:center;
-  filter:saturate(.72) contrast(1.05);
-  transform:scale(1.02);
+  filter:contrast(1.1) saturate(.72) sepia(.12);
+  transform:scale(1.03);
 }
-.hero::after{
+
+.hero-media::after{
   content:"";
   position:absolute;
   inset:0;
-  z-index:-2;
   background:
-    radial-gradient(circle at 70% 45%,rgba(214,173,93,.16),transparent 24%),
-    linear-gradient(90deg,transparent,rgba(158,48,43,.1));
-  pointer-events:none;
+    radial-gradient(circle at 55% 45%,transparent 0,rgba(0,0,0,.15) 30%,rgba(0,0,0,.88) 100%),
+    linear-gradient(0deg,#050708 0%,transparent 25%,transparent 75%,#050708 100%);
 }
-.hero-content{
-  width:min(1250px,92%);
-  margin:auto;
-  padding:120px 0 90px;
-}
-.eyebrow{
-  display:inline-flex;
-  gap:8px;
-  align-items:center;
-  color:var(--gold2);
-  border:1px solid var(--line);
-  background:rgba(8,12,16,.62);
-  padding:7px 13px;
-  border-radius:100px;
-  font-size:12px;
-}
-.hero h1{
-  font-size:clamp(55px,9vw,130px);
-  line-height:.95;
-  margin:25px 0;
-  font-weight:900;
-  letter-spacing:-5px;
-  text-shadow:0 15px 60px #000;
-}
-.hero h1 span{
-  display:block;
-  color:var(--gold2);
-  font-size:.42em;
-  letter-spacing:0;
-  margin-top:18px;
-}
-.hero-lead{
-  max-width:720px;
-  color:#d5d9dd;
-  font-size:18px;
-  line-height:2;
-}
-.hero-actions{
-  display:flex;
-  gap:12px;
-  margin-top:32px;
-  flex-wrap:wrap;
-}
-.btn{
-  border:1px solid var(--line);
-  border-radius:13px;
-  padding:13px 20px;
-  color:white;
-  background:rgba(255,255,255,.04);
-  transition:.25s;
-}
-.btn:hover{transform:translateY(-2px)}
-.btn-primary{
-  background:linear-gradient(135deg,#b88b39,#e0bd6e);
-  color:#080909;
-  border-color:#e2bd6c;
-  font-weight:800;
-}
-.btn-danger{
-  background:linear-gradient(135deg,#7d2623,#b63b34);
-  border-color:#bd4a43;
-}
-.hero-stats{
-  display:flex;
-  gap:35px;
-  margin-top:45px;
-  flex-wrap:wrap;
-}
-.stat strong{
-  display:block;
-  font-size:28px;
-  color:var(--gold2);
-}
-.stat span{font-size:12px;color:var(--muted)}
 
-section{
-  position:relative;
-  width:min(1250px,92%);
+.hero-water{
+  position:absolute;
+  z-index:-2;
+  bottom:-12%;
+  left:-10%;
+  width:120%;
+  height:38%;
+  background:linear-gradient(
+    180deg,
+    transparent,
+    rgba(5,17,18,.28),
+    rgba(3,8,10,.88)
+  );
+  transform:skewY(-2deg);
+}
+
+.hero-grid{
+  position:absolute;
+  inset:0;
+  z-index:-1;
+  opacity:.14;
+  background-image:
+    linear-gradient(rgba(214,173,82,.15) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(214,173,82,.15) 1px,transparent 1px);
+  background-size:70px 70px;
+  mask-image:linear-gradient(to bottom,transparent,#000 30%,#000 70%,transparent);
+}
+
+.hero-content{
+  width:min(1450px,94%);
   margin:auto;
-  padding:110px 0;
+  padding-top:100px;
 }
-.section-head{
+
+.hero-copy{
+  width:min(760px,100%);
+}
+
+.hero-kicker{
   display:flex;
-  justify-content:space-between;
-  gap:30px;
-  align-items:end;
-  margin-bottom:40px;
-}
-.kicker{
-  color:var(--gold);
-  font-size:11px;
+  align-items:center;
+  gap:12px;
+  color:var(--gold2);
+  font-size:13px;
   font-weight:800;
   letter-spacing:2px;
 }
-.section-head h2{
-  font-size:clamp(30px,5vw,52px);
-  line-height:1.2;
-  margin-top:7px;
-}
-.section-head p{
-  color:var(--muted);
-  max-width:540px;
-  line-height:1.9;
+
+.hero-kicker::before{
+  content:"";
+  width:50px;
+  height:1px;
+  background:var(--gold);
 }
 
-.intro-grid{
-  display:grid;
-  grid-template-columns:1.15fr .85fr;
-  gap:20px;
+.hero h1{
+  margin-top:22px;
+  font-family:"Amiri",serif;
+  font-size:clamp(70px,11vw,155px);
+  line-height:.8;
+  font-weight:700;
+  text-shadow:0 18px 70px rgba(0,0,0,.75);
 }
-.panel{
-  background:linear-gradient(145deg,rgba(18,25,33,.92),rgba(7,11,15,.9));
-  border:1px solid rgba(255,255,255,.07);
-  border-radius:24px;
-  box-shadow:var(--shadow);
+
+.hero h1 span{
+  color:var(--gold2);
+  display:block;
+  font-size:.52em;
+  margin-top:18px;
 }
-.story{
-  padding:35px;
+
+.hero-description{
+  margin-top:34px;
+  max-width:650px;
+  color:#c3c5c0;
+  font-size:17px;
   line-height:2.15;
-  color:#cbd1d6;
 }
-.story p+p{margin-top:20px}
-.fact-grid{
+
+.hero-buttons{
+  display:flex;
+  gap:12px;
+  flex-wrap:wrap;
+  margin-top:32px;
+}
+
+.btn{
+  min-height:50px;
+  padding:0 22px;
+  border-radius:12px;
+  border:1px solid rgba(255,255,255,.12);
+  background:rgba(255,255,255,.045);
+  color:#eee;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:9px;
+  transition:.3s;
+}
+
+.btn:hover{
+  transform:translateY(-3px);
+}
+
+.btn-primary{
+  border-color:rgba(214,173,82,.55);
+  background:linear-gradient(135deg,#a77a2d,#d8b65c);
+  color:#10100d;
+  font-weight:800;
+  box-shadow:0 12px 35px rgba(214,173,82,.15);
+}
+
+.btn-primary:hover{
+  box-shadow:0 18px 50px rgba(214,173,82,.25);
+}
+
+.hero-stats{
   display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:1px;
-  overflow:hidden;
-  border-radius:24px;
-  background:rgba(255,255,255,.07);
+  grid-template-columns:repeat(4,1fr);
+  gap:10px;
+  margin-top:60px;
+  width:min(800px,100%);
 }
-.fact{
-  padding:30px;
-  background:#0a1016;
+
+.stat{
+  padding:17px;
+  border-top:1px solid rgba(214,173,82,.2);
+  background:rgba(0,0,0,.18);
+  backdrop-filter:blur(10px);
 }
-.fact b{
+
+.stat strong{
   display:block;
   color:var(--gold2);
   font-size:25px;
 }
-.fact span{color:var(--muted);font-size:13px}
+
+.stat span{
+  color:#858a85;
+  font-size:10px;
+}
+
+/* =========================================================
+   SECTION SYSTEM
+========================================================= */
+
+section{
+  position:relative;
+}
+
+.section{
+  padding:125px 0;
+}
+
+.section-shell{
+  width:min(1250px,92%);
+  margin:auto;
+}
+
+.section-heading{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-end;
+  gap:30px;
+  margin-bottom:45px;
+}
+
+.heading-copy{
+  max-width:760px;
+}
+
+.eyebrow{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  color:var(--gold2);
+  font-size:11px;
+  letter-spacing:2px;
+  font-weight:800;
+  margin-bottom:12px;
+}
+
+.eyebrow::before{
+  content:"";
+  width:35px;
+  height:1px;
+  background:var(--gold);
+}
+
+.section-title{
+  font-family:"Amiri",serif;
+  font-size:clamp(40px,6vw,72px);
+  line-height:1;
+}
+
+.section-description{
+  color:#929791;
+  line-height:2;
+  margin-top:15px;
+  font-size:14px;
+}
+
+.section-number{
+  font-family:"Amiri",serif;
+  font-size:100px;
+  line-height:.7;
+  color:rgba(214,173,82,.08);
+  user-select:none;
+}
+
+/* =========================================================
+   STORY
+========================================================= */
+
+.story-section{
+  background:
+    linear-gradient(180deg,#050708,rgba(5,7,8,.85)),
+    url("https://commons.wikimedia.org/wiki/Special:FilePath/Egyptian%20soldiers%20during%20their%20storming%20of%20the%20Bar%20Lev%20Line.png");
+  background-size:cover;
+  background-position:center;
+  background-attachment:fixed;
+}
+
+.story-grid{
+  display:grid;
+  grid-template-columns:1.1fr .9fr;
+  gap:25px;
+}
+
+.story-card{
+  min-height:480px;
+  position:relative;
+  overflow:hidden;
+  border:1px solid rgba(255,255,255,.08);
+  border-radius:28px;
+  background:#090d0e;
+  box-shadow:var(--shadow);
+}
+
+.story-card.big{
+  min-height:600px;
+}
+
+.story-card img{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  transition:transform 1s;
+}
+
+.story-card:hover img{
+  transform:scale(1.05);
+}
+
+.story-overlay{
+  position:absolute;
+  inset:0;
+  background:
+    linear-gradient(0deg,rgba(0,0,0,.94),rgba(0,0,0,.18) 65%,rgba(0,0,0,.1)),
+    linear-gradient(90deg,rgba(0,0,0,.5),transparent);
+}
+
+.story-content{
+  position:absolute;
+  right:30px;
+  left:30px;
+  bottom:30px;
+}
+
+.story-content .date{
+  color:var(--gold2);
+  font-size:11px;
+  font-weight:800;
+}
+
+.story-content h3{
+  font-family:"Amiri",serif;
+  font-size:40px;
+  margin:8px 0;
+}
+
+.story-content p{
+  color:#b8bbb6;
+  line-height:2;
+  font-size:13px;
+}
+
+/* =========================================================
+   CINEMATIC QUOTE
+========================================================= */
+
+.quote-section{
+  min-height:580px;
+  display:grid;
+  place-items:center;
+  overflow:hidden;
+  background:
+    linear-gradient(rgba(0,0,0,.68),rgba(0,0,0,.8)),
+    url("https://commons.wikimedia.org/wiki/Special:FilePath/Egyptian%20armored%20military%20vehicles%20cross%20the%20Suez%20Canal.png");
+  background-size:cover;
+  background-position:center;
+  background-attachment:fixed;
+}
+
+.quote-inner{
+  width:min(900px,90%);
+  text-align:center;
+}
+
+.quote-mark{
+  color:var(--gold2);
+  font-family:"Amiri",serif;
+  font-size:110px;
+  line-height:.5;
+}
+
+.quote-text{
+  font-family:"Amiri",serif;
+  font-size:clamp(30px,5vw,58px);
+  line-height:1.6;
+  margin:20px 0;
+}
+
+.quote-caption{
+  color:#8e928d;
+  font-size:12px;
+}
+
+/* =========================================================
+   TIMELINE
+========================================================= */
+
+.timeline-section{
+  background:
+    radial-gradient(circle at 50% 20%,rgba(138,83,23,.08),transparent 40%),
+    #060809;
+}
 
 .timeline{
   position:relative;
+  padding:20px 0;
 }
+
 .timeline::before{
   content:"";
   position:absolute;
-  right:27px;
-  top:0;bottom:0;
+  top:0;
+  bottom:0;
+  right:50%;
   width:1px;
-  background:linear-gradient(var(--gold),rgba(214,173,93,.05));
+  background:linear-gradient(
+    transparent,
+    rgba(214,173,82,.5) 10%,
+    rgba(214,173,82,.5) 90%,
+    transparent
+  );
 }
+
 .timeline-item{
   position:relative;
-  padding-right:75px;
-  margin-bottom:30px;
+  width:50%;
+  padding:15px 55px;
 }
+
+.timeline-item:nth-child(odd){
+  right:0;
+  text-align:left;
+}
+
+.timeline-item:nth-child(even){
+  right:50%;
+}
+
 .timeline-dot{
   position:absolute;
-  right:17px;
-  top:4px;
-  width:21px;height:21px;
-  border:4px solid #080c10;
+  top:28px;
+  width:15px;
+  height:15px;
   border-radius:50%;
-  background:var(--gold);
-  box-shadow:0 0 0 1px var(--gold),0 0 25px rgba(214,173,93,.35);
+  background:var(--gold2);
+  box-shadow:0 0 0 7px rgba(214,173,82,.08),0 0 25px rgba(214,173,82,.35);
 }
+
+.timeline-item:nth-child(odd) .timeline-dot{
+  left:-7px;
+}
+
+.timeline-item:nth-child(even) .timeline-dot{
+  right:-7px;
+}
+
 .timeline-card{
-  padding:27px;
-  transition:.3s;
+  border:1px solid rgba(255,255,255,.07);
+  border-radius:20px;
+  padding:25px;
+  background:linear-gradient(145deg,#0d1214,#090c0d);
+  transition:.35s;
 }
-.timeline-card:hover{transform:translateX(-5px);border-color:var(--line)}
+
+.timeline-card:hover{
+  border-color:rgba(214,173,82,.3);
+  transform:translateY(-4px);
+}
+
 .timeline-date{
   color:var(--gold2);
-  font-size:12px;
+  font-size:11px;
   font-weight:800;
 }
-.timeline-card h3{font-size:23px;margin:8px 0}
-.timeline-card p{color:var(--muted);line-height:1.9}
 
-.people-grid{
+.timeline-card h3{
+  font-family:"Amiri",serif;
+  font-size:29px;
+  margin:6px 0;
+}
+
+.timeline-card p{
+  color:#929792;
+  font-size:13px;
+  line-height:2;
+}
+
+/* =========================================================
+   BATTLES
+========================================================= */
+
+.battles-section{
+  background:
+    linear-gradient(180deg,rgba(5,7,8,.92),rgba(5,7,8,.96)),
+    url("https://commons.wikimedia.org/wiki/Special:FilePath/Egyptian%20tanks%20invade%20Sinai%2C%201973.jpg");
+  background-size:cover;
+  background-position:center;
+}
+
+.battles-grid{
   display:grid;
   grid-template-columns:repeat(3,1fr);
   gap:18px;
 }
-.person{
-  overflow:hidden;
-  transition:.3s;
-}
-.person:hover{transform:translateY(-5px)}
-.person-image{
-  height:260px;
-  background:
-    linear-gradient(0deg,rgba(0,0,0,.8),transparent),
-    #111;
-  background-size:cover;
-  background-position:center;
-}
-.person-body{padding:22px}
-.person-role{color:var(--gold);font-size:11px}
-.person h3{font-size:23px;margin:7px 0}
-.person p{color:var(--muted);line-height:1.8;font-size:14px}
 
-.battles{
-  display:grid;
-  grid-template-columns:repeat(2,1fr);
-  gap:18px;
-}
-.battle{
-  min-height:230px;
-  padding:28px;
-  display:flex;
-  flex-direction:column;
-  justify-content:end;
-  overflow:hidden;
-  background-size:cover;
-  background-position:center;
+.battle-card{
   position:relative;
+  min-height:390px;
+  overflow:hidden;
+  border-radius:24px;
+  border:1px solid rgba(255,255,255,.08);
+  background:#0a0d0e;
 }
-.battle::before{
+
+.battle-card img{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  opacity:.7;
+  transition:1s;
+}
+
+.battle-card:hover img{
+  transform:scale(1.07);
+  opacity:.9;
+}
+
+.battle-card::after{
   content:"";
   position:absolute;
   inset:0;
-  background:linear-gradient(0deg,#05070a,rgba(5,7,10,.1));
+  background:linear-gradient(0deg,#050708,rgba(5,7,8,.15) 75%);
 }
-.battle>*{position:relative}
-.battle h3{font-size:25px}
-.battle p{color:#b9c0c6;line-height:1.8;margin-top:7px}
 
-.maps{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:20px;
+.battle-content{
+  position:absolute;
+  z-index:2;
+  right:22px;
+  left:22px;
+  bottom:22px;
 }
-.map-card{overflow:hidden}
-.map-image{
-  aspect-ratio:16/10;
-  background:#10161b;
-  overflow:hidden;
-}
-.map-image img{
-  width:100%;height:100%;
-  object-fit:cover;
-  transition:.5s;
-  cursor:zoom-in;
-}
-.map-card:hover img{transform:scale(1.035)}
-.map-body{padding:20px}
-.map-body h3{margin-bottom:7px}
-.map-body p{color:var(--muted);font-size:13px;line-height:1.8}
 
-.gallery{
+.battle-tag{
+  display:inline-flex;
+  color:var(--gold2);
+  background:rgba(0,0,0,.45);
+  border:1px solid rgba(214,173,82,.25);
+  border-radius:999px;
+  padding:5px 10px;
+  font-size:9px;
+}
+
+.battle-content h3{
+  font-family:"Amiri",serif;
+  font-size:31px;
+  margin:8px 0;
+}
+
+.battle-content p{
+  color:#aaa;
+  font-size:12px;
+  line-height:1.9;
+}
+
+/* =========================================================
+   FORCES
+========================================================= */
+
+.forces-section{
+  background:
+    radial-gradient(circle at 10% 30%,rgba(24,81,57,.11),transparent 30%),
+    radial-gradient(circle at 90% 70%,rgba(150,45,25,.08),transparent 30%);
+}
+
+.forces-grid{
   display:grid;
   grid-template-columns:repeat(4,1fr);
-  gap:10px;
-}
-.gallery-item{
-  height:210px;
-  overflow:hidden;
-  border-radius:17px;
-  border:1px solid rgba(255,255,255,.06);
-  cursor:zoom-in;
-  position:relative;
-}
-.gallery-item img{
-  width:100%;height:100%;
-  object-fit:cover;
-  transition:.45s;
-  background:#10151b;
-}
-.gallery-item:hover img{transform:scale(1.07)}
-.gallery-item span{
-  position:absolute;
-  bottom:10px;
-  right:10px;
-  padding:5px 9px;
-  background:rgba(0,0,0,.65);
-  border-radius:7px;
-  font-size:10px;
+  gap:12px;
 }
 
-.ai-wrap{
-  padding:25px;
+.force{
+  padding:27px 20px;
+  min-height:190px;
+  border:1px solid rgba(255,255,255,.07);
+  border-radius:20px;
+  background:linear-gradient(145deg,#0d1213,#080b0c);
+  transition:.3s;
 }
-.ai-top{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:20px;
-  padding-bottom:20px;
-  border-bottom:1px solid rgba(255,255,255,.06);
+
+.force:hover{
+  transform:translateY(-7px);
+  border-color:rgba(214,173,82,.3);
 }
-.ai-title{
-  display:flex;
-  gap:14px;
-  align-items:center;
+
+.force-icon{
+  width:52px;
+  height:52px;
+  border-radius:15px;
+  display:grid;
+  place-items:center;
+  background:rgba(214,173,82,.07);
+  color:var(--gold2);
+  font-size:24px;
+  margin-bottom:17px;
 }
-.ai-orb{
-  width:52px;height:52px;
-  display:grid;place-items:center;
-  border-radius:16px;
-  background:linear-gradient(145deg,#342713,#111);
-  border:1px solid var(--line);
+
+.force h3{
+  font-family:"Amiri",serif;
   font-size:25px;
 }
-.ai-status{
-  color:#94a0aa;
+
+.force p{
+  margin-top:7px;
+  color:#8d928d;
   font-size:11px;
-}
-.status-dot{
-  display:inline-block;
-  width:7px;height:7px;
-  border-radius:50%;
-  background:#4ed18a;
-  box-shadow:0 0 10px #4ed18a;
-  margin-left:5px;
-}
-.ai-messages{
-  height:470px;
-  overflow:auto;
-  padding:25px 5px;
-}
-.ai-message{
-  display:flex;
-  gap:12px;
-  margin-bottom:20px;
-  align-items:flex-start;
-}
-.ai-message-user{flex-direction:row-reverse}
-.ai-avatar{
-  min-width:38px;height:38px;
-  display:grid;place-items:center;
-  border-radius:12px;
-  background:#111920;
-  border:1px solid rgba(255,255,255,.08);
-}
-.ai-bubble{
-  max-width:760px;
-  padding:15px 18px;
-  border-radius:17px;
-  background:#111920;
-  border:1px solid rgba(255,255,255,.06);
-}
-.ai-message-user .ai-bubble{
-  background:#1a1913;
-  border-color:var(--line);
-}
-.ai-bubble strong{
-  display:block;
-  color:var(--gold2);
-  font-size:12px;
-  margin-bottom:5px;
-}
-.ai-bubble p{line-height:1.9;color:#d4d9dd;white-space:pre-line}
-.ai-composer{
-  display:flex;
-  gap:10px;
-  background:#080d12;
-  border:1px solid rgba(255,255,255,.08);
-  padding:10px;
-  border-radius:17px;
-}
-.ai-composer textarea{
-  flex:1;
-  resize:none;
-  min-height:48px;
-  max-height:130px;
-  border:0;
-  outline:0;
-  color:white;
-  background:transparent;
-  padding:12px;
-}
-.ai-composer button{
-  width:50px;
-  border:0;
-  border-radius:13px;
-  color:#080909;
-  background:var(--gold2);
-  font-size:20px;
-}
-.ai-suggestions,.ai-followups{
-  display:flex;
-  gap:7px;
-  flex-wrap:wrap;
-  margin-top:12px;
-}
-.ai-suggestions button,.ai-followups button{
-  border:1px solid var(--line);
-  color:#d7c99f;
-  background:rgba(214,173,93,.05);
-  border-radius:10px;
-  padding:7px 10px;
-  font-size:11px;
+  line-height:1.9;
 }
 
-.creator{
+/* =========================================================
+   LEADERS
+========================================================= */
+
+.leaders-section{
+  background:
+    linear-gradient(180deg,#050708,rgba(5,7,8,.9)),
+    url("https://commons.wikimedia.org/wiki/Special:FilePath/Egyptian%20Army%20Leaders%20in%206th%20Oct%201973%20War.jpg");
+  background-size:cover;
+  background-position:center;
+}
+
+.leaders-layout{
   display:grid;
-  grid-template-columns:.75fr 1.25fr;
-  gap:25px;
-  align-items:center;
-  padding:35px;
-  overflow:hidden;
+  grid-template-columns:1.2fr .8fr;
+  gap:20px;
 }
-.creator-photo{
+
+.leader-feature{
   position:relative;
-  width:min(320px,100%);
-  aspect-ratio:1;
-  margin:auto;
-  padding:5px;
-  border-radius:27px;
-  background:linear-gradient(145deg,#f0d083,#695020,#d3a94f,#8a672a);
-  box-shadow:0 30px 70px rgba(0,0,0,.6),0 0 60px rgba(214,173,93,.12);
+  min-height:580px;
+  overflow:hidden;
+  border-radius:28px;
+  border:1px solid rgba(255,255,255,.08);
 }
-.creator-photo::before{
+
+.leader-feature img{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  filter:sepia(.12) contrast(1.1);
+}
+
+.leader-feature::after{
   content:"";
   position:absolute;
-  inset:9px;
-  border:1px solid rgba(255,255,255,.3);
-  border-radius:21px;
+  inset:0;
+  background:
+    linear-gradient(0deg,#050708,transparent 65%),
+    linear-gradient(90deg,rgba(0,0,0,.5),transparent);
+}
+
+.leader-info{
+  position:absolute;
   z-index:2;
-  pointer-events:none;
+  right:30px;
+  left:30px;
+  bottom:30px;
 }
-.creator-photo img{
-  width:100%;height:100%;
-  object-fit:cover;
-  object-position:center;
-  border-radius:22px;
-  display:block;
-  background:#080b0e;
-}
-.creator-copy .kicker{display:block;margin-bottom:8px}
-.creator-copy h2{
-  font-size:clamp(34px,5vw,58px);
-  margin-bottom:5px;
-}
-.creator-role{
+
+.leader-role{
   color:var(--gold2);
-  font-size:17px;
-  font-weight:700;
-}
-.creator-copy p{
-  color:#aeb7bf;
-  line-height:2;
-  margin-top:20px;
-}
-.tags{
-  display:flex;
-  flex-wrap:wrap;
-  gap:8px;
-  margin-top:20px;
-}
-.tags span{
-  padding:7px 11px;
-  border-radius:9px;
-  background:#111820;
-  border:1px solid rgba(255,255,255,.06);
-  color:#c2c9ce;
   font-size:11px;
-}
-.signature{
-  margin-top:25px;
-  color:#dbc27f;
   font-weight:800;
 }
 
-.footer{
-  border-top:1px solid rgba(255,255,255,.07);
-  padding:45px 5%;
-  text-align:center;
-  color:#7f8992;
+.leader-info h3{
+  font-family:"Amiri",serif;
+  font-size:54px;
 }
-.footer strong{color:#d7bd7c}
 
-.modal{
+.leader-info p{
+  max-width:650px;
+  color:#bbbdb7;
+  font-size:13px;
+  line-height:2;
+}
+
+.leader-list{
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+}
+
+.leader-mini{
+  min-height:105px;
+  padding:10px;
+  display:flex;
+  gap:14px;
+  align-items:center;
+  border:1px solid rgba(255,255,255,.07);
+  background:#0a0d0f;
+  border-radius:17px;
+  cursor:pointer;
+  transition:.3s;
+}
+
+.leader-mini:hover{
+  border-color:rgba(214,173,82,.35);
+  transform:translateX(-5px);
+}
+
+.leader-mini img{
+  width:84px;
+  height:84px;
+  border-radius:13px;
+  object-fit:cover;
+}
+
+.leader-mini strong{
+  display:block;
+  font-family:"Amiri",serif;
+  font-size:23px;
+}
+
+.leader-mini span{
+  color:#808680;
+  font-size:10px;
+}
+
+/* =========================================================
+   MAP
+========================================================= */
+
+.map-section{
+  background:
+    radial-gradient(circle at center,rgba(29,81,61,.08),transparent 45%),
+    #050708;
+}
+
+.map-wrapper{
+  border:1px solid rgba(214,173,82,.15);
+  border-radius:30px;
+  overflow:hidden;
+  background:
+    linear-gradient(rgba(9,16,15,.78),rgba(6,10,10,.9)),
+    url("https://commons.wikimedia.org/wiki/Special:FilePath/1973%20sinai%20war%20maps-ar.jpg");
+  background-size:cover;
+  background-position:center;
+  min-height:600px;
+  position:relative;
+}
+
+.map-label{
+  position:absolute;
+  top:20px;
+  right:20px;
+  padding:8px 13px;
+  border:1px solid rgba(214,173,82,.25);
+  border-radius:999px;
+  background:rgba(0,0,0,.5);
+  color:#b7b9b2;
+  font-size:10px;
+  backdrop-filter:blur(10px);
+}
+
+.map-canvas{
+  min-height:600px;
+  position:relative;
+  overflow:hidden;
+  cursor:grab;
+}
+
+.map-canvas:active{
+  cursor:grabbing;
+}
+
+.map-image{
+  position:absolute;
+  width:850px;
+  max-width:none;
+  left:50%;
+  top:50%;
+  transform:translate(-50%,-50%);
+  opacity:.78;
+  filter:sepia(.18) contrast(1.1) brightness(.7);
+  transition:transform .2s;
+}
+
+.map-controls{
+  position:absolute;
+  bottom:20px;
+  right:20px;
+  display:flex;
+  gap:7px;
+}
+
+.map-controls button{
+  width:44px;
+  height:44px;
+  border-radius:12px;
+  border:1px solid rgba(214,173,82,.22);
+  background:rgba(0,0,0,.65);
+  color:var(--gold2);
+}
+
+/* =========================================================
+   GALLERY
+========================================================= */
+
+.gallery-section{
+  background:
+    linear-gradient(180deg,#050708,#080b0c);
+}
+
+.gallery-grid{
+  display:grid;
+  grid-template-columns:repeat(12,1fr);
+  grid-auto-rows:180px;
+  gap:10px;
+}
+
+.gallery-item{
+  position:relative;
+  overflow:hidden;
+  border-radius:18px;
+  cursor:pointer;
+  border:1px solid rgba(255,255,255,.05);
+  background:#0a0c0d;
+}
+
+.gallery-item:nth-child(1){grid-column:span 5;grid-row:span 2}
+.gallery-item:nth-child(2){grid-column:span 4;grid-row:span 2}
+.gallery-item:nth-child(3){grid-column:span 3}
+.gallery-item:nth-child(4){grid-column:span 3}
+.gallery-item:nth-child(5){grid-column:span 4}
+.gallery-item:nth-child(6){grid-column:span 5}
+.gallery-item:nth-child(7){grid-column:span 3}
+
+.gallery-item img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  transition:.7s;
+  filter:sepia(.12) contrast(1.08);
+}
+
+.gallery-item:hover img{
+  transform:scale(1.08);
+}
+
+.gallery-caption{
+  position:absolute;
+  right:12px;
+  left:12px;
+  bottom:10px;
+  color:#eee;
+  font-size:10px;
+  text-shadow:0 2px 8px #000;
+}
+
+/* =========================================================
+   ARCHIVE
+========================================================= */
+
+.archive-section{
+  background:
+    radial-gradient(circle at 50% 0,rgba(214,173,82,.08),transparent 40%),
+    #060809;
+}
+
+.archive-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:15px;
+}
+
+.archive-card{
+  padding:28px;
+  border:1px solid rgba(255,255,255,.07);
+  border-radius:20px;
+  background:linear-gradient(145deg,#0e1214,#080b0c);
+}
+
+.archive-icon{
+  font-size:31px;
+  margin-bottom:15px;
+}
+
+.archive-card h3{
+  font-family:"Amiri",serif;
+  font-size:27px;
+}
+
+.archive-card p{
+  color:#858a84;
+  font-size:12px;
+  line-height:2;
+  margin-top:8px;
+}
+
+.archive-card a{
+  display:inline-flex;
+  margin-top:18px;
+  color:var(--gold2);
+  font-size:11px;
+}
+
+/* =========================================================
+   AI SEARCH
+========================================================= */
+
+.ai-section{
+  background:
+    linear-gradient(135deg,rgba(20,41,32,.35),rgba(31,18,10,.3)),
+    #050708;
+}
+
+.ai-box{
+  border:1px solid rgba(214,173,82,.18);
+  border-radius:30px;
+  padding:35px;
+  background:
+    radial-gradient(circle at 80% 20%,rgba(214,173,82,.07),transparent 30%),
+    linear-gradient(145deg,#0d1312,#080b0b);
+  box-shadow:var(--shadow);
+}
+
+.ai-head{
+  display:flex;
+  align-items:center;
+  gap:15px;
+  margin-bottom:25px;
+}
+
+.ai-logo{
+  width:60px;
+  height:60px;
+  border-radius:18px;
+  display:grid;
+  place-items:center;
+  background:linear-gradient(145deg,#9d762b,#3a2a11);
+  font-size:28px;
+}
+
+.ai-head h3{
+  font-family:"Amiri",serif;
+  font-size:31px;
+}
+
+.ai-head p{
+  color:#808680;
+  font-size:11px;
+}
+
+.ai-search{
+  display:flex;
+  gap:10px;
+}
+
+.ai-search input{
+  flex:1;
+  height:58px;
+  padding:0 20px;
+  color:#eee;
+  background:#070a0b;
+  border:1px solid rgba(255,255,255,.09);
+  border-radius:15px;
+  outline:none;
+}
+
+.ai-search input:focus{
+  border-color:rgba(214,173,82,.4);
+}
+
+.ai-result{
+  margin-top:20px;
+  min-height:80px;
+  padding:20px;
+  border-radius:16px;
+  background:rgba(255,255,255,.025);
+  color:#b8bbb5;
+  font-size:13px;
+  line-height:2;
+}
+
+.ai-suggestions{
+  display:flex;
+  gap:7px;
+  flex-wrap:wrap;
+  margin-top:15px;
+}
+
+.ai-chip{
+  border:1px solid rgba(255,255,255,.08);
+  background:rgba(255,255,255,.025);
+  color:#9ca19b;
+  padding:7px 12px;
+  border-radius:999px;
+  font-size:10px;
+}
+
+/* =========================================================
+   CREATOR
+========================================================= */
+
+.creator-section{
+  padding:110px 0 90px;
+  background:
+    radial-gradient(circle at 20% 50%,rgba(214,173,82,.06),transparent 35%),
+    #050708;
+}
+
+.creator-card{
+  width:min(1100px,92%);
+  margin:auto;
+  display:grid;
+  grid-template-columns:330px 1fr;
+  gap:50px;
+  align-items:center;
+  padding:45px;
+  border:1px solid rgba(214,173,82,.17);
+  border-radius:30px;
+  background:
+    linear-gradient(145deg,rgba(17,20,20,.96),rgba(8,10,11,.96));
+  box-shadow:var(--shadow);
+}
+
+.creator-media{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+}
+
+.creator-photo-frame{
+  position:relative;
+  width:270px;
+  aspect-ratio:1/1;
+  border-radius:24px;
+  padding:5px;
+  background:linear-gradient(145deg,#e3bd63,#795b22,#e3bd63);
+  box-shadow:
+    0 20px 55px rgba(0,0,0,.55),
+    0 0 45px rgba(220,174,76,.12);
+  overflow:hidden;
+}
+
+.creator-photo{
+  display:block;
+  width:100%;
+  height:100%;
+  aspect-ratio:1/1;
+  object-fit:cover;
+  object-position:center;
+  border-radius:19px;
+  background:#08090b;
+}
+
+.creator-photo-frame.photo-missing .photo-fallback{
+  display:grid;
+}
+
+.photo-fallback{
+  display:none;
+  position:absolute;
+  inset:5px;
+  border-radius:19px;
+  place-items:center;
+  background:
+    radial-gradient(circle at center,rgba(214,173,82,.18),transparent 45%),
+    #090b0c;
+  color:var(--gold2);
+  font-size:50px;
+  font-family:"Amiri",serif;
+}
+
+.creator-photo-badge{
+  margin-top:15px;
+  padding:7px 14px;
+  border:1px solid rgba(214,173,82,.18);
+  border-radius:999px;
+  color:#999d97;
+  font-size:10px;
+}
+
+.creator-kicker{
+  color:var(--gold2);
+  font-size:11px;
+  font-weight:800;
+}
+
+.creator-name{
+  font-family:"Amiri",serif;
+  font-size:65px;
+  line-height:1;
+  margin:10px 0 4px;
+}
+
+.creator-role{
+  color:#d0c9b8;
+  font-size:14px;
+}
+
+.creator-description{
+  color:#8e938d;
+  line-height:2.1;
+  font-size:13px;
+  max-width:650px;
+  margin-top:20px;
+}
+
+.creator-tags{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+  margin-top:22px;
+}
+
+.creator-tags span{
+  padding:7px 11px;
+  border-radius:999px;
+  border:1px solid rgba(255,255,255,.07);
+  color:#9ea39d;
+  font-size:10px;
+}
+
+.creator-signature{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  margin-top:28px;
+  color:var(--gold2);
+  font-family:"Amiri",serif;
+  font-size:19px;
+}
+
+.signature-line{
+  width:45px;
+  height:1px;
+  background:rgba(214,173,82,.35);
+}
+
+/* =========================================================
+   FOOTER
+========================================================= */
+
+footer{
+  border-top:1px solid rgba(255,255,255,.07);
+  padding:45px 0;
+  background:#030505;
+}
+
+.footer-inner{
+  width:min(1250px,92%);
+  margin:auto;
+  display:flex;
+  justify-content:space-between;
+  gap:20px;
+  align-items:center;
+}
+
+.footer-brand{
+  font-family:"Amiri",serif;
+  font-size:27px;
+}
+
+.footer-copy{
+  color:#656b65;
+  font-size:10px;
+}
+
+/* =========================================================
+   LIGHTBOX
+========================================================= */
+
+.lightbox{
   position:fixed;
   inset:0;
-  z-index:9998;
-  display:none;
-  place-items:center;
-  background:rgba(0,0,0,.9);
+  z-index:10050;
+  background:rgba(0,0,0,.92);
+  backdrop-filter:blur(18px);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  opacity:0;
+  visibility:hidden;
+  transition:.3s;
   padding:25px;
 }
-.modal.open{display:grid}
-.modal img{
-  max-width:95vw;
-  max-height:85vh;
-  object-fit:contain;
-  border-radius:15px;
+
+.lightbox.open{
+  opacity:1;
+  visibility:visible;
 }
-.modal button{
+
+.lightbox img{
+  max-width:min(1200px,94vw);
+  max-height:88vh;
+  object-fit:contain;
+  border-radius:10px;
+  box-shadow:0 30px 100px rgba(0,0,0,.8);
+}
+
+.lightbox-close{
   position:absolute;
   top:20px;
   left:20px;
-  width:45px;height:45px;
+  width:45px;
+  height:45px;
   border-radius:50%;
-  border:1px solid var(--line);
-  color:white;
-  background:#111820;
+  background:rgba(255,255,255,.08);
+  color:#fff;
+  border:1px solid rgba(255,255,255,.1);
+  font-size:20px;
 }
 
-.toast{
+.lightbox-title{
+  position:absolute;
+  bottom:20px;
+  right:20px;
+  left:20px;
+  text-align:center;
+  color:#bbb;
+  font-size:11px;
+}
+
+/* =========================================================
+   SCROLL TOP
+========================================================= */
+
+.scroll-top{
   position:fixed;
   left:20px;
   bottom:20px;
-  z-index:9999;
-  padding:12px 17px;
-  border-radius:12px;
-  background:#111920;
-  border:1px solid var(--line);
-  color:#ddd;
-  transform:translateY(100px);
+  z-index:850;
+  width:45px;
+  height:45px;
+  border-radius:50%;
+  border:1px solid rgba(214,173,82,.2);
+  background:rgba(4,6,7,.85);
+  color:var(--gold2);
   opacity:0;
+  transform:translateY(15px);
+  pointer-events:none;
   transition:.3s;
 }
-.toast.show{transform:none;opacity:1}
 
-@media(max-width:900px){
-  .nav{display:none}
-  .menu-btn{display:block}
-  .nav.mobile{
-    display:flex;
-    position:absolute;
-    top:74px;
-    right:15px;
-    left:15px;
-    flex-direction:column;
-    align-items:stretch;
-    padding:10px;
-    background:#080d12;
-    border:1px solid var(--line);
-    border-radius:15px;
-  }
-  .intro-grid,.creator{grid-template-columns:1fr}
-  .people-grid{grid-template-columns:1fr 1fr}
-  .gallery{grid-template-columns:1fr 1fr}
+.scroll-top.show{
+  opacity:1;
+  transform:none;
+  pointer-events:auto;
 }
 
-@media(max-width:600px){
-  .topbar{padding:0 14px}
-  .hero-content{padding-top:120px}
-  .hero h1{font-size:56px;letter-spacing:-2px}
-  .hero-lead{font-size:15px}
-  section{padding:75px 0}
-  .section-head{display:block}
-  .section-head p{margin-top:12px}
-  .fact-grid,.battles,.maps,.people-grid{grid-template-columns:1fr}
-  .gallery{grid-template-columns:1fr 1fr}
-  .gallery-item{height:150px}
-  .timeline::before{right:18px}
-  .timeline-item{padding-right:53px}
-  .timeline-dot{right:8px}
-  .creator{padding:20px}
-  .creator-photo{width:min(280px,100%)}
+/* =========================================================
+   REVEAL
+========================================================= */
+
+.reveal{
+  opacity:0;
+  transform:translateY(35px);
+  transition:opacity .8s ease,transform .8s ease;
+}
+
+.reveal.visible{
+  opacity:1;
+  transform:none;
+}
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media(max-width:1050px){
+
+  .nav-links{
+    display:none;
+  }
+
+  .story-grid,
+  .leaders-layout{
+    grid-template-columns:1fr;
+  }
+
+  .battles-grid{
+    grid-template-columns:repeat(2,1fr);
+  }
+
+  .forces-grid{
+    grid-template-columns:repeat(2,1fr);
+  }
+
+  .archive-grid{
+    grid-template-columns:1fr 1fr;
+  }
+
+  .creator-card{
+    grid-template-columns:1fr;
+    text-align:center;
+  }
+
+  .creator-media{
+    order:0;
+  }
+
+  .creator-tags,
+  .creator-signature{
+    justify-content:center;
+  }
+}
+
+@media(max-width:720px){
+
+  :root{
+    --nav:68px;
+  }
+
+  .navbar{
+    height:68px;
+  }
+
+  .brand-text{
+    display:none;
+  }
+
+  .brand-symbol{
+    width:40px;
+    height:40px;
+  }
+
+  .nav-icon{
+    width:39px;
+    height:39px;
+  }
+
+  .hero{
+    min-height:850px;
+  }
+
+  .hero-media{
+    background-position:58% center;
+  }
+
+  .hero-content{
+    padding-top:80px;
+  }
+
+  .hero h1{
+    font-size:76px;
+  }
+
+  .hero-description{
+    font-size:13px;
+  }
+
+  .hero-stats{
+    grid-template-columns:repeat(2,1fr);
+    margin-top:35px;
+  }
+
+  .section{
+    padding:85px 0;
+  }
+
+  .section-heading{
+    display:block;
+  }
+
+  .section-number{
+    display:none;
+  }
+
+  .story-card,
+  .story-card.big{
+    min-height:440px;
+  }
+
+  .timeline::before{
+    right:12px;
+  }
+
+  .timeline-item,
+  .timeline-item:nth-child(even),
+  .timeline-item:nth-child(odd){
+    width:100%;
+    right:auto;
+    text-align:right;
+    padding:15px 40px 15px 0;
+  }
+
+  .timeline-item .timeline-dot,
+  .timeline-item:nth-child(even) .timeline-dot,
+  .timeline-item:nth-child(odd) .timeline-dot{
+    right:5px;
+    left:auto;
+  }
+
+  .battles-grid,
+  .forces-grid,
+  .archive-grid{
+    grid-template-columns:1fr;
+  }
+
+  .gallery-grid{
+    grid-template-columns:repeat(2,1fr);
+    grid-auto-rows:150px;
+  }
+
+  .gallery-item:nth-child(n){
+    grid-column:span 1;
+    grid-row:span 1;
+  }
+
+  .gallery-item:first-child{
+    grid-column:span 2;
+    grid-row:span 2;
+  }
+
+  .leader-feature{
+    min-height:500px;
+  }
+
+  .map-wrapper,
+  .map-canvas{
+    min-height:430px;
+  }
+
+  .map-image{
+    width:650px;
+  }
+
+  .ai-box{
+    padding:20px;
+  }
+
+  .ai-search{
+    flex-direction:column;
+  }
+
+  .creator-card{
+    padding:25px 18px;
+  }
+
+  .creator-photo-frame{
+    width:min(270px,80vw);
+  }
+
+  .creator-name{
+    font-size:52px;
+  }
+
+  .footer-inner{
+    flex-direction:column;
+    text-align:center;
+  }
 }
 
 @media(prefers-reduced-motion:reduce){
-  *,*::before,*::after{
-    animation-duration:.01ms!important;
-    animation-iteration-count:1!important;
+
+  *,
+  *::before,
+  *::after{
     scroll-behavior:auto!important;
-    transition:none!important;
+    animation-duration:.001ms!important;
+    animation-iteration-count:1!important;
+    transition-duration:.001ms!important;
   }
+
 }
+
 </style>
 </head>
 
-<body>
+<body class="locked">
 
-<div class="loader" id="loader">
-  <div class="loader-box">
-    <div class="loader-emblem">🇪🇬</div>
-    <div class="loader-title">حرب أكتوبر 1973</div>
-    <div class="loader-sub">جاري تجهيز الوثيقة التاريخية التفاعلية...</div>
-    <div class="loader-line"><span></span></div>
+<div class="noise"></div>
+<div class="scanlines"></div>
+<div class="vignette"></div>
+<div class="cinematic-flash" id="flash"></div>
+
+<!-- =======================================================
+     INTRO
+======================================================= -->
+
+<div id="intro">
+
+  <div class="intro-bg"></div>
+  <div class="intro-light"></div>
+
+  <div class="intro-content">
+
+    <div class="intro-eagle">🇪🇬</div>
+
+    <div class="intro-kicker">
+      أرشيف مصر العسكري
+    </div>
+
+    <h1 class="intro-title">
+      مصر <span>أكتوبر</span>
+    </h1>
+
+    <p class="intro-subtitle">
+      ملحمة العبور • 1973
+    </p>
+
+    <div class="intro-year">
+      <i></i>
+      6 أكتوبر 1973
+      <i></i>
+    </div>
+
+    <div class="intro-progress">
+      <span id="introProgress"></span>
+    </div>
+
+    <div class="intro-status" id="introStatus">
+      جاري تجهيز الأرشيف...
+    </div>
+
+    <button class="intro-enter" id="introEnter">
+      دخول إلى الملحمة ←
+    </button>
+
   </div>
+
 </div>
 
-<header class="topbar">
-  <a class="brand" href="#home">
-    <div class="brand-mark">🇪🇬</div>
-    <div>
-      <strong>أكتوبر 1973</strong>
-      <small>الوثيقة التفاعلية</small>
+<!-- =======================================================
+     NAVBAR
+======================================================= -->
+
+<header class="navbar" id="navbar">
+
+  <div class="nav-inner">
+
+    <a href="#home" class="brand">
+
+      <div class="brand-symbol">🇪🇬</div>
+
+      <div class="brand-text">
+        <strong>مصر أكتوبر</strong>
+        <small>ملحمة العبور</small>
+      </div>
+
+    </a>
+
+    <nav class="nav-links">
+
+      <a href="#home">البداية</a>
+      <a href="#story">القصة</a>
+      <a href="#timeline">الأحداث</a>
+      <a href="#battles">المعارك</a>
+      <a href="#forces">القوات</a>
+      <a href="#leaders">القادة</a>
+      <a href="#map">الخرائط</a>
+      <a href="#gallery">الأرشيف</a>
+      <a href="#ai">البحث الذكي</a>
+      <a href="#creator">المبرمج</a>
+
+    </nav>
+
+    <div class="nav-actions">
+
+      <button class="nav-icon" id="soundButton" title="الصوت">
+        🔇
+      </button>
+
     </div>
-  </a>
 
-  <nav class="nav" id="nav">
-    <button data-go="#home">الرئيسية</button>
-    <button data-go="#story">القصة</button>
-    <button data-go="#timeline">الخط الزمني</button>
-    <button data-go="#leaders">القادة</button>
-    <button data-go="#battles">المعارك</button>
-    <button data-go="#maps">الخرائط</button>
-    <button data-go="#gallery">الصور</button>
-    <button data-go="#ai">الذكاء المعرفي</button>
-  </nav>
+  </div>
 
-  <button class="menu-btn" id="menuBtn">☰</button>
 </header>
+
+<!-- =======================================================
+     HERO
+======================================================= -->
 
 <main>
 
 <section class="hero" id="home">
-  <div class="hero-bg"></div>
+
+  <div class="hero-media"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-water"></div>
 
   <div class="hero-content">
-    <span class="eyebrow">✦ السادس من أكتوبر 1973 • العاشر من رمضان 1393</span>
 
-    <h1>
-      حرب أكتوبر
-      <span>رحلة تفاعلية داخل واحدة من أهم محطات التاريخ المصري الحديث</span>
-    </h1>
+    <div class="hero-copy reveal">
 
-    <p class="hero-lead">
-      تجربة رقمية تجمع الخط الزمني، الشخصيات، العمليات العسكرية،
-      الخرائط، الصور، الأحداث والمعلومات التاريخية في رحلة واحدة
-      تبدأ من خلفية ما قبل الحرب وتمتد إلى وقف إطلاق النار وما بعده.
-    </p>
-
-    <div class="hero-actions">
-      <button class="btn btn-primary" data-go="#timeline">ابدأ الرحلة التاريخية ←</button>
-      <button class="btn btn-danger" data-go="#ai">اسأل عن الحرب 🧠</button>
-    </div>
-
-    <div class="hero-stats">
-      <div class="stat">
-        <strong>1973</strong>
-        <span>عام الحرب</span>
+      <div class="hero-kicker">
+        السادس من أكتوبر • رمضان 1393
       </div>
-      <div class="stat">
-        <strong>6 أكتوبر</strong>
-        <span>بداية الهجوم المصري السوري</span>
-      </div>
-      <div class="stat">
-        <strong>26 أكتوبر</strong>
-        <span>مرحلة تثبيت وقف إطلاق النار</span>
-      </div>
-    </div>
-  </div>
-</section>
 
-<section id="story">
-  <div class="section-head">
-    <div>
-      <span class="kicker">BACKGROUND / 01</span>
-      <h2>كيف وصلنا إلى أكتوبر؟</h2>
-    </div>
-    <p>
-      لا يمكن فهم حرب أكتوبر بمعزل عن السنوات التي سبقتها؛
-      لذلك تبدأ الوثيقة من آثار حرب 1967 وحرب الاستنزاف والتخطيط المصري.
-    </p>
-  </div>
+      <h1>
+        مصر
+        <span>أكتوبر</span>
+      </h1>
 
-  <div class="intro-grid">
-    <article class="panel story">
-      <p>
-        بعد حرب يونيو 1967 فقدت مصر شبه جزيرة سيناء، وأصبح استعادة
-        الأرض وإعادة بناء القدرة العسكرية والسياسية هدفًا مركزيًا.
-        تلت ذلك حرب الاستنزاف التي استمرت لسنوات وشهدت مواجهات
-        جوية ومدفعية وعمليات عسكرية على امتداد قناة السويس.
+      <p class="hero-description">
+        تجربة تفاعلية تعيد بناء قصة حرب أكتوبر 1973،
+        من سنوات الإعداد والانتظار إلى عبور قناة السويس
+        وتطور المعارك حتى وقف إطلاق النار.
       </p>
 
-      <p>
-        خلال السنوات التالية أعادت القوات المسلحة المصرية بناء
-        قدراتها، وتطورت خطط عبور قناة السويس والتعامل مع التحصينات
-        الإسرائيلية على الضفة الشرقية. وفي عام 1973 اتخذت القيادة
-        المصرية قرار خوض الحرب ضمن خطة هجومية محددة الأهداف.
-      </p>
+      <div class="hero-buttons">
 
-      <p>
-        في السادس من أكتوبر بدأ الهجوم في توقيت ارتبط بعوامل
-        عسكرية وعملياتية وسياسية، وبدأت القوات المصرية عبور قناة
-        السويس بعد تمهيد جوي ومدفعي واسع.
-      </p>
-    </article>
+        <a class="btn btn-primary" href="#story">
+          ابدأ الرحلة
+          <span>←</span>
+        </a>
 
-    <div class="fact-grid">
-      <div class="fact">
-        <b>1967</b>
-        <span>حرب يونيو واحتلال سيناء</span>
+        <a class="btn" href="#timeline">
+          الخط الزمني
+        </a>
+
       </div>
-      <div class="fact">
-        <b>1969–1970</b>
-        <span>مرحلة حرب الاستنزاف</span>
-      </div>
-      <div class="fact">
-        <b>6 أكتوبر</b>
-        <span>بدء الهجوم والعبور</span>
-      </div>
-      <div class="fact">
-        <b>22 أكتوبر</b>
-        <span>قرار وقف إطلاق النار الأممي</span>
-      </div>
-    </div>
-  </div>
-</section>
 
-<section id="timeline">
-  <div class="section-head">
-    <div>
-      <span class="kicker">CHRONOLOGY / 02</span>
-      <h2>الخط الزمني</h2>
-    </div>
-    <p>محطات رئيسية مرت بها الحرب من يوم العبور وحتى تثبيت وقف إطلاق النار.</p>
-  </div>
+      <div class="hero-stats">
 
-  <div class="timeline">
-
-    <article class="timeline-item">
-      <span class="timeline-dot"></span>
-      <div class="panel timeline-card">
-        <span class="timeline-date">6 أكتوبر 1973</span>
-        <h3>العبور وبدء الهجوم</h3>
-        <p>
-          بدأت القوات المصرية عملية العبور لقناة السويس تحت غطاء
-          جوي ومدفعي، ونجحت وحدات المهندسين في إنشاء المعابر والكباري
-          وتثبيت رؤوس جسور على الضفة الشرقية.
-        </p>
-      </div>
-    </article>
-
-    <article class="timeline-item">
-      <span class="timeline-dot"></span>
-      <div class="panel timeline-card">
-        <span class="timeline-date">7–9 أكتوبر</span>
-        <h3>تثبيت رؤوس الجسور</h3>
-        <p>
-          استمرت القوات المصرية في تدعيم مواقعها شرق القناة،
-          بينما بدأت القوات الإسرائيلية في إعادة تنظيم قواتها
-          ومحاولة استعادة زمام المبادرة.
-        </p>
-      </div>
-    </article>
-
-    <article class="timeline-item">
-      <span class="timeline-dot"></span>
-      <div class="panel timeline-card">
-        <span class="timeline-date">10–13 أكتوبر</span>
-        <h3>تطورات الجبهة</h3>
-        <p>
-          شهدت الجبهة عمليات مدرعة وجوية ومدفعية متتابعة،
-          مع استمرار تثبيت القوات المصرية لمواقعها شرق القناة.
-        </p>
-      </div>
-    </article>
-
-    <article class="timeline-item">
-      <span class="timeline-dot"></span>
-      <div class="panel timeline-card">
-        <span class="timeline-date">14 أكتوبر</span>
-        <h3>الهجوم المصري شرقًا</h3>
-        <p>
-          بدأت القوات المصرية عملية هجومية شرق القناة في محاولة
-          لتطوير الموقف، وتبعتها معارك مدرعة كبيرة.
-        </p>
-      </div>
-    </article>
-
-    <article class="timeline-item">
-      <span class="timeline-dot"></span>
-      <div class="panel timeline-card">
-        <span class="timeline-date">15–17 أكتوبر</span>
-        <h3>الدفرسوار والثغرة</h3>
-        <p>
-          تمكنت القوات الإسرائيلية من عبور القناة غربًا في منطقة
-          الدفرسوار، وبدأت مرحلة جديدة من العمليات عُرفت في المصادر
-          العربية باسم الثغرة.
-        </p>
-      </div>
-    </article>
-
-    <article class="timeline-item">
-      <span class="timeline-dot"></span>
-      <div class="panel timeline-card">
-        <span class="timeline-date">18–22 أكتوبر</span>
-        <h3>تطورات الحصار ووقف إطلاق النار</h3>
-        <p>
-          استمرت العمليات حول الجبهة الغربية للقناة، وتطورت أوضاع
-          الجيش الثالث، ثم صدر قرار مجلس الأمن رقم 338 في 22 أكتوبر.
-        </p>
-      </div>
-    </article>
-
-    <article class="timeline-item">
-      <span class="timeline-dot"></span>
-      <div class="panel timeline-card">
-        <span class="timeline-date">24–26 أكتوبر</span>
-        <h3>السويس وتثبيت وقف إطلاق النار</h3>
-        <p>
-          شهدت منطقة السويس تطورات عسكرية مهمة، واستمرت الاتصالات
-          الدولية حتى تثبيت وقف إطلاق النار في أواخر أكتوبر.
-        </p>
-      </div>
-    </article>
-
-  </div>
-</section>
-
-<section id="leaders">
-  <div class="section-head">
-    <div>
-      <span class="kicker">PEOPLE / 03</span>
-      <h2>الشخصيات والقادة</h2>
-    </div>
-    <p>شخصيات سياسية وعسكرية ارتبطت بقرارات وعمليات الحرب.</p>
-  </div>
-
-  <div class="people-grid">
-
-    <article class="panel person">
-      <div class="person-image" style="background-image:url('https://upload.wikimedia.org/wikipedia/commons/5/5b/Anwar_Sadat.jpg')"></div>
-      <div class="person-body">
-        <span class="person-role">رئيس جمهورية مصر العربية</span>
-        <h3>أنور السادات</h3>
-        <p>
-          رئيس مصر أثناء حرب أكتوبر، واتخذت القيادة السياسية في عهده
-          قرار الحرب، ثم قاد المسار السياسي الذي تلاها.
-        </p>
-      </div>
-    </article>
-
-    <article class="panel person">
-      <div class="person-image" style="background-image:url('https://upload.wikimedia.org/wikipedia/commons/1/1d/Ahmad_Ismail_Ali.jpg')"></div>
-      <div class="person-body">
-        <span class="person-role">وزير الحربية والقائد العام</span>
-        <h3>أحمد إسماعيل علي</h3>
-        <p>
-          تولى منصب وزير الحربية والقائد العام للقوات المسلحة المصرية
-          خلال الحرب.
-        </p>
-      </div>
-    </article>
-
-    <article class="panel person">
-      <div class="person-image" style="background-image:url('https://upload.wikimedia.org/wikipedia/commons/8/86/Saad_El_Shazly.jpg')"></div>
-      <div class="person-body">
-        <span class="person-role">رئيس أركان القوات المسلحة</span>
-        <h3>سعد الشاذلي</h3>
-        <p>
-          كان رئيس أركان القوات المسلحة المصرية خلال حرب أكتوبر
-          وارتبط بالتخطيط والعمليات على الجبهة.
-        </p>
-      </div>
-    </article>
-
-    <article class="panel person">
-      <div class="person-image" style="background-image:url('https://upload.wikimedia.org/wikipedia/commons/5/5f/Hosni_Mubarak_1981.jpg')"></div>
-      <div class="person-body">
-        <span class="person-role">قائد القوات الجوية</span>
-        <h3>محمد حسني مبارك</h3>
-        <p>
-          تولى قيادة القوات الجوية المصرية خلال حرب أكتوبر،
-          وارتبط دوره بالعمليات الجوية في بداية الحرب.
-        </p>
-      </div>
-    </article>
-
-    <article class="panel person">
-      <div class="person-image" style="background-image:url('https://upload.wikimedia.org/wikipedia/commons/2/26/Golda_Meir_1969.jpg')"></div>
-      <div class="person-body">
-        <span class="person-role">رئيسة وزراء إسرائيل</span>
-        <h3>جولدا مائير</h3>
-        <p>
-          كانت رئيسة الحكومة الإسرائيلية أثناء الحرب، وشاركت القيادة
-          السياسية الإسرائيلية في إدارة الأزمة والعمليات.
-        </p>
-      </div>
-    </article>
-
-    <article class="panel person">
-      <div class="person-image" style="background-image:url('https://upload.wikimedia.org/wikipedia/commons/6/6d/Ariel_Sharon_1973.jpg')"></div>
-      <div class="person-body">
-        <span class="person-role">قائد عسكري إسرائيلي</span>
-        <h3>أرييل شارون</h3>
-        <p>
-          كان أحد القادة الإسرائيليين البارزين على جبهة سيناء
-          وارتبط بعمليات العبور غرب القناة في مرحلة الثغرة.
-        </p>
-      </div>
-    </article>
-
-  </div>
-</section>
-
-<section id="battles">
-  <div class="section-head">
-    <div>
-      <span class="kicker">OPERATIONS / 04</span>
-      <h2>المعارك والعمليات</h2>
-    </div>
-    <p>محطات عسكرية أساسية لفهم تطور العمليات على الجبهة المصرية.</p>
-  </div>
-
-  <div class="battles">
-
-    <article class="panel battle" style="background-image:url('https://upload.wikimedia.org/wikipedia/commons/6/6c/Yom_Kippur_War_1973.jpg')">
-      <span class="kicker">06 OCT</span>
-      <h3>عملية العبور</h3>
-      <p>عبور القوات المصرية لقناة السويس وإنشاء رؤوس جسور شرق القناة.</p>
-    </article>
-
-    <article class="panel battle" style="background-image:url('https://upload.wikimedia.org/wikipedia/commons/4/45/Yom_Kippur_War_-_Suez_Canal.jpg')">
-      <span class="kicker">BAR-LEV</span>
-      <h3>خط بارليف</h3>
-      <p>منظومة التحصينات الإسرائيلية على طول الضفة الشرقية للقناة.</p>
-    </article>
-
-    <article class="panel battle" style="background-image:url('https://upload.wikimedia.org/wikipedia/commons/7/72/Yom_Kippur_War_tanks.jpg')">
-      <span class="kicker">14 OCT</span>
-      <h3>معارك المدرعات</h3>
-      <p>اشتباكات مدرعة واسعة شهدتها الجبهة خلال تطورات الحرب.</p>
-    </article>
-
-    <article class="panel battle" style="background-image:url('https://upload.wikimedia.org/wikipedia/commons/9/93/Yom_Kippur_War_-_Sinai.jpg')">
-      <span class="kicker">15–17 OCT</span>
-      <h3>الدفرسوار والثغرة</h3>
-      <p>عبور إسرائيلي غرب القناة وتطور الموقف حول منطقة الدفرسوار.</p>
-    </article>
-
-    <article class="panel battle" style="background-image:url('https://upload.wikimedia.org/wikipedia/commons/8/8a/Suez_1973.jpg')">
-      <span class="kicker">24 OCT</span>
-      <h3>معركة السويس</h3>
-      <p>قتال عنيف في مدينة السويس خلال مرحلة نهاية العمليات.</p>
-    </article>
-
-    <article class="panel battle" style="background-image:url('https://upload.wikimedia.org/wikipedia/commons/1/1e/Yom_Kippur_War_-_Sinai_Front_%28October_6%2C_1973%29.svg')">
-      <span class="kicker">MAP</span>
-      <h3>جبهة سيناء</h3>
-      <p>الخريطة العامة لتطور العمليات على الجبهة المصرية.</p>
-    </article>
-
-  </div>
-</section>
-
-<section id="forces">
-  <div class="section-head">
-    <div>
-      <span class="kicker">FORCES / 05</span>
-      <h2>فروع القوات</h2>
-    </div>
-    <p>الحرب لم تكن معركة سلاح واحد، بل منظومة مشتركة من القوات والأسلحة.</p>
-  </div>
-
-  <div class="fact-grid">
-    <div class="fact"><b>✈️ القوات الجوية</b><span>ضربات جوية وعمليات إسناد في بداية الحرب ومراحلها.</span></div>
-    <div class="fact"><b>🛡️ الدفاع الجوي</b><span>منظومة صواريخ ومدفعية مضادة للطائرات لحماية القوات والمدن.</span></div>
-    <div class="fact"><b>⚔️ القوات البرية</b><span>المشاة والمدرعات والمدفعية ووحدات الاستطلاع.</span></div>
-    <div class="fact"><b>🌉 المهندسون العسكريون</b><span>فتح الممرات والتعامل مع الساتر الترابي وإنشاء المعابر والكباري.</span></div>
-    <div class="fact"><b>🚤 القوات البحرية</b><span>عمليات وتأمين ومهام بحرية على مسارح مختلفة.</span></div>
-    <div class="fact"><b>📡 القيادة والسيطرة</b><span>تنسيق العمليات والاتصالات وإدارة القوات على الجبهة.</span></div>
-  </div>
-</section>
-
-<section id="maps">
-  <div class="section-head">
-    <div>
-      <span class="kicker">MAP ROOM / 06</span>
-      <h2>غرفة الخرائط</h2>
-    </div>
-    <p>خرائط تاريخية وتعليمية تساعد على فهم اتجاهات الحركة ومناطق العمليات.</p>
-  </div>
-
-  <div class="maps">
-
-    <article class="panel map-card">
-      <div class="map-image">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/1/1e/Yom_Kippur_War_-_Sinai_Front_%28October_6%2C_1973%29.svg"
-             alt="خريطة جبهة سيناء"
-             loading="lazy">
-      </div>
-      <div class="map-body">
-        <h3>جبهة سيناء — 6 أكتوبر</h3>
-        <p>خريطة توضيحية لمسار العمليات في بداية الحرب.</p>
-      </div>
-    </article>
-
-    <article class="panel map-card">
-      <div class="map-image">
-        <img src="https://commons.wikimedia.org/wiki/Special:FilePath/1973%20sinai%20war%20maps-ar.jpg"
-             alt="خريطة حرب أكتوبر بالعربية"
-             loading="lazy">
-      </div>
-      <div class="map-body">
-        <h3>خريطة حرب أكتوبر</h3>
-        <p>خريطة تاريخية توضح الجبهة المصرية وتطور العمليات.</p>
-      </div>
-    </article>
-
-  </div>
-</section>
-
-<section id="gallery">
-  <div class="section-head">
-    <div>
-      <span class="kicker">ARCHIVE / 07</span>
-      <h2>الأرشيف البصري</h2>
-    </div>
-    <p>مجموعة من الصور والمواد البصرية المرتبطة بالحرب والجبهة المصرية.</p>
-  </div>
-
-  <div class="gallery">
-
-    <div class="gallery-item">
-      <img src="https://upload.wikimedia.org/wikipedia/commons/6/6c/Yom_Kippur_War_1973.jpg" loading="lazy" alt="حرب أكتوبر">
-      <span>الحرب</span>
-    </div>
-
-    <div class="gallery-item">
-      <img src="https://upload.wikimedia.org/wikipedia/commons/4/45/Yom_Kippur_War_-_Suez_Canal.jpg" loading="lazy" alt="قناة السويس">
-      <span>القناة</span>
-    </div>
-
-    <div class="gallery-item">
-      <img src="https://upload.wikimedia.org/wikipedia/commons/7/72/Yom_Kippur_War_tanks.jpg" loading="lazy" alt="دبابات">
-      <span>مدرعات</span>
-    </div>
-
-    <div class="gallery-item">
-      <img src="https://upload.wikimedia.org/wikipedia/commons/1/1e/Yom_Kippur_War_-_Sinai_Front_%28October_6%2C_1973%29.svg" loading="lazy" alt="خريطة">
-      <span>خريطة</span>
-    </div>
-
-    <div class="gallery-item">
-      <img src="https://upload.wikimedia.org/wikipedia/commons/5/5b/Anwar_Sadat.jpg" loading="lazy" alt="أنور السادات">
-      <span>السادات</span>
-    </div>
-
-    <div class="gallery-item">
-      <img src="https://upload.wikimedia.org/wikipedia/commons/5f/Hosni_Mubarak_1981.jpg" loading="lazy" alt="حسني مبارك">
-      <span>القوات الجوية</span>
-    </div>
-
-    <div class="gallery-item">
-      <img src="https://upload.wikimedia.org/wikipedia/commons/2/26/Golda_Meir_1969.jpg" loading="lazy" alt="جولدا مائير">
-      <span>القيادة الإسرائيلية</span>
-    </div>
-
-    <div class="gallery-item">
-      <img src="https://commons.wikimedia.org/wiki/Special:FilePath/1973%20sinai%20war%20maps-ar.jpg" loading="lazy" alt="خريطة سيناء">
-      <span>سيناء</span>
-    </div>
-
-  </div>
-</section>
-
-<section id="ai">
-  <div class="section-head">
-    <div>
-      <span class="kicker">OCTOBER KNOWLEDGE ENGINE / 08</span>
-      <h2>اسأل عن حرب أكتوبر 🧠</h2>
-    </div>
-    <p>
-      محرك معرفة محلي يبحث داخل قاعدة المعلومات ويربط بين الأشخاص
-      والأحداث والتواريخ والأماكن والخرائط.
-    </p>
-  </div>
-
-  <div class="panel ai-wrap">
-
-    <div class="ai-top">
-      <div class="ai-title">
-        <div class="ai-orb">🧠</div>
-        <div>
-          <strong>October AI</strong>
-          <div class="ai-status">
-            <span class="status-dot"></span>
-            المعرفة المحلية جاهزة
-            <span id="aiCount"></span>
-          </div>
+        <div class="stat">
+          <strong>1973</strong>
+          <span>عام الحرب</span>
         </div>
+
+        <div class="stat">
+          <strong>6 أكتوبر</strong>
+          <span>بداية العبور</span>
+        </div>
+
+        <div class="stat">
+          <strong>14 أكتوبر</strong>
+          <span>تطور رئيسي على الجبهة</span>
+        </div>
+
+        <div class="stat">
+          <strong>26 أكتوبر</strong>
+          <span>نهاية العمليات الرئيسية</span>
+        </div>
+
       </div>
+
     </div>
 
-    <div class="ai-messages" id="aiMessages">
+  </div>
 
-      <div class="ai-message ai-message-bot">
-        <div class="ai-avatar">🧠</div>
-        <div class="ai-bubble">
-          <strong>October AI</strong>
+</section>
+
+<!-- =======================================================
+     STORY
+======================================================= -->
+
+<section class="section story-section" id="story">
+
+  <div class="section-shell">
+
+    <div class="section-heading reveal">
+
+      <div class="heading-copy">
+
+        <div class="eyebrow">01 • القصة</div>
+
+        <h2 class="section-title">
+          من الانتظار إلى العبور
+        </h2>
+
+        <p class="section-description">
+          لم تبدأ قصة أكتوبر في السادس من أكتوبر نفسه.
+          سبقتها سنوات من إعادة بناء القوات، حرب الاستنزاف،
+          التخطيط، التدريب، واختيار اللحظة المناسبة.
+        </p>
+
+      </div>
+
+      <div class="section-number">01</div>
+
+    </div>
+
+    <div class="story-grid">
+
+      <article class="story-card big reveal">
+
+        <img
+          src="https://commons.wikimedia.org/wiki/Special:FilePath/Egyptian%20forces%20crossing%20the%20Suez%20Canal.jpg"
+          alt="القوات المصرية تعبر قناة السويس"
+          loading="lazy"
+        >
+
+        <div class="story-overlay"></div>
+
+        <div class="story-content">
+
+          <span class="date">
+            6 أكتوبر 1973
+          </span>
+
+          <h3>
+            لحظة العبور
+          </h3>
+
           <p>
-أهلاً بك في محرك المعرفة التاريخية.
-
-اسأل بالطريقة التي تريدها، مثل:
-«مين السادات؟»
-«هو السادات كان بيعمل إيه؟»
-«الرئيس اللي كان وقت الحرب مين؟»
-«الثغرة حصلت إمتى وليه؟»
-«إيه اللي حصل يوم 6 أكتوبر؟»
-«هاتلي معلومات عن الدفرسوار؟»
-«فين قناة السويس؟»
-«قائد القوات الجوية كان مين؟»
+            عبرت القوات المصرية قناة السويس ضمن عملية عسكرية واسعة
+            تزامنت مع ضربة جوية وقصف مدفعي وفتح ثغرات في تحصينات
+            خط بارليف، ثم بدأت أعمال إنشاء الكباري والمعابر.
           </p>
 
-          <div class="ai-suggestions">
-            <button data-ai-question="مين السادات؟">👤 مين السادات؟</button>
-            <button data-ai-question="إيه اللي حصل يوم 6 أكتوبر؟">⚔️ يوم 6 أكتوبر</button>
-            <button data-ai-question="الثغرة حصلت إمتى وليه؟">📅 الثغرة</button>
-            <button data-ai-question="قائد القوات الجوية كان مين؟">✈️ القوات الجوية</button>
-            <button data-ai-question="هاتلي خريطة حرب أكتوبر">🗺️ خريطة</button>
-          </div>
         </div>
+
+      </article>
+
+      <div style="display:grid;gap:18px">
+
+        <article class="story-card reveal">
+
+          <img
+            src="https://commons.wikimedia.org/wiki/Special:FilePath/Egyptianbridge.jpg"
+            alt="جسر مصري فوق قناة السويس"
+            loading="lazy"
+          >
+
+          <div class="story-overlay"></div>
+
+          <div class="story-content">
+
+            <span class="date">7 أكتوبر</span>
+
+            <h3>الكباري والمعابر</h3>
+
+            <p>
+              لعبت وحدات المهندسين دوراً محورياً في إنشاء
+              المعابر ونقل القوات والمعدات إلى الضفة الشرقية.
+            </p>
+
+          </div>
+
+        </article>
+
+        <article class="story-card reveal">
+
+          <img
+            src="https://commons.wikimedia.org/wiki/Special:FilePath/Egyptian%20tanks%20invade%20Sinai%2C%201973.jpg"
+            alt="دبابات مصرية في سيناء"
+            loading="lazy"
+          >
+
+          <div class="story-overlay"></div>
+
+          <div class="story-content">
+
+            <span class="date">أكتوبر 1973</span>
+
+            <h3>القوات تتقدم</h3>
+
+            <p>
+              توسعت رؤوس الكباري المصرية وتم نقل أعداد كبيرة
+              من القوات والمعدات إلى شرق القناة.
+            </p>
+
+          </div>
+
+        </article>
+
       </div>
 
     </div>
 
-    <div class="ai-composer">
-      <textarea id="aiInput" rows="1" placeholder="اكتب سؤالك عن حرب أكتوبر..."></textarea>
-      <button id="aiSend" aria-label="إرسال">➤</button>
-    </div>
-
   </div>
+
 </section>
 
-<section id="creator">
-  <div class="panel creator">
+<!-- =======================================================
+     QUOTE
+======================================================= -->
 
-    <div class="creator-photo">
-      <img
-        src="100.jpg"
-        alt="يوسف أشرف — المبرمج وصانع التجربة الرقمية"
-        loading="lazy"
-        onerror="this.style.opacity='.15'">
+<section class="quote-section">
+
+  <div class="quote-inner reveal">
+
+    <div class="quote-mark">“</div>
+
+    <div class="quote-text">
+      أكتوبر لم يكن يوماً واحداً...
+      بل كان طريقاً طويلاً من الإعداد
+      إلى لحظة العبور.
     </div>
 
-    <div class="creator-copy">
-      <span class="kicker">THE CREATOR</span>
-      <h2>يوسف أشرف</h2>
-      <div class="creator-role">المبرمج وصانع التجربة الرقمية</div>
-
-      <p>
-        تم بناء هذه التجربة بهدف تقديم تاريخ حرب أكتوبر 1973
-        بطريقة تفاعلية حديثة تجمع بين السرد التاريخي والخط الزمني
-        والخرائط والشخصيات والأرشيف البصري ومحرك المعرفة المحلي.
-      </p>
-
-      <div class="tags">
-        <span>💻 برمجة</span>
-        <span>🧠 محرك معرفة</span>
-        <span>🇪🇬 تاريخ مصر</span>
-        <span>🗺️ خرائط تفاعلية</span>
-        <span>🎨 تجربة رقمية</span>
-      </div>
-
-      <div class="signature">✦ يوسف أشرف — OCTOBER 1973</div>
+    <div class="quote-caption">
+      مصر • أكتوبر 1973
     </div>
 
   </div>
+
+</section>
+
+<!-- =======================================================
+     TIMELINE
+======================================================= -->
+
+<section class="section timeline-section" id="timeline">
+
+  <div class="section-shell">
+
+    <div class="section-heading reveal">
+
+      <div class="heading-copy">
+
+        <div class="eyebrow">02 • الأحداث</div>
+
+        <h2 class="section-title">
+          خط زمني للحرب
+        </h2>
+
+        <p class="section-description">
+          استعرض المحطات الرئيسية من بداية الحرب حتى
+          تطورات وقف إطلاق النار في أواخر أكتوبر.
+        </p>
+
+      </div>
+
+      <div class="section-number">02</div>
+
+    </div>
+
+    <div class="timeline">
+
+      <article class="timeline-item reveal">
+
+        <div class="timeline-dot"></div>
+
+        <div class="timeline-card">
+
+          <span class="timeline-date">6 أكتوبر 1973</span>
+
+          <h3>بداية العبور</h3>
+
+          <p>
+            بدأت العملية بهجوم جوي وقصف مدفعي،
+            ثم عبور القوات المصرية لقناة السويس
+            واقتحام مواقع خط بارليف.
+          </p>
+
+        </div>
+
+      </article>
+
+      <article class="timeline-item reveal">
+
+        <div class="timeline-dot"></div>
+
+        <div class="timeline-card">
+
+          <span class="timeline-date">7 أكتوبر</span>
+
+          <h3>توسيع رؤوس الكباري</h3>
+
+          <p>
+            استمر تدفق القوات والمعدات عبر القناة
+            مع بناء الكباري والمعابر وتثبيت المواقع
+            على الضفة الشرقية.
+          </p>
+
+        </div>
+
+      </article>
+
+      <article class="timeline-item reveal">
+
+        <div class="timeline-dot"></div>
+
+        <div class="timeline-card">
+
+          <span class="timeline-date">8–9 أكتوبر</span>
+
+          <h3>تطور المعارك</h3>
+
+          <p>
+            شهدت الجبهة اشتباكات متواصلة ومحاولات
+            إسرائيلية لاستعادة زمام المبادرة.
+          </p>
+
+        </div>
+
+      </article>
+
+      <article class="timeline-item reveal">
+
+        <div class="timeline-dot"></div>
+
+        <div class="timeline-card">
+
+          <span class="timeline-date">10–13 أكتوبر</span>
+
+          <h3>معارك متصاعدة</h3>
+
+          <p>
+            استمرت العمليات على الجبهة المصرية
+            وتبادل الهجمات والاشتباكات المدرعة والجوية.
+          </p>
+
+        </div>
+
+      </article>
+
+      <article class="timeline-item reveal">
+
+        <div class="timeline-dot"></div>
+
+        <div class="timeline-card">
+
+          <span class="timeline-date">14 أكتوبر</span>
+
+          <h3>الهجوم المصري</h3>
+
+          <p>
+            شهد اليوم عمليات هجومية مصرية واسعة
+            وتطورات كبيرة في معارك المدرعات.
+          </p>
+
+        </div>
+
+      </article>
+
+      <article class="timeline-item reveal">
+
+        <div class="timeline-dot"></div>
+
+        <div class="timeline-card">
+
+          <span class="timeline-date">15–17 أكتوبر</span>
+
+          <h3>الدفرسوار والثغرة</h3>
+
+          <p>
+            بدأت القوات الإسرائيلية عملية عبور غرب القناة
+            في منطقة الدفرسوار، لتتطور بعدها أزمة الثغرة.
+          </p>
+
+        </div>
+
+      </article>
+
+      <article class="timeline-item reveal">
+
+        <div class="timeline-dot"></div>
+
+        <div class="timeline-card">
+
+          <span class="timeline-date">18–22 أكتوبر</span>
+
+          <h3>تطورات الحصار ووقف النار</h3>
+
+          <p>
+            استمرت العمليات بينما صدرت ترتيبات
+            لوقف إطلاق النار وتثبيت المواقع.
+          </p>
+
+        </div>
+
+      </article>
+
+      <article class="timeline-item reveal">
+
+        <div class="timeline-dot"></div>
+
+        <div class="timeline-card">
+
+          <span class="timeline-date">24–26 أكتوبر</span>
+
+          <h3>السويس ونهاية العمليات الرئيسية</h3>
+
+          <p>
+            شهدت السويس تطورات عسكرية مهمة،
+            ثم دخلت الجبهة مرحلة تثبيت وقف إطلاق النار.
+          </p>
+
+        </div>
+
+      </article>
+
+    </div>
+
+  </div>
+
+</section>
+
+<!-- =======================================================
+     BATTLES
+======================================================= -->
+
+<section class="section battles-section" id="battles">
+
+  <div class="section-shell">
+
+    <div class="section-heading reveal">
+
+      <div class="heading-copy">
+
+        <div class="eyebrow">03 • المعارك</div>
+
+        <h2 class="section-title">
+          ساحات القتال
+        </h2>
+
+        <p class="section-description">
+          أبرز المحاور والأحداث العسكرية التي شكلت مسار الحرب
+          على الجبهة المصرية.
+        </p>
+
+      </div>
+
+      <div class="section-number">03</div>
+
+    </div>
+
+    <div class="battles-grid">
+
+      <article class="battle-card reveal">
+
+        <img
+          src="https://commons.wikimedia.org/wiki/Special:FilePath/Egyptian%20soldiers%20during%20their%20storming%20of%20the%20Bar%20Lev%20Line.png"
+          alt="اقتحام خط بارليف"
+          loading="lazy"
+        >
+
+        <div class="battle-content">
+
+          <span class="battle-tag">6 أكتوبر</span>
+
+          <h3>اقتحام خط بارليف</h3>
+
+          <p>
+            هجوم القوات المصرية على مواقع التحصينات
+            على طول قناة السويس وفتح المعابر.
+          </p>
+
+        </div>
+
+      </article>
+
+      <article class="battle-card reveal">
+
+        <img
+          src="https://commons.wikimedia.org/wiki/Special:FilePath/Egyptian%20armor%20crossing%20suez%20canal.jpg"
+          alt="المدرعات المصرية تعبر القناة"
+          loading="lazy"
+        >
+
+        <div class="battle-content">
+
+          <span class="battle-tag">العبور</span>
+
+          <h3>رؤوس الكباري</h3>
+
+          <p>
+            تثبيت القوات شرق القناة ونقل المدرعات
+            والإمدادات عبر المعابر.
+          </p>
+
+        </div>
+
+      </article>
+
+      <article class="battle-card reveal">
+
+        <img
+          src="https://commons.wikimedia.org/wiki/Special:FilePath/Egyptian%20and%20Israeli%20Tanks%20Destroyed%20During%20Yom%20Kippur%20War.jpg"
+          alt="دبابات خلال حرب أكتوبر"
+          loading="lazy"
+        >
+
+        <div class="battle-content">
+
+          <span class="battle-tag">معارك المدرعات</span>
+
+          <h3>اشتباكات المدرعات</h3>
+
+          <p>
+            شهدت الجبهة المصرية معارك مدرعة عنيفة
+            خلال مراحل مختلفة من الحرب.
+          </p>
+
+        </div>
+
+      </article>
+
+      <article class="battle-card reveal">
+
+        <img
+          src="https://commons.wikimedia.org/wiki/Special:FilePath/Egyptian%20tanks%20invade%20Sinai%20in%201973.jpg"
+          alt="دبابات مصرية في سيناء"
+          loading="lazy"
+        >
+
+        <div class="battle-content">
+
+          <span class="battle-tag">سيناء</span>
+
+          <h3>التقدم شرق القناة</h3>
+
+          <p>
+            تقدمت الوحدات المصرية في مناطق مختلفة
+            من سيناء بعد نجاح العبور.
+          </p>
+
+        </div>
+
+      </article>
+
+      <article class="battle-card reveal">
+
+        <img
+          src="https://commons.wikimedia.org/wiki/Special:FilePath/Egyptian%20Soldiers%20-%20Flickr%20-%20The%20Central%20Intelligence%20Agency.jpg"
+          alt="جنود مصريون"
+          loading="lazy"
+        >
+
+        <div class="battle-content">
+
+          <span class="battle-tag">القوات البرية</span>
+
+          <h3>المشاة والهندسة</h3>
+
+          <p>
+            ساهمت وحدات المشاة والهندسة في فتح الثغرات
+            وإنشاء المعابر ودعم رؤوس الكباري.
+          </p>
+
+        </div>
+
+      </article>
+
+      <article class="battle-card reveal">
+
+        <img
+          src="https://commons.wikimedia.org/wiki/Special:FilePath/Egyptian%20aircraft%20are%20on%20their%20way%20to%20attack%20Sinai.jpg"
+          alt="طائرات مصرية"
+          loading="lazy"
+        >
+
+        <div class="battle-content">
+
+          <span class="battle-tag">القوات الجوية</span>
+
+          <h3>الضربة الجوية</h3>
+
+          <p>
+            شاركت القوات الجوية المصرية في افتتاح
+            العمليات بضربات استهدفت مواقع عسكرية في سيناء.
+          </p>
+
+        </div>
+
+      </article>
+
+    </div>
+
+  </div>
+
+</section>
+
+<!-- =======================================================
+     FORCES
+======================================================= -->
+
+<section class="section forces-section" id="forces">
+
+  <div class="section-shell">
+
+    <div class="section-heading reveal">
+
+      <div class="heading-copy">
+
+        <div class="eyebrow">04 • القوات</div>
+
+        <h2 class="section-title">
+          منظومة العبور
+        </h2>
+
+        <p class="section-description">
+          الحرب لم تكن مواجهة سلاح واحد؛ شاركت فيها أفرع
+          وتخصصات متعددة تعمل ضمن منظومة عسكرية متكاملة.
+        </p>
+
+      </div>
+
+      <div class="section-number">04</div>
+
+    </div>
+
+    <div class="forces-grid">
+
+      <article class="force reveal">
+        <div class="force-icon">⚔</div>
+        <h3>القوات البرية</h3>
+        <p>
+          المشاة والمدرعات والوحدات المقاتلة على الجبهة.
+        </p>
+      </article>
+
+      <article class="force reveal">
+        <div class="force-icon">✈</div>
+        <h3>القوات الجوية</h3>
+        <p>
+          الضربة الجوية والعمليات الجوية خلال الحرب.
+        </p>
+      </article>
+
+      <article class="force reveal">
+        <div class="force-icon">◉</div>
+        <h3>الدفاع الجوي</h3>
+        <p>
+          شبكة الدفاع الجوي ودورها في حماية القوات والمدن.
+        </p>
+      </article>
+
+      <article class="force reveal">
+        <div class="force-icon">⚓</div>
+        <h3>القوات البحرية</h3>
+        <p>
+          العمليات البحرية وتأمين المحاور والمياه الإقليمية.
+        </p>
+      </article>
+
+      <article class="force reveal">
+        <div class="force-icon">▣</div>
+        <h3>المهندسون</h3>
+        <p>
+          إنشاء الكباري والمعابر وفتح الممرات.
+        </p>
+      </article>
+
+      <article class="force reveal">
+        <div class="force-icon">◆</div>
+        <h3>المدفعية</h3>
+        <p>
+          القصف التمهيدي والدعم النيراني للقوات.
+        </p>
+      </article>
+
+      <article class="force reveal">
+        <div class="force-icon">⌁</div>
+        <h3>الإمداد</h3>
+        <p>
+          استمرار تدفق الذخيرة والمعدات والقوات.
+        </p>
+      </article>
+
+      <article class="force reveal">
+        <div class="force-icon">✦</div>
+        <h3>القيادة والسيطرة</h3>
+        <p>
+          إدارة العمليات واتخاذ القرارات خلال المراحل المختلفة.
+        </p>
+      </article>
+
+    </div>
+
+  </div>
+
+</section>
+
+<!-- =======================================================
+     LEADERS
+======================================================= -->
+
+<section class="section leaders-section" id="leaders">
+
+  <div class="section-shell">
+
+    <div class="section-heading reveal">
+
+      <div class="heading-copy">
+
+        <div class="eyebrow">05 • القادة</div>
+
+        <h2 class="section-title">
+          وجوه من غرفة القيادة
+        </h2>
+
+        <p class="section-description">
+          شخصيات سياسية وعسكرية ارتبطت بقرارات وعمليات
+          مختلفة خلال حرب أكتوبر.
+        </p>
+
+      </div>
+
+      <div class="section-number">05</div>
+
+    </div>
+
+    <div class="leaders-layout">
+
+      <article class="leader-feature reveal" id="leaderFeature">
+
+        <img
+          id="leaderFeatureImage"
+          src="https://commons.wikimedia.org/wiki/Special:FilePath/Egyptian%20Army%20Leaders%20in%206th%20Oct%201973%20War.jpg"
+          alt="قادة الجيش المصري"
+        >
+
+        <div class="leader-info">
+
+          <span class="leader-role" id="leaderRole">
+            القيادة المصرية
+          </span>
+
+          <h3 id="leaderName">
+            قادة أكتوبر
+          </h3>
+
+          <p id="leaderText">
+            قيادة الحرب جمعت بين المستوى السياسي والعسكري
+            والتخطيط العملياتي وإدارة المعارك على الجبهة.
+          </p>
+
+        </div>
+
+      </article>
+
+      <div class="leader-list">
+
+        <div
+          class="leader-mini"
+          data-name="أنور السادات"
+          data-role="رئيس الجمهورية"
+          data-text="كان أنور السادات رئيس جمهورية مصر العربية خلال حرب أكتوبر 1973، وارتبط القرار السياسي للحرب بإدارته للمرحلة."
+          data-image="https://commons.wikimedia.org/wiki/Special:FilePath/Anwar%20Sadat%20%281972%29.jpg"
+        >
+
+          <img
+            src="https://commons.wikimedia.org/wiki/Special:FilePath/Anwar%20Sadat%20%281972%29.jpg"
+            alt="أنور السادات"
+            loading="lazy"
+          >
+
+          <div>
+            <strong>أنور السادات</strong>
+            <span>رئيس الجمهورية</span>
+          </div>
+
+        </div>
+
+        <div
+          class="leader-mini"
+          data-name="أحمد إسماعيل علي"
+          data-role="وزير الحربية والقائد العام"
+          data-text="تولى أحمد إسماعيل علي منصب وزير الحربية والقائد العام للقوات المسلحة خلال حرب أكتوبر."
+          data-image="https://commons.wikimedia.org/wiki/Special:FilePath/Ahmad%20Ismail%20Ali.jpg"
+        >
+
+          <img
+            src="https://commons.wikimedia.org/wiki/Special:FilePath/Ahmad%20Ismail%20Ali.jpg"
+            alt="أحمد إسماعيل علي"
+            loading="lazy"
+          >
+
+          <div>
+            <strong>أحمد إسماعيل علي</strong>
+            <span>وزير الحربية والقائد العام</span>
+          </div>
+
+        </div>
+
+        <div
+          class="leader-mini"
+          data-name="سعد الشاذلي"
+          data-role="رئيس أركان حرب القوات المسلحة"
+          data-text="كان سعد الشاذلي رئيساً لأركان حرب القوات المسلحة المصرية في بداية حرب أكتوبر، وارتبط بالتخطيط العملياتي وإدارة مراحل العبور."
+          data-image="https://commons.wikimedia.org/wiki/Special:FilePath/Saad%20El%20Shazly.jpg"
+        >
+
+          <img
+            src="https://commons.wikimedia.org/wiki/Special:FilePath/Saad%20El%20Shazly.jpg"
+            alt="سعد الشاذلي"
+            loading="lazy"
+          >
+
+          <div>
+            <strong>سعد الشاذلي</strong>
+            <span>رئيس أركان حرب القوات المسلحة</span>
+          </div>
+
+        </div>
+
+        <div
+          class="leader-mini"
+          data-name="حسني مبارك"
+          data-role="قائد القوات الجوية"
+          data-text="كان حسني مبارك قائداً للقوات الجوية المصرية خلال حرب أكتوبر، وارتبط بقيادة القوات الجوية في بداية العمليات."
+          data-image="https://commons.wikimedia.org/wiki/Special:FilePath/Hosni%20Mubarak%201980s.jpg"
+        >
+
+          <img
+            src="https://commons.wikimedia.org/wiki/Special:FilePath/Hosni%20Mubarak%201980s.jpg"
+            alt="حسني مبارك"
+            loading="lazy"
+          >
+
+          <div>
+            <strong>حسني مبارك</strong>
+            <span>قائد القوات الجوية</span>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+<!-- =======================================================
+     MAP
+======================================================= -->
+
+<section class="section map-section" id="map">
+
+  <div class="section-shell">
+
+    <div class="section-heading reveal">
+
+      <div class="heading-copy">
+
+        <div class="eyebrow">06 • الخرائط</div>
+
+        <h2 class="section-title">
+          جبهة القناة وسيناء
+        </h2>
+
+        <p class="section-description">
+          خريطة تاريخية تساعد على فهم الجغرافيا العامة
+          لمحاور القتال والعبور.
+        </p>
+
+      </div>
+
+      <div class="section-number">06</div>
+
+    </div>
+
+    <div class="map-wrapper reveal">
+
+      <div class="map-label">
+        خريطة تاريخية • اضغط للتكبير
+      </div>
+
+      <div class="map-canvas" id="mapCanvas">
+
+        <img
+          class="map-image"
+          id="mapImage"
+          src="https://commons.wikimedia.org/wiki/Special:FilePath/1973%20sinai%20war%20maps-ar.jpg"
+          alt="خريطة حرب أكتوبر في سيناء"
+        >
+
+        <div class="map-controls">
+
+          <button id="mapPlus">+</button>
+          <button id="mapMinus">−</button>
+          <button id="mapReset">↺</button>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+<!-- =======================================================
+     GALLERY
+======================================================= -->
+
+<section class="section gallery-section" id="gallery">
+
+  <div class="section-shell">
+
+    <div class="section-heading reveal">
+
+      <div class="heading-copy">
+
+        <div class="eyebrow">07 • الأرشيف</div>
+
+        <h2 class="section-title">
+          صور من زمن الحرب
+        </h2>
+
+        <p class="section-description">
+          مجموعة من الصور التاريخية التي تساعد على تصور
+          مشاهد العبور والقوات والمعدات.
+        </p>
+
+      </div>
+
+      <div class="section-number">07</div>
+
+    </div>
+
+    <div class="gallery-grid">
+
+      <div
+        class="gallery-item reveal"
+        data-image="https://commons.wikimedia.org/wiki/Special:FilePath/Egyptian%20forces%20crossing%20the%20Suez%20Canal.jpg"
+        data-title="القوات المصرية تعبر قناة السويس"
+      >
+        <img
+          src="https://commons.wikimedia.org/wiki/Special:FilePath/Egyptian%20forces%20crossing%20the%20Suez%20Canal.jpg"
+          alt="القوات المصرية تعبر قناة السويس"
+          loading="lazy"
+        >
+        <span class="gallery-caption">العبور</span>
+      </div>
+
+      <div
+        class="gallery-item reveal"
+        data-image="https://commons.wikimedia.org/wiki/Special:FilePath/Egyptianbridge.jpg"
+        data-title="المركبات المصرية فوق المعبر"
+      >
+        <img
+          src="https://commons.wikimedia.org/wiki/Special:FilePath/Egyptianbridge.jpg"
+          alt="المركبات المصرية فوق المعبر"
+          loading="lazy"
+        >
+        <span class="gallery-caption">الكباري</span>
+      </div>
+
+      <div
+        class="gallery-item reveal"
+        data-image="https://commons.wikimedia.org/wiki/Special:FilePath/Egyptian%20armored%20military%20vehicles%20cross%20the%20Suez%20Canal.png"
+        data-title="مركبات مدرعة مصرية تعبر القناة"
+      >
+        <img
+          src="https://commons.wikimedia.org/wiki/Special:FilePath/Egyptian%20armored%20military%20vehicles%20cross%20the%20Suez%20Canal.png"
+          alt="مركبات مدرعة مصرية"
+          loading="lazy"
+        >
+        <span class="gallery-caption">المدرعات</span>
+      </div>
+
+      <div
+        class="gallery-item reveal"
+        data-image="https://commons.wikimedia.org/wiki/Special:FilePath/Egyptian%20soldier%2C%201973.jpg"
+        data-title="جندي مصري عام 1973"
+      >
+        <img
+          src="https://commons.wikimedia.org/wiki/Special:FilePath/Egyptian%20soldier%2C%201973.jpg"
+          alt="جندي مصري عام 1973"
+          loading="lazy"
+        >
+        <span class="gallery-caption">الجنود</span>
+      </div>
+
+      <div
+        class="gallery-item reveal"
+        data-image="https://commons.wikimedia.org/wiki/Special:FilePath/Egyptian%20Soldiers%20-%20Flickr%20-%20The%20Central%20Intelligence%20Agency.jpg"
+        data-title="جنود مصريون"
+      >
+        <img
+          src="https://commons.wikimedia.org/wiki/Special:FilePath/Egyptian%20Soldiers%20-%20Flickr%20-%20The%20Central%20Intelligence%20Agency.jpg"
+          alt="جنود مصريون"
+          loading="lazy"
+        >
+        <span class="gallery-caption">القوات</span>
+      </div>
+
+      <div
+        class="gallery-item reveal"
+        data-image="https://commons.wikimedia.org/wiki/Special:FilePath/Egyptian%20tanks%20invade%20Sinai%20in%201973.jpg"
+        data-title="دبابات مصرية في سيناء"
+      >
+        <img
+          src="https://commons.wikimedia.org/wiki/Special:FilePath/Egyptian%20tanks%20invade%20Sinai%20in%201973.jpg"
+          alt="دبابات مصرية في سيناء"
+          loading="lazy"
+        >
+        <span class="gallery-caption">سيناء</span>
+      </div>
+
+      <div
+        class="gallery-item reveal"
+        data-image="https://commons.wikimedia.org/wiki/Special:FilePath/Egyptian%20and%20Israeli%20Tanks%20Destroyed%20During%20Yom%20Kippur%20War.jpg"
+        data-title="معدات مدرعة خلال الحرب"
+      >
+        <img
+          src="https://commons.wikimedia.org/wiki/Special:FilePath/Egyptian%20and%20Israeli%20Tanks%20Destroyed%20During%20Yom%20Kippur%20War.jpg"
+          alt="معدات مدرعة خلال الحرب"
+          loading="lazy"
+        >
+        <span class="gallery-caption">المعارك</span>
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+<!-- =======================================================
+     ARCHIVE CARDS
+======================================================= -->
+
+<section class="section archive-section">
+
+  <div class="section-shell">
+
+    <div class="section-heading reveal">
+
+      <div class="heading-copy">
+
+        <div class="eyebrow">08 • الوثائق</div>
+
+        <h2 class="section-title">
+          أبواب الأرشيف
+        </h2>
+
+        <p class="section-description">
+          مناطق مختلفة داخل التجربة لاستكشاف الحرب من زوايا متعددة.
+        </p>
+
+      </div>
+
+      <div class="section-number">08</div>
+
+    </div>
+
+    <div class="archive-grid">
+
+      <article class="archive-card reveal">
+        <div class="archive-icon">📜</div>
+        <h3>قبل الحرب</h3>
+        <p>
+          حرب الاستنزاف، إعادة بناء القوات، والسياق الاستراتيجي
+          الذي سبق أكتوبر.
+        </p>
+        <a href="#story">استكشف ←</a>
+      </article>
+
+      <article class="archive-card reveal">
+        <div class="archive-icon">📻</div>
+        <h3>غرفة القيادة</h3>
+        <p>
+          واجهة معرفية لاستعراض القرارات والأدوار والقيادة
+          خلال مراحل الحرب.
+        </p>
+        <a href="#leaders">فتح الغرفة ←</a>
+      </article>
+
+      <article class="archive-card reveal">
+        <div class="archive-icon">🗺</div>
+        <h3>خرائط العمليات</h3>
+        <p>
+          خرائط تساعد على فهم القناة وسيناء ومحاور العبور
+          وتطورات الجبهة.
+        </p>
+        <a href="#map">فتح الخرائط ←</a>
+      </article>
+
+    </div>
+
+  </div>
+
+</section>
+
+<!-- =======================================================
+     AI
+======================================================= -->
+
+<section class="section ai-section" id="ai">
+
+  <div class="section-shell">
+
+    <div class="section-heading reveal">
+
+      <div class="heading-copy">
+
+        <div class="eyebrow">09 • المعرفة</div>
+
+        <h2 class="section-title">
+          اسأل عن أكتوبر
+        </h2>
+
+        <p class="section-description">
+          اكتب السؤال بالطريقة التي تتحدث بها، وسيبحث محرك المعرفة
+          المحلي داخل المعلومات التاريخية المتاحة.
+        </p>
+
+      </div>
+
+      <div class="section-number">09</div>
+
+    </div>
+
+    <div class="ai-box reveal">
+
+      <div class="ai-head">
+
+        <div class="ai-logo">🧠</div>
+
+        <div>
+          <h3>October Intelligence</h3>
+          <p>
+            محرك معرفة تاريخي محلي
+          </p>
+        </div>
+
+      </div>
+
+      <div class="ai-search">
+
+        <input
+          id="aiInput"
+          type="text"
+          autocomplete="off"
+          placeholder="مثلاً: مين كان قائد القوات الجوية؟"
+        >
+
+        <button class="btn btn-primary" id="aiAsk">
+          اسأل
+        </button>
+
+      </div>
+
+      <div class="ai-suggestions">
+
+        <button class="ai-chip" data-question="مين كان رئيس الجمهورية وقت الحرب؟">
+          رئيس الجمهورية؟
+        </button>
+
+        <button class="ai-chip" data-question="ايه اللي حصل يوم 6 اكتوبر؟">
+          ماذا حدث في 6 أكتوبر؟
+        </button>
+
+        <button class="ai-chip" data-question="مين كان قائد القوات الجوية؟">
+          قائد القوات الجوية؟
+        </button>
+
+        <button class="ai-chip" data-question="الثغرة حصلت امتى؟">
+          متى حدثت الثغرة؟
+        </button>
+
+        <button class="ai-chip" data-question="عايز خريطة للحرب">
+          أريد خريطة
+        </button>
+
+      </div>
+
+      <div class="ai-result" id="aiResult">
+        اكتب سؤالك عن حرب أكتوبر 1973...
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+<!-- =======================================================
+     CREATOR
+======================================================= -->
+
+<section class="creator-section" id="creator">
+
+  <div class="creator-card reveal">
+
+    <div class="creator-media">
+
+      <div class="creator-photo-frame">
+
+        <img
+          src="100.jpg"
+          alt="يوسف أشرف"
+          class="creator-photo"
+          loading="lazy"
+          onerror="this.style.display='none';this.parentElement.classList.add('photo-missing')"
+        >
+
+        <div class="photo-fallback">
+          <span>100</span>
+        </div>
+
+      </div>
+
+      <div class="creator-photo-badge">
+        <span>✦</span>
+        صورة المبرمج
+      </div>
+
+    </div>
+
+    <div class="creator-info">
+
+      <span class="creator-kicker">
+        صُنِع بكل شغف 🇪🇬
+      </span>
+
+      <h2 class="creator-name">
+        يوسف أشرف
+      </h2>
+
+      <p class="creator-role">
+        المبرمج وصانع التجربة الرقمية
+      </p>
+
+      <p class="creator-description">
+        تم تصميم هذه التجربة لتقديم تاريخ حرب أكتوبر 1973
+        بصورة تفاعلية تجمع بين المعرفة التاريخية، الخط الزمني،
+        الشخصيات، الأحداث، الخرائط، الصور، والبحث الذكي
+        في تجربة واحدة.
+      </p>
+
+      <div class="creator-tags">
+        <span>💻 مبرمج</span>
+        <span>🧠 ذكاء معرفي</span>
+        <span>🇪🇬 تاريخ مصر</span>
+        <span>🎨 تصميم تفاعلي</span>
+      </div>
+
+      <div class="creator-signature">
+        <span class="signature-line"></span>
+        <span>يوسف أشرف</span>
+        <span class="signature-line"></span>
+      </div>
+
+    </div>
+
+  </div>
+
 </section>
 
 </main>
 
-<footer class="footer">
-  <strong>حرب أكتوبر 1973 🇪🇬</strong>
-  <br>
-  تجربة تاريخية رقمية تفاعلية — المعلومات التاريخية يجب التعامل معها
-  باعتبارها مادة توثيقية قابلة للمراجعة والمقارنة بين المصادر.
+<!-- =======================================================
+     FOOTER
+======================================================= -->
+
+<footer>
+
+  <div class="footer-inner">
+
+    <div class="footer-brand">
+      مصر أكتوبر | ملحمة العبور 🇪🇬
+    </div>
+
+    <div class="footer-copy">
+      تجربة تاريخية تفاعلية • أكتوبر 1973
+    </div>
+
+  </div>
+
 </footer>
 
-<div class="modal" id="imageModal">
-  <button id="closeModal">×</button>
-  <img id="modalImage" alt="عرض الصورة">
+<!-- =======================================================
+     LIGHTBOX
+======================================================= -->
+
+<div class="lightbox" id="lightbox">
+
+  <button class="lightbox-close" id="lightboxClose">
+    ×
+  </button>
+
+  <img id="lightboxImage" src="" alt="">
+
+  <div class="lightbox-title" id="lightboxTitle"></div>
+
 </div>
 
-<div class="toast" id="toast"></div>
+<button class="scroll-top" id="scrollTop">
+  ↑
+</button>
 
-<script src="october-ai.js"></script>
+<!-- =======================================================
+     JAVASCRIPT
+======================================================= -->
 
 <script>
-document.addEventListener("DOMContentLoaded",()=>{
 
-  const $=s=>document.querySelector(s);
-  const $$=s=>document.querySelectorAll(s);
+/* =========================================================
+   CONFIG
+========================================================= */
 
-  setTimeout(()=>{
-    $("#loader")?.classList.add("hide");
-  },2700);
+window.OCTOBER_CONFIG = Object.freeze({
 
-  const menu=$("#menuBtn");
-  const nav=$("#nav");
+  name:"مصر أكتوبر | ملحمة العبور",
 
-  menu?.addEventListener("click",()=>{
-    nav.classList.toggle("mobile");
-  });
+  year:1973,
 
-  $$("[data-go]").forEach(btn=>{
-    btn.addEventListener("click",()=>{
-      const target=document.querySelector(btn.dataset.go);
-      if(target){
-        target.scrollIntoView({behavior:"smooth"});
-        nav.classList.remove("mobile");
-      }
-    });
-  });
+  creator:"يوسف أشرف",
 
-  const sections=[...document.querySelectorAll("section[id]")];
-  const navButtons=[...document.querySelectorAll(".nav button")];
+  image:"100.jpg",
 
-  const observer=new IntersectionObserver(entries=>{
-    entries.forEach(entry=>{
-      if(entry.isIntersecting){
-        navButtons.forEach(btn=>{
-          btn.classList.toggle(
-            "active",
-            btn.dataset.go===`#${entry.target.id}`
-          );
-        });
-      }
-    });
-  },{threshold:.35});
-
-  sections.forEach(s=>observer.observe(s));
-
-  const modal=$("#imageModal");
-  const modalImage=$("#modalImage");
-
-  $$(".gallery-item img,.map-image img").forEach(img=>{
-    img.addEventListener("click",()=>{
-      modalImage.src=img.src;
-      modal.classList.add("open");
-    });
-  });
-
-  $("#closeModal")?.addEventListener("click",()=>{
-    modal.classList.remove("open");
-  });
-
-  modal?.addEventListener("click",e=>{
-    if(e.target===modal) modal.classList.remove("open");
-  });
-
-  const input=$("#aiInput");
-  const send=$("#aiSend");
-  const messages=$("#aiMessages");
-  const count=$("#aiCount");
-
-  if(window.OCTOBER_AI){
-
-    const stats=OCTOBER_AI.stats();
-
-    if(count){
-      count.textContent=
-        ` • ${stats.entries} وحدة معرفة • ${stats.people} شخصيات • ${stats.media} وسائط`;
-    }
-
-    function escapeHTML(value){
-      const div=document.createElement("div");
-      div.textContent=value;
-      return div.innerHTML;
-    }
-
-    function addMessage(text,type="bot",result=null){
-
-      const wrapper=document.createElement("div");
-      wrapper.className=`ai-message ai-message-${type}`;
-
-      const avatar=type==="bot"?"🧠":"👤";
-
-      wrapper.innerHTML=`
-        <div class="ai-avatar">${avatar}</div>
-        <div class="ai-bubble">
-          <strong>${type==="bot"?"October AI":"أنت"}</strong>
-          <p>${escapeHTML(text)}</p>
-        </div>
-      `;
-
-      messages.appendChild(wrapper);
-
-      if(type==="bot" && result){
-
-        if(result.suggestions?.length){
-
-          const box=document.createElement("div");
-          box.className="ai-followups";
-
-          result.suggestions.slice(0,4).forEach(q=>{
-            const button=document.createElement("button");
-            button.type="button";
-            button.textContent=q;
-            button.dataset.aiQuestion=q;
-            box.appendChild(button);
-          });
-
-          messages.appendChild(box);
-        }
-
-        if(result.media?.length){
-
-          const mediaBox=document.createElement("div");
-          mediaBox.className="ai-followups";
-
-          result.media.slice(0,4).forEach(media=>{
-            const button=document.createElement("button");
-            button.type="button";
-            button.textContent=`🖼️ ${media.title||"عرض الوسيط"}`;
-
-            button.addEventListener("click",()=>{
-              if(media.url){
-                modalImage.src=media.url;
-                modal.classList.add("open");
-              }
-            });
-
-            mediaBox.appendChild(button);
-          });
-
-          messages.appendChild(mediaBox);
-        }
-      }
-
-      messages.scrollTop=messages.scrollHeight;
-    }
-
-    function ask(){
-
-      const question=input.value.trim();
-
-      if(!question)return;
-
-      addMessage(question,"user");
-      input.value="";
-
-      const typing=document.createElement("div");
-      typing.className="ai-message ai-message-bot";
-
-      typing.innerHTML=`
-        <div class="ai-avatar">🧠</div>
-        <div class="ai-bubble">
-          <strong>October AI</strong>
-          <p>أراجع المعرفة التاريخية...</p>
-        </div>
-      `;
-
-      messages.appendChild(typing);
-      messages.scrollTop=messages.scrollHeight;
-
-      setTimeout(()=>{
-
-        typing.remove();
-
-        let result;
-
-        try{
-          result=OCTOBER_AI.smartAsk(question,{
-            section:"global"
-          });
-        }catch(error){
-          result={
-            answer:"حدث خطأ أثناء البحث داخل قاعدة المعرفة.",
-            suggestions:[]
-          };
-        }
-
-        addMessage(
-          result.answer||"لم أجد إجابة موثقة داخل المعرفة المحلية.",
-          "bot",
-          result
-        );
-
-      },320);
-    }
-
-    send?.addEventListener("click",ask);
-
-    input?.addEventListener("keydown",e=>{
-      if(e.key==="Enter"&&!e.shiftKey){
-        e.preventDefault();
-        ask();
-      }
-    });
-
-    document.addEventListener("click",e=>{
-      const btn=e.target.closest("[data-ai-question]");
-      if(!btn)return;
-
-      input.value=btn.dataset.aiQuestion;
-      ask();
-    });
-  }
-
-  let toastTimer;
-
-  window.showToast=(text)=>{
-    const toast=$("#toast");
-    if(!toast)return;
-
-    toast.textContent=text;
-    toast.classList.add("show");
-
-    clearTimeout(toastTimer);
-
-    toastTimer=setTimeout(()=>{
-      toast.classList.remove("show");
-    },2500);
-  };
+  aiFile:"october-ai.js"
 
 });
+
+
+/* =========================================================
+   INTRO LOADER
+========================================================= */
+
+const intro = document.getElementById("intro");
+const introProgress = document.getElementById("introProgress");
+const introStatus = document.getElementById("introStatus");
+const introEnter = document.getElementById("introEnter");
+
+const introMessages = [
+  "جاري تجهيز الأرشيف...",
+  "تحميل صور العبور...",
+  "تجهيز الخط الزمني...",
+  "فتح خرائط العمليات...",
+  "تجهيز القادة والأحداث...",
+  "ربط محرك المعرفة...",
+  "اكتملت التجربة..."
+];
+
+let progress = 0;
+
+const introTimer = setInterval(()=>{
+
+  progress += Math.random() * 8 + 4;
+
+  if(progress >= 100){
+    progress = 100;
+    clearInterval(introTimer);
+
+    introProgress.style.width = "100%";
+    introStatus.textContent = introMessages[introMessages.length - 1];
+    introEnter.classList.add("show");
+
+  }else{
+
+    introProgress.style.width = progress + "%";
+
+    const index = Math.min(
+      introMessages.length - 2,
+      Math.floor(progress / 15)
+    );
+
+    introStatus.textContent = introMessages[index];
+
+  }
+
+},180);
+
+function closeIntro(){
+
+  intro.classList.add("hide");
+
+  document.body.classList.remove("locked");
+
+  setTimeout(()=>{
+
+    intro.remove();
+
+  },1200);
+
+}
+
+introEnter.addEventListener("click",closeIntro);
+
+setTimeout(()=>{
+
+  if(document.body.contains(intro)){
+    introEnter.classList.add("show");
+  }
+
+},7000);
+
+
+/* =========================================================
+   NAVBAR
+========================================================= */
+
+const navbar = document.getElementById("navbar");
+
+window.addEventListener("scroll",()=>{
+
+  if(window.scrollY > 40){
+    navbar.classList.add("scrolled");
+  }else{
+    navbar.classList.remove("scrolled");
+  }
+
+});
+
+
+/* =========================================================
+   REVEAL
+========================================================= */
+
+const revealObserver = new IntersectionObserver(
+
+  entries=>{
+
+    entries.forEach(entry=>{
+
+      if(entry.isIntersecting){
+
+        entry.target.classList.add("visible");
+
+        revealObserver.unobserve(entry.target);
+
+      }
+
+    });
+
+  },
+
+  {
+    threshold:.12
+  }
+
+);
+
+document.querySelectorAll(".reveal").forEach(el=>{
+  revealObserver.observe(el);
+});
+
+
+/* =========================================================
+   ACTIVE NAV
+========================================================= */
+
+const sections = [...document.querySelectorAll("main section[id]")];
+
+const navLinks = [...document.querySelectorAll(".nav-links a")];
+
+const sectionObserver = new IntersectionObserver(
+
+  entries=>{
+
+    entries.forEach(entry=>{
+
+      if(entry.isIntersecting){
+
+        navLinks.forEach(link=>{
+
+          link.classList.toggle(
+            "active",
+            link.getAttribute("href") === "#" + entry.target.id
+          );
+
+        });
+
+      }
+
+    });
+
+  },
+
+  {
+    rootMargin:"-35% 0px -55% 0px"
+  }
+
+);
+
+sections.forEach(section=>{
+  sectionObserver.observe(section);
+});
+
+
+/* =========================================================
+   LIGHTBOX
+========================================================= */
+
+const lightbox = document.getElementById("lightbox");
+const lightboxImage = document.getElementById("lightboxImage");
+const lightboxTitle = document.getElementById("lightboxTitle");
+const lightboxClose = document.getElementById("lightboxClose");
+
+document.querySelectorAll(".gallery-item").forEach(item=>{
+
+  item.addEventListener("click",()=>{
+
+    lightboxImage.src = item.dataset.image;
+    lightboxImage.alt = item.dataset.title || "";
+    lightboxTitle.textContent = item.dataset.title || "";
+
+    lightbox.classList.add("open");
+
+    document.body.classList.add("locked");
+
+  });
+
+});
+
+function closeLightbox(){
+
+  lightbox.classList.remove("open");
+
+  document.body.classList.remove("locked");
+
+  setTimeout(()=>{
+    lightboxImage.src="";
+  },250);
+
+}
+
+lightboxClose.addEventListener("click",closeLightbox);
+
+lightbox.addEventListener("click",e=>{
+
+  if(e.target === lightbox){
+    closeLightbox();
+  }
+
+});
+
+document.addEventListener("keydown",e=>{
+
+  if(e.key === "Escape"){
+    closeLightbox();
+  }
+
+});
+
+
+/* =========================================================
+   LEADER SWITCHER
+========================================================= */
+
+const leaderName = document.getElementById("leaderName");
+const leaderRole = document.getElementById("leaderRole");
+const leaderText = document.getElementById("leaderText");
+const leaderImage = document.getElementById("leaderFeatureImage");
+
+document.querySelectorAll(".leader-mini").forEach(card=>{
+
+  card.addEventListener("click",()=>{
+
+    leaderName.textContent = card.dataset.name;
+    leaderRole.textContent = card.dataset.role;
+    leaderText.textContent = card.dataset.text;
+
+    leaderImage.style.opacity = "0";
+
+    setTimeout(()=>{
+
+      leaderImage.src = card.dataset.image;
+
+      leaderImage.onload = ()=>{
+        leaderImage.style.opacity = "1";
+      };
+
+    },180);
+
+  });
+
+});
+
+
+/* =========================================================
+   MAP ZOOM
+========================================================= */
+
+const mapImage = document.getElementById("mapImage");
+const mapPlus = document.getElementById("mapPlus");
+const mapMinus = document.getElementById("mapMinus");
+const mapReset = document.getElementById("mapReset");
+
+let mapScale = 1;
+
+function renderMap(){
+
+  mapImage.style.transform =
+    `translate(-50%,-50%) scale(${mapScale})`;
+
+}
+
+mapPlus.addEventListener("click",()=>{
+
+  mapScale = Math.min(2.6,mapScale + .2);
+
+  renderMap();
+
+});
+
+mapMinus.addEventListener("click",()=>{
+
+  mapScale = Math.max(.65,mapScale - .2);
+
+  renderMap();
+
+});
+
+mapReset.addEventListener("click",()=>{
+
+  mapScale = 1;
+
+  renderMap();
+
+});
+
+
+/* =========================================================
+   MAP DRAG
+========================================================= */
+
+const mapCanvas = document.getElementById("mapCanvas");
+
+let dragging = false;
+let startX = 0;
+let startY = 0;
+let translateX = 0;
+let translateY = 0;
+
+mapCanvas.addEventListener("pointerdown",e=>{
+
+  dragging = true;
+
+  startX = e.clientX - translateX;
+  startY = e.clientY - translateY;
+
+  mapCanvas.setPointerCapture(e.pointerId);
+
+});
+
+mapCanvas.addEventListener("pointermove",e=>{
+
+  if(!dragging) return;
+
+  translateX = e.clientX - startX;
+  translateY = e.clientY - startY;
+
+  mapImage.style.marginLeft = translateX + "px";
+  mapImage.style.marginTop = translateY + "px";
+
+});
+
+mapCanvas.addEventListener("pointerup",()=>{
+  dragging=false;
+});
+
+mapCanvas.addEventListener("pointercancel",()=>{
+  dragging=false;
+});
+
+
+/* =========================================================
+   AI
+========================================================= */
+
+const aiInput = document.getElementById("aiInput");
+const aiAsk = document.getElementById("aiAsk");
+const aiResult = document.getElementById("aiResult");
+
+function localFallback(question){
+
+  const q = question
+    .toLowerCase()
+    .replace(/[أإآ]/g,"ا")
+    .replace(/ى/g,"ي");
+
+  if(
+    q.includes("السادات") ||
+    q.includes("الرئيس") ||
+    q.includes("رئيس الجمهورية")
+  ){
+
+    return `
+      <strong style="color:#e4bf67">أنور السادات</strong><br>
+      كان رئيس جمهورية مصر العربية خلال حرب أكتوبر 1973،
+      وكان القرار السياسي للحرب مرتبطاً بإدارته للمرحلة.
+    `;
+
+  }
+
+  if(
+    q.includes("6 اكتوبر") ||
+    q.includes("6 أكتوبر") ||
+    q.includes("العبور")
+  ){
+
+    return `
+      <strong style="color:#e4bf67">6 أكتوبر 1973</strong><br>
+      بدأت العمليات بهجوم جوي وقصف مدفعي ثم عبور القوات
+      المصرية لقناة السويس واقتحام مواقع خط بارليف
+      وإنشاء المعابر والكباري.
+    `;
+
+  }
+
+  if(
+    q.includes("مبارك") ||
+    q.includes("القوات الجويه") ||
+    q.includes("القوات الجوية")
+  ){
+
+    return `
+      <strong style="color:#e4bf67">حسني مبارك</strong><br>
+      كان قائداً للقوات الجوية المصرية خلال حرب أكتوبر 1973.
+    `;
+
+  }
+
+  if(
+    q.includes("الثغره") ||
+    q.includes("الثغرة") ||
+    q.includes("الدفرسوار")
+  ){
+
+    return `
+      <strong style="color:#e4bf67">الدفرسوار والثغرة</strong><br>
+      بدأت عملية العبور الإسرائيلي غرب قناة السويس
+      في منطقة الدفرسوار خلال الفترة 15–17 أكتوبر،
+      وتطورت بعدها أحداث الثغرة.
+    `;
+
+  }
+
+  if(
+    q.includes("خريطه") ||
+    q.includes("خريطة") ||
+    q.includes("خرائط")
+  ){
+
+    return `
+      <strong style="color:#e4bf67">الخرائط</strong><br>
+      يمكنك فتح قسم الخرائط لرؤية خريطة تاريخية للجبهة
+      المصرية وسيناء ومسار قناة السويس.
+      <br><br>
+      <a href="#map" style="color:#e4bf67">
+        فتح الخريطة ←
+      </a>
+    `;
+
+  }
+
+  return `
+    لم أجد إجابة مؤكدة لهذا السؤال داخل النسخة الحالية.
+    جرّب سؤالاً مثل:
+    «مين كان رئيس الجمهورية؟»
+    أو «إيه اللي حصل يوم 6 أكتوبر؟»
+    أو «الثغرة حصلت إمتى؟»
+  `;
+
+}
+
+async function askAI(){
+
+  const question = aiInput.value.trim();
+
+  if(!question){
+    aiResult.textContent = "اكتب سؤالك أولاً...";
+    return;
+  }
+
+  aiResult.innerHTML = `
+    <span style="color:#d7b45e">
+      جاري البحث في الأرشيف...
+    </span>
+  `;
+
+  try{
+
+    if(
+      window.OCTOBER_AI &&
+      typeof window.OCTOBER_AI.smartAsk === "function"
+    ){
+
+      const result = await window.OCTOBER_AI.smartAsk(
+        question,
+        {
+          section:"ai",
+          selectedMediaId:null
+        }
+      );
+
+      if(result && result.answer){
+
+        aiResult.innerHTML = result.answer;
+
+        return;
+
+      }
+
+    }
+
+  }catch(error){
+
+    console.warn("OCTOBER_AI:",error);
+
+  }
+
+  setTimeout(()=>{
+
+    aiResult.innerHTML = localFallback(question);
+
+  },250);
+
+}
+
+aiAsk.addEventListener("click",askAI);
+
+aiInput.addEventListener("keydown",e=>{
+
+  if(e.key === "Enter"){
+    askAI();
+  }
+
+});
+
+document.querySelectorAll(".ai-chip").forEach(chip=>{
+
+  chip.addEventListener("click",()=>{
+
+    aiInput.value = chip.dataset.question;
+
+    askAI();
+
+  });
+
+});
+
+
+/* =========================================================
+   LOAD AI FILE
+========================================================= */
+
+(function loadOctoberAI(){
+
+  const script = document.createElement("script");
+
+  script.src = "october-ai.js";
+
+  script.async = true;
+
+  script.onerror = ()=>{
+
+    console.warn(
+      "october-ai.js غير موجود — تم تشغيل البحث المحلي الاحتياطي."
+    );
+
+  };
+
+  document.head.appendChild(script);
+
+})();
+
+
+/* =========================================================
+   SCROLL TOP
+========================================================= */
+
+const scrollTop = document.getElementById("scrollTop");
+
+window.addEventListener("scroll",()=>{
+
+  scrollTop.classList.toggle(
+    "show",
+    window.scrollY > 700
+  );
+
+});
+
+scrollTop.addEventListener("click",()=>{
+
+  window.scrollTo({
+    top:0,
+    behavior:"smooth"
+  });
+
+});
+
+
+/* =========================================================
+   CINEMATIC FLASH
+========================================================= */
+
+const flash = document.getElementById("flash");
+
+function cinematicFlash(){
+
+  flash.classList.remove("fire");
+
+  void flash.offsetWidth;
+
+  flash.classList.add("fire");
+
+}
+
+setInterval(()=>{
+
+  if(
+    document.visibilityState === "visible" &&
+    !document.body.classList.contains("locked")
+  ){
+
+    if(Math.random() > .45){
+      cinematicFlash();
+    }
+
+  }
+
+},6500);
+
+
+/* =========================================================
+   IMAGE ERROR HANDLING
+========================================================= */
+
+document.querySelectorAll("img").forEach(img=>{
+
+  img.addEventListener("error",()=>{
+
+    img.style.background =
+      "linear-gradient(145deg,#111,#080909)";
+
+    img.style.opacity = ".55";
+
+  });
+
+});
+
+
+/* =========================================================
+   SOUND UI
+========================================================= */
+
+const soundButton = document.getElementById("soundButton");
+
+let soundEnabled = false;
+
+soundButton.addEventListener("click",()=>{
+
+  soundEnabled = !soundEnabled;
+
+  soundButton.textContent =
+    soundEnabled ? "🔊" : "🔇";
+
+});
+
+
+/* =========================================================
+   SMOOTH INTERNAL LINKS
+========================================================= */
+
+document.querySelectorAll('a[href^="#"]').forEach(link=>{
+
+  link.addEventListener("click",e=>{
+
+    const target = document.querySelector(
+      link.getAttribute("href")
+    );
+
+    if(!target) return;
+
+    e.preventDefault();
+
+    target.scrollIntoView({
+      behavior:"smooth",
+      block:"start"
+    });
+
+  });
+
+});
+
+
+/* =========================================================
+   PERFORMANCE / PAGE READY
+========================================================= */
+
+window.addEventListener("load",()=>{
+
+  document.documentElement.classList.add("ready");
+
+});
+
 </script>
 
 </body>
-          </html>
+  </html>
