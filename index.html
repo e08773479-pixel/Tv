@@ -1,2198 +1,3280 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover">
-
-  <title>أحببتُ الملك 👑</title>
-
-  <meta name="description" content="أحببتُ الملك — رحلة من الكلمات والمشاهد والقصائد إلى قلبٍ واحد.">
-  <meta name="theme-color" content="#080507">
-
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cairo:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-
-  <style>
-    :root{
-      --bg:#070506;
-      --bg2:#11080c;
-      --wine:#702039;
-      --wine2:#a33d5b;
-      --wine3:#32101b;
-      --ivory:#f5eee8;
-      --muted:#b9aba8;
-      --copper:#c49376;
-      --line:rgba(255,255,255,.11);
-      --header:72px;
-      --ease:cubic-bezier(.22,.8,.22,1);
-    }
-
-    *{
-      box-sizing:border-box;
-      margin:0;
-      padding:0;
-    }
-
-    html{
-      background:var(--bg);
-      scroll-behavior:smooth;
-    }
-
-    body{
-      min-height:100vh;
-      background:var(--bg);
-      color:var(--ivory);
-      font-family:"Cairo",sans-serif;
-      overflow-x:hidden;
-    }
-
-    body.locked{
-      overflow:hidden;
-    }
-
-    button,
-    input{
-      font:inherit;
-    }
-
-    button{
-      border:0;
-      cursor:pointer;
-    }
-
-    /* =====================================================
-       CINEMATIC INTRO
-    ===================================================== */
-
-    .opening{
-      position:fixed;
-      inset:0;
-      z-index:10000;
-      overflow:hidden;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      background:#050304;
-      isolation:isolate;
-      transition:
-        opacity 900ms var(--ease),
-        visibility 900ms var(--ease),
-        transform 1200ms var(--ease);
-    }
-
-    .opening.hide{
-      opacity:0;
-      visibility:hidden;
-      pointer-events:none;
-      transform:scale(1.035);
-    }
-
-    .opening-image{
-      position:absolute;
-      inset:-5%;
-      z-index:-5;
-      background:
-        linear-gradient(
-          180deg,
-          rgba(4,2,3,.28),
-          rgba(4,2,3,.52) 45%,
-          rgba(4,2,3,.92)
-        ),
-        url("https://images.unsplash.com/photo-1518199266791-5375a83190b7?auto=format&fit=crop&w=2400&q=92")
-        center/cover;
-      animation:openingZoom 7s ease-out forwards;
-      filter:saturate(.72) contrast(1.05);
-    }
-
-    .opening-image::after{
-      content:"";
-      position:absolute;
-      inset:0;
-      background:
-        radial-gradient(
-          circle at 50% 42%,
-          rgba(150,45,78,.23),
-          transparent 28%
-        ),
-        linear-gradient(
-          90deg,
-          rgba(0,0,0,.45),
-          transparent 50%,
-          rgba(0,0,0,.45)
-        );
-    }
-
-    .opening-noise{
-      position:absolute;
-      inset:0;
-      opacity:.045;
-      pointer-events:none;
-      background-image:url("https://grainy-gradients.vercel.app/noise.svg");
-      mix-blend-mode:screen;
-    }
-
-    .opening-light{
-      position:absolute;
-      width:70vw;
-      height:70vw;
-      max-width:800px;
-      max-height:800px;
-      border-radius:50%;
-      background:rgba(154,43,77,.16);
-      filter:blur(100px);
-      animation:lightBreath 4s ease-in-out infinite;
-    }
-
-    .opening-content{
-      position:relative;
-      width:min(760px,90vw);
-      text-align:center;
-      animation:openingContent 1.3s var(--ease) both;
-    }
-
-    .opening-top{
-      color:#d4ad99;
-      font-size:10px;
-      letter-spacing:5px;
-      margin-bottom:28px;
-      opacity:.85;
-    }
-
-    .opening-crown{
-      width:82px;
-      height:82px;
-      margin:0 auto 24px;
-      display:grid;
-      place-items:center;
-      border:1px solid rgba(255,255,255,.16);
-      border-radius:50%;
-      background:rgba(10,5,8,.28);
-      backdrop-filter:blur(14px);
-      font-size:38px;
-      box-shadow:
-        0 0 70px rgba(155,44,78,.22),
-        inset 0 0 30px rgba(255,255,255,.04);
-      animation:crownFloat 3s ease-in-out infinite;
-    }
-
-    .opening-title{
-      font-family:"Amiri",serif;
-      font-size:clamp(55px,13vw,125px);
-      line-height:.85;
-      font-weight:700;
-      letter-spacing:-3px;
-      text-shadow:0 20px 60px rgba(0,0,0,.6);
-    }
-
-    .opening-title span{
-      display:block;
-      color:transparent;
-      -webkit-text-stroke:1px rgba(245,238,232,.55);
-    }
-
-    .opening-subtitle{
-      margin-top:28px;
-      color:#d2c5c1;
-      font-size:13px;
-      line-height:2;
-    }
-
-    .opening-progress{
-      width:min(430px,78vw);
-      margin:42px auto 0;
-    }
-
-    .opening-progress-head{
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      color:#a99794;
-      font-size:9px;
-      letter-spacing:2px;
-      margin-bottom:10px;
-    }
-
-    .opening-counter{
-      color:#f1ddd2;
-      font-family:"Amiri",serif;
-      font-size:18px;
-    }
-
-    .opening-track{
-      position:relative;
-      height:2px;
-      overflow:hidden;
-      background:rgba(255,255,255,.13);
-    }
-
-    .opening-bar{
-      width:0;
-      height:100%;
-      background:linear-gradient(
-        90deg,
-        var(--wine),
-        var(--copper),
-        #fff0e5
-      );
-      animation:openingProgress 4s linear forwards;
-    }
-
-    .opening-bottom{
-      position:absolute;
-      bottom:28px;
-      left:0;
-      right:0;
-      display:flex;
-      justify-content:center;
-      color:rgba(255,255,255,.42);
-      font-size:9px;
-      letter-spacing:3px;
-    }
-
-    @keyframes openingZoom{
-      from{
-        transform:scale(1.1);
-      }
-      to{
-        transform:scale(1);
-      }
-    }
-
-    @keyframes openingContent{
-      from{
-        opacity:0;
-        transform:translateY(30px);
-      }
-      to{
-        opacity:1;
-        transform:translateY(0);
-      }
-    }
-
-    @keyframes crownFloat{
-      0%,100%{
-        transform:translateY(0);
-      }
-      50%{
-        transform:translateY(-7px);
-      }
-    }
-
-    @keyframes lightBreath{
-      0%,100%{
-        transform:scale(.9);
-        opacity:.55;
-      }
-      50%{
-        transform:scale(1.1);
-        opacity:1;
-      }
-    }
-
-    @keyframes openingProgress{
-      from{width:0}
-      to{width:100%}
-    }
-
-    /* =====================================================
-       GLOBAL BACKGROUND
-    ===================================================== */
-
-    .background-layer{
-      position:fixed;
-      inset:0;
-      z-index:-20;
-      overflow:hidden;
-      background:
-        radial-gradient(
-          circle at 15% 20%,
-          rgba(111,32,56,.2),
-          transparent 32%
-        ),
-        radial-gradient(
-          circle at 85% 70%,
-          rgba(185,133,104,.08),
-          transparent 28%
-        ),
-        #070506;
-    }
-
-    .background-image{
-      position:absolute;
-      inset:0;
-      background-size:cover;
-      background-position:center;
-      opacity:.13;
-      transform:scale(1.04);
-      transition:
-        background-image 1s ease,
-        opacity 1s ease,
-        transform 8s ease;
-    }
-
-    .background-image.active{
-      opacity:.18;
-      transform:scale(1);
-    }
-
-    .background-overlay{
-      position:absolute;
-      inset:0;
-      background:
-        linear-gradient(
-          180deg,
-          rgba(7,5,6,.76),
-          rgba(7,5,6,.54) 35%,
-          rgba(7,5,6,.94)
-        );
-    }
-
-    .grain{
-      position:fixed;
-      inset:0;
-      z-index:999;
-      pointer-events:none;
-      opacity:.045;
-      background-image:url("https://grainy-gradients.vercel.app/noise.svg");
-      mix-blend-mode:overlay;
-    }
-
-    /* =====================================================
-       PASSWORD GATE
-    ===================================================== */
-
-    .gate{
-      position:fixed;
-      inset:0;
-      z-index:4000;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      padding:24px;
-      background:
-        linear-gradient(
-          rgba(6,3,5,.38),
-          rgba(6,3,5,.88)
-        ),
-        url("https://images.unsplash.com/photo-1518199266791-5375a83190b7?auto=format&fit=crop&w=2200&q=90")
-        center/cover;
-      transition:
-        opacity 700ms ease,
-        visibility 700ms ease,
-        transform 700ms ease;
-    }
-
-    .gate::before{
-      content:"";
-      position:absolute;
-      inset:0;
-      background:
-        radial-gradient(
-          circle at center,
-          transparent 10%,
-          rgba(5,3,4,.72) 86%
-        );
-    }
-
-    .gate.hide{
-      opacity:0;
-      visibility:hidden;
-      pointer-events:none;
-      transform:scale(1.03);
-    }
-
-    .gate-panel{
-      position:relative;
-      width:min(520px,100%);
-      padding:clamp(30px,7vw,58px);
-      border:1px solid rgba(255,255,255,.14);
-      border-radius:34px;
-      background:rgba(10,6,8,.7);
-      backdrop-filter:blur(24px);
-      box-shadow:0 40px 120px rgba(0,0,0,.7);
-      text-align:center;
-      animation:gateIn 1s ease both;
-    }
-
-    @keyframes gateIn{
-      from{
-        opacity:0;
-        transform:translateY(30px);
-      }
-      to{
-        opacity:1;
-        transform:translateY(0);
-      }
-    }
-
-    .gate-crown{
-      font-size:48px;
-      margin-bottom:14px;
-    }
-
-    .gate-kicker{
-      color:#d8b29e;
-      font-size:10px;
-      letter-spacing:4px;
-      margin-bottom:12px;
-    }
-
-    .gate-title{
-      font-family:"Amiri",serif;
-      font-size:clamp(42px,10vw,72px);
-      line-height:1;
-      margin-bottom:18px;
-    }
-
-    .gate-description{
-      color:#cbbfbd;
-      line-height:2;
-      font-size:14px;
-      margin-bottom:30px;
-    }
-
-    .password-wrap{
-      position:relative;
-      margin-bottom:13px;
-    }
-
-    .password-input{
-      width:100%;
-      height:58px;
-      padding:0 20px 0 58px;
-      border:1px solid rgba(255,255,255,.13);
-      border-radius:18px;
-      background:rgba(255,255,255,.055);
-      color:#fff;
-      outline:none;
-      text-align:center;
-      letter-spacing:4px;
-      transition:.3s ease;
-    }
-
-    .password-input:focus{
-      border-color:rgba(185,133,104,.65);
-      box-shadow:0 0 0 4px rgba(185,133,104,.08);
-    }
-
-    .password-eye{
-      position:absolute;
-      left:9px;
-      top:9px;
-      width:40px;
-      height:40px;
-      border-radius:13px;
-      background:rgba(255,255,255,.07);
-      color:var(--muted);
-    }
-
-    .gate-button{
-      width:100%;
-      min-height:58px;
-      border-radius:18px;
-      background:linear-gradient(135deg,#7e2944,#4b1425);
-      color:#fff;
-      font-weight:700;
-      box-shadow:0 16px 45px rgba(111,32,56,.28);
-      transition:.25s ease;
-    }
-
-    .gate-button:hover{
-      transform:translateY(-2px);
-    }
-
-    .gate-error{
-      min-height:22px;
-      color:#d88a9e;
-      font-size:12px;
-      margin-top:12px;
-      opacity:0;
-      transition:.25s ease;
-    }
-
-    .gate-error.show{
-      opacity:1;
-    }
-
-    .gate-hint{
-      margin-top:22px;
-      color:#75676b;
-      font-size:10px;
-    }
-
-    /* =====================================================
-       APP
-    ===================================================== */
-
-    /*
-      مهم:
-      التطبيق أصبح ظاهرًا افتراضيًا.
-      الـJS لا يملك حق حبس الموقع كله.
-    */
-
-    #app{
-      opacity:1;
-      visibility:visible;
-    }
-
-    /* =====================================================
-       HEADER
-    ===================================================== */
-
-    .topbar{
-      position:fixed;
-      top:0;
-      right:0;
-      left:0;
-      z-index:1000;
-      height:var(--header);
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      padding:0 24px;
-      border-bottom:1px solid rgba(255,255,255,.07);
-      background:rgba(7,5,6,.64);
-      backdrop-filter:blur(22px);
-    }
-
-    .brand{
-      display:flex;
-      align-items:center;
-      gap:11px;
-      cursor:pointer;
-    }
-
-    .brand-icon{
-      width:42px;
-      height:42px;
-      display:grid;
-      place-items:center;
-      border:1px solid rgba(255,255,255,.12);
-      border-radius:14px;
-      background:rgba(255,255,255,.05);
-    }
-
-    .brand-name{
-      font-family:"Amiri",serif;
-      font-size:23px;
-      font-weight:700;
-    }
-
-    .brand-small{
-      color:#837477;
-      font-size:8px;
-      letter-spacing:2px;
-      display:block;
-      margin-top:-4px;
-    }
-
-    .menu-button{
-      width:46px;
-      height:46px;
-      border-radius:15px;
-      background:rgba(255,255,255,.06);
-      color:white;
-      border:1px solid rgba(255,255,255,.08);
-      font-size:20px;
-    }
-
-    /* =====================================================
-       MENU
-    ===================================================== */
-
-    .menu-backdrop{
-      position:fixed;
-      inset:0;
-      z-index:1500;
-      background:rgba(0,0,0,.6);
-      opacity:0;
-      visibility:hidden;
-      transition:.35s ease;
-    }
-
-    .menu-backdrop.open{
-      opacity:1;
-      visibility:visible;
-    }
-
-    .side-menu{
-      position:fixed;
-      top:0;
-      right:0;
-      bottom:0;
-      z-index:1600;
-      width:min(390px,88vw);
-      padding:25px;
-      background:
-        linear-gradient(
-          180deg,
-          rgba(25,12,17,.98),
-          rgba(7,5,6,.99)
-        );
-      border-left:1px solid rgba(255,255,255,.09);
-      box-shadow:-30px 0 90px rgba(0,0,0,.5);
-      transform:translateX(105%);
-      transition:transform 600ms var(--ease);
-      overflow-y:auto;
-    }
-
-    .side-menu.open{
-      transform:translateX(0);
-    }
-
-    .menu-head{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      padding-bottom:25px;
-      border-bottom:1px solid rgba(255,255,255,.08);
-      margin-bottom:22px;
-    }
-
-    .menu-close{
-      width:42px;
-      height:42px;
-      border-radius:13px;
-      background:rgba(255,255,255,.06);
-      color:white;
-    }
-
-    .menu-links{
-      display:grid;
-      gap:8px;
-    }
-
-    .menu-link{
-      width:100%;
-      padding:15px 17px;
-      border-radius:15px;
-      display:flex;
-      align-items:center;
-      gap:13px;
-      color:#d4c9c7;
-      background:transparent;
-      text-align:right;
-      transition:.25s ease;
-    }
-
-    .menu-link:hover,
-    .menu-link.active{
-      background:rgba(111,32,56,.2);
-      color:#fff;
-      transform:translateX(-4px);
-    }
-
-    .menu-number{
-      width:30px;
-      height:30px;
-      display:grid;
-      place-items:center;
-      border-radius:10px;
-      background:rgba(255,255,255,.06);
-      color:#d8b29e;
-      font-size:10px;
-    }
-
-    /* =====================================================
-       MAIN
-    ===================================================== */
-
-    main{
-      position:relative;
-    }
-
-    section{
-      position:relative;
-      min-height:100vh;
-      padding:120px 20px 80px;
-      display:flex;
-      align-items:center;
-    }
-
-    .container{
-      width:min(1180px,100%);
-      margin-inline:auto;
-    }
-
-    /* =====================================================
-       HERO
-    ===================================================== */
-
-    .hero{
-      min-height:100svh;
-      background:
-        linear-gradient(
-          180deg,
-          rgba(7,5,6,.28),
-          rgba(7,5,6,.95)
-        ),
-        url("https://images.unsplash.com/photo-1497250681960-ef046c08a56e?auto=format&fit=crop&w=2200&q=90")
-        center/cover;
-      overflow:hidden;
-    }
-
-    .hero::before{
-      content:"";
-      position:absolute;
-      inset:0;
-      background:
-        radial-gradient(
-          circle at 50% 38%,
-          rgba(111,32,56,.24),
-          transparent 30%
-        ),
-        linear-gradient(
-          90deg,
-          rgba(0,0,0,.25),
-          transparent,
-          rgba(0,0,0,.25)
-        );
-    }
-
-    .hero-content{
-      position:relative;
-      width:min(850px,100%);
-      padding-top:50px;
-    }
-
-    .eyebrow,
-    .section-kicker{
-      color:#d3a991;
-      font-size:10px;
-      letter-spacing:4px;
-      margin-bottom:14px;
-    }
-
-    .hero-title{
-      font-family:"Amiri",serif;
-      font-size:clamp(65px,14vw,150px);
-      line-height:.82;
-      font-weight:700;
-      letter-spacing:-4px;
-      margin-bottom:30px;
-    }
-
-    .hero-title span{
-      display:block;
-      color:transparent;
-      -webkit-text-stroke:1px rgba(244,238,231,.38);
-    }
-
-    .hero-description{
-      width:min(620px,100%);
-      color:#d2c6c3;
-      font-size:clamp(15px,2vw,19px);
-      line-height:2.1;
-      margin-bottom:34px;
-    }
-
-    .hero-actions{
-      display:flex;
-      flex-wrap:wrap;
-      gap:12px;
-    }
-
-    .primary-btn,
-    .secondary-btn{
-      min-height:54px;
-      padding:0 25px;
-      border-radius:17px;
-      transition:.3s ease;
-    }
-
-    .primary-btn{
-      color:#fff;
-      background:linear-gradient(135deg,#7c2945,#491322);
-      box-shadow:0 15px 45px rgba(111,32,56,.3);
-    }
-
-    .secondary-btn{
-      color:#e3d9d6;
-      background:rgba(255,255,255,.055);
-      border:1px solid rgba(255,255,255,.1);
-      backdrop-filter:blur(12px);
-    }
-
-    .primary-btn:hover,
-    .secondary-btn:hover{
-      transform:translateY(-3px);
-    }
-
-    .hero-scroll{
-      position:absolute;
-      bottom:35px;
-      right:50%;
-      transform:translateX(50%);
-      color:#9c8e8e;
-      font-size:10px;
-      letter-spacing:2px;
-    }
-
-    /* =====================================================
-       COMMON
-    ===================================================== */
-
-    .section-title{
-      font-family:"Amiri",serif;
-      font-size:clamp(42px,8vw,82px);
-      line-height:1;
-      margin-bottom:20px;
-    }
-
-    .section-description{
-      max-width:700px;
-      color:var(--muted);
-      line-height:2;
-      font-size:14px;
-    }
-
-    /* =====================================================
-       LETTER
-    ===================================================== */
-
-    .letter{
-      background:
-        linear-gradient(180deg,rgba(7,5,6,.94),rgba(12,7,9,.97)),
-        url("https://images.unsplash.com/photo-1499209974431-9dddcece7f88?auto=format&fit=crop&w=2200&q=85")
-        center/cover;
-    }
-
-    .letter-layout{
-      display:grid;
-      grid-template-columns:.7fr 1.3fr;
-      gap:70px;
-      align-items:start;
-    }
-
-    .letter-side{
-      position:sticky;
-      top:130px;
-    }
-
-    .letter-mark{
-      font-family:"Amiri",serif;
-      font-size:130px;
-      line-height:.7;
-      color:rgba(185,133,104,.14);
-    }
-
-    .letter-content{
-      padding:40px;
-      border-right:1px solid rgba(255,255,255,.1);
-    }
-
-    .letter-paragraph{
-      color:#ddd2cf;
-      font-family:"Amiri",serif;
-      font-size:clamp(21px,3vw,29px);
-      line-height:2.15;
-      margin-bottom:35px;
-      opacity:0;
-      transform:translateY(20px);
-      transition:900ms ease;
-    }
-
-    .letter-paragraph.visible{
-      opacity:1;
-      transform:translateY(0);
-    }
-
-    /* =====================================================
-       POETRY
-    ===================================================== */
-
-    .poetry-intro{
-      min-height:65vh;
-      background:
-        linear-gradient(rgba(7,5,6,.64),rgba(7,5,6,.94)),
-        url("https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=2200&q=90")
-        center/cover;
-    }
-
-    .poetry-intro .container{
-      text-align:center;
-    }
-
-    .poetry-intro .section-description{
-      margin:auto;
-    }
-
-    .diwan{
-      background:#090607;
-    }
-
-    .diwan-head{
-      display:flex;
-      justify-content:space-between;
-      gap:30px;
-      align-items:end;
-      margin-bottom:45px;
-    }
-
-    .poem-list{
-      display:grid;
-      grid-template-columns:repeat(2,minmax(0,1fr));
-      gap:12px;
-    }
-
-    .poem-card{
-      position:relative;
-      min-height:220px;
-      padding:28px;
-      border:1px solid rgba(255,255,255,.1);
-      border-radius:25px;
-      background:linear-gradient(
-        145deg,
-        rgba(255,255,255,.045),
-        rgba(255,255,255,.015)
-      );
-      overflow:hidden;
-      cursor:pointer;
-      transition:.4s ease;
-    }
-
-    .poem-card:hover{
-      transform:translateY(-6px);
-      border-color:rgba(185,133,104,.3);
-    }
-
-    .poem-number{
-      color:#d6ad96;
-      font-size:11px;
-      margin-bottom:30px;
-    }
-
-    .poem-card-title{
-      font-family:"Amiri",serif;
-      font-size:37px;
-      margin-bottom:8px;
-    }
-
-    .poem-card-subtitle{
-      color:var(--muted);
-      font-size:12px;
-      line-height:1.8;
-    }
-
-    /* =====================================================
-       POEM READER
-    ===================================================== */
-
-    .poem-reader{
-      display:none;
-      min-height:100vh;
-      padding-top:130px;
-      background:#080506;
-    }
-
-    .poem-reader.active{
-      display:block;
-    }
-
-    .poem-scene{
-      position:relative;
-      min-height:430px;
-      display:flex;
-      align-items:end;
-      padding:55px;
-      border-radius:35px;
-      overflow:hidden;
-      background-size:cover;
-      background-position:center;
-      box-shadow:0 30px 90px rgba(0,0,0,.55);
-    }
-
-    .poem-scene::before{
-      content:"";
-      position:absolute;
-      inset:0;
-      background:
-        linear-gradient(0deg,rgba(4,2,3,.95),rgba(4,2,3,.2)),
-        radial-gradient(circle at center,transparent 20%,rgba(0,0,0,.35));
-    }
-
-    .poem-scene-content{
-      position:relative;
-      z-index:1;
-      max-width:750px;
-    }
-
-    .poem-scene-title{
-      font-family:"Amiri",serif;
-      font-size:clamp(50px,9vw,100px);
-      line-height:.95;
-      margin-bottom:15px;
-    }
-
-    .poem-scene-text{
-      color:#d2c5c2;
-      line-height:2;
-      max-width:650px;
-    }
-
-    .poem-reader-body{
-      width:min(900px,100%);
-      margin:70px auto;
-    }
-
-    .poem-description{
-      color:var(--muted);
-      line-height:2;
-      margin-bottom:50px;
-      text-align:center;
-    }
-
-    .poem-line{
-      position:relative;
-      padding:22px 25px;
-      margin-bottom:3px;
-      border-bottom:1px solid rgba(255,255,255,.055);
-      color:#e7ddda;
-      font-family:"Amiri",serif;
-      font-size:clamp(20px,3vw,28px);
-      line-height:1.9;
-      animation:lineIn .65s ease both;
-    }
-
-    @keyframes lineIn{
-      from{
-        opacity:0;
-        transform:translateY(12px);
-      }
-      to{
-        opacity:1;
-        transform:none;
-      }
-    }
-
-    .poem-controls{
-      display:flex;
-      justify-content:space-between;
-      gap:12px;
-      margin-top:50px;
-    }
-
-    .reader-btn{
-      min-height:52px;
-      padding:0 22px;
-      border-radius:15px;
-      background:rgba(255,255,255,.055);
-      border:1px solid rgba(255,255,255,.09);
-      color:#ddd3d0;
-    }
-
-    .reader-btn.primary{
-      background:linear-gradient(135deg,#76263f,#461322);
-      color:#fff;
-    }
-
-    /* =====================================================
-       DETAILS
-    ===================================================== */
-
-    .details{
-      background:
-        linear-gradient(rgba(8,5,6,.8),rgba(8,5,6,.96)),
-        url("https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=2200&q=90")
-        center/cover;
-    }
-
-    .details-list{
-      margin-top:50px;
-      display:grid;
-    }
-
-    .detail-row{
-      display:grid;
-      grid-template-columns:100px 1fr;
-      gap:30px;
-      padding:35px 0;
-      border-top:1px solid rgba(255,255,255,.09);
-    }
-
-    .detail-number{
-      color:#d6ad96;
-      font-size:11px;
-    }
-
-    .detail-title{
-      font-family:"Amiri",serif;
-      font-size:33px;
-      margin-bottom:8px;
-    }
-
-    .detail-text{
-      color:var(--muted);
-      line-height:2;
-      max-width:750px;
-    }
-
-    /* =====================================================
-       MEMORY
-    ===================================================== */
-
-    .memory{
-      background:
-        linear-gradient(rgba(7,5,6,.55),rgba(7,5,6,.94)),
-        url("https://images.unsplash.com/photo-1470252649378-9c29740c9fa8?auto=format&fit=crop&w=2200&q=90")
-        center/cover;
-    }
-
-    .memory-stage{
-      margin-top:45px;
-      position:relative;
-      min-height:500px;
-      padding:50px;
-      border:1px solid rgba(255,255,255,.12);
-      border-radius:35px;
-      background:linear-gradient(
-        135deg,
-        rgba(20,10,14,.76),
-        rgba(7,5,6,.62)
-      );
-      backdrop-filter:blur(15px);
-      overflow:hidden;
-    }
-
-    .memory-number{
-      color:#d6ad96;
-      font-size:11px;
-      margin-bottom:35px;
-    }
-
-    .memory-title{
-      font-family:"Amiri",serif;
-      font-size:clamp(42px,7vw,75px);
-      margin-bottom:15px;
-    }
-
-    .memory-description{
-      max-width:720px;
-      color:#cfc2bf;
-      line-height:2.1;
-      font-size:16px;
-    }
-
-    .memory-controls{
-      display:flex;
-      gap:10px;
-      margin-top:45px;
-    }
-
-    .memory-controls button{
-      width:50px;
-      height:50px;
-      border-radius:15px;
-      background:rgba(255,255,255,.07);
-      color:white;
-      border:1px solid rgba(255,255,255,.08);
-    }
-
-    /* =====================================================
-       SOUND
-    ===================================================== */
-
-    .sound{
-      min-height:80vh;
-      background:
-        linear-gradient(rgba(6,4,5,.72),rgba(6,4,5,.95)),
-        url("https://images.unsplash.com/photo-1511379938547-c1f69419868d?auto=format&fit=crop&w=2200&q=90")
-        center/cover;
-    }
-
-    .sound-box{
-      max-width:800px;
-      padding:45px;
-      border:1px solid rgba(255,255,255,.1);
-      border-radius:32px;
-      background:rgba(15,8,11,.68);
-      backdrop-filter:blur(22px);
-    }
-
-    .sound-status{
-      color:var(--muted);
-      line-height:2;
-      margin:20px 0 30px;
-    }
-
-    .sound-controls{
-      display:flex;
-      align-items:center;
-      gap:15px;
-    }
-
-    .sound-toggle{
-      width:62px;
-      height:62px;
-      border-radius:20px;
-      background:linear-gradient(135deg,#792741,#471322);
-      color:white;
-      font-size:20px;
-    }
-
-    .sound-progress{
-      flex:1;
-      height:4px;
-      border-radius:999px;
-      background:rgba(255,255,255,.1);
-      overflow:hidden;
-    }
-
-    .sound-progress-bar{
-      width:0;
-      height:100%;
-      background:var(--copper);
-    }
-
-    /* =====================================================
-       FINAL
-    ===================================================== */
-
-    .final{
-      min-height:100svh;
-      text-align:center;
-      background:
-        linear-gradient(rgba(7,5,6,.48),rgba(7,5,6,.96)),
-        url("https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?auto=format&fit=crop&w=2200&q=90")
-        center/cover;
-    }
-
-    .final .container{
-      display:flex;
-      flex-direction:column;
-      align-items:center;
-    }
-
-    .final-crown{
-      font-size:45px;
-      margin-bottom:20px;
-    }
-
-    .final-title{
-      font-family:"Amiri",serif;
-      font-size:clamp(55px,12vw,120px);
-      line-height:.95;
-      margin-bottom:30px;
-    }
-
-    .final-text{
-      width:min(750px,100%);
-      color:#d7cbc8;
-      font-family:"Amiri",serif;
-      font-size:clamp(20px,3vw,27px);
-      line-height:2.2;
-    }
-
-    .final-signature{
-      margin-top:50px;
-      color:#d3a991;
-      font-family:"Amiri",serif;
-      font-size:27px;
-    }
-
-    .restart-btn{
-      margin-top:35px;
-    }
-
-    /* =====================================================
-       REVEAL
-    ===================================================== */
-
-    .reveal{
-      opacity:1;
-      transform:none;
-    }
-
-    /*
-      لو app.js اشتغل، يقدر يرجع أنيميشن الظهور.
-      لكن لا نخلي المحتوى مختفي في حالة فشل JS.
-    */
-
-    .js-ready .reveal{
-      opacity:0;
-      transform:translateY(35px);
-      transition:
-        opacity 900ms ease,
-        transform 900ms ease;
-    }
-
-    .js-ready .reveal.visible{
-      opacity:1;
-      transform:none;
-    }
-
-    /* =====================================================
-       MOBILE
-    ===================================================== */
-
-    @media(max-width:800px){
-
-      :root{
-        --header:68px;
-      }
-
-      .topbar{
-        padding:0 14px;
-      }
-
-      .brand-name{
-        font-size:19px;
-      }
-
-      .brand-small{
-        display:none;
-      }
-
-      section{
-        padding:100px 15px 65px;
-      }
-
-      .opening-title{
-        font-size:clamp(58px,19vw,100px);
-      }
-
-      .opening-crown{
-        width:72px;
-        height:72px;
-        font-size:32px;
-      }
-
-      .opening-subtitle{
-        padding:0 25px;
-      }
-
-      .hero{
-        padding-top:130px;
-      }
-
-      .hero-title{
-        font-size:clamp(62px,20vw,110px);
-        letter-spacing:-3px;
-      }
-
-      .hero-description{
-        font-size:14px;
-      }
-
-      .hero-actions{
-        flex-direction:column;
-      }
-
-      .hero-actions button{
-        width:100%;
-      }
-
-      .letter-layout{
-        grid-template-columns:1fr;
-        gap:20px;
-      }
-
-      .letter-side{
-        position:static;
-      }
-
-      .letter-mark{
-        font-size:80px;
-      }
-
-      .letter-content{
-        padding:25px 0;
-        border-right:0;
-      }
-
-      .poem-list{
-        grid-template-columns:1fr;
-      }
-
-      .poem-card{
-        min-height:190px;
-      }
-
-      .poem-scene{
-        min-height:430px;
-        padding:30px 23px;
-        border-radius:25px;
-      }
-
-      .poem-line{
-        padding:18px 4px;
-        font-size:21px;
-      }
-
-      .poem-controls{
-        flex-direction:column;
-      }
-
-      .poem-controls button{
-        width:100%;
-      }
-
-      .detail-row{
-        grid-template-columns:1fr;
-        gap:8px;
-      }
-
-      .memory-stage,
-      .sound-box{
-        padding:30px 23px;
-      }
-
-      .memory-controls{
-        justify-content:center;
-      }
-
-      .opening-progress{
-        margin-top:32px;
-      }
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
+<meta name="theme-color" content="#050608">
+<meta name="description" content="حرب أكتوبر 1973 — تجربة وثائقية تفاعلية عن العبور والقادة والمعارك والخرائط والأحداث.">
+
+<title>أكتوبر 1973 | ملحمة العبور</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --bg:#050608;
+  --bg2:#090d12;
+  --panel:rgba(14,17,21,.82);
+  --panel2:rgba(20,23,28,.92);
+  --gold:#d7ad57;
+  --gold2:#f0d38b;
+  --red:#9d2525;
+  --red2:#d44c3c;
+  --white:#f7f2e8;
+  --muted:#a8a7a1;
+  --line:rgba(255,255,255,.10);
+  --shadow:0 30px 100px rgba(0,0,0,.55);
+  --radius:24px;
+}
+
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
+
+html{
+  scroll-behavior:smooth;
+  background:var(--bg);
+}
+
+body{
+  background:
+    radial-gradient(circle at 50% 10%,rgba(148,37,25,.14),transparent 32%),
+    radial-gradient(circle at 80% 60%,rgba(215,173,87,.07),transparent 28%),
+    #050608;
+  color:var(--white);
+  font-family:"Cairo","IBM Plex Sans Arabic",sans-serif;
+  overflow-x:hidden;
+}
+
+button,
+input{
+  font-family:inherit;
+}
+
+button{
+  cursor:pointer;
+}
+
+img{
+  max-width:100%;
+  display:block;
+}
+
+/* =========================================================
+   INTRO
+========================================================= */
+
+.intro{
+  position:fixed;
+  inset:0;
+  z-index:99999;
+  background:
+    linear-gradient(180deg,rgba(0,0,0,.2),rgba(0,0,0,.94)),
+    url("https://commons.wikimedia.org/wiki/Special:FilePath/Bridge%20Crossing.jpg")
+    center/cover no-repeat;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  transition:1.2s ease;
+}
+
+.intro::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:
+    radial-gradient(circle at 50% 35%,rgba(215,173,87,.20),transparent 28%),
+    linear-gradient(90deg,rgba(0,0,0,.85),transparent,rgba(0,0,0,.85));
+}
+
+.intro.hide{
+  opacity:0;
+  pointer-events:none;
+  transform:scale(1.05);
+}
+
+.intro-content{
+  position:relative;
+  z-index:2;
+  width:min(900px,92%);
+  text-align:center;
+}
+
+.intro-kicker{
+  color:var(--gold2);
+  font-size:13px;
+  letter-spacing:5px;
+  margin-bottom:18px;
+}
+
+.intro h1{
+  font-size:clamp(52px,10vw,130px);
+  line-height:.95;
+  font-weight:900;
+  text-shadow:
+    0 10px 60px rgba(0,0,0,.9),
+    0 0 30px rgba(215,173,87,.15);
+}
+
+.intro h1 span{
+  display:block;
+  color:var(--gold);
+  font-size:.42em;
+  margin-top:25px;
+  letter-spacing:4px;
+}
+
+.intro-line{
+  width:180px;
+  height:2px;
+  background:linear-gradient(90deg,transparent,var(--gold),transparent);
+  margin:32px auto;
+}
+
+.intro-text{
+  color:#ddd;
+  font-size:17px;
+  line-height:2;
+}
+
+.intro-progress{
+  margin:40px auto 0;
+  width:min(500px,80%);
+  height:3px;
+  background:rgba(255,255,255,.1);
+  overflow:hidden;
+}
+
+.intro-progress span{
+  display:block;
+  width:0%;
+  height:100%;
+  background:var(--gold);
+  animation:loadIntro 4.5s ease forwards;
+}
+
+@keyframes loadIntro{
+  to{width:100%}
+}
+
+/* =========================================================
+   CINEMATIC LAYERS
+========================================================= */
+
+.cinematic{
+  position:fixed;
+  inset:0;
+  z-index:9000;
+  pointer-events:none;
+  overflow:hidden;
+}
+
+.smoke{
+  position:absolute;
+  width:300px;
+  height:300px;
+  border-radius:50%;
+  filter:blur(45px);
+  opacity:0;
+  background:rgba(170,170,170,.08);
+  animation:smokeMove 9s ease-in-out infinite;
+}
+
+.smoke.one{
+  right:-100px;
+  bottom:10%;
+}
+
+.smoke.two{
+  left:-120px;
+  bottom:35%;
+  animation-delay:3s;
+}
+
+@keyframes smokeMove{
+  0%,100%{
+    opacity:0;
+    transform:translate(0,40px) scale(.8);
+  }
+  35%{
+    opacity:.8;
+  }
+  65%{
+    opacity:.45;
+    transform:translate(80px,-70px) scale(1.3);
+  }
+}
+
+.flash{
+  position:absolute;
+  inset:0;
+  background:#fff;
+  opacity:0;
+  animation:flash 8s infinite;
+}
+
+@keyframes flash{
+  0%,92%,100%{opacity:0}
+  94%{opacity:.05}
+  95%{opacity:0}
+}
+
+/* =========================================================
+   APP
+========================================================= */
+
+.app{
+  opacity:0;
+  visibility:hidden;
+  transition:1s;
+}
+
+.app.ready{
+  opacity:1;
+  visibility:visible;
+}
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.header{
+  position:fixed;
+  top:0;
+  left:0;
+  right:0;
+  height:78px;
+  z-index:8000;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:0 4vw;
+  background:rgba(4,6,8,.72);
+  backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--line);
+}
+
+.brand{
+  display:flex;
+  align-items:center;
+  gap:14px;
+  cursor:pointer;
+}
+
+.brand-mark{
+  width:45px;
+  height:45px;
+  border:1px solid rgba(215,173,87,.45);
+  display:grid;
+  place-items:center;
+  border-radius:14px;
+  color:var(--gold2);
+  background:linear-gradient(145deg,#16130d,#080808);
+  font-size:20px;
+}
+
+.brand-text strong{
+  display:block;
+  font-size:16px;
+}
+
+.brand-text small{
+  color:var(--muted);
+  font-size:10px;
+}
+
+.header-actions{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+
+.icon-btn{
+  width:42px;
+  height:42px;
+  border:1px solid var(--line);
+  background:rgba(255,255,255,.04);
+  color:white;
+  border-radius:13px;
+  display:grid;
+  place-items:center;
+  transition:.25s;
+}
+
+.icon-btn:hover{
+  border-color:var(--gold);
+  color:var(--gold2);
+  transform:translateY(-2px);
+}
+
+/* =========================================================
+   NAV
+========================================================= */
+
+.nav{
+  position:fixed;
+  top:100px;
+  right:25px;
+  z-index:7000;
+  display:flex;
+  flex-direction:column;
+  gap:7px;
+}
+
+.nav button{
+  width:48px;
+  height:48px;
+  border:1px solid var(--line);
+  border-radius:15px;
+  background:rgba(10,12,15,.78);
+  color:#aaa;
+  backdrop-filter:blur(15px);
+  transition:.25s;
+}
+
+.nav button:hover,
+.nav button.active{
+  color:var(--gold2);
+  border-color:rgba(215,173,87,.45);
+  box-shadow:0 0 25px rgba(215,173,87,.10);
+}
+
+/* =========================================================
+   MAIN
+========================================================= */
+
+main{
+  padding-top:78px;
+}
+
+section{
+  position:relative;
+  min-height:100vh;
+  padding:100px 7vw;
+  overflow:hidden;
+}
+
+.section-title{
+  max-width:900px;
+  margin-bottom:50px;
+}
+
+.section-kicker{
+  color:var(--gold);
+  font-size:12px;
+  letter-spacing:3px;
+  margin-bottom:10px;
+}
+
+.section-title h2{
+  font-size:clamp(32px,5vw,64px);
+  line-height:1.15;
+}
+
+.section-title p{
+  color:var(--muted);
+  line-height:2;
+  margin-top:15px;
+  max-width:720px;
+}
+
+/* =========================================================
+   HERO
+========================================================= */
+
+.hero{
+  min-height:calc(100vh - 78px);
+  display:flex;
+  align-items:flex-end;
+  background:
+    linear-gradient(180deg,rgba(0,0,0,.12),rgba(0,0,0,.35) 40%,#050608 96%),
+    url("https://commons.wikimedia.org/wiki/Special:FilePath/Bridge%20Crossing.jpg")
+    center/cover no-repeat;
+}
+
+.hero::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:
+    radial-gradient(circle at 60% 40%,transparent 0,rgba(0,0,0,.05) 35%,rgba(0,0,0,.8) 100%);
+}
+
+.hero-content{
+  position:relative;
+  z-index:2;
+  max-width:950px;
+  padding-bottom:10vh;
+}
+
+.hero-tag{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  border:1px solid rgba(215,173,87,.3);
+  background:rgba(0,0,0,.35);
+  padding:8px 15px;
+  border-radius:999px;
+  color:var(--gold2);
+  font-size:12px;
+  margin-bottom:20px;
+  backdrop-filter:blur(10px);
+}
+
+.hero h1{
+  font-size:clamp(48px,9vw,125px);
+  line-height:.9;
+  font-weight:900;
+  letter-spacing:-4px;
+  text-shadow:0 20px 80px #000;
+}
+
+.hero h1 span{
+  display:block;
+  color:var(--gold2);
+  font-size:.35em;
+  letter-spacing:2px;
+  margin-top:30px;
+}
+
+.hero-desc{
+  margin-top:30px;
+  max-width:680px;
+  color:#ddd;
+  font-size:17px;
+  line-height:2;
+}
+
+.hero-actions{
+  display:flex;
+  flex-wrap:wrap;
+  gap:12px;
+  margin-top:30px;
+}
+
+.primary-btn,
+.secondary-btn{
+  min-height:50px;
+  border-radius:15px;
+  padding:0 22px;
+  border:1px solid var(--line);
+  color:white;
+  transition:.25s;
+  font-weight:700;
+}
+
+.primary-btn{
+  background:linear-gradient(135deg,#d3aa55,#856221);
+  color:#0b0b0b;
+  border-color:#e4c477;
+}
+
+.secondary-btn{
+  background:rgba(255,255,255,.05);
+  backdrop-filter:blur(10px);
+}
+
+.primary-btn:hover,
+.secondary-btn:hover{
+  transform:translateY(-3px);
+}
+
+/* =========================================================
+   STORY CARDS
+========================================================= */
+
+.story-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:18px;
+}
+
+.story-card{
+  position:relative;
+  min-height:320px;
+  border:1px solid var(--line);
+  border-radius:var(--radius);
+  overflow:hidden;
+  background:#101216;
+  box-shadow:var(--shadow);
+}
+
+.story-card img{
+  width:100%;
+  height:100%;
+  min-height:320px;
+  object-fit:cover;
+  transition:.7s;
+}
+
+.story-card:hover img{
+  transform:scale(1.06);
+}
+
+.story-card::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:linear-gradient(180deg,transparent 20%,rgba(0,0,0,.92));
+}
+
+.story-card-content{
+  position:absolute;
+  z-index:2;
+  right:25px;
+  left:25px;
+  bottom:25px;
+}
+
+.story-card-content span{
+  color:var(--gold);
+  font-size:11px;
+}
+
+.story-card-content h3{
+  margin-top:7px;
+  font-size:24px;
+}
+
+.story-card-content p{
+  color:#bbb;
+  line-height:1.8;
+  font-size:13px;
+  margin-top:7px;
+}
+
+/* =========================================================
+   LEADERS
+========================================================= */
+
+.leaders-section{
+  background:
+    radial-gradient(circle at 50% 30%,rgba(150,35,25,.13),transparent 35%);
+}
+
+.leader-stage{
+  position:relative;
+  min-height:670px;
+  border-radius:32px;
+  overflow:hidden;
+  border:1px solid var(--line);
+  background:#090b0e;
+  box-shadow:var(--shadow);
+}
+
+.leader-backdrop{
+  position:absolute;
+  inset:0;
+  background-position:center;
+  background-size:cover;
+  filter:grayscale(.35);
+  opacity:.42;
+  transform:scale(1.04);
+}
+
+.leader-backdrop::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:
+    linear-gradient(90deg,#070809 0%,rgba(7,8,9,.88) 25%,rgba(7,8,9,.3) 65%,rgba(7,8,9,.8)),
+    linear-gradient(0deg,#070809,transparent 50%);
+}
+
+.leader-inner{
+  position:relative;
+  z-index:2;
+  min-height:670px;
+  display:grid;
+  grid-template-columns:420px 1fr;
+  gap:70px;
+  align-items:center;
+  padding:60px;
+}
+
+.leader-photo{
+  position:relative;
+  height:500px;
+  border-radius:28px;
+  overflow:hidden;
+  border:1px solid rgba(215,173,87,.3);
+  box-shadow:0 30px 80px rgba(0,0,0,.6);
+}
+
+.leader-photo img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+
+.leader-photo::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:linear-gradient(180deg,transparent 65%,rgba(0,0,0,.65));
+}
+
+.leader-number{
+  position:absolute;
+  z-index:3;
+  top:18px;
+  right:18px;
+  background:rgba(0,0,0,.68);
+  border:1px solid rgba(215,173,87,.3);
+  color:var(--gold2);
+  padding:7px 12px;
+  border-radius:10px;
+  font-size:12px;
+}
+
+.leader-info .eyebrow{
+  color:var(--gold);
+  font-size:13px;
+}
+
+.leader-info h3{
+  font-size:clamp(38px,5vw,72px);
+  line-height:1;
+  margin:15px 0;
+}
+
+.leader-role{
+  color:#d6d6d6;
+  font-size:17px;
+  margin-bottom:25px;
+}
+
+.leader-story{
+  color:#aaa;
+  line-height:2.1;
+  font-size:15px;
+  max-width:700px;
+}
+
+.leader-points{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:10px;
+  margin-top:25px;
+}
+
+.leader-point{
+  border:1px solid var(--line);
+  padding:14px;
+  border-radius:14px;
+  background:rgba(255,255,255,.035);
+}
+
+.leader-point small{
+  display:block;
+  color:var(--gold);
+  margin-bottom:5px;
+}
+
+.leader-point span{
+  color:#ccc;
+  font-size:13px;
+}
+
+.leader-controls{
+  display:flex;
+  gap:10px;
+  margin-top:28px;
+}
+
+.circle-btn{
+  width:50px;
+  height:50px;
+  border:1px solid var(--line);
+  border-radius:50%;
+  background:rgba(255,255,255,.05);
+  color:white;
+  transition:.25s;
+}
+
+.circle-btn:hover{
+  border-color:var(--gold);
+  color:var(--gold);
+}
+
+/* =========================================================
+   TIMELINE
+========================================================= */
+
+.timeline{
+  position:relative;
+  max-width:1000px;
+  margin:auto;
+}
+
+.timeline::before{
+  content:"";
+  position:absolute;
+  right:28px;
+  top:0;
+  bottom:0;
+  width:1px;
+  background:linear-gradient(var(--gold),rgba(215,173,87,.05));
+}
+
+.timeline-item{
+  position:relative;
+  padding:0 75px 45px 0;
+}
+
+.timeline-dot{
+  position:absolute;
+  right:18px;
+  top:0;
+  width:21px;
+  height:21px;
+  border:4px solid var(--bg);
+  border-radius:50%;
+  background:var(--gold);
+  box-shadow:0 0 20px rgba(215,173,87,.4);
+}
+
+.timeline-date{
+  color:var(--gold);
+  font-size:12px;
+  letter-spacing:1px;
+}
+
+.timeline-item h3{
+  font-size:24px;
+  margin:7px 0;
+}
+
+.timeline-item p{
+  color:#aaa;
+  line-height:2;
+}
+
+/* =========================================================
+   EVENTS
+========================================================= */
+
+.events-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:20px;
+}
+
+.event{
+  min-height:300px;
+  position:relative;
+  overflow:hidden;
+  border-radius:25px;
+  border:1px solid var(--line);
+  background:#0c0e11;
+}
+
+.event img{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  opacity:.48;
+  transition:.7s;
+}
+
+.event:hover img{
+  transform:scale(1.05);
+  opacity:.6;
+}
+
+.event::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:linear-gradient(180deg,transparent 20%,#08090b 95%);
+}
+
+.event-content{
+  position:absolute;
+  z-index:2;
+  bottom:25px;
+  right:25px;
+  left:25px;
+}
+
+.event-content .date{
+  color:var(--gold);
+  font-size:11px;
+}
+
+.event-content h3{
+  font-size:27px;
+  margin:7px 0;
+}
+
+.event-content p{
+  color:#aaa;
+  line-height:1.9;
+  font-size:13px;
+}
+
+/* =========================================================
+   FORCES
+========================================================= */
+
+.forces-grid{
+  display:grid;
+  grid-template-columns:repeat(5,1fr);
+  gap:14px;
+}
+
+.force{
+  min-height:220px;
+  border:1px solid var(--line);
+  border-radius:20px;
+  padding:25px 18px;
+  background:
+    linear-gradient(145deg,rgba(255,255,255,.05),rgba(255,255,255,.015));
+  transition:.3s;
+}
+
+.force:hover{
+  transform:translateY(-7px);
+  border-color:rgba(215,173,87,.4);
+}
+
+.force-icon{
+  font-size:34px;
+  margin-bottom:30px;
+}
+
+.force h3{
+  font-size:18px;
+}
+
+.force p{
+  color:#999;
+  font-size:12px;
+  line-height:1.9;
+  margin-top:10px;
+}
+
+/* =========================================================
+   MAPS
+========================================================= */
+
+.maps-section{
+  background:
+    linear-gradient(180deg,#050608,rgba(16,19,24,.8),#050608);
+}
+
+.maps-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:22px;
+}
+
+.map-card{
+  border:1px solid var(--line);
+  border-radius:24px;
+  overflow:hidden;
+  background:#0b0e12;
+}
+
+.map-image{
+  position:relative;
+  height:390px;
+  overflow:hidden;
+  cursor:zoom-in;
+}
+
+.map-image img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  transition:.6s;
+}
+
+.map-card:hover .map-image img{
+  transform:scale(1.04);
+}
+
+.map-label{
+  position:absolute;
+  right:15px;
+  top:15px;
+  padding:6px 10px;
+  border-radius:9px;
+  background:rgba(0,0,0,.72);
+  color:var(--gold2);
+  font-size:11px;
+}
+
+.map-info{
+  padding:22px;
+}
+
+.map-info h3{
+  font-size:21px;
+}
+
+.map-info p{
+  color:#999;
+  font-size:13px;
+  line-height:1.8;
+  margin-top:8px;
+}
+
+/* =========================================================
+   GALLERY
+========================================================= */
+
+.gallery-grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:10px;
+}
+
+.gallery-item{
+  position:relative;
+  height:260px;
+  border-radius:17px;
+  overflow:hidden;
+  border:1px solid var(--line);
+  cursor:zoom-in;
+}
+
+.gallery-item.wide{
+  grid-column:span 2;
+}
+
+.gallery-item img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  transition:.6s;
+}
+
+.gallery-item:hover img{
+  transform:scale(1.08);
+}
+
+.gallery-item::after{
+  content:"اضغط للتكبير";
+  position:absolute;
+  inset:auto 12px 12px auto;
+  background:rgba(0,0,0,.72);
+  color:#ddd;
+  padding:5px 9px;
+  border-radius:8px;
+  font-size:10px;
+  opacity:0;
+  transition:.3s;
+}
+
+.gallery-item:hover::after{
+  opacity:1;
+}
+
+/* =========================================================
+   CREATOR
+========================================================= */
+
+.creator{
+  min-height:70vh;
+  display:grid;
+  place-items:center;
+  background:
+    radial-gradient(circle at center,rgba(215,173,87,.09),transparent 35%);
+}
+
+.creator-card{
+  width:min(850px,100%);
+  border:1px solid rgba(215,173,87,.25);
+  border-radius:35px;
+  padding:50px;
+  background:
+    linear-gradient(135deg,rgba(255,255,255,.05),rgba(255,255,255,.015));
+  box-shadow:var(--shadow);
+  text-align:center;
+  position:relative;
+  overflow:hidden;
+}
+
+.creator-photo{
+  width:160px;
+  height:160px;
+  margin:0 auto 25px;
+  border-radius:50%;
+  overflow:hidden;
+  border:3px solid var(--gold);
+  background:
+    radial-gradient(circle,#28231a,#080808);
+  display:grid;
+  place-items:center;
+  position:relative;
+}
+
+.creator-photo img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+
+.creator-placeholder{
+  font-size:50px;
+  color:var(--gold);
+}
+
+.creator-card h2{
+  font-size:35px;
+}
+
+.creator-card .creator-role{
+  color:var(--gold2);
+  margin-top:5px;
+}
+
+.creator-card p{
+  color:#aaa;
+  line-height:2;
+  max-width:620px;
+  margin:20px auto;
+}
+
+.creator-tools{
+  display:flex;
+  justify-content:center;
+  flex-wrap:wrap;
+  gap:10px;
+  margin-top:25px;
+}
+
+.creator-tools label{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-height:45px;
+  padding:0 18px;
+  border-radius:13px;
+  border:1px solid var(--line);
+  background:rgba(255,255,255,.04);
+  color:#ddd;
+  cursor:pointer;
+  font-size:13px;
+}
+
+.creator-tools input{
+  display:none;
+}
+
+/* =========================================================
+   AI
+========================================================= */
+
+.ai-section{
+  background:
+    radial-gradient(circle at 50% 20%,rgba(30,90,130,.12),transparent 30%);
+}
+
+.ai-shell{
+  width:min(1100px,100%);
+  margin:auto;
+  border:1px solid var(--line);
+  border-radius:30px;
+  overflow:hidden;
+  background:#080b0f;
+  box-shadow:var(--shadow);
+}
+
+.ai-header{
+  padding:22px;
+  border-bottom:1px solid var(--line);
+  display:flex;
+  align-items:center;
+  gap:15px;
+}
+
+.ai-logo{
+  width:48px;
+  height:48px;
+  display:grid;
+  place-items:center;
+  border-radius:15px;
+  background:linear-gradient(145deg,#d4ae60,#654b1b);
+  color:#080808;
+  font-weight:900;
+}
+
+.ai-header strong{
+  display:block;
+}
+
+.ai-header small{
+  color:#777;
+}
+
+.chat{
+  height:430px;
+  overflow:auto;
+  padding:25px;
+  display:flex;
+  flex-direction:column;
+  gap:13px;
+}
+
+.message{
+  max-width:80%;
+  padding:14px 17px;
+  border-radius:17px;
+  line-height:1.9;
+  font-size:13px;
+}
+
+.message.ai{
+  align-self:flex-start;
+  background:#11161c;
+  border:1px solid var(--line);
+  color:#d5d5d5;
+}
+
+.message.user{
+  align-self:flex-end;
+  background:linear-gradient(135deg,#8b692c,#c9a454);
+  color:#080808;
+}
+
+.ai-input{
+  padding:15px;
+  border-top:1px solid var(--line);
+  display:flex;
+  gap:10px;
+}
+
+.ai-input input{
+  flex:1;
+  height:52px;
+  border:1px solid var(--line);
+  border-radius:15px;
+  background:#0d1014;
+  color:white;
+  padding:0 17px;
+  outline:none;
+}
+
+.ai-input input:focus{
+  border-color:rgba(215,173,87,.5);
+}
+
+.ai-suggestions{
+  display:flex;
+  gap:8px;
+  padding:0 15px 15px;
+  flex-wrap:wrap;
+}
+
+.ai-suggestions button{
+  border:1px solid var(--line);
+  background:rgba(255,255,255,.035);
+  color:#aaa;
+  padding:7px 11px;
+  border-radius:10px;
+  font-size:11px;
+}
+
+/* =========================================================
+   FOOTER
+========================================================= */
+
+footer{
+  padding:50px 7vw;
+  border-top:1px solid var(--line);
+  text-align:center;
+  color:#666;
+  font-size:12px;
+}
+
+footer strong{
+  color:var(--gold);
+}
+
+/* =========================================================
+   LIGHTBOX
+========================================================= */
+
+.lightbox{
+  position:fixed;
+  inset:0;
+  z-index:999999;
+  background:rgba(0,0,0,.94);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  padding:30px;
+}
+
+.lightbox.open{
+  display:flex;
+}
+
+.lightbox img{
+  max-width:95vw;
+  max-height:88vh;
+  object-fit:contain;
+  border-radius:15px;
+  box-shadow:0 30px 100px #000;
+}
+
+.close-lightbox{
+  position:absolute;
+  top:20px;
+  right:25px;
+  width:48px;
+  height:48px;
+  border-radius:50%;
+  border:1px solid var(--line);
+  background:#111;
+  color:white;
+  font-size:24px;
+}
+
+/* =========================================================
+   SEARCH
+========================================================= */
+
+.search-overlay{
+  position:fixed;
+  inset:0;
+  z-index:99998;
+  background:rgba(0,0,0,.88);
+  backdrop-filter:blur(20px);
+  display:none;
+  align-items:flex-start;
+  justify-content:center;
+  padding-top:15vh;
+}
+
+.search-overlay.open{
+  display:flex;
+}
+
+.search-box{
+  width:min(850px,90%);
+}
+
+.search-box input{
+  width:100%;
+  height:70px;
+  border-radius:22px;
+  border:1px solid rgba(215,173,87,.35);
+  background:#0c0f13;
+  color:white;
+  font-size:20px;
+  padding:0 25px;
+  outline:none;
+}
+
+.search-results{
+  margin-top:12px;
+  background:#0b0e12;
+  border:1px solid var(--line);
+  border-radius:20px;
+  overflow:hidden;
+  max-height:55vh;
+  overflow-y:auto;
+}
+
+.search-result{
+  padding:18px;
+  border-bottom:1px solid var(--line);
+  cursor:pointer;
+}
+
+.search-result:hover{
+  background:rgba(255,255,255,.04);
+}
+
+.search-result strong{
+  color:var(--gold2);
+}
+
+.search-result p{
+  color:#999;
+  font-size:12px;
+  margin-top:5px;
+}
+
+/* =========================================================
+   TOAST
+========================================================= */
+
+.toast{
+  position:fixed;
+  left:50%;
+  bottom:25px;
+  transform:translate(-50%,30px);
+  opacity:0;
+  z-index:999999;
+  padding:13px 18px;
+  border-radius:14px;
+  background:#11161c;
+  border:1px solid var(--line);
+  color:#ddd;
+  transition:.3s;
+  pointer-events:none;
+}
+
+.toast.show{
+  opacity:1;
+  transform:translate(-50%,0);
+}
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media(max-width:1100px){
+
+  .forces-grid{
+    grid-template-columns:repeat(3,1fr);
+  }
+
+  .leader-inner{
+    grid-template-columns:330px 1fr;
+    gap:35px;
+    padding:35px;
+  }
+
+  .leader-photo{
+    height:470px;
+  }
+
+  .gallery-grid{
+    grid-template-columns:repeat(3,1fr);
+  }
+
+}
+
+@media(max-width:800px){
+
+  .header{
+    padding:0 15px;
+  }
+
+  .brand-text{
+    display:none;
+  }
+
+  .nav{
+    top:auto;
+    bottom:15px;
+    right:50%;
+    transform:translateX(50%);
+    flex-direction:row;
+    width:max-content;
+    max-width:92vw;
+    overflow:auto;
+    background:rgba(5,6,8,.85);
+    padding:7px;
+    border:1px solid var(--line);
+    border-radius:18px;
+    backdrop-filter:blur(20px);
+  }
+
+  .nav button{
+    flex:0 0 42px;
+    width:42px;
+    height:42px;
+  }
+
+  section{
+    padding:80px 18px;
+  }
+
+  .hero{
+    padding:60px 18px;
+  }
+
+  .hero h1{
+    letter-spacing:-2px;
+  }
+
+  .story-grid,
+  .events-grid,
+  .maps-grid{
+    grid-template-columns:1fr;
+  }
+
+  .leader-stage{
+    min-height:auto;
+  }
+
+  .leader-inner{
+    display:flex;
+    flex-direction:column;
+    padding:20px;
+  }
+
+  .leader-photo{
+    width:100%;
+    height:430px;
+  }
+
+  .leader-info h3{
+    font-size:44px;
+  }
+
+  .leader-points{
+    grid-template-columns:1fr;
+  }
+
+  .forces-grid{
+    grid-template-columns:repeat(2,1fr);
+  }
+
+  .gallery-grid{
+    grid-template-columns:repeat(2,1fr);
+  }
+
+  .gallery-item{
+    height:190px;
+  }
+
+  .gallery-item.wide{
+    grid-column:span 2;
+  }
+
+  .creator-card{
+    padding:30px 20px;
+  }
+
+  .creator-card h2{
+    font-size:28px;
+  }
+
+}
+
+@media(max-width:480px){
+
+  .hero-desc{
+    font-size:14px;
+  }
+
+  .hero-actions{
+    flex-direction:column;
+  }
+
+  .primary-btn,
+  .secondary-btn{
+    width:100%;
+  }
+
+  .forces-grid{
+    grid-template-columns:1fr;
+  }
+
+  .gallery-grid{
+    grid-template-columns:1fr;
+  }
+
+  .gallery-item,
+  .gallery-item.wide{
+    grid-column:span 1;
+    height:230px;
+  }
+
+  .chat{
+    height:400px;
+  }
+
+  .message{
+    max-width:90%;
+  }
+
+}
+
+/* Reduced motion */
+
+@media(prefers-reduced-motion:reduce){
+  *,
+  *::before,
+  *::after{
+    animation-duration:.01ms!important;
+    animation-iteration-count:1!important;
+    scroll-behavior:auto!important;
+    transition-duration:.01ms!important;
+  }
+}
+</style>
 </head>
 
-<body class="locked">
+<body>
 
-  <!-- =====================================================
-       CINEMATIC OPENING
-       تعمل بـ CSS وحده ولا تنتظر app.js
-  ====================================================== -->
+<!-- =======================================================
+     CINEMATIC EFFECTS
+======================================================= -->
 
-  <div id="opening" class="opening">
+<div class="cinematic">
+  <div class="smoke one"></div>
+  <div class="smoke two"></div>
+  <div class="flash"></div>
+</div>
 
-    <div class="opening-image"></div>
-    <div class="opening-light"></div>
-    <div class="opening-noise"></div>
+<!-- =======================================================
+     INTRO
+======================================================= -->
 
-    <div class="opening-content">
+<div class="intro" id="intro">
 
-      <div class="opening-top">
-        A STORY FOR MALAK
-      </div>
+  <div class="intro-content">
 
-      <div class="opening-crown">
-        👑
-      </div>
-
-      <h1 class="opening-title">
-        أحببتُ
-        <span>الملك</span>
-      </h1>
-
-      <p class="opening-subtitle">
-        مش صفحة...
-        <br>
-        دي حكاية اتعملت مخصوص عشان اسم واحد.
-      </p>
-
-      <div class="opening-progress">
-
-        <div class="opening-progress-head">
-          <span>جاري فتح الحكاية</span>
-          <strong id="openingCounter" class="opening-counter">04</strong>
-        </div>
-
-        <div class="opening-track">
-          <div class="opening-bar"></div>
-        </div>
-
-      </div>
-
+    <div class="intro-kicker">
+      وثيقة تفاعلية
     </div>
 
-    <div class="opening-bottom">
-      YOUSSEF ASHRAF ELGARF
+    <h1>
+      أكتوبر
+      <span>حرب العبور 1973</span>
+    </h1>
+
+    <div class="intro-line"></div>
+
+    <p class="intro-text">
+      رحلة تاريخية بين القادة والجنود والمعارك والخرائط
+      <br>
+      من لحظة العبور إلى وقف إطلاق النار.
+    </p>
+
+    <div class="intro-progress">
+      <span></span>
     </div>
 
   </div>
 
+</div>
 
-  <!-- =====================================================
-       GLOBAL BACKGROUND
-  ====================================================== -->
+<!-- =======================================================
+     APP
+======================================================= -->
 
-  <div class="background-layer">
-    <div id="backgroundImage" class="background-image"></div>
-    <div class="background-overlay"></div>
-  </div>
+<div class="app" id="app">
 
-  <div class="grain"></div>
+<header class="header">
 
+  <div class="brand" onclick="goTo('home')">
 
-  <!-- =====================================================
-       PASSWORD
-  ====================================================== -->
+    <div class="brand-mark">٦</div>
 
-  <section id="gate" class="gate">
-
-    <div class="gate-panel">
-
-      <div class="gate-crown">👑</div>
-
-      <div class="gate-kicker">
-        PRIVATE JOURNEY
-      </div>
-
-      <h1 class="gate-title">
-        أحببتُ الملك
-      </h1>
-
-      <p class="gate-description">
-        في حاجات مش معمولة عشان تتشاف بسرعة...
-        <br>
-        الحكاية دي معمول لها باب، ومفتاحها كلمة واحدة.
-      </p>
-
-      <form id="passwordForm">
-
-        <div class="password-wrap">
-
-          <input
-            id="passwordInput"
-            class="password-input"
-            type="password"
-            autocomplete="off"
-            placeholder="••••"
-            aria-label="كلمة المرور"
-          >
-
-          <button
-            id="passwordEye"
-            class="password-eye"
-            type="button"
-            aria-label="إظهار كلمة المرور"
-          >
-            ◉
-          </button>
-
-        </div>
-
-        <button class="gate-button" type="submit">
-          افتح الحكاية
-        </button>
-
-        <div id="passwordError" class="gate-error">
-          الكلمة دي مش هي المفتاح...
-        </div>
-
-      </form>
-
-      <div class="gate-hint">
-        بعض الحكايات تستحق مفتاحًا خاصًا.
-      </div>
-
+    <div class="brand-text">
+      <strong>أكتوبر 1973</strong>
+      <small>ملحمة العبور</small>
     </div>
 
-  </section>
+  </div>
 
+  <div class="header-actions">
 
-  <!-- =====================================================
-       APP
-  ====================================================== -->
+    <button class="icon-btn" onclick="openSearch()" title="بحث">
+      🔎
+    </button>
 
-  <div id="app">
+    <button class="icon-btn" onclick="toggleFullscreen()" title="ملء الشاشة">
+      ⛶
+    </button>
 
-    <header class="topbar">
+  </div>
 
-      <div class="brand" data-go="home">
+</header>
 
-        <div class="brand-icon">
-          👑
-        </div>
+<!-- =======================================================
+     NAV
+======================================================= -->
 
-        <div>
-          <div class="brand-name">
-            أحببتُ الملك
-          </div>
+<nav class="nav">
 
-          <span class="brand-small">
-            A PRIVATE STORY
-          </span>
-        </div>
+  <button data-target="home" onclick="goTo('home')" class="active">⌂</button>
 
-      </div>
+  <button data-target="leaders" onclick="goTo('leaders')">★</button>
 
-      <button
-        id="menuButton"
-        class="menu-button"
-        type="button"
-      >
-        ☰
+  <button data-target="timeline" onclick="goTo('timeline')">◷</button>
+
+  <button data-target="events" onclick="goTo('events')">⚔</button>
+
+  <button data-target="forces" onclick="goTo('forces')">▣</button>
+
+  <button data-target="maps" onclick="goTo('maps')">⌖</button>
+
+  <button data-target="gallery" onclick="goTo('gallery')">▧</button>
+
+  <button data-target="ai" onclick="goTo('ai')">AI</button>
+
+</nav>
+
+<main>
+
+<!-- =======================================================
+     HERO
+======================================================= -->
+
+<section class="hero" id="home">
+
+  <div class="hero-content">
+
+    <div class="hero-tag">
+      🇪🇬 ٦ أكتوبر ١٩٧٣
+    </div>
+
+    <h1>
+      حرب أكتوبر
+      <span>حين عبرت القوات المصرية قناة السويس</span>
+    </h1>
+
+    <p class="hero-desc">
+      تجربة وثائقية تفاعلية تحكي قصة حرب أكتوبر 1973:
+      لماذا بدأت الحرب، كيف جرى العبور، من هم القادة،
+      ماذا حدث على الجبهة، وكيف تطورت الأحداث حتى وقف إطلاق النار.
+    </p>
+
+    <div class="hero-actions">
+
+      <button class="primary-btn" onclick="goTo('leaders')">
+        ابدأ رحلة القادة
       </button>
 
-    </header>
-
-
-    <!-- MENU -->
-
-    <div id="menuBackdrop" class="menu-backdrop"></div>
-
-    <aside id="sideMenu" class="side-menu">
-
-      <div class="menu-head">
-
-        <div>
-          <div class="section-kicker">
-            THE JOURNEY
-          </div>
-
-          <strong>
-            أبواب الحكاية
-          </strong>
-        </div>
-
-        <button
-          id="menuClose"
-          class="menu-close"
-          type="button"
-        >
-          ×
-        </button>
-
-      </div>
-
-      <nav id="menuLinks" class="menu-links">
-
-        <button class="menu-link active" data-go="home">
-          <span class="menu-number">01</span>
-          <span>البداية</span>
-        </button>
-
-        <button class="menu-link" data-go="letter">
-          <span class="menu-number">02</span>
-          <span>الرسالة</span>
-        </button>
-
-        <button class="menu-link" data-go="poetryIntro">
-          <span class="menu-number">03</span>
-          <span>الديوان</span>
-        </button>
-
-        <button class="menu-link" data-go="diwan">
-          <span class="menu-number">04</span>
-          <span>القصائد</span>
-        </button>
-
-        <button class="menu-link" data-go="details">
-          <span class="menu-number">05</span>
-          <span>تفاصيل صغيرة</span>
-        </button>
-
-        <button class="menu-link" data-go="memory">
-          <span class="menu-number">06</span>
-          <span>المشاهد</span>
-        </button>
-
-        <button class="menu-link" data-go="sound">
-          <span class="menu-number">07</span>
-          <span>الصوت</span>
-        </button>
-
-        <button class="menu-link" data-go="final">
-          <span class="menu-number">08</span>
-          <span>النهاية</span>
-        </button>
-
-      </nav>
-
-    </aside>
-
-
-    <main>
-
-      <!-- HOME -->
-
-      <section id="home" class="hero">
-
-        <div class="container">
-
-          <div class="hero-content reveal">
-
-            <div class="eyebrow">
-              A STORY WRITTEN FOR ONE PERSON
-            </div>
-
-            <h1 class="hero-title">
-              أحببتُ
-              <span>الملك</span>
-            </h1>
-
-            <p class="hero-description">
-              مش كل الكلام بيتقال في رسالة،
-              ومش كل الإحساس يعرف ياخد شكل جملة.
-              عشان كده اتعملت الحكاية دي...
-              عشان كل حاجة كان صعب تتقال،
-              تلاقي لها مكان هنا.
-            </p>
-
-            <div class="hero-actions">
-
-              <button
-                class="primary-btn"
-                data-go="letter"
-                type="button"
-              >
-                ابدأ الحكاية
-              </button>
-
-              <button
-                class="secondary-btn"
-                data-go="diwan"
-                type="button"
-              >
-                ادخل الديوان
-              </button>
-
-            </div>
-
-          </div>
-
-        </div>
-
-        <div class="hero-scroll">
-          اسحب لتحت
-        </div>
-
-      </section>
-
-
-      <!-- LETTER -->
-
-      <section id="letter" class="letter">
-
-        <div class="container">
-
-          <div class="letter-layout">
-
-            <div class="letter-side reveal">
-
-              <div class="section-kicker">
-                A LETTER
-              </div>
-
-              <h2 class="section-title">
-                كلام كان لازم يتقال.
-              </h2>
-
-              <div class="letter-mark">
-                م
-              </div>
-
-            </div>
-
-            <div id="letterContent" class="letter-content"></div>
-
-          </div>
-
-        </div>
-
-      </section>
-
-
-      <!-- POETRY INTRO -->
-
-      <section id="poetryIntro" class="poetry-intro">
-
-        <div class="container reveal">
-
-          <div class="section-kicker">
-            THE DIWAN
-          </div>
-
-          <h2 id="diwanTitle" class="section-title">
-            ديوان الحكاية
-          </h2>
-
-          <p id="diwanDescription" class="section-description">
-            هنا الكلام بياخد شكل قصيدة.
-          </p>
-
-        </div>
-
-      </section>
-
-
-      <!-- DIWAN -->
-
-      <section id="diwan" class="diwan">
-
-        <div class="container">
-
-          <div class="diwan-head reveal">
-
-            <div>
-
-              <div class="section-kicker">
-                10 CHAPTERS
-              </div>
-
-              <h2 class="section-title">
-                القصائد
-              </h2>
-
-            </div>
-
-            <p class="section-description">
-              كل قصيدة فصل مستقل،
-              وكل فصل له مزاجه ومشهده وكلامه.
-            </p>
-
-          </div>
-
-          <div id="poemList" class="poem-list"></div>
-
-        </div>
-
-      </section>
-
-
-      <!-- POEM READER -->
-
-      <section id="poemReader" class="poem-reader">
-
-        <div class="container">
-
-          <div id="poemScene" class="poem-scene">
-
-            <div class="poem-scene-content">
-
-              <div id="poemNumber" class="section-kicker">
-                القصيدة 01
-              </div>
-
-              <h2 id="poemSceneTitle" class="poem-scene-title">
-                مَلَك
-              </h2>
-
-              <p id="poemSceneText" class="poem-scene-text">
-                ...
-              </p>
-
-            </div>
-
-          </div>
-
-          <div class="poem-reader-body">
-
-            <p id="poemDescription" class="poem-description"></p>
-
-            <div id="poemLines"></div>
-
-            <div class="poem-controls">
-
-              <button
-                id="previousPoem"
-                class="reader-btn"
-                type="button"
-              >
-                ← القصيدة السابقة
-              </button>
-
-              <button
-                class="reader-btn primary"
-                data-go="diwan"
-                type="button"
-              >
-                العودة للديوان
-              </button>
-
-              <button
-                id="nextPoem"
-                class="reader-btn"
-                type="button"
-              >
-                القصيدة التالية →
-              </button>
-
-            </div>
-
-          </div>
-
-        </div>
-
-      </section>
-
-
-      <!-- DETAILS -->
-
-      <section id="details" class="details">
-
-        <div class="container">
-
-          <div class="reveal">
-
-            <div class="section-kicker">
-              LITTLE THINGS
-            </div>
-
-            <h2 class="section-title">
-              تفاصيل صغيرة...
-            </h2>
-
-            <p class="section-description">
-              لأن أحيانًا الحاجات الصغيرة هي اللي بتفضل أكبر من أي كلام.
-            </p>
-
-          </div>
-
-          <div id="detailsList" class="details-list"></div>
-
-        </div>
-
-      </section>
-
-
-      <!-- MEMORY -->
-
-      <section id="memory" class="memory">
-
-        <div class="container">
-
-          <div class="reveal">
-
-            <div class="section-kicker">
-              SCENES
-            </div>
-
-            <h2 class="section-title">
-              مشاهد من الحكاية
-            </h2>
-
-            <p class="section-description">
-              مش ذكريات بنفترض إنها حصلت،
-              دي مشاهد وإحساسات اتكتبت مخصوص للمكان ده.
-            </p>
-
-          </div>
-
-          <div class="memory-stage reveal">
-
-            <div id="memoryNumber" class="memory-number">
-              المشهد 01
-            </div>
-
-            <h3 id="memoryTitle" class="memory-title">
-              أول مشهد
-            </h3>
-
-            <p id="memoryDescription" class="memory-description">
-              ...
-            </p>
-
-            <div class="memory-controls">
-
-              <button id="memoryPrev" type="button">
-                ←
-              </button>
-
-              <button id="memoryNext" type="button">
-                →
-              </button>
-
-            </div>
-
-          </div>
-
-        </div>
-
-      </section>
-
-
-      <!-- SOUND -->
-
-      <section id="sound" class="sound">
-
-        <div class="container">
-
-          <div class="sound-box reveal">
-
-            <div class="section-kicker">
-              SOUNDTRACK
-            </div>
-
-            <h2 class="section-title">
-              سيب الكلام يمشي مع الصوت.
-            </h2>
-
-            <p id="soundStatus" class="sound-status">
-              اضغط تشغيل لو حابب تضيف موسيقى للحظة.
-            </p>
-
-            <div class="sound-controls">
-
-              <button
-                id="soundToggle"
-                class="sound-toggle"
-                type="button"
-              >
-                ▶
-              </button>
-
-              <div class="sound-progress">
-
-                <div
-                  id="soundProgress"
-                  class="sound-progress-bar"
-                ></div>
-
-              </div>
-
-            </div>
-
-          </div>
-
-        </div>
-
-      </section>
-
-
-      <!-- FINAL -->
-
-      <section id="final" class="final">
-
-        <div class="container reveal">
-
-          <div class="final-crown">
-            👑
-          </div>
-
-          <div class="section-kicker">
-            THE LAST PAGE
-          </div>
-
-          <h2 id="finalTitle" class="final-title">
-            إلى ملك
-          </h2>
-
-          <div id="finalText" class="final-text"></div>
-
-          <div class="final-signature">
-            يوسف أشرف الجرف
-          </div>
-
-          <button
-            id="restartJourney"
-            class="primary-btn restart-btn"
-            type="button"
-          >
-            أبدأ الحكاية من الأول
-          </button>
-
-        </div>
-
-      </section>
-
-    </main>
+      <button class="secondary-btn" onclick="goTo('timeline')">
+        شاهد الخط الزمني
+      </button>
+
+      <button class="secondary-btn" onclick="goTo('maps')">
+        افتح الخرائط
+      </button>
+
+    </div>
 
   </div>
 
+</section>
 
-  <!-- =====================================================
-       SCRIPTS
-  ====================================================== -->
+<!-- =======================================================
+     OVERVIEW
+======================================================= -->
 
-  <script src="content.js"></script>
-  <script src="media.js"></script>
-  <script src="app.js"></script>
+<section>
 
-  <script>
-    /*
-      FALLBACK OPENING
-      الافتتاحية لا تعتمد على app.js.
-      بعد 4 ثوانٍ تفتح شاشة كلمة السر بنفسها.
-    */
+  <div class="section-title">
 
-    (function(){
+    <div class="section-kicker">
+      البداية
+    </div>
 
-      const opening = document.getElementById("opening");
-      const counter = document.getElementById("openingCounter");
+    <h2>قصة الحرب في صورة واحدة</h2>
 
-      if(!opening) return;
+    <p>
+      لم تكن حرب أكتوبر مجرد لحظة عبور للقناة،
+      بل كانت سلسلة من القرارات السياسية والعسكرية
+      والتخطيط والتجهيز والقتال والتطورات التي امتدت
+      من السادس وحتى أواخر أكتوبر 1973.
+    </p>
 
-      let remaining = 4;
+  </div>
 
-      const timer = setInterval(function(){
+  <div class="story-grid">
 
-        remaining--;
+    <article class="story-card">
 
-        if(counter){
-          counter.textContent =
-            String(Math.max(remaining,0)).padStart(2,"0");
-        }
+      <img
+        src="https://commons.wikimedia.org/wiki/Special:FilePath/Bridge%20Crossing.jpg"
+        alt="عبور القوات المصرية"
+        loading="lazy"
+      >
 
-        if(remaining <= 0){
+      <div class="story-card-content">
+        <span>06 أكتوبر 1973</span>
+        <h3>العبور</h3>
+        <p>
+          بدأت القوات المصرية عبور قناة السويس
+          وإنشاء رؤوس كباري على الضفة الشرقية.
+        </p>
+      </div>
 
-          clearInterval(timer);
+    </article>
 
-          opening.classList.add("hide");
+    <article class="story-card">
 
-          document.body.classList.add("locked");
+      <img
+        src="https://commons.wikimedia.org/wiki/Special:FilePath/Egyptianbridge.jpg"
+        alt="القوات المصرية تعبر قناة السويس"
+        loading="lazy"
+      >
 
-          setTimeout(function(){
+      <div class="story-card-content">
+        <span>الجبهة المصرية</span>
+        <h3>تثبيت رؤوس الكباري</h3>
+        <p>
+          تتابعت عمليات نقل الأفراد والمعدات
+          ودعم القوات على الضفة الشرقية.
+        </p>
+      </div>
 
-            opening.remove();
+    </article>
 
-            const passwordInput =
-              document.getElementById("passwordInput");
+    <article class="story-card">
 
-            if(passwordInput){
-              passwordInput.focus();
-            }
+      <img
+        src="https://commons.wikimedia.org/wiki/Special:FilePath/October%20War%20leaders%20in%20war%20operations%201973.jpg"
+        alt="قادة حرب أكتوبر"
+        loading="lazy"
+      >
 
-          },950);
+      <div class="story-card-content">
+        <span>غرفة العمليات</span>
+        <h3>القادة</h3>
+        <p>
+          الرئيس أنور السادات وقادة القوات المسلحة
+          شاركوا في إدارة الحرب وقراراتها.
+        </p>
+      </div>
 
-        }
+    </article>
 
-      },1000);
+  </div>
 
-    })();
+</section>
 
+<!-- =======================================================
+     LEADERS
+======================================================= -->
 
-    /*
-      EMERGENCY NAVIGATION FALLBACK
+<section class="leaders-section" id="leaders">
 
-      لو app.js لم يتم تحميله، التنقل الأساسي
-      يظل شغالًا من داخل index.html.
-    */
+  <div class="section-title">
 
-    (function(){
+    <div class="section-kicker">
+      رجال صنعوا القرار
+    </div>
 
-      function fallbackGo(id){
+    <h2>رحلة القادة</h2>
 
-        const element =
-          document.getElementById(id);
+    <p>
+      اضغط التالي وانتقل من قائد إلى قائد،
+      وشاهد الصورة الحقيقية ثم اقرأ دوره في حرب أكتوبر.
+    </p>
 
-        if(!element) return;
+  </div>
 
-        const top =
-          element.getBoundingClientRect().top +
-          window.scrollY -
-          72;
+  <div class="leader-stage">
 
-        window.scrollTo({
-          top:top,
-          behavior:"smooth"
-        });
+    <div class="leader-backdrop" id="leaderBackdrop"></div>
 
+    <div class="leader-inner">
+
+      <div class="leader-photo">
+
+        <div class="leader-number" id="leaderNumber">
+          01 / 06
+        </div>
+
+        <img id="leaderImage" src="" alt="قائد">
+
+      </div>
+
+      <div class="leader-info">
+
+        <div class="eyebrow" id="leaderKicker">
+          القيادة السياسية
+        </div>
+
+        <h3 id="leaderName">
+          أنور السادات
+        </h3>
+
+        <div class="leader-role" id="leaderRole">
+          رئيس جمهورية مصر العربية والقائد الأعلى للقوات المسلحة
+        </div>
+
+        <p class="leader-story" id="leaderStory">
+          قاد السادات القرار السياسي المصري خلال حرب أكتوبر،
+          وكان جزءًا أساسيًا من منظومة اتخاذ القرار المتعلقة
+          ببدء الحرب وإدارتها والتعامل مع تطوراتها.
+        </p>
+
+        <div class="leader-points">
+
+          <div class="leader-point">
+            <small>الدور</small>
+            <span id="leaderDuty">القيادة السياسية والعسكرية العليا</span>
+          </div>
+
+          <div class="leader-point">
+            <small>الفترة</small>
+            <span id="leaderPeriod">1973</span>
+          </div>
+
+        </div>
+
+        <div class="leader-controls">
+
+          <button class="circle-btn" onclick="prevLeader()">→</button>
+
+          <button class="circle-btn" onclick="nextLeader()">←</button>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+<!-- =======================================================
+     TIMELINE
+======================================================= -->
+
+<section id="timeline">
+
+  <div class="section-title">
+
+    <div class="section-kicker">
+      يومًا بيوم
+    </div>
+
+    <h2>الخط الزمني للحرب</h2>
+
+    <p>
+      من السادس من أكتوبر إلى نهاية العمليات الرئيسية
+      في أواخر الشهر.
+    </p>
+
+  </div>
+
+  <div class="timeline">
+
+    <article class="timeline-item">
+      <div class="timeline-dot"></div>
+      <div class="timeline-date">06 أكتوبر 1973</div>
+      <h3>بداية العبور</h3>
+      <p>
+        بدأت العمليات المصرية على جبهة قناة السويس،
+        وجرى عبور القوات وإنشاء رؤوس كباري على الضفة الشرقية.
+      </p>
+    </article>
+
+    <article class="timeline-item">
+      <div class="timeline-dot"></div>
+      <div class="timeline-date">07 أكتوبر</div>
+      <h3>توسيع رؤوس الكباري</h3>
+      <p>
+        استمرت عمليات العبور والدعم ونقل القوات والمعدات
+        إلى شرق القناة.
+      </p>
+    </article>
+
+    <article class="timeline-item">
+      <div class="timeline-dot"></div>
+      <div class="timeline-date">08–09 أكتوبر</div>
+      <h3>المعارك الأولى</h3>
+      <p>
+        شهدت الجبهة تطورات واشتباكات متواصلة مع محاولات
+        إسرائيلية لاحتواء الهجوم المصري.
+      </p>
+    </article>
+
+    <article class="timeline-item">
+      <div class="timeline-dot"></div>
+      <div class="timeline-date">10–13 أكتوبر</div>
+      <h3>تطورات الجبهة</h3>
+      <p>
+        استمرت المعارك على عدة محاور، وتغيرت أوضاع القوات
+        على جبهة سيناء.
+      </p>
+    </article>
+
+    <article class="timeline-item">
+      <div class="timeline-dot"></div>
+      <div class="timeline-date">14 أكتوبر</div>
+      <h3>المواجهة المدرعة الكبرى</h3>
+      <p>
+        شهدت الجبهة المصرية معارك مدرعة واسعة ضمن تطورات
+        الهجوم المصري والرد الإسرائيلي.
+      </p>
+    </article>
+
+    <article class="timeline-item">
+      <div class="timeline-dot"></div>
+      <div class="timeline-date">15–17 أكتوبر</div>
+      <h3>الدفرسوار والثغرة</h3>
+      <p>
+        تمكنت قوات إسرائيلية من عبور القناة إلى الضفة الغربية
+        في منطقة الدفرسوار، وبدأت مرحلة جديدة من القتال.
+      </p>
+    </article>
+
+    <article class="timeline-item">
+      <div class="timeline-dot"></div>
+      <div class="timeline-date">22 أكتوبر</div>
+      <h3>قرار وقف إطلاق النار</h3>
+      <p>
+        صدر قرار مجلس الأمن المتعلق بوقف إطلاق النار،
+        مع استمرار التوتر والقتال في بعض المناطق.
+      </p>
+    </article>
+
+    <article class="timeline-item">
+      <div class="timeline-dot"></div>
+      <div class="timeline-date">24–25 أكتوبر</div>
+      <h3>معارك السويس</h3>
+      <p>
+        شهدت مدينة السويس تطورات قتالية مهمة خلال الأيام
+        الأخيرة من الحرب.
+      </p>
+    </article>
+
+    <article class="timeline-item">
+      <div class="timeline-dot"></div>
+      <div class="timeline-date">أواخر أكتوبر</div>
+      <h3>تثبيت وقف إطلاق النار</h3>
+      <p>
+        اتجهت العمليات إلى التوقف التدريجي وتثبيت ترتيبات
+        وقف إطلاق النار.
+      </p>
+    </article>
+
+  </div>
+
+</section>
+
+<!-- =======================================================
+     EVENTS
+======================================================= -->
+
+<section id="events">
+
+  <div class="section-title">
+
+    <div class="section-kicker">
+      أهم المحطات
+    </div>
+
+    <h2>المعارك والأحداث</h2>
+
+    <p>
+      كل بطاقة هنا تمثل محطة تاريخية مختلفة.
+    </p>
+
+  </div>
+
+  <div class="events-grid">
+
+    <article class="event">
+
+      <img
+        src="https://commons.wikimedia.org/wiki/Special:FilePath/Bridge%20Crossing.jpg"
+        alt="العبور"
+        loading="lazy"
+      >
+
+      <div class="event-content">
+        <div class="date">06 أكتوبر 1973</div>
+        <h3>عبور قناة السويس</h3>
+        <p>
+          العبور المصري لقناة السويس وإنشاء رؤوس الكباري
+          على الضفة الشرقية.
+        </p>
+      </div>
+
+    </article>
+
+    <article class="event">
+
+      <img
+        src="https://commons.wikimedia.org/wiki/Special:FilePath/Egyptianbridge.jpg"
+        alt="جسر قناة السويس"
+        loading="lazy"
+      >
+
+      <div class="event-content">
+        <div class="date">07 أكتوبر 1973</div>
+        <h3>الجسور والعبور المتتابع</h3>
+        <p>
+          استمرار عبور القوات والمركبات والمعدات عبر القناة.
+        </p>
+      </div>
+
+    </article>
+
+    <article class="event">
+
+      <img
+        src="https://commons.wikimedia.org/wiki/Special:FilePath/1973%20sinai%20war%20maps-ar.jpg"
+        alt="خريطة الجبهة المصرية"
+        loading="lazy"
+      >
+
+      <div class="event-content">
+        <div class="date">06–13 أكتوبر</div>
+        <h3>الجبهة المصرية</h3>
+        <p>
+          تطورات التحركات العسكرية على الجبهة المصرية
+          خلال الأيام الأولى للحرب.
+        </p>
+      </div>
+
+    </article>
+
+    <article class="event">
+
+      <img
+        src="https://commons.wikimedia.org/wiki/Special:FilePath/1973%20sinai%20war%20maps2.jpg"
+        alt="خريطة المرحلة الثانية"
+        loading="lazy"
+      >
+
+      <div class="event-content">
+        <div class="date">15–23 أكتوبر</div>
+        <h3>تغير شكل المعركة</h3>
+        <p>
+          خريطة توضح التطورات العسكرية خلال المرحلة
+          اللاحقة من الحرب.
+        </p>
+      </div>
+
+    </article>
+
+  </div>
+
+</section>
+
+<!-- =======================================================
+     FORCES
+======================================================= -->
+
+<section id="forces">
+
+  <div class="section-title">
+
+    <div class="section-kicker">
+      القوات
+    </div>
+
+    <h2>من شارك في الحرب؟</h2>
+
+    <p>
+      الحرب لم تكن ساحة لقوة واحدة؛ شاركت أفرع متعددة
+      من القوات المسلحة في منظومة العمليات.
+    </p>
+
+  </div>
+
+  <div class="forces-grid">
+
+    <article class="force">
+      <div class="force-icon">⚔️</div>
+      <h3>القوات البرية</h3>
+      <p>
+        قوات المشاة والمدرعات والمدفعية والهندسة
+        والوحدات المختلفة على الجبهة.
+      </p>
+    </article>
+
+    <article class="force">
+      <div class="force-icon">✈️</div>
+      <h3>القوات الجوية</h3>
+      <p>
+        شاركت في الضربة الجوية الأولى والعمليات الجوية
+        خلال الحرب.
+      </p>
+    </article>
+
+    <article class="force">
+      <div class="force-icon">🛡️</div>
+      <h3>الدفاع الجوي</h3>
+      <p>
+        كان عنصرًا أساسيًا في حماية القوات والمدن
+        والمنشآت من الهجمات الجوية.
+      </p>
+    </article>
+
+    <article class="force">
+      <div class="force-icon">⚓</div>
+      <h3>القوات البحرية</h3>
+      <p>
+        شاركت في العمليات البحرية وتأمين الجبهة
+        والممرات والمناطق الساحلية.
+      </p>
+    </article>
+
+    <article class="force">
+      <div class="force-icon">🔧</div>
+      <h3>المهندسون العسكريون</h3>
+      <p>
+        شاركوا في تجهيز وسائل العبور وإنشاء الكباري
+        ودعم عمليات عبور القوات.
+      </p>
+    </article>
+
+  </div>
+
+</section>
+
+<!-- =======================================================
+     MAPS
+======================================================= -->
+
+<section class="maps-section" id="maps">
+
+  <div class="section-title">
+
+    <div class="section-kicker">
+      خرائط حقيقية
+    </div>
+
+    <h2>حرب أكتوبر على الخريطة</h2>
+
+    <p>
+      الخرائط التالية خرائط تاريخية/توثيقية منشورة
+      وليست رسومات CSS مصطنعة، ويمكن تكبيرها لرؤية التفاصيل.
+    </p>
+
+  </div>
+
+  <div class="maps-grid">
+
+    <article class="map-card">
+
+      <div class="map-image" onclick="openImage(this.querySelector('img').src)">
+
+        <span class="map-label">
+          06–13 أكتوبر
+        </span>
+
+        <img
+          src="https://commons.wikimedia.org/wiki/Special:FilePath/1973%20sinai%20war%20maps-ar.jpg"
+          alt="خريطة التحركات العسكرية من 6 إلى 13 أكتوبر"
+          loading="lazy"
+        >
+
+      </div>
+
+      <div class="map-info">
+        <h3>تحركات القوات المصرية — 6 إلى 13 أكتوبر</h3>
+        <p>
+          خريطة عربية للتحركات العسكرية على الجبهة المصرية
+          خلال الأيام الأولى للحرب.
+        </p>
+      </div>
+
+    </article>
+
+    <article class="map-card">
+
+      <div class="map-image" onclick="openImage(this.querySelector('img').src)">
+
+        <span class="map-label">
+          15–23 أكتوبر
+        </span>
+
+        <img
+          src="https://commons.wikimedia.org/wiki/Special:FilePath/1973%20sinai%20war%20maps2-ar.jpg"
+          alt="خريطة التحركات من 15 إلى 23 أكتوبر"
+          loading="lazy"
+        >
+
+      </div>
+
+      <div class="map-info">
+        <h3>المرحلة اللاحقة — 15 إلى 23 أكتوبر</h3>
+        <p>
+          خريطة توضح التحركات العسكرية خلال المرحلة
+          اللاحقة من الحرب.
+        </p>
+      </div>
+
+    </article>
+
+    <article class="map-card">
+
+      <div class="map-image" onclick="openImage(this.querySelector('img').src)">
+
+        <span class="map-label">
+          خريطة أرشيفية
+        </span>
+
+        <img
+          src="https://commons.wikimedia.org/wiki/Special:FilePath/1973%20sinai%20war%20map%20A%20he.jpg"
+          alt="خريطة قناة السويس"
+          loading="lazy"
+        >
+
+      </div>
+
+      <div class="map-info">
+        <h3>منطقة قناة السويس</h3>
+        <p>
+          خريطة تاريخية لمنطقة القناة والجبهة المصرية
+          في بداية الحرب.
+        </p>
+      </div>
+
+    </article>
+
+    <article class="map-card">
+
+      <div class="map-image" onclick="openImage(this.querySelector('img').src)">
+
+        <span class="map-label">
+          المرحلة الأخيرة
+        </span>
+
+        <img
+          src="https://commons.wikimedia.org/wiki/Special:FilePath/Yom%20Kippur%20War%20-%20Sinai%20Front%20%28October%2024%2C%201973%29.svg"
+          alt="خريطة الجبهة في 24 أكتوبر"
+          loading="lazy"
+        >
+
+      </div>
+
+      <div class="map-info">
+        <h3>الجبهة في أواخر أكتوبر</h3>
+        <p>
+          خريطة تفصيلية تقريبية للجبهة في أواخر أكتوبر
+          قبل تثبيت وقف إطلاق النار.
+        </p>
+      </div>
+
+    </article>
+
+  </div>
+
+</section>
+
+<!-- =======================================================
+     GALLERY
+======================================================= -->
+
+<section id="gallery">
+
+  <div class="section-title">
+
+    <div class="section-kicker">
+      أرشيف بصري
+    </div>
+
+    <h2>صور من زمن الحرب</h2>
+
+    <p>
+      صور أرشيفية حقيقية يتم تحميلها مباشرة داخل التجربة.
+    </p>
+
+  </div>
+
+  <div class="gallery-grid">
+
+    <div class="gallery-item wide"
+         onclick="openImage(this.querySelector('img').src)">
+
+      <img
+        src="https://commons.wikimedia.org/wiki/Special:FilePath/Egyptian%20Army%20Leaders%20in%206th%20Oct%201973%20War.jpg"
+        alt="قادة حرب أكتوبر"
+        loading="lazy"
+      >
+
+    </div>
+
+    <div class="gallery-item"
+         onclick="openImage(this.querySelector('img').src)">
+
+      <img
+        src="https://commons.wikimedia.org/wiki/Special:FilePath/President%20Anwar%20Sadat.jpg"
+        alt="أنور السادات"
+        loading="lazy"
+      >
+
+    </div>
+
+    <div class="gallery-item"
+         onclick="openImage(this.querySelector('img').src)">
+
+      <img
+        src="https://commons.wikimedia.org/wiki/Special:FilePath/General%20Hosni%20Mubarak.jpg"
+        alt="حسني مبارك"
+        loading="lazy"
+      >
+
+    </div>
+
+    <div class="gallery-item"
+         onclick="openImage(this.querySelector('img').src)">
+
+      <img
+        src="https://commons.wikimedia.org/wiki/Special:FilePath/MG%20Saad%20El-Shazly.jpg"
+        alt="سعد الشاذلي"
+        loading="lazy"
+      >
+
+    </div>
+
+    <div class="gallery-item"
+         onclick="openImage(this.querySelector('img').src)">
+
+      <img
+        src="https://commons.wikimedia.org/wiki/Special:FilePath/General%20Ahmed%20Ismail%20Ali.jpg"
+        alt="أحمد إسماعيل علي"
+        loading="lazy"
+      >
+
+    </div>
+
+    <div class="gallery-item"
+         onclick="openImage(this.querySelector('img').src)">
+
+      <img
+        src="https://commons.wikimedia.org/wiki/Special:FilePath/Elgamsy.jpg"
+        alt="محمد عبد الغني الجمسي"
+        loading="lazy"
+      >
+
+    </div>
+
+    <div class="gallery-item wide"
+         onclick="openImage(this.querySelector('img').src)">
+
+      <img
+        src="https://commons.wikimedia.org/wiki/Special:FilePath/Bridge%20Crossing.jpg"
+        alt="عبور قناة السويس"
+        loading="lazy"
+      >
+
+    </div>
+
+  </div>
+
+</section>
+
+<!-- =======================================================
+     CREATOR
+======================================================= -->
+
+<section class="creator" id="creator">
+
+  <div class="creator-card">
+
+    <div class="creator-photo" id="creatorPhoto">
+
+      <div class="creator-placeholder" id="creatorPlaceholder">
+        يوسف
+      </div>
+
+    </div>
+
+    <h2>يوسف أشرف الجارح</h2>
+
+    <div class="creator-role">
+      مبرمج وصاحب فكرة هذا المشروع
+    </div>
+
+    <p>
+      هذا الموقع تجربة وثائقية تفاعلية صُممت لتقديم
+      تاريخ حرب أكتوبر 1973 بطريقة تجمع بين السرد،
+      الصور، الخرائط، القادة، الخط الزمني، والبحث
+      التاريخي التفاعلي.
+    </p>
+
+    <div class="creator-tools">
+
+      <label>
+        📷 تحميل صورتي رقم 100
+        <input
+          type="file"
+          id="creatorImageInput"
+          accept="image/*"
+        >
+      </label>
+
+      <button class="secondary-btn" onclick="removeCreatorImage()">
+        إزالة الصورة
+      </button>
+
+    </div>
+
+  </div>
+
+</section>
+
+<!-- =======================================================
+     AI
+======================================================= -->
+
+<section class="ai-section" id="ai">
+
+  <div class="section-title">
+
+    <div class="section-kicker">
+      البحث التاريخي
+    </div>
+
+    <h2>اسأل عن حرب أكتوبر</h2>
+
+    <p>
+      اكتب سؤالك بالعربي كما تريد:
+      «مين كان قائد القوات الجوية؟»
+      «إيه اللي حصل يوم 6 أكتوبر؟»
+      «إيه قصة الدفرسوار؟»
+      «هاتلي خريطة الحرب».
+    </p>
+
+  </div>
+
+  <div class="ai-shell">
+
+    <div class="ai-header">
+
+      <div class="ai-logo">
+        73
+      </div>
+
+      <div>
+        <strong>مساعد أكتوبر التاريخي</strong>
+        <small>محرك المعرفة المحلي</small>
+      </div>
+
+    </div>
+
+    <div class="chat" id="chat">
+
+      <div class="message ai">
+        أهلاً بك في أرشيف أكتوبر 1973.
+        اسألني عن القادة، الأيام، المعارك، الخرائط،
+        القوات أو الأحداث وسأبحث داخل قاعدة المعرفة التاريخية.
+      </div>
+
+    </div>
+
+    <div class="ai-suggestions">
+
+      <button onclick="askAI('من هو أنور السادات؟')">
+        من هو السادات؟
+      </button>
+
+      <button onclick="askAI('من هو سعد الشاذلي؟')">
+        سعد الشاذلي
+      </button>
+
+      <button onclick="askAI('ماذا حدث يوم 6 أكتوبر؟')">
+        يوم 6 أكتوبر
+      </button>
+
+      <button onclick="askAI('ما قصة الدفرسوار والثغرة؟')">
+        الدفرسوار
+      </button>
+
+      <button onclick="askAI('أريد خرائط حرب أكتوبر')">
+        الخرائط
+      </button>
+
+    </div>
+
+    <div class="ai-input">
+
+      <input
+        id="aiInput"
+        type="text"
+        placeholder="اكتب سؤالك عن حرب أكتوبر..."
+        onkeydown="if(event.key==='Enter') sendAI()"
+      >
+
+      <button class="primary-btn" onclick="sendAI()">
+        اسأل
+      </button>
+
+    </div>
+
+  </div>
+
+</section>
+
+</main>
+
+<footer>
+
+  <strong>أكتوبر 1973</strong>
+  — تجربة وثائقية تفاعلية
+  <br><br>
+  صُنع هذا المشروع بواسطة
+  <strong>يوسف أشرف الجارح</strong>
+
+</footer>
+
+</div>
+
+<!-- =======================================================
+     SEARCH
+======================================================= -->
+
+<div class="search-overlay" id="searchOverlay">
+
+  <div class="search-box">
+
+    <input
+      id="searchInput"
+      placeholder="ابحث عن قائد، معركة، تاريخ، مكان..."
+      oninput="performSearch(this.value)"
+    >
+
+    <div class="search-results" id="searchResults"></div>
+
+  </div>
+
+</div>
+
+<!-- =======================================================
+     LIGHTBOX
+======================================================= -->
+
+<div class="lightbox" id="lightbox">
+
+  <button class="close-lightbox" onclick="closeImage()">
+    ×
+  </button>
+
+  <img id="lightboxImage" src="" alt="صورة مكبرة">
+
+</div>
+
+<div class="toast" id="toast"></div>
+
+<!-- =======================================================
+     SCRIPT
+======================================================= -->
+
+<script>
+
+/* =========================================================
+   LEADERS
+========================================================= */
+
+const leaders = [
+
+  {
+    name:"أنور السادات",
+    kicker:"القيادة السياسية",
+    role:"رئيس جمهورية مصر العربية والقائد الأعلى للقوات المسلحة",
+    duty:"القيادة السياسية والعسكرية العليا",
+    period:"1973",
+    image:"https://commons.wikimedia.org/wiki/Special:FilePath/President%20Anwar%20Sadat.jpg",
+    story:
+      "قاد أنور السادات القرار السياسي المصري في حرب أكتوبر، " +
+      "وكان على رأس الدولة والقوات المسلحة عند بدء العمليات. " +
+      "ارتبط اسمه بقرار الحرب وإدارة الموقف السياسي والعسكري " +
+      "خلال الأسابيع التي شهدت العبور والمعارك ثم وقف إطلاق النار."
+  },
+
+  {
+    name:"أحمد إسماعيل علي",
+    kicker:"القيادة العامة",
+    role:"القائد العام للقوات المسلحة ووزير الحربية",
+    duty:"القيادة العامة وإدارة الحرب",
+    period:"1972–1974",
+    image:"https://commons.wikimedia.org/wiki/Special:FilePath/General%20Ahmed%20Ismail%20Ali.jpg",
+    story:
+      "تولى أحمد إسماعيل علي قيادة القوات المسلحة المصرية " +
+      "خلال حرب أكتوبر، وكان مسؤولًا عن القيادة العامة وإدارة " +
+      "الحرب مع القيادات الرئيسية للقوات والأفرع المختلفة."
+  },
+
+  {
+    name:"سعد الدين الشاذلي",
+    kicker:"رئيس أركان حرب القوات المسلحة",
+    role:"رئيس أركان حرب القوات المسلحة المصرية خلال الحرب",
+    duty:"التخطيط والمتابعة العملياتية",
+    period:"1973",
+    image:"https://commons.wikimedia.org/wiki/Special:FilePath/MG%20Saad%20El-Shazly.jpg",
+    story:
+      "كان الفريق سعد الدين الشاذلي رئيسًا لأركان حرب القوات المسلحة " +
+      "خلال حرب أكتوبر. ارتبط دوره بالتخطيط العسكري ومتابعة العمليات " +
+      "والعمل داخل منظومة القيادة خلال الحرب."
+  },
+
+  {
+    name:"محمد عبد الغني الجمسي",
+    kicker:"هيئة العمليات",
+    role:"رئيس هيئة عمليات القوات المسلحة خلال الحرب",
+    duty:"إدارة العمليات والتخطيط",
+    period:"1973",
+    image:"https://commons.wikimedia.org/wiki/Special:FilePath/Elgamsy.jpg",
+    story:
+      "كان محمد عبد الغني الجمسي من أبرز قادة هيئة العمليات، " +
+      "وشارك في التخطيط وإدارة العمليات خلال حرب أكتوبر. " +
+      "ارتبط اسمه بمتابعة الموقف العسكري وتنسيق العمل العملياتي."
+  },
+
+  {
+    name:"حسني مبارك",
+    kicker:"القوات الجوية",
+    role:"قائد القوات الجوية المصرية خلال حرب أكتوبر",
+    duty:"قيادة القوات الجوية",
+    period:"1973",
+    image:"https://commons.wikimedia.org/wiki/Special:FilePath/General%20Hosni%20Mubarak.jpg",
+    story:
+      "كان حسني مبارك قائد القوات الجوية المصرية في حرب أكتوبر. " +
+      "ارتبط دوره بقيادة القوات الجوية خلال الضربة الجوية الأولى " +
+      "والعمليات الجوية التي جرت أثناء الحرب."
+  },
+
+  {
+    name:"محمد علي فهمي",
+    kicker:"الدفاع الجوي",
+    role:"قائد قوات الدفاع الجوي المصرية",
+    duty:"قيادة الدفاع الجوي",
+    period:"1973",
+    image:"https://commons.wikimedia.org/wiki/Special:FilePath/Mohamed%20Ali%20Fahmi.jpg",
+    story:
+      "كان الفريق محمد علي فهمي من أبرز قادة الدفاع الجوي المصري. " +
+      "ارتبط دوره بمنظومة الدفاع الجوي التي شاركت في حماية القوات " +
+      "والمدن والمنشآت المصرية خلال الحرب."
+  }
+
+];
+
+let currentLeader = 0;
+
+function renderLeader(){
+
+  const leader = leaders[currentLeader];
+
+  document.getElementById("leaderImage").src = leader.image;
+
+  document.getElementById("leaderBackdrop").style.backgroundImage =
+    `url("${leader.image}")`;
+
+  document.getElementById("leaderName").textContent =
+    leader.name;
+
+  document.getElementById("leaderKicker").textContent =
+    leader.kicker;
+
+  document.getElementById("leaderRole").textContent =
+    leader.role;
+
+  document.getElementById("leaderDuty").textContent =
+    leader.duty;
+
+  document.getElementById("leaderPeriod").textContent =
+    leader.period;
+
+  document.getElementById("leaderStory").textContent =
+    leader.story;
+
+  document.getElementById("leaderNumber").textContent =
+    `${String(currentLeader+1).padStart(2,"0")} / ${String(leaders.length).padStart(2,"0")}`;
+
+}
+
+function nextLeader(){
+
+  currentLeader++;
+
+  if(currentLeader >= leaders.length){
+    currentLeader = 0;
+  }
+
+  renderLeader();
+
+}
+
+function prevLeader(){
+
+  currentLeader--;
+
+  if(currentLeader < 0){
+    currentLeader = leaders.length-1;
+  }
+
+  renderLeader();
+
+}
+
+renderLeader();
+
+/* =========================================================
+   NAVIGATION
+========================================================= */
+
+function goTo(id){
+
+  const element = document.getElementById(id);
+
+  if(!element) return;
+
+  element.scrollIntoView({
+    behavior:"smooth",
+    block:"start"
+  });
+
+}
+
+/* =========================================================
+   ACTIVE NAV
+========================================================= */
+
+const sections = [
+  "home",
+  "leaders",
+  "timeline",
+  "events",
+  "forces",
+  "maps",
+  "gallery",
+  "ai"
+];
+
+const observer = new IntersectionObserver(
+  entries => {
+
+    entries.forEach(entry => {
+
+      if(!entry.isIntersecting) return;
+
+      document.querySelectorAll(".nav button").forEach(button => {
+
+        button.classList.toggle(
+          "active",
+          button.dataset.target === entry.target.id
+        );
+
+      });
+
+    });
+
+  },
+  {
+    threshold:.35
+  }
+);
+
+sections.forEach(id => {
+
+  const element = document.getElementById(id);
+
+  if(element){
+    observer.observe(element);
+  }
+
+});
+
+/* =========================================================
+   INTRO
+========================================================= */
+
+window.addEventListener("load",()=>{
+
+  setTimeout(()=>{
+
+    document.getElementById("intro").classList.add("hide");
+
+    document.getElementById("app").classList.add("ready");
+
+  },4700);
+
+});
+
+/* =========================================================
+   IMAGE LIGHTBOX
+========================================================= */
+
+function openImage(src){
+
+  document.getElementById("lightboxImage").src = src;
+
+  document.getElementById("lightbox").classList.add("open");
+
+}
+
+function closeImage(){
+
+  document.getElementById("lightbox").classList.remove("open");
+
+  document.getElementById("lightboxImage").src = "";
+
+}
+
+document.getElementById("lightbox").addEventListener("click",event=>{
+
+  if(event.target.id === "lightbox"){
+    closeImage();
+  }
+
+});
+
+/* =========================================================
+   FULLSCREEN
+========================================================= */
+
+function toggleFullscreen(){
+
+  if(!document.fullscreenElement){
+
+    document.documentElement.requestFullscreen?.();
+
+  }else{
+
+    document.exitFullscreen?.();
+
+  }
+
+}
+
+/* =========================================================
+   SEARCH
+========================================================= */
+
+const localSearchData = [
+
+  {
+    title:"أنور السادات",
+    category:"قائد",
+    text:"رئيس جمهورية مصر العربية والقائد الأعلى للقوات المسلحة خلال حرب أكتوبر.",
+    target:"leaders"
+  },
+
+  {
+    title:"أحمد إسماعيل علي",
+    category:"قائد",
+    text:"القائد العام للقوات المسلحة خلال حرب أكتوبر.",
+    target:"leaders"
+  },
+
+  {
+    title:"سعد الدين الشاذلي",
+    category:"قائد",
+    text:"رئيس أركان حرب القوات المسلحة خلال الحرب.",
+    target:"leaders"
+  },
+
+  {
+    title:"محمد عبد الغني الجمسي",
+    category:"قائد",
+    text:"رئيس هيئة العمليات وأحد أبرز قادة التخطيط العملياتي.",
+    target:"leaders"
+  },
+
+  {
+    title:"حسني مبارك",
+    category:"قائد",
+    text:"قائد القوات الجوية المصرية خلال حرب أكتوبر.",
+    target:"leaders"
+  },
+
+  {
+    title:"محمد علي فهمي",
+    category:"قائد",
+    text:"قائد قوات الدفاع الجوي المصرية.",
+    target:"leaders"
+  },
+
+  {
+    title:"العبور",
+    category:"حدث",
+    text:"عبور القوات المصرية لقناة السويس يوم 6 أكتوبر 1973.",
+    target:"events"
+  },
+
+  {
+    title:"الدفرسوار",
+    category:"حدث",
+    text:"منطقة ارتبطت بعبور القوات الإسرائيلية إلى غرب القناة خلال المرحلة اللاحقة من الحرب.",
+    target:"events"
+  },
+
+  {
+    title:"الثغرة",
+    category:"حدث",
+    text:"تطور عسكري في المرحلة الأخيرة من الحرب بعد عبور القوات الإسرائيلية غرب القناة.",
+    target:"timeline"
+  },
+
+  {
+    title:"قناة السويس",
+    category:"مكان",
+    text:"الممر المائي الذي عبرته القوات المصرية في بداية الحرب.",
+    target:"maps"
+  },
+
+  {
+    title:"خرائط حرب أكتوبر",
+    category:"خرائط",
+    text:"خرائط تاريخية للجبهة المصرية وتحركات القوات خلال الحرب.",
+    target:"maps"
+  }
+
+];
+
+function normalize(text){
+
+  return String(text || "")
+    .toLowerCase()
+    .replace(/[ًٌٍَُِّْـ]/g,"")
+    .replace(/[أإآ]/g,"ا")
+    .replace(/ى/g,"ي")
+    .replace(/ؤ/g,"و")
+    .replace(/ئ/g,"ي")
+    .replace(/ة/g,"ه")
+    .replace(/[^\u0600-\u06FFa-z0-9\s]/gi," ")
+    .replace(/\s+/g," ")
+    .trim();
+
+}
+
+function performSearch(query){
+
+  const box = document.getElementById("searchResults");
+
+  const q = normalize(query);
+
+  if(!q){
+
+    box.innerHTML = "";
+
+    return;
+
+  }
+
+  const words = q.split(" ");
+
+  const results = localSearchData
+    .map(item=>{
+
+      const text = normalize(
+        item.title + " " +
+        item.category + " " +
+        item.text
+      );
+
+      let score = 0;
+
+      if(text.includes(q)){
+        score += 20;
       }
 
-      document.addEventListener("click",function(event){
+      words.forEach(word=>{
 
-        const button =
-          event.target.closest("[data-go]");
-
-        if(!button) return;
-
-        const id =
-          button.getAttribute("data-go");
-
-        if(id){
-          fallbackGo(id);
+        if(word.length > 1 && text.includes(word)){
+          score += 4;
         }
 
       });
 
-    })();
+      return {
+        ...item,
+        score
+      };
 
-  </script>
+    })
+    .filter(item=>item.score > 0)
+    .sort((a,b)=>b.score-a.score)
+    .slice(0,8);
+
+  if(!results.length){
+
+    box.innerHTML = `
+      <div class="search-result">
+        <strong>لا توجد نتيجة محلية مباشرة</strong>
+        <p>جرّب سؤالًا أطول أو استخدم المساعد التاريخي.</p>
+      </div>
+    `;
+
+    return;
+
+  }
+
+  box.innerHTML = results.map(item=>`
+
+    <div class="search-result"
+         onclick="closeSearch();goTo('${item.target}')">
+
+      <strong>${item.title}</strong>
+
+      <p>
+        ${item.category} — ${item.text}
+      </p>
+
+    </div>
+
+  `).join("");
+
+}
+
+function openSearch(){
+
+  document.getElementById("searchOverlay")
+    .classList.add("open");
+
+  setTimeout(()=>{
+    document.getElementById("searchInput").focus();
+  },100);
+
+}
+
+function closeSearch(){
+
+  document.getElementById("searchOverlay")
+    .classList.remove("open");
+
+}
+
+document.getElementById("searchOverlay")
+  .addEventListener("click",event=>{
+
+    if(event.target.id === "searchOverlay"){
+      closeSearch();
+    }
+
+  });
+
+document.addEventListener("keydown",event=>{
+
+  if(event.key === "Escape"){
+
+    closeSearch();
+    closeImage();
+
+  }
+
+});
+
+/* =========================================================
+   CREATOR IMAGE
+   صورة المستخدم "100"
+========================================================= */
+
+const creatorInput =
+  document.getElementById("creatorImageInput");
+
+const creatorPhoto =
+  document.getElementById("creatorPhoto");
+
+const creatorPlaceholder =
+  document.getElementById("creatorPlaceholder");
+
+function loadCreatorImage(){
+
+  const saved =
+    localStorage.getItem("october_creator_100");
+
+  if(!saved) return;
+
+  creatorPhoto.innerHTML = `
+    <img
+      src="${saved}"
+      alt="يوسف أشرف الجرف"
+    >
+  `;
+
+}
+
+creatorInput.addEventListener("change",function(){
+
+  const file = this.files[0];
+
+  if(!file) return;
+
+  const reader = new FileReader();
+
+  reader.onload = function(){
+
+    try{
+
+      localStorage.setItem(
+        "october_creator_100",
+        reader.result
+      );
+
+      loadCreatorImage();
+
+      showToast("تم حفظ صورة 100 على هذا الجهاز.");
+
+    }catch(error){
+
+      showToast("الصورة كبيرة جدًا للتخزين المحلي.");
+
+    }
+
+  };
+
+  reader.readAsDataURL(file);
+
+});
+
+function removeCreatorImage(){
+
+  localStorage.removeItem("october_creator_100");
+
+  creatorPhoto.innerHTML = `
+    <div class="creator-placeholder">
+      يوسف
+    </div>
+  `;
+
+  showToast("تمت إزالة الصورة.");
+
+}
+
+loadCreatorImage();
+
+/* =========================================================
+   AI CONNECTION
+========================================================= */
+
+function addMessage(text,type="ai"){
+
+  const chat =
+    document.getElementById("chat");
+
+  const div =
+    document.createElement("div");
+
+  div.className =
+    `message ${type}`;
+
+  div.textContent = text;
+
+  chat.appendChild(div);
+
+  chat.scrollTop =
+    chat.scrollHeight;
+
+}
+
+async function askAI(question){
+
+  if(!question) return;
+
+  addMessage(question,"user");
+
+  try{
+
+    if(
+      window.OCTOBER_AI &&
+      typeof window.OCTOBER_AI.ask === "function"
+    ){
+
+      const result =
+        await window.OCTOBER_AI.ask(question);
+
+      if(result && result.answer){
+
+        addMessage(result.answer,"ai");
+
+        return;
+
+      }
+
+    }
+
+    /*
+      لو ملف october-ai.js لم يتم تحميله بعد،
+      يظهر رد مؤقت بدل كسر الموقع.
+    */
+
+    addMessage(
+      "محرك المعرفة التاريخية لم يتم تحميله بعد. تأكد من وجود ملف october-ai.js بجوار index.html.",
+      "ai"
+    );
+
+  }catch(error){
+
+    console.error(error);
+
+    addMessage(
+      "حدث خطأ أثناء البحث في قاعدة المعرفة.",
+      "ai"
+    );
+
+  }
+
+}
+
+function sendAI(){
+
+  const input =
+    document.getElementById("aiInput");
+
+  const value =
+    input.value.trim();
+
+  if(!value) return;
+
+  input.value = "";
+
+  askAI(value);
+
+}
+
+/* =========================================================
+   TOAST
+========================================================= */
+
+let toastTimer;
+
+function showToast(message){
+
+  const toast =
+    document.getElementById("toast");
+
+  toast.textContent =
+    message;
+
+  toast.classList.add("show");
+
+  clearTimeout(toastTimer);
+
+  toastTimer =
+    setTimeout(()=>{
+      toast.classList.remove("show");
+    },2800);
+
+}
+
+/* =========================================================
+   IMAGE ERROR FALLBACK
+========================================================= */
+
+document.addEventListener("error",event=>{
+
+  if(
+    event.target &&
+    event.target.tagName === "IMG"
+  ){
+
+    event.target.style.background =
+      "linear-gradient(135deg,#171717,#070707)";
+
+  }
+
+},true);
+
+/* =========================================================
+   CREATOR AUTO SECTION
+========================================================= */
+
+setTimeout(()=>{
+
+  /*
+    لا نعرضها عند البداية حتى لا تفسد
+    تجربة الدخول.
+  */
+
+},1000);
+
+</script>
+
+<!-- =======================================================
+     THE SECOND FILE IS THE ONLY AI ENGINE
+======================================================= -->
+
+<script src="october-ai.js"></script>
 
 </body>
-  </html>
+      </html>
